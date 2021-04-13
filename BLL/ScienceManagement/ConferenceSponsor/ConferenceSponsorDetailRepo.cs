@@ -228,16 +228,32 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public AlertModal<string> RequestEdit(int request_id)
         {
-            var Request = db.RequestConferences.Find(request_id);
-            if (Request == null)
-                return new AlertModal<string>(false, "Đề nghị không tồn tại");
-            if (Request.status_id >= 2)
-                return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
-            Request.editable = true;
-            db.SaveChanges();
-            return new AlertModal<string>(true, "Cập nhật thành công");
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    NotificationRepo notificationRepo = new NotificationRepo(db);
+
+                    var Request = db.RequestConferences.Find(request_id);
+                    if (Request == null)
+                        return new AlertModal<string>(false, "Đề nghị không tồn tại");
+                    if (Request.status_id >= 2)
+                        return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
+                    Request.editable = true;
+                    string notification_id = notificationRepo.AddByAccountID(Request.BaseRequest.account_id, 4, "/ConferenceSponsor/Detail?id=" + Request.request_id).ToString();
+                    trans.Commit();
+
+                    return new AlertModal<string>(notification_id, true, "Cập nhật thành công");
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Console.WriteLine(e.ToString());
+                }
+            }
+            return new AlertModal<string>(false);
         }
-        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id, int account_id)
+        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id)
         {
             string DriveId = null;
             var temp = (from a in db.BaseRequests
