@@ -117,16 +117,40 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                     x.country_name
                 });
 
-                var result = pre_group.ToList().Select(x => new PartnerList
-                {
-                    partner_name = x.Key.partner_name,
-                    partner_id = (int)x.Key.partner_id,
-                    is_deleted = x.Key.is_deleted,
-                    website = x.Key.website,
-                    address = x.Key.address,
-                    is_collab = x.Key.is_collab,
-                    specialization_name = string.Join(" ,", x.Select(y => y.specialization_name))
-                });
+                //var result = pre_group.ToList().Select(x => new PartnerList
+                //{
+                //    partner_name = x.Key.partner_name,
+                //    partner_id = (int)x.Key.partner_id,
+                //    is_deleted = x.Key.is_deleted,
+                //    website = x.Key.website,
+                //    address = x.Key.address,
+                //    is_collab = x.Key.is_collab,
+                //    specialization_name = string.Join(" ,", x.Select(y => y.specialization_name))
+                //});
+
+                var temp = (from a in db.Partners
+                            join b in db.Countries on a.country_id equals b.country_id
+                            where (searchPartner.partner_name == null || a.partner_name.Contains(searchPartner.partner_name))
+                            && (searchPartner.nation == null || b.country_name.Contains(searchPartner.nation))
+                            && a.is_deleted == (searchPartner.is_deleted == 1)
+                            select new PartnerList
+                            {
+                                partner_name = a.partner_name,
+                                partner_id = a.partner_id,
+                                is_deleted = a.is_deleted,
+                                website = a.website,
+                                address = a.address,
+                                country_name = b.country_name,
+                                is_collab = db.MOUPartners.Any(c => c.partner_id == a.partner_id) ? 2 : 1,
+                                SpecializationNames = (from d in db.MOUPartnerSpecializations
+                                                       join e in db.SpecializationLanguages on d.specialization_id equals e.specialization_id
+                                                       where d.MOUPartner.Partner.partner_id == a.partner_id
+                                                       && (e.name.Contains(searchPartner.specialization) || searchPartner.partner_name == null)
+                                                       && e.language_id == searchPartner.language
+                                                       select e.name).Distinct().ToList()
+                            }).Where(x => searchPartner.is_collab == 0 || x.is_collab == searchPartner.is_collab).ToList();
+                temp.ForEach(x => x.specialization_name = string.Join(" ,", x.specialization_name));
+                int count = temp.Count;
                 //===========================================================================================================================
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
                             + baseDatatable.SortDirection +

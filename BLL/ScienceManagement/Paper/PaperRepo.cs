@@ -890,7 +890,6 @@ namespace BLL.ScienceManagement.Paper
                 rp.reward_type = item.reward_type;
                 rp.status_id = 3;
 
-
                 if (rp.reward_type == "Canhan")
                 {
                     Author author = (from a in db.Authors
