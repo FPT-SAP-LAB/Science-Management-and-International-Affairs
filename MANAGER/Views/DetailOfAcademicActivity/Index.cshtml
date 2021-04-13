@@ -191,10 +191,10 @@
                         <div class="dropdown">
                             <button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdown-excel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Xuất kinh phí</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a href="javascript:;" class="dropdown-item" onclick="excelDuTru()">Dự trù ban đầu</a>
-                                <a href="javascript:;" class="dropdown-item" onclick="excelDieuChinh()">Dự trù điều chỉnh</a>
-                                <a href="javascript:;" class="dropdown-item" onclick="excelThucTe()">Thực tế</a>
-                                <a href="javascript:;" class="dropdown-item" onclick="excelTonghop()">Tổng hợp</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelDuTru(1)">Dự trù ban đầu</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelDieuChinh(2)">Dự trù điều chỉnh</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelThucTe(3)">Thực tế</a>
+                                <a href="javascript:;" class="dropdown-item" onclick="excelTonghop(4)">Tổng hợp</a>
                             </div>
                         </div>
                     </div>
@@ -260,7 +260,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-  
                             </tbody>
                         </table>
                     </div>
@@ -779,7 +778,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
                     </div>
@@ -916,7 +914,7 @@
                         </div>
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
-                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">   
+                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
                         <label class="col-form-label font-weight-bolder">File đính kèm</label>
                         <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDuTru"></a>
                     </div>
@@ -962,7 +960,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
                     </div>
@@ -1062,7 +1059,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
                     </div>
@@ -1207,7 +1203,7 @@
             return myDate;
         }
         function clearModal(id) {
-            $(id).find('input:text, input:password, select, a')
+            $(id).find('input:text, input:password, select, a, textarea')
                 .each(function () {
                     $(this).val('');
                 });
@@ -2165,7 +2161,7 @@
                             }
                             console.log(objData);
                             $("#edit_banmem_DongToChuc #edit_DongToChuc_file_content_upload").append(
-                                `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
+                                `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden;
                                 white-space: nowrap;" target="_blank" href="` + objData.file_link + `"><span>` + file_content + `</span></a>`);
                             $('#edit_name_DongToChuc').val(objData.contact_point_name);
                             $('#edit_email_DongToChuc').val(objData.contact_point_email);
@@ -3491,7 +3487,86 @@
             });
             $(id).append(html);
         }
-
+        function excelDuTru(type) {
+            var object = {
+                type: type,
+                activity_id: $('#activity_id').val()
+            };
+            $.ajax({
+                url: "@Url.Action("ExportExcel", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                success: function (data) {
+                    window.location = '../DetailOfAcademicActivity/' + 'Download?fileGuid=' + data.data.FileGuid
+                        + '&filename=' + data.data.FileName;
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
+        }
+        function excelDieuChinh(type) {
+            var object = {
+                type: type,
+                activity_id: $('#activity_id').val()
+            };
+            $.ajax({
+                url: "@Url.Action("ExportExcel", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                success: function (data) {
+                    window.location = '../DetailOfAcademicActivity/' + 'Download?fileGuid=' + data.data.FileGuid
+                        + '&filename=' + data.data.FileName;
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
+        }
+        function excelThucTe(type) {
+            var object = {
+                type: type,
+                activity_id: $('#activity_id').val()
+            };
+            $.ajax({
+                url: "@Url.Action("ExportExcel", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                success: function (data) {
+                    window.location = '../DetailOfAcademicActivity/' + 'Download?fileGuid=' + data.data.FileGuid
+                        + '&filename=' + data.data.FileName;
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
+        }
+        function excelTonghop(type) {
+            var object = {
+                type: type,
+                activity_id: $('#activity_id').val()
+            };
+            $.ajax({
+                url: "@Url.Action("ExportExcel", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                cache: false,
+                success: function (data) {
+                    window.location = '../DetailOfAcademicActivity/' + 'Download?fileGuid=' + data.data.FileGuid
+                        + '&filename=' + data.data.FileName;
+                },
+                error: function (data) {
+                    toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                }
+            });
+        }
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
