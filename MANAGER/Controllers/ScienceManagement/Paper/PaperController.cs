@@ -277,5 +277,12 @@ namespace MANAGER.Controllers
             string mess = pr.changeStatusManager(paper);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult deleteRequest(int id)
+        {
+            string mess = pr.deleteRequest(id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

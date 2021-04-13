@@ -106,5 +106,12 @@ namespace MANAGER.Controllers
             string mess = ir.changeStatusManager(inven);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult deleteRequest(int id)
+        {
+            string mess = ir.deleteRequest(id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
