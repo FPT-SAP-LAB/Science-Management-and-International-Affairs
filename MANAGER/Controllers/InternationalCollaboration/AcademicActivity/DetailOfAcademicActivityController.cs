@@ -468,7 +468,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
         }
         [Auther(RightID = "3")]
-        public ActionResult ExportExcel(int type,int activity_id)
+        public ActionResult ExportExcel(int type, int activity_id)
         {
             try
             {
