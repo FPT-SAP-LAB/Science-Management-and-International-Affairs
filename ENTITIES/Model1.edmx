@@ -1099,6 +1099,19 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="paper_id" Type="int" Nullable="false" />
           <Property Name="author_received_reward" Type="int" />
         </EntityType>
+        <EntityType Name="SCIE">
+          <Key>
+            <PropertyRef Name="SCIE_id" />
+          </Key>
+          <Property Name="Journal_title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ISSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="eISSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Publisher_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Publisher_address" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Languages" Type="nvarchar" MaxLength="50" />
+          <Property Name="Web_of_Science_Categories" Type="nvarchar(max)" />
+          <Property Name="SCIE_id" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Scimagojr">
           <Key>
             <PropertyRef Name="Sourceid" />
@@ -1123,6 +1136,29 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="Publisher" Type="nvarchar(max)" />
           <Property Name="Coverage" Type="nvarchar(max)" />
           <Property Name="Categories" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scopus">
+          <Key>
+            <PropertyRef Name="Sourcerecord_ID" />
+          </Key>
+          <Property Name="Sourcerecord_ID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Source_Title_Medline_sourced_journals_are_indicated_in_Green" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Print_ISSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="E_ISSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active_or_Inactive" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SSCI">
+          <Key>
+            <PropertyRef Name="SSCI_id" />
+          </Key>
+          <Property Name="Journal_title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ISSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="eISSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="Publisher_name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Publisher_address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Languages" Type="nvarchar" MaxLength="150" />
+          <Property Name="Web_of_Science_Categories" Type="nvarchar(max)" />
+          <Property Name="SSCI_id" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicActivity">
           <Key>
@@ -4019,7 +4055,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="PaperWithCriteria" EntityType="Self.PaperWithCriteria" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="RequestInvention" EntityType="Self.RequestInvention" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="RequestPaper" EntityType="Self.RequestPaper" Schema="SM_ScientificProduct" store:Type="Tables" />
+          <EntitySet Name="SCIE" EntityType="Self.SCIE" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="Scimagojr" EntityType="Self.Scimagojr" Schema="SM_ScientificProduct" store:Type="Tables" />
+          <EntitySet Name="Scopus" EntityType="Self.Scopus" Schema="SM_ScientificProduct" store:Type="Tables" />
+          <EntitySet Name="SSCI" EntityType="Self.SSCI" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="AcademicActivity" EntityType="Self.AcademicActivity" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityLanguage" EntityType="Self.AcademicActivityLanguage" Schema="SMIA_AcademicActivity" store:Type="Tables" />
           <EntitySet Name="AcademicActivityPhase" EntityType="Self.AcademicActivityPhase" Schema="SMIA_AcademicActivity" store:Type="Tables" />
@@ -6268,6 +6307,19 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="Paper" Relationship="Self.FK__RequestPa__paper__3EA749C6" FromRole="RequestPaper" ToRole="Paper" />
           <NavigationProperty Name="PaperStatu" Relationship="Self.FK__RequestPa__statu__4183B671" FromRole="RequestPaper" ToRole="PaperStatus" />
         </EntityType>
+        <EntityType Name="SCIE">
+          <Key>
+            <PropertyRef Name="SCIE_id" />
+          </Key>
+          <Property Name="Journal_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ISSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="eISSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Publisher_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher_address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Languages" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Web_of_Science_Categories" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SCIE_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Scimagojr">
           <Key>
             <PropertyRef Name="Sourceid" />
@@ -6292,6 +6344,29 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="Publisher" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Coverage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Categories" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scopu">
+          <Key>
+            <PropertyRef Name="Sourcerecord_ID" />
+          </Key>
+          <Property Name="Sourcerecord_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Source_Title_Medline_sourced_journals_are_indicated_in_Green" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Print_ISSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="E_ISSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active_or_Inactive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SSCI">
+          <Key>
+            <PropertyRef Name="SSCI_id" />
+          </Key>
+          <Property Name="Journal_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ISSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="eISSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Publisher_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Languages" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Web_of_Science_Categories" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SSCI_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="AcademicActivity">
           <Key>
@@ -9117,7 +9192,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="PaperWithCriterias" EntityType="Self.PaperWithCriteria" />
           <EntitySet Name="RequestInventions" EntityType="Self.RequestInvention" />
           <EntitySet Name="RequestPapers" EntityType="Self.RequestPaper" />
+          <EntitySet Name="SCIEs" EntityType="Self.SCIE" />
           <EntitySet Name="Scimagojrs" EntityType="Self.Scimagojr" />
+          <EntitySet Name="Scopus" EntityType="Self.Scopu" />
+          <EntitySet Name="SSCIs" EntityType="Self.SSCI" />
           <EntitySet Name="AcademicActivities" EntityType="Self.AcademicActivity" />
           <EntitySet Name="AcademicActivityLanguages" EntityType="Self.AcademicActivityLanguage" />
           <EntitySet Name="AcademicActivityPhases" EntityType="Self.AcademicActivityPhase" />
@@ -11100,6 +11178,20 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SCIEs">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.SCIE">
+              <MappingFragment StoreEntitySet="SCIE">
+                <ScalarProperty Name="Journal_title" ColumnName="Journal_title" />
+                <ScalarProperty Name="ISSN" ColumnName="ISSN" />
+                <ScalarProperty Name="eISSN" ColumnName="eISSN" />
+                <ScalarProperty Name="Publisher_name" ColumnName="Publisher_name" />
+                <ScalarProperty Name="Publisher_address" ColumnName="Publisher_address" />
+                <ScalarProperty Name="Languages" ColumnName="Languages" />
+                <ScalarProperty Name="Web_of_Science_Categories" ColumnName="Web_of_Science_Categories" />
+                <ScalarProperty Name="SCIE_id" ColumnName="SCIE_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Scimagojrs">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Scimagojr">
               <MappingFragment StoreEntitySet="Scimagojr">
@@ -11123,6 +11215,31 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="Publisher" ColumnName="Publisher" />
                 <ScalarProperty Name="Coverage" ColumnName="Coverage" />
                 <ScalarProperty Name="Categories" ColumnName="Categories" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scopus">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Scopu">
+              <MappingFragment StoreEntitySet="Scopus">
+                <ScalarProperty Name="Sourcerecord_ID" ColumnName="Sourcerecord_ID" />
+                <ScalarProperty Name="Source_Title_Medline_sourced_journals_are_indicated_in_Green" ColumnName="Source_Title_Medline_sourced_journals_are_indicated_in_Green" />
+                <ScalarProperty Name="Print_ISSN" ColumnName="Print_ISSN" />
+                <ScalarProperty Name="E_ISSN" ColumnName="E_ISSN" />
+                <ScalarProperty Name="Active_or_Inactive" ColumnName="Active_or_Inactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SSCIs">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.SSCI">
+              <MappingFragment StoreEntitySet="SSCI">
+                <ScalarProperty Name="Journal_title" ColumnName="Journal_title" />
+                <ScalarProperty Name="ISSN" ColumnName="ISSN" />
+                <ScalarProperty Name="eISSN" ColumnName="eISSN" />
+                <ScalarProperty Name="Publisher_name" ColumnName="Publisher_name" />
+                <ScalarProperty Name="Publisher_address" ColumnName="Publisher_address" />
+                <ScalarProperty Name="Languages" ColumnName="Languages" />
+                <ScalarProperty Name="Web_of_Science_Categories" ColumnName="Web_of_Science_Categories" />
+                <ScalarProperty Name="SSCI_id" ColumnName="SSCI_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
