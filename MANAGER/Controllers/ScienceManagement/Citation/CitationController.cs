@@ -103,5 +103,12 @@ namespace MANAGER.Controllers
             string mess = cr.changeStatus(request_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult deleteRequest(int id)
+        {
+            string mess = cr.deleteRequest(id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

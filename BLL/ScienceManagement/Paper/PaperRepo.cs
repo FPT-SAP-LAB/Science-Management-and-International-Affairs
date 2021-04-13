@@ -222,6 +222,26 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
+        public string deleteRequest(int id)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestPaper rp = db.RequestPapers.Where(x => x.request_id == id).FirstOrDefault();
+                rp.status_id = 1;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public List<string> getDecisionLink(int id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
@@ -767,13 +787,34 @@ namespace BLL.ScienceManagement.Paper
                     int paper_id_int = Int32.Parse(paper_id);
                     ENTITIES.Paper paper = db.Papers.Where(x => x.paper_id == paper_id_int).FirstOrDefault();
 
-                    foreach (var item in list)
+                    foreach (var item in criteria)
                     {
-                        foreach (var cri in criteria)
+                        foreach (var cri in list)
                         {
                             if (cri.name == item.name)
                             {
-                                item.link = cri.link;
+                                item.criteria_id = cri.criteria_id;
+                                if (item.name == "ISI")
+                                {
+                                    SCIE scie = db.SCIEs.Where(x => x.Journal_title == paper.journal_name).FirstOrDefault();
+                                    SSCI ssci = db.SSCIs.Where(x => x.Journal_title == paper.journal_name).FirstOrDefault();
+                                    if (scie != null || ssci != null)
+                                    {
+                                        item.check = true;
+                                    }
+                                }
+                                else if (item.name == "Scopus")
+                                {
+                                    Scopu scopu = db.Scopus.Where(x => x.Source_Title_Medline_sourced_journals_are_indicated_in_Green == paper.journal_name).FirstOrDefault();
+                                    if (scopu != null)
+                                    {
+                                        if (scopu.Active_or_Inactive == "Active") item.check = true;
+                                    }
+                                }
+                                else
+                                {
+                                    item.check = false;
+                                }
                             }
                         }
                         PaperWithCriteria pwc = new PaperWithCriteria
