@@ -156,7 +156,6 @@ namespace GUEST.Controllers
         {
             string mess = ir.addAuthor(people, invention_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
-
         }
 
         [HttpPost]
