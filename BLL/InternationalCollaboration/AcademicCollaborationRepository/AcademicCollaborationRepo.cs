@@ -50,7 +50,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         and ISNULL(offi.office_name, '') like @office_name ";
                 if (obj_searching.year != 0)
                 {
-                    sql += @"or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)";
+                    sql += @"and @year between YEAR(collab.plan_study_start_date) and YEAR(collab.plan_study_end_date)";
                 }
                 sql += @"ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                         " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
