@@ -272,7 +272,10 @@
                         }
                         people.push(AddAuthor);
                     }
-                    if (ck != "5") $(".edit").prop("disabled", true);
+                    if (ck != "5") {
+                        $(".edit").prop("disabled", true);
+                        $(".edit-author").prop("disabled", false);
+                    }
                     $("#loading").hide();
                 },
                 error: function () {

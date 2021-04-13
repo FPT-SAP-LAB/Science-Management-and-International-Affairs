@@ -77,6 +77,25 @@ namespace BLL.ScienceManagement.Invention
             return list;
         }
 
+        public string deleteRequest(int id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention rp = db.RequestInventions.Where(x => x.request_id == id).FirstOrDefault();
+                rp.status_id = 1;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string changeStatus(DetailInvention inven)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
