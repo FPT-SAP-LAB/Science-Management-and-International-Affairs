@@ -15,10 +15,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityExcelRepo
     {
-        public MemoryStream ExportDuTruExcel()
+        AcademicActivityExpenseRepo expenseRepo;
+        public MemoryStream ExportDuTruExcel(int activity_id)
         {
-            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
-            string filename = "MOU.xlsx";
+            expenseRepo = new AcademicActivityExpenseRepo();
+            string path = HostingEnvironment.MapPath("/Excel_template/");
+            string filename = "TemplateKinhPhiDuTru.xlsx";
             FileInfo file = new FileInfo(path + filename);
             List<ListMOU> listMOU = new List<ListMOU>();
 
@@ -32,24 +34,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
                     excelWorksheet.Cells[i + startRow, 2].Value = listMOU.ElementAt(i).mou_code;
-                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.ElementAt(i).partner_name;
-                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.ElementAt(i).country_name;
-                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
-                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
-                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_email;
-                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).contact_point_phone;
                     excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_start_date.ToString("dd'/'MM'/'yyyy");
                     excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).mou_end_date.ToString("dd'/'MM'/'yyyy");
-                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).office_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).scope_abbreviation;
                     excelWorksheet.Cells[i + startRow, 14].Value = listMOU.ElementAt(i).mou_status_id == 1 ? "Active" : "Inactive";
                 }
-                string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
+                string Flocation = "/Excel_template/Download/kinh-phi-du-tru.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
-                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
+                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/Download/kinh-phi-du-tru.xlsx")));
 
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -59,10 +51,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public MemoryStream ExportDieuChinhExcel()
+        public MemoryStream ExportDieuChinhExcel(int activity_id)
         {
-            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
-            string filename = "MOU.xlsx";
+            expenseRepo = new AcademicActivityExpenseRepo();
+            string path = HostingEnvironment.MapPath("/Excel_template/");
+            string filename = "TemplateKinhPhiDieuChinh.xlsx";
             FileInfo file = new FileInfo(path + filename);
             List<ListMOU> listMOU = new List<ListMOU>();
 
@@ -76,24 +69,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
                     excelWorksheet.Cells[i + startRow, 2].Value = listMOU.ElementAt(i).mou_code;
-                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.ElementAt(i).partner_name;
-                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.ElementAt(i).country_name;
-                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
-                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
-                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_email;
-                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).contact_point_phone;
                     excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_start_date.ToString("dd'/'MM'/'yyyy");
                     excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).mou_end_date.ToString("dd'/'MM'/'yyyy");
-                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).office_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).scope_abbreviation;
                     excelWorksheet.Cells[i + startRow, 14].Value = listMOU.ElementAt(i).mou_status_id == 1 ? "Active" : "Inactive";
                 }
-                string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
+                string Flocation = "/Excel_template/Download/kinh-phi-dieu-chinh.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
-                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
+                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/Download/kinh-phi-dieu-chinh.xlsx")));
 
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -103,10 +86,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public MemoryStream ExportThucTeExcel()
+        public MemoryStream ExportThucTeExcel(int activity_id)
         {
-            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
-            string filename = "MOU.xlsx";
+            expenseRepo = new AcademicActivityExpenseRepo();
+            string path = HostingEnvironment.MapPath("/Excel_template/");
+            string filename = "TemplateKinhPhiThucTe.xlsx";
             FileInfo file = new FileInfo(path + filename);
             List<ListMOU> listMOU = new List<ListMOU>();
 
@@ -120,24 +104,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
                     excelWorksheet.Cells[i + startRow, 2].Value = listMOU.ElementAt(i).mou_code;
-                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.ElementAt(i).partner_name;
-                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.ElementAt(i).country_name;
-                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
-                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
-                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_email;
-                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).contact_point_phone;
                     excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_start_date.ToString("dd'/'MM'/'yyyy");
                     excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).mou_end_date.ToString("dd'/'MM'/'yyyy");
-                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).office_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).scope_abbreviation;
                     excelWorksheet.Cells[i + startRow, 14].Value = listMOU.ElementAt(i).mou_status_id == 1 ? "Active" : "Inactive";
                 }
-                string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
+                string Flocation = "/Excel_template/Download/kinh-phi-thuc-te.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
-                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
+                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/Download/kinh-phi-thuc-te.xlsx")));
 
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -147,10 +121,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public MemoryStream ExportTongHopExcel()
+        public MemoryStream ExportTongHopExcel(int activity_id)
         {
-            string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
-            string filename = "MOU.xlsx";
+            expenseRepo = new AcademicActivityExpenseRepo();
+            string path = HostingEnvironment.MapPath("/Excel_template/");
+            string filename = "TemplateKinhPhiTongHop.xlsx";
             FileInfo file = new FileInfo(path + filename);
             List<ListMOU> listMOU = new List<ListMOU>();
 
@@ -164,24 +139,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
                     excelWorksheet.Cells[i + startRow, 2].Value = listMOU.ElementAt(i).mou_code;
-                    excelWorksheet.Cells[i + startRow, 3].Value = listMOU.ElementAt(i).partner_name;
-                    excelWorksheet.Cells[i + startRow, 4].Value = listMOU.ElementAt(i).country_name;
-                    excelWorksheet.Cells[i + startRow, 5].Value = listMOU.ElementAt(i).website;
-                    excelWorksheet.Cells[i + startRow, 6].Value = listMOU.ElementAt(i).specialization_name;
-                    excelWorksheet.Cells[i + startRow, 7].Value = listMOU.ElementAt(i).contact_point_name;
-                    excelWorksheet.Cells[i + startRow, 8].Value = listMOU.ElementAt(i).contact_point_email;
-                    excelWorksheet.Cells[i + startRow, 9].Value = listMOU.ElementAt(i).contact_point_phone;
                     excelWorksheet.Cells[i + startRow, 10].Value = listMOU.ElementAt(i).mou_start_date.ToString("dd'/'MM'/'yyyy");
                     excelWorksheet.Cells[i + startRow, 11].Value = listMOU.ElementAt(i).mou_end_date.ToString("dd'/'MM'/'yyyy");
-                    excelWorksheet.Cells[i + startRow, 12].Value = listMOU.ElementAt(i).office_abbreviation;
-                    excelWorksheet.Cells[i + startRow, 13].Value = listMOU.ElementAt(i).scope_abbreviation;
                     excelWorksheet.Cells[i + startRow, 14].Value = listMOU.ElementAt(i).mou_status_id == 1 ? "Active" : "Inactive";
                 }
-                string Flocation = "/Content/assets/excel/Collaboration/Download/MOU.xlsx";
+                string Flocation = "/Excel_template/Download/kinh-phi-tong-hop.xlsx";
                 string savePath = HostingEnvironment.MapPath(Flocation);
-                //string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
-                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/MOU.xlsx")));
+                excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/Download/kinh-phi-tong-hop.xlsx")));
 
                 using (MemoryStream memoryStream = new MemoryStream())
                 {

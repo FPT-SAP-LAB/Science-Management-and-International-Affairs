@@ -257,6 +257,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new viewResponse();
             }
         }
+        public bool sendEmailForm(EmailForm data)
+        {
+            try
+            {
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
         public class viewResponse
         {
             public List<Question> ques { get; set; }
@@ -265,6 +275,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         public class Answer
         {
             public string answer { get; set; }
+        }
+        public class EmailForm
+        {
+            public int phase_id { get; set; }
+            public string title { get; set; }
+            public string content { get; set; }
         }
     }
 }

@@ -110,6 +110,35 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-send-email" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title font-weight-bolder">Gửi mail đến người đăng ký</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-3 pb-0">
+                <div class="row form-group">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Tiêu đề</label>
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" spellcheck="false" required id="send_title" />
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+                        <label class="col-form-label font-weight-bolder">Nội dung</label>
+                        <div id="send_content" class="summernote"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn load-btn btn-light-success font-weight-bold" id="btn_send">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="main-control">
     <div id="control-title">
@@ -279,6 +308,7 @@
     </div>
     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
         <button type="button" class="btn btn-light-success px-6 font-weight-bold float-left" onclick="viewParticipant()">Danh sách câu trả lời</button>
+        <button type="button" class="btn btn-light-success px-6 font-weight-bold float-left ml-5" data-toggle="modal" data-target="#modal-send-email">Gửi mail đến người đăng ký</button>
         <button type="button" class="btn btn-light-danger px-6 font-weight-bold float-right" id="btn_delete_form">Xóa</button>
         <button type="button" class="btn btn-light-success px-6 font-weight-bold float-right mr-5" id="btn_save_form">Xác nhận</button>
     </div>
@@ -286,9 +316,27 @@
 <input type="text" hidden value="@ViewBag.phaseID" id="phase_id" />
 @section scripts{
     <script>
+        var KTSummernoteDemo = function () {
+            var demos = function () {
+                $('.summernote').summernote({
+                    height: 150
+                });
+            }
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            KTSummernoteDemo.init();
+        });
+    </script>
+    <script>
         arrDivControl = [0]
         indexDiv = 1
         let form_id = 0;
+        var save_loader = new LoaderBtn($(".load-btn"));
         function textAreaAdjust(element) {
             element.style.height = "1px";
             element.style.height = (25 + element.scrollHeight) + "px";
@@ -876,6 +924,36 @@
                 }
             });
         }
+        $('#btn_send').click(function () {
+            save_loader.startLoading();
+            var object = {
+                phase_id: document.getElementById('phase_id').value,
+                title: $('#send_title').val(),
+                content: $('#send_content').val()
+            };
+            if (object.title == '' || object.content == '') {
+                toastr.warning('Bạn chưa điền hết các trường thông tin.');
+                save_loader.stopLoading();
+                return false;
+            }
+            $.ajax({
+                url: "@Url.Action("sendEmailForm", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data != '') {
+                        toastr.success(data);
+                    } else {
+                        toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function (data) {
+                    save_loader.stopLoading();
+                }
+            });
+        });
         $(document).ready(function () {
             $("#main-container").attr("style", "background-color:rgb(255 255 255 / 0%) !important; box-shadow:none");
             arrCMD = createArrMultiDimensional(2, 100);
