@@ -238,5 +238,99 @@ namespace GUEST.Controllers
             List<string> link = pr.getDecisionLink(id);
             return Json(new { link = link }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult AddPaper_Refactor(HttpPostedFileBase file, string paper_input, string criteria_input, string author_input, string request_input, string daidien)
+        {
+            JObject @object_paper = JObject.Parse(paper_input);
+            JObject @object_criteria = JObject.Parse(criteria_input);
+            JObject @object_author = JObject.Parse(author_input);
+            JObject @object_request = JObject.Parse(request_input);
+
+            DetailPaper paper = new DetailPaper
+            {
+                name = (string)@object_paper["name"],
+                date_string = (string)@object_paper["date_string"],
+                link_doi = (string)@object_paper["link_doi"],
+                link_scholar = (string)@object_paper["link_scholar"],
+                paper_type_id = (int)@object_paper["paper_type_id"],
+                journal_name = (string)@object_paper["journal_name"],
+                vol = (string)@object_paper["vol"],
+                page = (string)@object_paper["page"],
+                company = (string)@object_paper["company"],
+                index = (string)@object_paper["index"],
+                note_domestic = (string)@object_paper["note_domestic"],
+            };
+            DateTime temp_date = DateTime.Parse(paper.date_string);
+            paper.publish_date = temp_date;
+
+            List<CustomCriteria> criteria = new List<CustomCriteria>();
+            foreach (var item in object_criteria["criteria"])
+            {
+                CustomCriteria cc = new CustomCriteria()
+                {
+                    name = (string)item["name"],
+                    link = (string)item["link"]
+                };
+                criteria.Add(cc);
+            }
+
+            List<AddAuthor> author = new List<AddAuthor>();
+            foreach (var item in @object_author["people"])
+            {
+                AddAuthor temp = new AddAuthor()
+                {
+                    name = (string)item["name"],
+                    email = (string)item["email"],
+                    bank_number = (int)item["bank_number"],
+                    bank_branch = (string)item["bank_branch"],
+                    tax_code = (int)item["tax_code"],
+                    identification_number = (string)item["identification_number"],
+                    mssv_msnv = (string)item["mssv_msnv"],
+                    office_id = (int)item["office_id"],
+                    contract_id = 1,
+                    title_id = (int)item["title_id"],
+                    is_reseacher = (bool)item["is_reseacher"],
+                    identification_file_link = (string)item["identification_file_link"],
+                };
+                author.Add(temp);
+            }
+
+            RequestPaper request = new RequestPaper()
+            {
+                specialization_id = (int)object_request["specialization_id"],
+                type = (string)object_request["type"],
+                reward_type = (string)object_request["reward_type"],
+            };
+
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+
+            ENTITIES.File fl = new ENTITIES.File();
+            if (file != null)
+            {
+                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, paper.name, 2, acc.email);
+                fl.link = f.WebViewLink;
+                fl.file_drive_id = f.Id;
+                fl.name = paper.name;
+                //ENTITIES.File fl = new ENTITIES.File
+                //{
+                //    link = f.WebViewLink,
+                //    file_drive_id = f.Id,
+                //    name = paper.name
+                //};
+                string m = pr.addFile(fl);
+                if (m == "ss") paper.file_id = fl.file_id;
+            }
+
+            bool mess = pr.addPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
