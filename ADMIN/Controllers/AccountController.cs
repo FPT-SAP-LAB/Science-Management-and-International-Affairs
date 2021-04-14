@@ -7,26 +7,28 @@ using System.Web;
 using System.Web.Mvc;
 using BLL.Admin;
 using ADMIN.Support;
+using BLL.ModelDAL;
 
 namespace ADMIN.Controllers
 {
     [Auther(RightID = "0")]
     public class AccountController : Controller
     {
-        private static AccountRepo repo = new AccountRepo();
+        private readonly AccountRepo repo = new AccountRepo();
         public ActionResult List()
         {
             ViewBag.pageTitle = "Quản lí tài khoản";
             ViewBag.HTright = repo.getRightsByModule(1);
             ViewBag.QLright = repo.getRightsByModule(2);
             ViewBag.Role = repo.getRoles();
+            ViewBag.Postions = PositionLanguageRepo.GetPositionLanguages(1);
             return View();
         }
         [HttpPost]
         public ActionResult getDatatable()
         {
             List<AccountRepo.extendAccount> data = repo.getAccounts();
-            return Json(new { success = true, data = data });
+            return Json(new { success = true, data });
         }
         [HttpPost]
         public JsonResult add(AccountRepo.baseAccount obj)

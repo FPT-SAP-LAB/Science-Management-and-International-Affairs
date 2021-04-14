@@ -77,7 +77,7 @@ namespace BLL.Admin
         {
             try
             {
-                baseAccount data = db.Database.SqlQuery<baseAccount>("select a.email,a.role_id from General.Account a where a.account_id = @account_id",
+                baseAccount data = db.Database.SqlQuery<baseAccount>("select a.email,a.role_id,a.position_id from General.Account a where a.account_id = @account_id",
                                                 new SqlParameter("account_id", account_id)).FirstOrDefault();
                 return data;
             }
@@ -95,7 +95,8 @@ namespace BLL.Admin
                 {
                     email = obj.email,
                     is_login = false,
-                    role_id = obj.role_id
+                    role_id = obj.role_id,
+                    position_id = obj.position_id
                 });
                 db.SaveChanges();
                 return true;
@@ -121,6 +122,7 @@ namespace BLL.Admin
                 }
                 a.email = obj.email;
                 a.role_id = obj.role_id;
+                a.position_id = obj.position_id;
                 db.Entry(a).State = EntityState.Modified;
                 db.SaveChanges();
                 return "ok";
@@ -223,6 +225,7 @@ namespace BLL.Admin
         {
             public string email { get; set; }
             public int role_id { get; set; }
+            public int? position_id { get; set; }
         }
         public class infoAccount : baseAccount
         {

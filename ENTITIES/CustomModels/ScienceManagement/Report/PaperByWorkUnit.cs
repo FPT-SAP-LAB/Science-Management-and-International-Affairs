@@ -8,6 +8,5 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
 {
     public class PaperByWorkUnit
     {
-
     }
 }
