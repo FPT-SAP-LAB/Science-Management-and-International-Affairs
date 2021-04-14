@@ -484,5 +484,33 @@ namespace BLL.ScienceManagement.Invention
                 return "ff";
             }
         }
+
+        public List<Invention_Appendix_1> getListAppendix1()
+        {
+            string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, it.name as 'type_name', i.no, i.name
+                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.AuthorInvention ai on i.invention_id = ai.invention_id
+	                            join SM_ScientificProduct.Author ah on ah.people_id = ai.people_id
+	                            join SM_ScientificProduct.InventionType it on i.type_id = it.invention_type_id
+	                            join General.Office o on o.office_id = ah.office_id
+	                            join SM_ScientificProduct.RequestInvention ri on ri.invention_id = i.invention_id
+                            where ri.status_id = 4
+                            order by ah.name";
+            List<Invention_Appendix_1> list = db.Database.SqlQuery<Invention_Appendix_1>(sql).ToList();
+            return list;
+        }
+
+        public List<Invention_Appendix_2> getListAppendix2()
+        {
+            string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, ai.money_reward
+                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.AuthorInvention ai on i.invention_id = ai.invention_id
+	                            join SM_ScientificProduct.Author ah on ah.people_id = ai.people_id
+	                            join SM_ScientificProduct.InventionType it on i.type_id = it.invention_type_id
+	                            join General.Office o on o.office_id = ah.office_id
+	                            join SM_ScientificProduct.RequestInvention ri on ri.invention_id = i.invention_id
+                            where ri.status_id = 4
+                            order by ah.name";
+            List<Invention_Appendix_2> list = db.Database.SqlQuery<Invention_Appendix_2>(sql).ToList();
+            return list;
+        }
     }
 }
