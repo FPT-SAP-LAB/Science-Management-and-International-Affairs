@@ -261,7 +261,7 @@ namespace GUEST.Controllers
                 index = (string)@object_paper["index"],
                 note_domestic = (string)@object_paper["note_domestic"],
             };
-            DateTime temp_date = DateTime.Parse(paper.date_string);
+            DateTime temp_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             paper.publish_date = temp_date;
 
             List<CustomCriteria> criteria = new List<CustomCriteria>();
@@ -282,9 +282,9 @@ namespace GUEST.Controllers
                 {
                     name = (string)item["name"],
                     email = (string)item["email"],
-                    bank_number = (int)item["bank_number"],
+                    bank_number = Int64.Parse(item["bank_number"].ToString()),
                     bank_branch = (string)item["bank_branch"],
-                    tax_code = (int)item["tax_code"],
+                    tax_code = Int64.Parse(item["tax_code"].ToString()),
                     identification_number = (string)item["identification_number"],
                     mssv_msnv = (string)item["mssv_msnv"],
                     office_id = (int)item["office_id"],
