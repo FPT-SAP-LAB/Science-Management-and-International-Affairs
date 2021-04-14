@@ -296,7 +296,6 @@ namespace GUEST.Controllers
                 author.Add(temp);
             }
 
-
             RequestPaper request = new RequestPaper()
             {
                 specialization_id = (int)object_request["specialization_id"],
