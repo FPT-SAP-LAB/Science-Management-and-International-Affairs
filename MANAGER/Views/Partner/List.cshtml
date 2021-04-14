@@ -245,14 +245,20 @@
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
                 $(this).parent().css('padding', '0');
-                $('#partner_table th').css('padding', '5px 5px')
+                $('#partner_table th').css('padding', '5px 15px 5px 5px')
+
+                $('#partner_table th').css('padding', '5px 15px 5px 5px')
+                $('#partner_table > thead > tr:nth-child(1) > th:nth-child(3)').css('padding', '5px')
+                $('#partner_table > thead > tr:nth-child(1) > th:nth-child(4)').css('padding', '5px')
+                $('#partner_table > thead > tr:nth-child(1) >th.text-center.text-nowrap.sorting_disabled').css('padding', '5px')
             },
             columns: [
                 {
                     name: "partner_id",
                     data: "no",
+                    orderable: false,
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -260,7 +266,7 @@
                     data: "partner_name",
                     name: "partner_name",
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -268,7 +274,7 @@
                     data: "country_name",
                     name: "country_name",
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -277,14 +283,14 @@
                     name: "website",
                     orderable: false,
                     render: function (data) {
-                        if (data == null) {
+                        if (data == null || data == "") {
                             return "";
                         } else {
                             return '<a href="' + data + '"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
                         }
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -295,12 +301,12 @@
                         if (data == null) {
                             return "";
                         } else {
-                            data = data.replaceAll(',', '<br />')
+                            data = data.replaceAll(',', ',<br />')
                             return data;
                         }
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -308,7 +314,7 @@
                     data: "is_collab",
                     name: "is_collab",
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -316,7 +322,7 @@
                     data: "address",
                     name: "address",
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -358,6 +364,10 @@
                 },
             ]
         });
+        $("#partner_table > thead > tr > th:nth-child(4)").css({ 'min-width': '30px', 'max-width': '30px' });
+        $("#partner_table > thead > tr > th:nth-child(5)").css({ 'min-width': '0', 'max-width': '70px' });
+        $("#partner_table > thead > tr > th:nth-child(6)").css({ 'min-width': '80px', 'max-width': '80px' });
+        $("#partner_table > thead > tr > th:nth-child(7)").css({ 'min-width': '0', 'max-width': '100px' });
 
         $('#search_btn').click(function () {
             datatable.ajax.reload();
