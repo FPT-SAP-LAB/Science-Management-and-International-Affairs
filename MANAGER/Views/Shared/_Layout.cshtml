@@ -830,19 +830,22 @@
                     success: function (data) {
                         if (data.success) {
                             for (var i = 0; i < data.content.length; i++) {
-                                let templateMessage = '<a href="' + data.content[i].URL + '" class="navi-item">' +
+                                let templateMessage = '<a data-id="' + data.content[i].NotificationID + '" href="' + data.content[i].URL + '" class="navi-item not-read-noti">' +
                                     '<div class="navi-link">' +
-                                        '<div class="navi-icon mr-2">' +
-                                            '<i class="' + data.content[i].Icon + '"></i>' +
-                                        '</div>' +
-                                        '<div class="navi-text">' +
-                                            '<div class="font-weight-bold">' +
-                                                data.content[i].Template +
-                                            '</div>' +
-                                            '<div class="text-muted">' +
-                                                data.content[i].StringDate +
-                                            '</div>' +
-                                        '</div>' +
+                                    '<div class="navi-icon mr-2">' +
+                                    '<i class="' + data.content[i].Icon + '"></i>' +
+                                    '</div>' +
+                                    '<div class="navi-text">' +
+                                    '<div';
+                                if (data.content[i].IsRead)
+                                    templateMessage += ' class="text-muted"'
+                                templateMessage += '>' +
+                                    data.content[i].Template +
+                                    '</div>' +
+                                    '<div class="text-muted">' +
+                                    data.content[i].StringDate +
+                                    '</div>' +
+                                    '</div>' +
                                     '</div>' +
                                     '</a>';
                                 $("#event-noti").append(templateMessage);
@@ -853,6 +856,11 @@
                         toastr.error("Không thể lấy được dữ liệu thông báo");
                     }
                 });
+
+                $(document).on("click", ".not-read-noti", function (e) {
+                    location.href = "/Notification/Read?id=" + $(this).data("id");
+                    return false;
+                })
             })
         </script>
     }

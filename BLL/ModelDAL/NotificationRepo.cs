@@ -107,9 +107,27 @@ namespace BLL.ModelDAL
                             Template = c.notification_template,
                             IsRead = a.is_read,
                             URL = a.URL,
-                            CreatedDate = a.created_date
+                            CreatedDate = a.created_date,
+                            NotificationID = a.notification_id
                         }).Skip(start).Take(10).ToList();
             return list;
+        }
+        public string Read(int id)
+        {
+            string URL = "/";
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
+                NotificationBase notification = db.NotificationBases.Find(id);
+                notification.is_read = true;
+                db.SaveChanges();
+                URL = notification.URL;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return URL;
         }
     }
 }
