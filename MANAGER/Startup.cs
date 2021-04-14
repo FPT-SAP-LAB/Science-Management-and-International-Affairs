@@ -1,15 +1,46 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
-
+using System;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin.Security.Notifications;
 [assembly: OwinStartup(typeof(MANAGER.Startup))]
 namespace MANAGER
 {
     public class Startup
     {
+        string clientId = System.Configuration.ConfigurationManager.AppSettings["ClientId"];
+        string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
+        static string tenant = System.Configuration.ConfigurationManager.AppSettings["Tenant"];
+        string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
         public void Configuration(IAppBuilder app)
         {
+            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseOpenIdConnectAuthentication(
+                new OpenIdConnectAuthenticationOptions
+                {
+                    ClientId = clientId,
+                    Authority = authority,
+                    RedirectUri = redirectUri,
+                    PostLogoutRedirectUri = redirectUri,
+                    Scope = OpenIdConnectScope.OpenIdProfile,
+                    ResponseType = OpenIdConnectResponseType.CodeIdToken,
+                    TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = false
+                    },
+                    //Notifications = new OpenIdConnectAuthenticationNotifications
+                    //{
+                    //    AuthenticationFailed = OnAuthenticationFailed
+                    //}
+                }
+            );
             // Branch the pipeline here for requests that start with "/signalr"
             app.Map("/signalr", map =>
             {
