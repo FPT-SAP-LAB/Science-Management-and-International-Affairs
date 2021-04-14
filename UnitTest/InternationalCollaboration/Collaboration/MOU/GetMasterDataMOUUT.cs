@@ -58,7 +58,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
         {
             //Act
             MOURepo mou = new MOURepo();
-            List <CollaborationScope> list = mou.GetCollaborationScopes();
+            List<CollaborationScope> list = mou.GetCollaborationScopes();
 
             //Assert
             Assert.Greater(list.Count, 0);
