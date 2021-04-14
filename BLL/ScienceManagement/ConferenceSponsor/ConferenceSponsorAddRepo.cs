@@ -66,17 +66,20 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             }
             return infos;
         }
-        public List<Conference> GetAllConferenceBy(string name)
+        public Select2Ajax<Conference> GetAllConferenceBy(string name, int page)
         {
             db.Configuration.LazyLoadingEnabled = false;
-            var Conferences = db.Conferences.Where(x => x.conference_name.Contains(name)).ToList();
-            return Conferences;
+            //  Không nên tắt min character còn nếu bắt buộc thì thêm "name == null || " vào where
+            var Conferences = db.Conferences.Where(x => x.conference_name.Contains(name))
+                .OrderBy(x => x.conference_name).Skip((page - 1) * 10).Take(10).ToList();
+            int CountFiltered = db.Conferences.Where(x => x.conference_name.Contains(name)).Count();
+            return new Select2Ajax<Conference>(Conferences, CountFiltered);
         }
         public bool DateRangeOverlaps(DateTime a_start, DateTime a_end, DateTime b_start, DateTime b_end)
         {
             if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
             if (a_start <= b_end && b_end <= a_end) return true; // b ends in a
-            if (b_start < a_start && a_end < b_end) return true; // a in b
+            if (b_start <= a_start && a_end <= b_end) return true; // a in b or equal
             return false;
         }
         public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
