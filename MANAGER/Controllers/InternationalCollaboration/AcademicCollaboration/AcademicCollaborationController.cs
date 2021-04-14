@@ -75,7 +75,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<YearSearching> alertModal = academicCollaborationRepo.yearSearching();
+                AlertModal<List<Year>> alertModal = academicCollaborationRepo.yearSearching();
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)

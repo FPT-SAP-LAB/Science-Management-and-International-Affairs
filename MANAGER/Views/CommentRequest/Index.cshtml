@@ -28,6 +28,7 @@
 </table>
 <script>
     function AddComment() {
+        $("#loading").show();
         $.ajax({
             url: "/CommentRequest/Add",
             method: "post",
@@ -41,6 +42,7 @@
                     $("#comment-table").parent().load("/CommentRequest/Index?request_id=@ViewBag.request_id");
                     if (data.obj != 0 && data.obj != '0')
                         hub.server.send(data.obj);
+                    $("#loading").hide();
                 }
                 else
                     toastr.error(data.content);

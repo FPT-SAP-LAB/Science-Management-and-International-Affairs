@@ -120,7 +120,7 @@ var exchange_going_table = $('#exchange_going_table').DataTable({
                     },
                     4: {
                         'title': 'Đã hoàn thành',
-                        'class': 'label-secondary'
+                        'class': 'label-success'
                     }
                 };
                 if (typeof status[data] === 'undefined') {

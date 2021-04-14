@@ -341,14 +341,19 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                     $("#going_edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
                     let file_content = '';
+                    let file_link = '';
+                    let target = '';
                     if (acadCollab.file_id == null) {
                         file_content = 'Chưa có bản mềm.';
+                        file_link = 'javascript:;';
                     } else {
                         file_content = acadCollab.file_name;
+                        file_link = acadCollab.file_link;
+                        target = 'target="_blank"';
                     }
                     $("#going_edit_officer_upload #going_edit_file_content_upload").append(
                         `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
-                        white-space: nowrap;" target="_blank" href="` + acadCollab.file_link + `"><span>` + file_content + `</span></a>`);
+                        white-space: nowrap;" `+ target + ` href="` + file_link + `"><span>` + file_content + `</span></a>`);
 
                     //console.log(acadCollab.file_id);
                     //console.log(acadCollab.file_name);
@@ -427,7 +432,7 @@ $('#going_edit_officer_save').on('click', function () {
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, null, note);
+        let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, 'true', note);
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
