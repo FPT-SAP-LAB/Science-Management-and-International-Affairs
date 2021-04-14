@@ -36,8 +36,7 @@ namespace GUEST.Support
                 }
                 if (!Check)
                 {
-                    string url = u.url;
-                    filterContext.Result = new RedirectResult(url);
+                    filterContext.Result = new RedirectResult("/");
                 }
             }
         }
