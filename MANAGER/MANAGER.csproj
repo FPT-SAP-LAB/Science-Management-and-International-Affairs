@@ -2335,6 +2335,10 @@
     <Content Include="Excel_template\TemplateKinhPhiDieuChinh.xlsx" />
     <Content Include="Excel_template\TemplateKinhPhiTongHop.xlsx" />
     <Content Include="Excel_template\TemplateKinhPhiThucTe.xlsx" />
+    <Content Include="Excel_template\Invention.xlsx" />
+    <Content Include="Excel_template\Download\Invention.xlsx" />
+    <Content Include="Excel_template\Citation.xlsx" />
+    <Content Include="Excel_template\Download\Citation.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
