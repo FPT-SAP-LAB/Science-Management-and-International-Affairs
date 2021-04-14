@@ -22,9 +22,9 @@ namespace GUEST.Controllers
 {
     public class InventionController : Controller
     {
-        InventionRepo ir = new InventionRepo();
-        CommentRepo cr = new CommentRepo();
-        MasterDataRepo md = new MasterDataRepo();
+        private readonly InventionRepo ir = new InventionRepo();
+        private readonly CommentRepo cr = new CommentRepo();
+        private readonly MasterDataRepo md = new MasterDataRepo();
 
         [Auther(RightID = "2")]
         public ActionResult AddRequest()

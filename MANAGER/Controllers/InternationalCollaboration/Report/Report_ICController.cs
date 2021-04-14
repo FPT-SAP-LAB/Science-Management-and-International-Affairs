@@ -18,7 +18,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
         public ActionResult Dashboard()
         {
             dashboardRepo = new DashboardRepo();
-            List<ChartDashboard> dashboards = dashboardRepo.GetDashboard(DateTime.Now.Year);
             int this_year = DateTime.Today.Year;
             //23 22 21 20 19 18 17 16 15
             List<int> year_select = new List<int>

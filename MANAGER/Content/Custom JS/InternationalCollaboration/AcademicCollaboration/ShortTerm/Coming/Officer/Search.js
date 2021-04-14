@@ -1,4 +1,4 @@
-﻿// 1.SEARCH
+﻿//1.SEARCH
 $('#search_nation_tab_1_table_2').select2({
     placeholder: 'Quốc gia',
     allowClear: true,
