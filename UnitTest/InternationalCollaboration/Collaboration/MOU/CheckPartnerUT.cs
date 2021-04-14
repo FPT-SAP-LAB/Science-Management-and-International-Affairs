@@ -1,14 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace UnitTest.InternationalCollaboration.Collaboration.MOU
 {
-    [TestClass]
+    [TestFixture]
     public class CheckPartnerUT
     {
-        [TestMethod]
-        public void TestMethod1()
+        //Pre-condition: TestAddMOU() - Integration Test
+        [TestCase]
+        public void TestCheckPartner()
         {
+            Assert.Fail();
         }
     }
 }
