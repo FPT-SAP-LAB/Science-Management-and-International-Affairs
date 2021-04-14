@@ -61,18 +61,25 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
-                        where tb1.is_deleted = 0";
+                        where tb1.is_deleted = 0 ";
+                string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
+                        IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
+                        inner join IA_Collaboration.Partner t3 on t3.partner_id = t1.partner_id
+                        where t2.is_deleted = 0 ";
                 if (partner_name != "")
                 {
                     sql_mouList += "and tb3.partner_name like @partner_name ";
+                    sql_recordsTotal += "and t3.partner_name like @partner_name ";
                 }
                 if (contact_point_name != "")
                 {
                     sql_mouList += "and tb2.contact_point_name like @contact_point_name ";
+                    sql_recordsTotal += "and t1.contact_point_name like @contact_point_name ";
                 }
                 if (mou_code != "")
                 {
                     sql_mouList += "and tb1.mou_code like @mou_code ";
+                    sql_recordsTotal += "and t2.mou_code like @mou_code ";
                 }
                 string sql_BonusQuery = @"
                         GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
@@ -82,14 +89,15 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
                         "OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 sql_mouList += sql_BonusQuery;
-                string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
-                        IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
-                        where t2.is_deleted = 0";
+
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
-                int recordsTotal = db.Database.SqlQuery<int>(sql_recordsTotal).First();
+                int recordsTotal = db.Database.SqlQuery<int>(sql_recordsTotal,
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
+                    new SqlParameter("mou_code", '%' + mou_code + '%')).First();
                 handlingMOUListData(mouList, baseDatatable.Start);
                 return new BaseServerSideData<ListMOU>(mouList, recordsTotal);
             }
@@ -144,17 +152,24 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
                         where tb1.is_deleted = 1";
+                string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
+                        IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
+                        inner join IA_Collaboration.Partner t3 on t3.partner_id = t1.partner_id
+                        where t2.is_deleted = 1 ";
                 if (partner_name != "")
                 {
                     sql_mouList += "and tb3.partner_name like @partner_name ";
+                    sql_recordsTotal += "and t3.partner_name like @partner_name ";
                 }
                 if (contact_point_name != "")
                 {
                     sql_mouList += "and tb2.contact_point_name like @contact_point_name ";
+                    sql_recordsTotal += "and t1.contact_point_name like @contact_point_name ";
                 }
                 if (mou_code != "")
                 {
                     sql_mouList += "and tb1.mou_code like @mou_code ";
+                    sql_recordsTotal += "and t2.mou_code like @mou_code ";
                 }
                 string sql_BonusQuery = @"
                         GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
@@ -164,14 +179,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
                         "OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 sql_mouList += sql_BonusQuery;
-                string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
-                        IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
-                        where t2.is_deleted = 1";
                 List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
-                int recordsTotal = db.Database.SqlQuery<int>(sql_recordsTotal).First();
+                int recordsTotal = db.Database.SqlQuery<int>(sql_recordsTotal,
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
+                    new SqlParameter("mou_code", '%' + mou_code + '%')).First();
                 handlingMOUListData(mouList, baseDatatable.Start);
                 return new BaseServerSideData<ListMOU>(mouList, recordsTotal);
             }
