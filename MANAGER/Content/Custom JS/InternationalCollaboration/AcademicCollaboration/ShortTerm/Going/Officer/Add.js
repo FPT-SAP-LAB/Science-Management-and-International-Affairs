@@ -367,7 +367,7 @@ $('#going_add_officer_save').on('click', function () {
 
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
-        let obj_academic_collab = objAcadCollab(0 /*auto set collab_id = 0 when add*/, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, null, note);
+        let obj_academic_collab = objAcadCollab(0 /*auto set collab_id = 0 when add*/, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, 'true', note);
 
         //validate datepicker from - to
         if (!datePickerFromToValidate(plan_start_date, plan_end_date) || !datePickerFromToValidate(actual_start_date, actual_end_date)) {
