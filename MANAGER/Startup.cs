@@ -9,7 +9,6 @@ using System;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin.Security.Notifications;
-
 [assembly: OwinStartup(typeof(MANAGER.Startup))]
 namespace MANAGER
 {
@@ -19,11 +18,9 @@ namespace MANAGER
         string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
         static string tenant = System.Configuration.ConfigurationManager.AppSettings["Tenant"];
         string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
-
         public void Configuration(IAppBuilder app)
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
-
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions
@@ -44,8 +41,6 @@ namespace MANAGER
                     //}
                 }
             );
-
-
             // Branch the pipeline here for requests that start with "/signalr"
             app.Map("/signalr", map =>
             {
