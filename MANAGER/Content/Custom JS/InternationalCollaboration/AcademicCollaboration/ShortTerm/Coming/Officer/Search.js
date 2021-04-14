@@ -1,4 +1,4 @@
-﻿// 1.SEARCH
+﻿//1.SEARCH
 $('#search_nation_tab_1_table_2').select2({
     placeholder: 'Quốc gia',
     allowClear: true,
@@ -34,29 +34,26 @@ $('#search_nation_tab_1_table_2').select2({
 
 $('#search_year_tab_1_table_2').select2({
     placeholder: 'Năm đi học',
-    allowClear: true
-});
-
-//get data to year search
-$.ajax({
-    url: "/AcademicCollaboration/getYears",
-    type: "GET",
-    cache: true,
-    dataType: "json",
-    success: function (data) {
-        if (data != null) {
-            for (let year = data.obj.year_from; year <= data.obj.year_to; year++) {
-                let newOption = new Option(year, year, false, false);
-                $("#search_year_tab_1_table_2").val(null).trigger('change');
-                $("#search_year_tab_1_table_2").append(newOption).trigger('change');
-            }
+    allowClear: true,
+    minimumResultsForSearch: -1, //hide search box
+    ajax: {
+        url: '/AcademicCollaboration/getYears',
+        delay: 250,
+        cache: true,
+        dataType: 'json',
+        processResults: function (data) {
+            data.obj.map(function (obj) {
+                obj.id = obj.year;
+                obj.text = obj.year;
+                return data.obj;
+            });
+            return {
+                results: data.obj
+            };
         }
     },
-    error: function () {
-        toastr.error("Lấy dữ liệu về năm xảy ra lỗi.");
-    }
+    templateResult: formatYearInfo
 });
-
 
 $('#search_training_facility_tab_1_table_2').select2({
     placeholder: 'Đơn vị công tác',

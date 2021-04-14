@@ -307,14 +307,20 @@
     <Compile Include="CustomModels\InternationalCollaboration\Dashboard\ChartDashboard.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\Dashboard\DashboardDatatable.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\MasterData\AcademicActivityType_Ext.cs" />
+    <Compile Include="CustomModels\InternationalCollaboration\Year.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\Notification.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_1.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_2.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_1.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_2.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\Title2Name.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaiDecisionHaveReseacher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\PaperByWorkUnit.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherCandidate.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherView.cs" />
+    <Compile Include="CustomModels\Select2Ajax.cs" />
     <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\PendingCitation_manager.cs" />
@@ -411,13 +417,13 @@
       <DependentUpon>Model1.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Designer.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Module.cs">
@@ -595,9 +601,6 @@
     <Compile Include="SSCI.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="SSCI.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -642,8 +645,8 @@
     </Content>
     <Content Include="Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

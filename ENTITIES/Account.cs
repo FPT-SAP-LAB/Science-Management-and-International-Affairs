@@ -41,11 +41,13 @@ namespace ENTITIES
         public string picture { get; set; }
         public int role_id { get; set; }
         public bool is_login { get; set; }
+        public Nullable<int> position_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentBase> CommentBases { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityPhase> AcademicActivityPhases { get; set; }
+        public virtual Position Position { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountRight> AccountRights { get; set; }

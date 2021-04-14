@@ -101,6 +101,30 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpenseEstimate>();
             }
         }
+        public List<excelEstimate> getExcelDuTru(int activity_id)
+        {
+            try
+            {
+                string sql = @"SELECT o.office_name,aec.expense_category_id, aec.expense_category_name, aed.expense_price, aed.expense_quantity,(aed.expense_price * aed.expense_quantity) as 'total', aed.note,f.link,f.[name]
+                                    FROM SMIA_AcademicActivity.ActivityOffice ao 
+									left join General.Office o on ao.office_id = o.office_id
+									inner join
+									SMIA_AcademicActivity.ActivityExpenseCategory aec on ao.activity_office_id = aec.activity_office_id 
+									INNER JOIN SMIA_AcademicActivity.ActivityExpenseDetail aed
+                                    ON aec.expense_category_id = aed.expense_category_id 
+                                    left join General.[File] f on f.[file_id] = aed.[file_id]
+                                    WHERE aed.expense_type_id = 1 and ao.activity_id = @activity_id
+                                    group by o.office_name,aec.expense_category_id, aec.expense_category_name, aed.expense_price, aed.expense_quantity, aed.note,f.link,f.[name]
+									order by aec.expense_category_id";
+                List<excelEstimate> data = db.Database.SqlQuery<excelEstimate>(sql, new SqlParameter("activity_id", activity_id)).ToList();
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new List<excelEstimate>();
+            }
+        }
         public bool addExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -297,6 +321,33 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpenseModified>();
             }
         }
+        public List<excelModified> getExcelDieuChinh(int activity_id)
+        {
+            try
+            {
+                string sql = @"select office_name,expense_category_id, expense_category_name, sum(price_bandau) 'price_bandau', sum(sl_bandau) 'sl_bandau',sum(price_bandau) *sum(sl_bandau) as 'total_bandau',
+                                    sum(price_dieuchinh) 'price_dieuchinh', sum(sl_dieuchinh) 'sl_dieuchinh',sum(price_dieuchinh) * sum(sl_dieuchinh) as 'total_dieuchinh', STRING_AGG(note,'') as 'note'
+                                    from (SELECT o.office_name,aec.expense_category_id, aec.expense_category_name, case when expense_type_id = 1 then expense_price else 0 end as 'price_bandau',
+                                    CASE WHEN expense_type_id = 1 then expense_quantity else 0 end as 'sl_bandau', 
+                                    CASE WHEN expense_type_id = 2 then expense_price else 0 end as 'price_dieuchinh', 
+                                    CASE WHEN expense_type_id = 2 then expense_quantity else 0 end as 'sl_dieuchinh', 
+                                    CASE WHEN expense_type_id = 2 then note else '' end as 'note'
+                                    FROM SMIA_AcademicActivity.ActivityOffice ao 
+									left join General.Office o on ao.office_id = o.office_id
+									inner join SMIA_AcademicActivity.ActivityExpenseCategory aec on ao.activity_office_id = aec.activity_office_id
+									INNER JOIN SMIA_AcademicActivity.ActivityExpenseDetail aed
+                                    ON aec.expense_category_id = aed.expense_category_id 
+                                    WHERE ao.activity_id = @activity_id and (aed.expense_type_id = 1 or aed.expense_type_id = 2)) as a
+                                    group by office_name,expense_category_id, expense_category_name";
+                List<excelModified> data = db.Database.SqlQuery<excelModified>(sql, new SqlParameter("activity_id", activity_id)).ToList();
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new List<excelModified>();
+            }
+        }
         public bool editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -396,6 +447,36 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 Console.WriteLine(e.ToString());
                 return new List<infoExpenseModified>();
+            }
+        }
+        public List<excelModified> getExcelTongHop(int activity_id)
+        {
+            try
+            {
+                string sql = @"select o.office_name,aec.expense_category_id, aec.expense_category_name, 
+                                    case when aed.expense_price is null then 0 else aed.expense_price end 'price_bandau', 
+                                    case when aed.expense_quantity is null then 0 else aed.expense_quantity end 'sl_bandau', 
+                                    case when aed.expense_price * aed.expense_quantity is null then 0 else aed.expense_price * aed.expense_quantity end 'total_bandau',
+                                    case when aee.expense_price is null then 0 else aee.expense_price end 'price_dieuchinh',
+                                    case when aee.expense_quantity is null then 0 else aee.expense_quantity end 'sl_dieuchinh',
+                                    case when aee.expense_price * aee.expense_quantity is null then 0 else aee.expense_price * aee.expense_quantity end 'total_dieuchinh',
+                                    aee.note from SMIA_AcademicActivity.ActivityOffice ao
+									left join General.Office o on ao.office_id = o.office_id
+									inner join SMIA_AcademicActivity.ActivityExpenseCategory aec on ao.activity_office_id = aec.activity_office_id
+									left join (select expense_category_id, max(expense_type_id) 'expense_type_id'
+                                    from SMIA_AcademicActivity.ActivityExpenseDetail
+                                    where expense_type_id < 3
+                                    group by expense_category_id) a on aec.expense_category_id = a.expense_category_id 
+                                    left join SMIA_AcademicActivity.ActivityExpenseDetail aed
+                                    on a.expense_category_id = aed.expense_category_id and a.expense_type_id = aed.expense_type_id 
+                                    left join SMIA_AcademicActivity.ActivityExpenseDetail aee on aee.expense_category_id = aed.expense_category_id
+                                    and aee.expense_type_id = 3 where ao.activity_id = @activity_id";
+                List<excelModified> data = db.Database.SqlQuery<excelModified>(sql, new SqlParameter("activity_id", activity_id)).ToList();
+                return data;
+            }
+            catch (Exception e)
+            {
+                return new List<excelModified>();
             }
         }
         public bool editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
@@ -571,6 +652,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string link { get; set; }
             public string name { get; set; }
         }
+        public class excelEstimate : infoExpenseEstimate
+        {
+            public string office_name { get; set; }
+        }
         public class infoExpenseModified
         {
             public int expense_category_id { get; set; }
@@ -582,6 +667,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int? sl_dieuchinh { get; set; }
             public double? total_dieuchinh { get; set; }
             public string note { get; set; }
+        }
+        public class excelModified : infoExpenseModified
+        {
+            public string office_name { get; set; }
         }
         public class Statistic
         {

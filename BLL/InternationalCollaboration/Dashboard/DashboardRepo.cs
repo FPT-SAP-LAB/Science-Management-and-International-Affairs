@@ -95,13 +95,17 @@ namespace BLL.InternationalCollaboration.Dashboard
             try
             {
                 db = new ScienceAndInternationalAffairsEntities();
-                string query_total = @"SELECT COUNT(a.mou_id) 'count' FROM 
-                            (SELECT DISTINCT mou.mou_id
-                            FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
-                            ON mou.mou_id = mp.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb 
-                            ON mb.mou_id = mou.mou_id AND mb.mou_bonus_end_date IS NOT NULL 
-                            WHERE ({0}  BETWEEN YEAR(mp.mou_start_date) AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL)
-                            OR ({0} BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date) AND mb.mou_bonus_end_date IS NOT NULL )) a";
+                string query_total = @"SELECT COUNT(mou_id) 'count' FROM(
+                                        SELECT DISTINCT mou.mou_id 
+                                        FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
+                                        ON mou.mou_id = mp.mou_id
+                                        WHERE (YEAR(mp.mou_start_date) <= {0})
+                                        UNION ALL
+                                        SELECT DISTINCT moa.moa_id
+                                        FROM IA_Collaboration.MOA moa JOIN IA_Collaboration.MOAPartner mp
+                                        ON moa.moa_id = mp.moa_id
+                                        WHERE (YEAR(mp.moa_start_date) <= {0})) a
+";
 
                 int total = db.Database.SqlQuery<int>(query_total, year).FirstOrDefault();
 
@@ -128,13 +132,10 @@ namespace BLL.InternationalCollaboration.Dashboard
             try
             {
                 db = new ScienceAndInternationalAffairsEntities();
-                string query = @"SELECT COUNT(partner_id) 'count' FROM (SELECT DISTINCT(mp.partner_id)
+                string query = @"SELECT COUNT(partner_id) 'count' FROM (SELECT DISTINCT (mp.partner_id)
                             FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
-                            ON mou.mou_id = mp.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb
-                            ON mb.mou_id = mou.mou_id
-                            WHERE ({0} BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) 
-                            OR (mb.mou_bonus_end_date IS NULL AND {0} BETWEEN YEAR(mp.mou_start_date) 
-                            AND YEAR(mou.mou_end_date))) a";
+                            ON mou.mou_id = mp.mou_id
+                            WHERE (YEAR(mp.mou_start_date) <= {0})) a";
 
                 int collab = db.Database.SqlQuery<int>(query, year).FirstOrDefault();
 

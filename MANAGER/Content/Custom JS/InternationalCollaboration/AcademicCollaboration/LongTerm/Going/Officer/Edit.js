@@ -349,14 +349,19 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                     //} 
 
                     let file_content = '';
+                    let file_link = '';
+                    let target = '';
                     if (acadCollab.file_id == null) {
                         file_content = 'Chưa có bản mềm.';
+                        file_link = 'javascript:;';
                     } else {
                         file_content = acadCollab.file_name;
+                        file_link = acadCollab.file_link;
+                        target = 'target="_blank"';
                     }
                     $("#going_edit_officer_upload #going_edit_file_content_upload").append(
                         `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
-                        white-space: nowrap;" target="_blank" href="` + acadCollab.file_link + `"><span>` + file_content + `</span></a>`);
+                        white-space: nowrap;" `+ target + ` href="` + file_link + `"><span>` + file_content + `</span></a>`);
 
                     file = {
                         file_id: acadCollab.file_id === null ? 0 : acadCollab.file_id,

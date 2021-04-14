@@ -3,7 +3,23 @@
     ViewBag.Title = "Biên bản ghi nhớ đã xóa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .mou_table th {
+        font-size: 10px !important
+    }
 
+    .mou_table td {
+        font-size: 10px !important
+    }
+
+        .mou_table td span {
+            font-size: 10px !important
+        }
+
+        .mou_table td a {
+            font-size: 10px !important
+        }
+</style>
 <div class="card card-custom collapse_tab_1" id="main-card">
     <div class="card-body p-0 ">
         <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
@@ -111,7 +127,7 @@
 
         });
         //var rowIdx = 1;
-        var mou_table = $("#mou_table_deleted").DataTable({
+        var mou_table_del = $("#mou_table_deleted").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -138,40 +154,136 @@
                         "mou_code": function () { return $('#search_mou_code').val() },
                     },
                     cache: "false"
-                },
+            },
             columns: [
-                { data: "RowNumber" },
-                { data: "mou_code" },
-                { data: "partner_name" },
-                { data: "country_name" },
+                {
+                    data: "RowNumber",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "mou_code", name: "mou_code",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "partner_name",
+                    name: "partner_name",
+                    width: '200px',
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "country_name",
+                    name: "country_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
+                },
                 {
                     data: "website",
                     render: function (data) {
-                        if (data == null) {
+                        if (data == null || data == "") {
                             return "";
                         } else {
                             return '<a target="blank" href="' + data + '"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
                         }
-                    }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
                 },
-                { data: "specialization_name" },
-                { data: "contact_point_name" },
-                { data: "contact_point_email" },
-                { data: "contact_point_phone" },
                 {
-                    data: "evidence",
+                    data: "specialization_name", name: "specialization_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center text-nowrap',
                     render: function (data) {
                         if (data == null) {
                             return "";
                         } else {
+                            data = data.replaceAll(',', ',<br />')
+                            return data;
+                        }
+                    },
+                },
+                {
+                    data: "contact_point_name", name: "contact_point_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center text-nowrap',
+                },
+                {
+                    data: "contact_point_email", name: "contact_point_email",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center text-nowrap',
+                },
+                {
+                    data: "contact_point_phone", name: "contact_point_phone",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center text-nowrap',
+                },
+                {
+                    data: "evidence",
+                    render: function (data) {
+                        if (data == null || data == "") {
+                            return "";
+                        } else {
                             return '<a target="blank" href="' + data + '" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
                         }
-                    }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
                 },
-                { data: "mou_start_date_string" },
-                { data: "mou_end_date_string" },
-                { data: "office_abbreviation" },
-                { data: "scope_abbreviation" },
+                {
+                    data: "mou_start_date_string", name: "mou_start_date",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "mou_end_date_string", name: "mou_end_date",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "office_abbreviation", name: "office_abbreviation",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "scope_abbreviation",
+                    name: "scope_abbreviation",
+                    render: function (data) {
+                        data = data.replaceAll(',', ', ')
+                        return data
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
                 {
                     data: "mou_status_id",
                     width: '150px',
@@ -190,25 +302,30 @@
                             return data;
                         }
                         return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
-                    }
-                }
-        ],
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+            ],
+          
         columnDefs: [
-            {
-                className: "text-center",
-                targets: [0, 4, 9, 12, 13, 14],
-            },
-            {
-                className: "text-nowrap",
-                targets: [5, 6, 8, -1]
-            },
+            //{
+            //    className: "text-center",
+            //    targets: [0, 4, 9, 12, 13, 14],
+            //},
+            //{
+            //    className: "text-nowrap",
+            //    targets: [5, 6, 8, -1]
+            //},
         ],
         });
         $('#mou_table_deleted > thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '200px', 'max-width': '200px' });
 
         function searchMOU() {
             rowIdx = 1;
-            mou_table.ajax.reload();
+            mou_table_del.ajax.reload();
         }
     </script>
 }

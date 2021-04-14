@@ -96,7 +96,7 @@
             $.ajax({
                 url: "@Url.Action("List", "DecisionHistory")",
                 type: "POST",
-                data: JSON.stringify(search),
+                data: JSON.stringify({'search': search}),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,

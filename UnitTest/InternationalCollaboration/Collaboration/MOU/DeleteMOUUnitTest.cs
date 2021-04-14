@@ -6,9 +6,11 @@ namespace UnitTest.InternationalCollaboration.Collaboration
     [TestClass]
     public class DeleteMOUUnitTest
     {
+        //Pre-condition: TestAddMOU() - Integration Test
         [TestMethod]
-        public void TestMethod1()
+        public void TestDeleteMOU()
         {
+            Assert.Fail();
         }
     }
 }
