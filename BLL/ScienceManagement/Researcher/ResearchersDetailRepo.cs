@@ -158,7 +158,6 @@ namespace BLL.ScienceManagement.Researcher
                    name = a.name,
                    dob = b.birth_date,
                    position_fields = (from a in db.Profiles
-                                          //from g in db.Positions.Where(x => x.Profiles.Contains(a))
                                       join g in db.PeoplePositions on a.people_id equals g.people_id
                                       join h in db.PositionLanguages on g.position_id equals h.position_id
                                       where a.people_id == id && h.language_id == language_id
