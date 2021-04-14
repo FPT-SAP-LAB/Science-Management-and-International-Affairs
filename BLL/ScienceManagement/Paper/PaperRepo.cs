@@ -346,7 +346,7 @@ namespace BLL.ScienceManagement.Paper
                     r.request_id = request_id;
                     r.status_id = 3;
                     r.total_reward = 0;
-                    if (r.reward_type == "Canhan")
+                    if (r.reward_type == 1)
                     {
                         Author author = (from a in db.Authors
                                          join b in db.AuthorPapers on a.people_id equals b.people_id
@@ -890,7 +890,7 @@ namespace BLL.ScienceManagement.Paper
                 rp.reward_type = item.reward_type;
                 rp.status_id = 3;
 
-                if (rp.reward_type == "Canhan")
+                if (rp.reward_type == 1)
                 {
                     Author author = (from a in db.Authors
                                      join b in db.AuthorPapers on a.people_id equals b.people_id
@@ -1322,7 +1322,7 @@ namespace BLL.ScienceManagement.Paper
                 request.status_id = 3;
                 request.total_reward = 0;
                 request.paper_id = paper_add.paper_id;
-                if (request.reward_type == "Canhan")
+                if (request.reward_type == 1)
                 {
                     Author temp = (from a in db.Authors
                                    join z in db.AuthorPapers on a.people_id equals z.people_id

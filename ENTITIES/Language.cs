@@ -34,6 +34,8 @@ namespace ENTITIES
             this.SpecializationLanguages = new HashSet<SpecializationLanguage>();
             this.TitleLanguages = new HashSet<TitleLanguage>();
             this.AcademicActivityPhaseLanguages = new HashSet<AcademicActivityPhaseLanguage>();
+            this.PaperRewardTypeLanguages = new HashSet<PaperRewardTypeLanguage>();
+            this.PaperTypeByAreaLanguages = new HashSet<PaperTypeByAreaLanguage>();
         }
     
         public int language_id { get; set; }
@@ -73,5 +75,9 @@ namespace ENTITIES
         public virtual ICollection<TitleLanguage> TitleLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityPhaseLanguage> AcademicActivityPhaseLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaperRewardTypeLanguage> PaperRewardTypeLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaperTypeByAreaLanguage> PaperTypeByAreaLanguages { get; set; }
     }
 }

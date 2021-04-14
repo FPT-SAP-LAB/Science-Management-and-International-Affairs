@@ -299,8 +299,8 @@ namespace GUEST.Controllers
             RequestPaper request = new RequestPaper()
             {
                 specialization_id = (int)object_request["specialization_id"],
-                type = (string)object_request["type"],
-                reward_type = (string)object_request["reward_type"],
+                type = Int32.Parse((string)object_request["type"]),
+                reward_type = Int32.Parse((string)object_request["reward_type"]),
             };
 
             LoginRepo.User u = new LoginRepo.User();
