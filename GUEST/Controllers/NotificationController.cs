@@ -35,5 +35,9 @@ namespace GUEST.Controllers
                 return Json(new { success = false, content = "Không thể lấy được dữ liệu thông báo" });
             }
         }
+        public ActionResult Read(int id)
+        {
+            return Redirect(notificationRepo.Read(id));
+        }
     }
 }
