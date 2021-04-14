@@ -1180,7 +1180,7 @@ namespace BLL.ScienceManagement.Paper
         }
 
         public bool addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
-         {
+        {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -1325,9 +1325,9 @@ namespace BLL.ScienceManagement.Paper
                 if (request.reward_type == "Canhan")
                 {
                     Author temp = (from a in db.Authors
-                                     join z in db.AuthorPapers on a.people_id equals z.people_id
-                                     where a.mssv_msnv == daidien && z.paper_id == paper_add.paper_id
-                                     select a).FirstOrDefault();
+                                   join z in db.AuthorPapers on a.people_id equals z.people_id
+                                   where a.mssv_msnv == daidien && z.paper_id == paper_add.paper_id
+                                   select a).FirstOrDefault();
                     request.author_received_reward = temp.people_id;
                 }
                 db.RequestPapers.Add(request);
