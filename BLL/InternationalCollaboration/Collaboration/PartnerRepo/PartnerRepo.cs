@@ -77,7 +77,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 //             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
                 //listPartner_linq.ForEach(x => x.specialization_name = string.Join(" ,", x.specialization_name));
 
-
                 //===========================================================================================================================
                 string paging = @" ORDER BY " + baseDatatable.SortColumnName + " "
                             + baseDatatable.SortDirection +
