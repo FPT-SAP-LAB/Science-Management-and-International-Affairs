@@ -15,7 +15,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
         [TestCase]
         public void TestSuggestedMOUCode()
         {
-
+            Assert.Pass();
         }
     }
 }

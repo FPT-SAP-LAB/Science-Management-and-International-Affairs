@@ -16,7 +16,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
         [TestCase]
         public void TestDuplicatedPartner()
         {
-
+            Assert.Pass();
         }
     }
 }
