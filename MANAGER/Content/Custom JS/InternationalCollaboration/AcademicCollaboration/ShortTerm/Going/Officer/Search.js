@@ -55,6 +55,10 @@ $('#search_year_tab_1_table_1').select2({
     templateResult: formatYearInfo
 });
 
+function formatYearInfo(year) {
+    return year.year;
+}
+
 $('#search_training_facility_tab_1_table_1').select2({
     placeholder: 'Đơn vị công tác',
     allowClear: true,
