@@ -145,7 +145,7 @@ namespace BLL.ScienceManagement.Researcher
             return profile;
         }
 
-        public ResearcherView GetDetailView(int id)
+        public ResearcherView GetDetailView(int id, int language_id)
         {
             researcherBiographyRepo = new ResearchersBiographyRepo();
             var profile = (
@@ -158,9 +158,9 @@ namespace BLL.ScienceManagement.Researcher
                    name = a.name,
                    dob = b.birth_date,
                    position_fields = (from a in db.Profiles
-                                      from g in db.Positions.Where(x => x.Profiles.Contains(a))
+                                      join g in db.PeoplePositions on a.people_id equals g.people_id
                                       join h in db.PositionLanguages on g.position_id equals h.position_id
-                                      where a.people_id == id && h.language_id == 1
+                                      where a.people_id == id && h.language_id == language_id
                                       select new SelectField
                                       {
                                           name = h.name
@@ -168,7 +168,7 @@ namespace BLL.ScienceManagement.Researcher
                    interested_fields = (from a in db.Profiles
                                         from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
                                         join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
-                                        where a.people_id == id && h.language_id == 1
+                                        where a.people_id == id && h.language_id == language_id
                                         select new SelectField
                                         {
                                             name = h.name
@@ -176,7 +176,7 @@ namespace BLL.ScienceManagement.Researcher
                    title_fields = (from a in db.Profiles
                                    from g in db.Titles.Where(x => x.Profiles.Contains(a))
                                    join h in db.TitleLanguages on g.title_id equals h.title_id
-                                   where a.people_id == id && h.language_id == 1
+                                   where a.people_id == id && h.language_id == language_id
                                    select new SelectField
                                    {
                                        name = h.name

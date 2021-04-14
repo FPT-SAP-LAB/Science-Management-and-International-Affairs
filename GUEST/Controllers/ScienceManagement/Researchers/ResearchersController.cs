@@ -73,7 +73,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "#"));
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            ResearcherDetail profile = researcherDetailRepo.GetDetailView(id);
+            ResearcherDetail profile = researcherDetailRepo.GetDetailView(id, LanguageResource.GetCurrentLanguageID());
             ViewBag.profile = profile;
             ViewBag.pagesTree = pagesTree;
             return View();
