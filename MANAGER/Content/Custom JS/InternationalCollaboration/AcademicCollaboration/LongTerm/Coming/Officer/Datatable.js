@@ -30,25 +30,45 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
     columns: [
         {
             name: 'collab_id',
+            name: 'plan_study_start_date',
             render: function (data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
-            }
+            },
+            className: 'text-center',
         },
         {
             data: 'people_name',
-            name: 'people_name'
+            name: 'people_name',
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: 'email',
-            name: 'email'
+            name: 'email',
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: 'partner_name',
-            name: 'partner_name'
+            name: 'partner_name',
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '0px', 'max-width': '400px' });
+            },
+            className: 'text-center',
         },
         {
             data: 'country_name',
-            name: 'country_name'
+            name: 'country_name',
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
+
         },
         {
             data: 'plan_study_start_date',
@@ -58,7 +78,11 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                     return data;
                 }
                 return moment(data).format('DD-MM-YYYY');
-            }
+            },
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0')
+            },
+            className: 'text-center',
         },
         {
             data: 'plan_study_end_date',
@@ -68,11 +92,19 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                     return data;
                 }
                 return moment(data).format('DD-MM-YYYY');
-            }
+            },
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0')
+            },
+            className: 'text-center',
         },
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 12px 0 5px')
+            },
+            className: 'text-center text-nowrap',
         },
         {
             data: 'is_supported', //bool true || false
@@ -80,32 +112,44 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
             render: function (data) {
                 if (data == true) return `<input type="checkbox" disabled checked/>`
                 return `<input type="checkbox" disabled/>`
-            }
+            },
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0')
+            },
+            className: 'text-center',
         },
         {
             data: 'note',
-            name: 'note'
+            name: 'note',
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: 'collab_id',
             className: 'text-nowrap',
             render: function (data) {
-                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=` + data + ` data-toggle="modal" href="#coming_edit_officer">Sửa</a>
+                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-acad_collab_id=` + data + ` data-toggle="modal" href="#going_edit_officer">Sửa</a>
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
             },
-            orderable: false
+            orderable: false,
+            createdCell: function (td, cellData, rowData, row, col) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center text-nowrap',
         }
     ],
     columnDefs: [
-        {
-            targets: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
-            className: 'text-nowrap text-center'
-        },
-        {
-            targets: 3,
-            width: '150px',
-            className: 'text-center'
-        },
+        //{
+        //    targets: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
+        //    className: 'text-nowrap text-center'
+        //},
+        //{
+        //    targets: 3,
+        //    width: '150px',
+        //    className: 'text-center'
+        //},
         {
             targets: 7,
             render: function (data, type, row) {
@@ -154,7 +198,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         $(this).parent().css('padding', '0');
     }
 });
-$('#collab_coming_table > thead > tr:nth-child(2) > th:nth-child(3)').css({ 'min-width': '200px', 'max-width': '200px' });
+//$('#collab_coming_table > thead > tr:nth-child(2) > th:nth-child(3)').css({ 'min-width': '200px', 'max-width': '200px' });
 
 //Search
 $("#collab_coming_search").click(function () {
