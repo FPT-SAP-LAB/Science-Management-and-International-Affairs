@@ -29,6 +29,13 @@
         .social-link i {
             padding-right: 0rem !important;
         }
+    #table_tapchi tr td{
+        border: 0;
+    }
+    .paper_items {
+        box-shadow: none !important;
+        border: 0.5px solid #e5e5e5 !important;
+    }
 </style>
 <!--begin::Card-->
 <div class="card card-custom gutter-b">
@@ -211,13 +218,10 @@
                     <!--begin::Body-->
                     <div class="card-body pt-3 pb-0">
                         <!--begin::Table-->
-                        <table id="table_tapchi" class="table table-bordered table-checkable">
-                            <thead>
+                        <table id="table_tapchi" style="border:0" class="table table-bordered table-checkable">
+                            <thead hidden>
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Tên bài báo</th>
-                                    <th>Tên tạp chí</th>
-                                    <th>Năm xuất bản</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -229,6 +233,7 @@
                 </div>
                 <!--end::Advance Table Widget 2-->
             </div>
+            
         </div>
         @if (ViewBag.profile.awards.Count > 0) {
         <div class="row">
@@ -244,8 +249,8 @@
                             <div class="timeline-bar"></div>
                             @foreach (BaseRecord<Award> award in ViewBag.profile.awards)
                             {
-                                <div class="timeline-item">
-                                    <span class="timeline-badge bg-success"></span>
+                                <div class="timeline-item ">
+                                    <span class=" timeline-badge bg-success"></span>
                                     <div class="timeline-content d-flex align-items-center justify-content-between">
                                         <span class="mr-3">
                                             <i class="text-warning la la-diamond icon-md"></i>@award.records.award_time: @award.records.rank - @award.records.competion_name
@@ -281,8 +286,8 @@
                 "bLengthChange": false,
                 "bInfo": false,
                 lengthMenu: [5, 10, 25, 50],
-
-                pageLength: 5,
+                searching: false,
+                pageLength: 7,
                 ajax: {
                     url: "/Researchers/GetPublications?id=@ViewBag.profile.id",
                     datatype: "json",
@@ -296,14 +301,23 @@
                 order: [[0, 'asc']],
 
                 columns: [
-                    { data: "rownum", name: "rownum", orderable: false },
+                    //{ data: "rownum", name: "rownum", orderable: false },
                     {
                         data: "paper_name", name: "paper_name", render: function (data, type, row, meta) {
-                            return "<a href='"+row.link+"'>" + row.paper_name + "</a>"
+                            return `
+                                <div class='card card-custom paper_items' style='padding-bottom:2rem'>
+                                <div class='card-body pt-3 pb-0'><a href='` + row.link + `'>` + row.paper_name + `</a>`
+                                + "     <span class='text-muted'>" + (String(row.year) != "" ? "(" + String(row.year) +")" : "") + "</span>"
+                                + "     <span class='text-muted navi-text font-italic'> - " + String(row.co_author).replace(",",", ")+ "</span>"
+                                +`
+                                </div>
+                            </div>
+                            `
                         }
-                    },
-                    { data: "journal_or_cfr_name", name: "journal_or_cfr_name" },
-                    { data: "year", name: "year" },
+                    }
+                    //,
+                    //{ data: "journal_or_cfr_name", name: "journal_or_cfr_name" },
+                    //{ data: "year", name: "year" },
                 ],
             });
         })

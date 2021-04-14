@@ -191,9 +191,9 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult editRequest(RequestPaper item)
+        public JsonResult editRequest(RequestPaper item, string daidien)
         {
-            string mess = pr.updateRequest(item);
+            string mess = pr.updateRequest(item, daidien);
             return Json(new { mess = mess, id = item.paper_id }, JsonRequestBehavior.AllowGet);
         }
 

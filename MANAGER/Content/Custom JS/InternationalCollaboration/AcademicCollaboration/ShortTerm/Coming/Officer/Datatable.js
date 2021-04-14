@@ -116,7 +116,7 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
                     },
                     4: {
                         'title': 'Đã hoàn thành',
-                        'class': 'label-secondary'
+                        'class': 'label-success'
                     }
                 };
                 if (typeof status[data] === 'undefined') {

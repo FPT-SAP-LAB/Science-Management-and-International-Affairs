@@ -205,6 +205,24 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return false;
             }
         }
+        public string checkFormOutdate(int phase_id)
+        {
+            try
+            {
+                string sql = @"select aap.* from SMIA_AcademicActivity.AcademicActivityPhase aap
+                                    where getdate() between aap.phase_start and aap.phase_end and aap.phase_id = @phase_id";
+                AcademicActivityPhase aap = db.Database.SqlQuery<AcademicActivityPhase>(sql, new SqlParameter("phase_id", phase_id)).FirstOrDefault();
+                if (aap != null)
+                {
+                    return "ok";
+                }
+                else return "no";
+            }
+            catch (Exception e)
+            {
+                return "no";
+            }
+        }
         public bool sendForm(int fid, string answer, AnswerUnchange unchange)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -274,7 +292,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     on aap.activity_id = aa.activity_id
                                     where aap.phase_id = @phase_id";
                 string file_drive_id = db.Database.SqlQuery<string>(sql, new SqlParameter("phase_id", phase_id)).FirstOrDefault();
-                return file_drive_id;
+                return file_drive_id == null ? String.Empty : file_drive_id;
             }
             catch (Exception e)
             {

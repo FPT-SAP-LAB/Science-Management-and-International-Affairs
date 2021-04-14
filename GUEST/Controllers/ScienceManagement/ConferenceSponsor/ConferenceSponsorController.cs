@@ -151,9 +151,9 @@ namespace GUEST.Controllers
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
         [AjaxOnly]
-        public JsonResult GetConferenceWithName(string name)
+        public JsonResult GetConferenceWithName(string name, int page)
         {
-            var confer = AppRepos.GetAllConferenceBy(name);
+            var confer = AppRepos.GetAllConferenceBy(name, page);
             return Json(confer, JsonRequestBehavior.AllowGet);
         }
         public class DataAddPage

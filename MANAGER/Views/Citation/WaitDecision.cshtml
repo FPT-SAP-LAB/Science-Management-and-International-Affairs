@@ -204,6 +204,20 @@
                 contentType: false
             });
         });
+
+        $("#excel").click(function () {
+            $.ajax({
+                url: "@Url.Action("exportExcel", "Citation")",
+                type: "post",
+                success: function (data) {
+                    window.location.href = data.location;
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
         $(document).ready(function () {
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();

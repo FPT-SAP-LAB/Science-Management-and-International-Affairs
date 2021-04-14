@@ -2334,6 +2334,11 @@
     <Content Include="Excel_template\TemplateKinhPhiDuTru.xlsx" />
     <Content Include="Excel_template\TemplateKinhPhiDieuChinh.xlsx" />
     <Content Include="Excel_template\TemplateKinhPhiTongHop.xlsx" />
+    <Content Include="Excel_template\TemplateKinhPhiThucTe.xlsx" />
+    <Content Include="Excel_template\Invention.xlsx" />
+    <Content Include="Excel_template\Download\Invention.xlsx" />
+    <Content Include="Excel_template\Citation.xlsx" />
+    <Content Include="Excel_template\Download\Citation.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
@@ -2489,6 +2494,7 @@
     <Content Include="Views\ConditionManagement\Index.cshtml" />
     <Content Include="Views\ConditionManagement\Add.cshtml" />
     <Content Include="Views\DecisionHistory\History.cshtml" />
+    <Content Include="Views\ConferenceSponsor\History.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

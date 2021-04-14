@@ -66,12 +66,11 @@
                                 </div>
                                 <div class="card-body">
                                     <ul>
-                                        <li>Lorem ipsum, or lipsum as it is sometimes known</li>
-                                        <li>is dummy text used in laying out print, graphic</li>
-                                        <li>have scrambled parts of Cicero's De Finibus Bonorum et Malorum</li>
+                                        <li>Thưởng sáng chế/GPHI</li>
+                                        <li>Ít nhất 1 tác giả có địa chỉ FE</li>
                                     </ul>
                                     <br />
-                                    <a href="#" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                    <a href="https://drive.google.com/file/d/12X4zCRabwpcY7rqVWoscJ4AqlXtfvoKF/view?usp=sharing" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -322,18 +321,21 @@
                 if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
                     toastr.error("Tiêu chí chưa có link chứng minh");
                     ck = false;
+                    $("#loading").hide();
                     return false;
                 }
                 criteria.push(PaperWithCriteria);
             }
             if (criteria.length == 0 && $("#loaithuong").val() == "Quocte") {
                 toastr.error("Cần có ít nhất 1 tiêu chí");
+                $("#loading").hide();
                 ck = false;
             }
 
             if ($("#loaithuong").val() == "Trongnuoc") {
                 if (uppy1.getFiles().length == 0) {
                     toastr.error("Thiếu file chứng minh cho chỉ số tạp chí");
+                    $("#loading").hide();
                     ck = false;
                     return false;
                 }
@@ -389,6 +391,7 @@
                             else alert('loi');
                         },
                         error: function () {
+                            $("#loading").hide();
                             toastr.error("Có lỗi xảy ra");
                             save_loader.stopLoading();
                         },

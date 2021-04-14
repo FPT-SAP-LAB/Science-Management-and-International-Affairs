@@ -124,7 +124,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                     },
                     4: {
                         'title': 'Đã hoàn thành',
-                        'class': 'label-secondary'
+                        'class': 'label-success'
                     }
                 };
                 if (typeof status[data] === 'undefined') {
@@ -154,6 +154,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         $(this).parent().css('padding', '0');
     }
 });
+$('#collab_coming_table > thead > tr:nth-child(2) > th:nth-child(3)').css({ 'min-width': '200px', 'max-width': '200px' });
 
 //Search
 $("#collab_coming_search").click(function () {
