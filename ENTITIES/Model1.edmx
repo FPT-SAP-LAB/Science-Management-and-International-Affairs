@@ -42,6 +42,7 @@
           <Property Name="picture" Type="nvarchar" MaxLength="150" />
           <Property Name="role_id" Type="int" Nullable="false" />
           <Property Name="is_login" Type="bit" Nullable="false" />
+          <Property Name="position_id" Type="int" />
         </EntityType>
         <EntityType Name="AccountRight">
           <Key>
@@ -136,7 +137,6 @@
           <Property Name="profile_page_active" Type="bit" Nullable="false" />
           <Property Name="is_reseacher" Type="bit" Nullable="false" />
           <Property Name="title_id" Type="int" Nullable="false" />
-          <Property Name="position_smia_id" Type="int" />
         </EntityType>
         <EntityType Name="Right">
           <Key>
@@ -1591,6 +1591,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="AcademicProgram">
               <PropertyRef Name="partner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__positio__1D9B5BB6">
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="position_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3088,18 +3100,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profile__positio__2D67AF2B">
-          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="position_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="position_smia_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Profile__title_i__1B48FEF0">
           <End Role="Title" Type="Self.Title" Multiplicity="1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -4147,6 +4147,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Partner" EntitySet="Partner" />
             <End Role="AcademicProgram" EntitySet="AcademicProgram" />
           </AssociationSet>
+          <AssociationSet Name="FK__Account__positio__1D9B5BB6" Association="Self.FK__Account__positio__1D9B5BB6">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
           <AssociationSet Name="FK__Account__role_id__2704CA5F" Association="Self.FK__Account__role_id__2704CA5F">
             <End Role="Role" EntitySet="Role" />
             <End Role="Account" EntitySet="Account" />
@@ -4639,10 +4643,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="People" EntitySet="People" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profile__positio__2D67AF2B" Association="Self.FK__Profile__positio__2D67AF2B">
-            <End Role="Position" EntitySet="Position" />
-            <End Role="Profile" EntitySet="Profile" />
-          </AssociationSet>
           <AssociationSet Name="FK__Profile__title_i__1B48FEF0" Association="Self.FK__Profile__title_i__1B48FEF0">
             <End Role="Title" EntitySet="Title" />
             <End Role="Profile" EntitySet="Profile" />
@@ -4945,8 +4945,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="picture" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="role_id" Type="Int32" Nullable="false" />
           <Property Name="is_login" Type="Boolean" Nullable="false" />
+          <Property Name="position_id" Type="Int32" />
           <NavigationProperty Name="CommentBases" Relationship="Self.FK__CommentBa__accou__2077C861" FromRole="Account" ToRole="CommentBase" />
           <NavigationProperty Name="AcademicActivityPhases" Relationship="Self.FK__AcademicA__creat__2704CA5F" FromRole="Account" ToRole="AcademicActivityPhase" />
+          <NavigationProperty Name="Position" Relationship="Self.FK__Account__positio__1D9B5BB6" FromRole="Account" ToRole="Position" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Account__role_id__2704CA5F" FromRole="Account" ToRole="Role" />
           <NavigationProperty Name="AccountRights" Relationship="Self.FK__AccountRi__accou__27F8EE98" FromRole="Account" ToRole="AccountRight" />
           <NavigationProperty Name="ApprovalProcesses" Relationship="Self.FK__ApprovalP__accou__2CDD9F46" FromRole="Account" ToRole="ApprovalProcess" />
@@ -5090,7 +5092,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="profile_page_active" Type="Boolean" Nullable="false" />
           <Property Name="is_reseacher" Type="Boolean" Nullable="false" />
           <Property Name="title_id" Type="Int32" Nullable="false" />
-          <Property Name="position_smia_id" Type="Int32" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Profile" ToRole="Account" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Profile__country__70FDBF69" FromRole="Profile" ToRole="Country" />
           <NavigationProperty Name="File" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="Profile" ToRole="File" />
@@ -5100,7 +5101,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="CustomProfiles" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="Profile" ToRole="CustomProfile" />
           <NavigationProperty Name="PeoplePositions" Relationship="Self.FK__PeoplePos__peopl__37FA4C37" FromRole="Profile" ToRole="PeoplePosition" />
           <NavigationProperty Name="AcademicDegree" Relationship="Self.FK__Profile__current__297722B6" FromRole="Profile" ToRole="AcademicDegree" />
-          <NavigationProperty Name="Position" Relationship="Self.FK__Profile__positio__2D67AF2B" FromRole="Profile" ToRole="Position" />
           <NavigationProperty Name="Title" Relationship="Self.FK__Profile__title_i__1B48FEF0" FromRole="Profile" ToRole="Title" />
           <NavigationProperty Name="ProfileAcademicDegrees" Relationship="Self.FK__ProfileAc__peopl__27C3E46E" FromRole="Profile" ToRole="ProfileAcademicDegree" />
           <NavigationProperty Name="WorkingProcesses" Relationship="Self.FK__WorkingPr__peppl__705EA0EB" FromRole="Profile" ToRole="WorkingProcess" />
@@ -5978,7 +5978,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="position_id" />
           </Key>
           <Property Name="position_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__positio__2D67AF2B" FromRole="Position" ToRole="Profile" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__positio__1D9B5BB6" FromRole="Position" ToRole="Account" />
           <NavigationProperty Name="PositionLanguages" Relationship="Self.FK__PositionL__posit__0D0FEE32" FromRole="Position" ToRole="PositionLanguage" />
           <NavigationProperty Name="ApprovalProcesses" Relationship="Self.FK__ApprovalP__posit__2EC5E7B8" FromRole="Position" ToRole="ApprovalProcess" />
           <NavigationProperty Name="PeoplePositions" Relationship="Self.FK__PeoplePos__posit__38EE7070" FromRole="Position" ToRole="PeoplePosition" />
@@ -6635,6 +6635,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Account__positio__1D9B5BB6">
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Account__role_id__2704CA5F">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
@@ -7210,18 +7222,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="current_academic_degree_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Profile__positio__2D67AF2B">
-          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="position_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="position_smia_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9193,6 +9193,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Accounts" />
             <End Role="AcademicActivityPhase" EntitySet="AcademicActivityPhases" />
           </AssociationSet>
+          <AssociationSet Name="FK__Account__positio__1D9B5BB6" Association="Self.FK__Account__positio__1D9B5BB6">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
           <AssociationSet Name="FK__Account__role_id__2704CA5F" Association="Self.FK__Account__role_id__2704CA5F">
             <End Role="Role" EntitySet="Roles" />
             <End Role="Account" EntitySet="Accounts" />
@@ -9383,10 +9387,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </AssociationSet>
           <AssociationSet Name="FK__Profile__current__297722B6" Association="Self.FK__Profile__current__297722B6">
             <End Role="AcademicDegree" EntitySet="AcademicDegrees" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Profile__positio__2D67AF2B" Association="Self.FK__Profile__positio__2D67AF2B">
-            <End Role="Position" EntitySet="Positions" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
           <AssociationSet Name="FK__Profile__title_i__1B48FEF0" Association="Self.FK__Profile__title_i__1B48FEF0">
@@ -10039,6 +10039,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="role_id" ColumnName="role_id" />
                 <ScalarProperty Name="is_login" ColumnName="is_login" />
+                <ScalarProperty Name="position_id" ColumnName="position_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10142,7 +10143,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="profile_page_active" ColumnName="profile_page_active" />
                 <ScalarProperty Name="is_reseacher" ColumnName="is_reseacher" />
                 <ScalarProperty Name="title_id" ColumnName="title_id" />
-                <ScalarProperty Name="position_smia_id" ColumnName="position_smia_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
