@@ -30,7 +30,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
     columns: [
         {
             name: 'collab_id',
-            name: 'plan_study_start_date',
+            data: 'plan_study_start_date',
             render: function (data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
             },
@@ -128,7 +128,6 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         },
         {
             data: 'collab_id',
-            className: 'text-nowrap',
             render: function (data) {
                 return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-acad_collab_id=` + data + ` data-toggle="modal" href="#going_edit_officer">Sửa</a>
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
