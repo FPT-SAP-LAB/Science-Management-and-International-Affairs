@@ -1178,5 +1178,172 @@ namespace BLL.ScienceManagement.Paper
             List<string> list = db.Database.SqlQuery<string>(sql, new SqlParameter("reseacher", reseacher)).ToList();
             return list;
         }
+
+        public bool addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                ENTITIES.Paper paper_add = new ENTITIES.Paper
+                {
+                    name = paper.name,
+                    publish_date = paper.publish_date,
+                    link_doi = paper.link_doi,
+                    link_scholar = paper.link_scholar,
+                    journal_name = paper.journal_name,
+                    page = paper.page,
+                    vol = paper.vol,
+                    company = paper.company,
+                    index = paper.index,
+                    paper_type_id = paper.paper_type_id,
+                    note_domestic = paper.note_domestic
+                };
+                if (paper.file_id != null) paper.file_id = paper.file_id;
+                db.Papers.Add(paper_add);
+                db.SaveChanges();
+
+                if (criteria != null)
+                {
+                    string temp = "";
+                    foreach (var item in criteria)
+                    {
+                        temp += "," + item.name;
+                    }
+                    temp = temp.Substring(1);
+                    string[] listCriName = temp.Split(',');
+
+                    String strAppend = "";
+                    List<SqlParameter> listParam = new List<SqlParameter>();
+                    for (int i = 0; i < listCriName.Length; i++)
+                    {
+                        SqlParameter param = new SqlParameter("@idParam" + i, listCriName[i]);
+                        listParam.Add(param);
+                        string paramName = "@idParam" + i;
+                        strAppend += paramName + ",";
+                    }
+                    strAppend = strAppend.ToString().Remove(strAppend.LastIndexOf(","), 1);
+                    string sql = @"select pc.*
+                                from [SM_ScientificProduct].PaperCriteria pc
+                                where pc.name in (" + strAppend + ")";
+                    List<CustomCriteria> list = db.Database.SqlQuery<CustomCriteria>(sql, listParam.ToArray()).ToList();
+
+                    foreach (var item in criteria)
+                    {
+                        foreach (var cri in list)
+                        {
+                            if (cri.name == item.name)
+                            {
+                                item.criteria_id = cri.criteria_id;
+                                if (item.name == "ISI")
+                                {
+                                    SCIE scie = db.SCIEs.Where(x => x.Journal_title == paper_add.journal_name).FirstOrDefault();
+                                    SSCI ssci = db.SSCIs.Where(x => x.Journal_title == paper_add.journal_name).FirstOrDefault();
+                                    if (scie != null || ssci != null)
+                                    {
+                                        item.check = true;
+                                    }
+                                }
+                                else if (item.name == "Scopus")
+                                {
+                                    Scopu scopu = db.Scopus.Where(x => x.Source_Title_Medline_sourced_journals_are_indicated_in_Green == paper_add.journal_name).FirstOrDefault();
+                                    if (scopu != null)
+                                    {
+                                        if (scopu.Active_or_Inactive == "Active") item.check = true;
+                                    }
+                                }
+                                else
+                                {
+                                    item.check = false;
+                                }
+                            }
+                        }
+                        PaperWithCriteria pwc = new PaperWithCriteria
+                        {
+                            paper_id = paper_add.paper_id,
+                            criteria_id = item.criteria_id,
+                            link = item.link,
+                            check = item.check,
+                            manager_check = false
+                        };
+                        db.PaperWithCriterias.Add(pwc);
+                    }
+                    db.SaveChanges();
+                }
+
+                List<Author> listAuthor = new List<Author>();
+                foreach (var item in author)
+                {
+                    Author temp = new Author
+                    {
+                        name = item.name,
+                        email = item.email
+                    };
+                    if (item.office_id != 0)
+                    {
+                        temp.office_id = item.office_id;
+                        temp.bank_number = item.bank_number;
+                        temp.bank_branch = item.bank_branch;
+                        temp.tax_code = item.tax_code;
+                        temp.identification_number = item.identification_number;
+                        temp.mssv_msnv = item.mssv_msnv;
+                        temp.is_reseacher = item.is_reseacher;
+                        temp.title_id = item.title_id;
+                        temp.contract_id = 1;
+                        temp.identification_file_link = item.identification_file_link;
+                    }
+                    db.Authors.Add(temp);
+                    listAuthor.Add(temp);
+                }
+                db.SaveChanges();
+
+                foreach (var item in listAuthor)
+                {
+                    AuthorPaper ap = new AuthorPaper
+                    {
+                        people_id = item.people_id,
+                        paper_id = paper_add.paper_id,
+                        money_reward = 0,
+                        money_reward_in_decision = 0
+                    };
+                    db.AuthorPapers.Add(ap);
+                }
+                db.SaveChanges();
+
+                BaseRequest b = new BaseRequest
+                {
+                    account_id = acc.account_id,
+                    created_date = DateTime.Today
+                };
+                db.BaseRequests.Add(b);
+                db.SaveChanges();
+
+                request.request_id = b.request_id;
+                request.status_id = 3;
+                request.total_reward = 0;
+                request.paper_id = paper_add.paper_id;
+                if (request.reward_type == "Canhan")
+                {
+                    Author temp = (from a in db.Authors
+                                   join z in db.AuthorPapers on a.people_id equals z.people_id
+                                   where a.mssv_msnv == daidien && z.paper_id == paper_add.paper_id
+                                   select a).FirstOrDefault();
+                    request.author_received_reward = temp.people_id;
+                }
+                db.RequestPapers.Add(request);
+                db.SaveChanges();
+
+                dbc.Commit();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                GoogleDriveService.DeleteFile(fl.file_drive_id);
+                return false;
+            }
+        }
     }
 }
