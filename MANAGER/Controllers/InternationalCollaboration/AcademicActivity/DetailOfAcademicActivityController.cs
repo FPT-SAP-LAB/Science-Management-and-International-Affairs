@@ -10,6 +10,7 @@ using ENTITIES;
 using Newtonsoft.Json;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicActivity;
+using System.IO;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {
@@ -20,6 +21,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         AcademicActivityExpenseRepo expenseRepo;
         AcademicActivityPhaseRepo phaseRepo;
         AcademicActivityPartnerRepo partnerRepo;
+        AcademicActivityExcelRepo excelRepo;
         [Auther(RightID = "3")]
         public ActionResult Index(int id)
         {
@@ -247,6 +249,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             else
                 return Json(String.Empty);
         }
+        [Auther(RightID = "3")]
+        [HttpPost]
+        public JsonResult sendEmailForm(FormRepo.EmailForm data)
+        {
+            formRepo = new FormRepo();
+            bool res = formRepo.sendEmailForm(data);
+            if (res)
+            {
+                return Json("Gửi email đến người đăng ký thành công");
+            }
+            else
+                return Json(String.Empty);
+        }
         [HttpPost]
         public JsonResult getRealtimeParticipant(int phase_id)
         {
@@ -450,6 +465,61 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+        [Auther(RightID = "3")]
+        [HttpPost]
+        public ActionResult ExportExcel(int type, int activity_id)
+        {
+            try
+            {
+                excelRepo = new AcademicActivityExcelRepo();
+                switch (type)
+                {
+                    case 1:
+                        MemoryStream memoryStream = excelRepo.ExportDuTruExcel(activity_id);
+                        string downloadFile = "Kinh-phi-du-tru.xlsx";
+                        string handle = Guid.NewGuid().ToString();
+                        TempData[handle] = memoryStream.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle, FileName = downloadFile } }, JsonRequestBehavior.AllowGet);
+                    case 2:
+                        MemoryStream memoryStream2 = excelRepo.ExportDieuChinhExcel(activity_id);
+                        string downloadFile2 = "Kinh-phi-dieu-chinh.xlsx";
+                        string handle2 = Guid.NewGuid().ToString();
+                        TempData[handle2] = memoryStream2.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle2, FileName = downloadFile2 } }, JsonRequestBehavior.AllowGet);
+                    case 3:
+                        MemoryStream memoryStream3 = excelRepo.ExportThucTeExcel(activity_id);
+                        string downloadFile3 = "Kinh-phi-thuc-te.xlsx";
+                        string handle3 = Guid.NewGuid().ToString();
+                        TempData[handle3] = memoryStream3.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle3, FileName = downloadFile3 } }, JsonRequestBehavior.AllowGet);
+                    case 4:
+                        MemoryStream memoryStream4 = excelRepo.ExportTongHopExcel(activity_id);
+                        string downloadFile4 = "Kinh-phi-tong-hop.xlsx";
+                        string handle4 = Guid.NewGuid().ToString();
+                        TempData[handle4] = memoryStream4.ToArray();
+                        return Json(new { success = true, data = new { FileGuid = handle4, FileName = downloadFile4 } }, JsonRequestBehavior.AllowGet);
+                    default:
+                        return Json(new { success = true, data = new { } }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        [HttpGet]
+        public virtual ActionResult Download(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                return new EmptyResult();
             }
         }
     }

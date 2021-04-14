@@ -133,11 +133,11 @@
                         </select>
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Email <span style="color:red">*</span></label>
+                        <label class="col-form-label font-weight-bolder">Email</label>
                         <input type="text" class="form-control" placeholder="Email" spellcheck="false" required autocomplete="off" id="add_email" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label font-weight-bolder">Số điện thoại <span style="color:red">*</span></label>
+                        <label class="col-form-label font-weight-bolder">Số điện thoại</label>
                         <input type="text" class="form-control" placeholder="Số điện thoại" spellcheck="false" autocomplete="off" id="add_msnv_mssv" />
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
@@ -216,7 +216,7 @@
             let email = document.getElementById('add_email').value;
             let participant_number = document.getElementById('add_msnv_mssv').value;
             let office_id = document.getElementById('add_co_so').value;
-            if (name == '' || participant_role_id == '' || email == '' || participant_number == '' || office_id == '') {
+            if (name == '' || participant_role_id == '' || office_id == '') {
                 toastr.warning("Bạn chưa điền hết các thông tin cho người tham dự");
                 return false;
             }

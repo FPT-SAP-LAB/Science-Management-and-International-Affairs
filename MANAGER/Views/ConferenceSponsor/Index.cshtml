@@ -1,35 +1,69 @@
 ﻿<div class="card card-custom gutter-b">
-    @*<div class="card-header flex-wrap border-0 pt-6 pb-0">
-        <div class="card-title">
-            <h3 class="card-label">
-                <b>DANH SÁCH ĐỀ NGHỊ ĐANG XỬ LÝ</b>
-            </h3>
-        </div>
-    </div>*@
-<div class="card-body">
-        <!--begin: Datatable-->
-        <div class="col-xl-12 col-xxl-12 table-responsive">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-sm-12 form-group">
+                <div class="input-icon">
+                    <input type="text" class="form-control"
+                           placeholder="Tên sản phẩm khoa học"
+                           id="search_paper" />
+                    <span>
+                        <i class="flaticon2-search-1 text-muted"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 form-group">
+                <div class="input-icon">
+                    <input type="text" class="form-control"
+                           placeholder="Tên hội nghị"
+                           id="search_conference" />
+                    <span>
+                        <i class="flaticon2-search-1 text-muted"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-12 form-group">
+                <div>
+                    <select class="form-control" id="search_status" name="param">
+                        <option value="0">Tất cả</option>
+                        <option value="1">Đang duyệt</option>
+                        <option value="2">Được tham dự</option>
+                        <option value="3">Đã duyệt</option>
+                        <option value="4">Chưa hoàn ứng</option>
+                        <option value="5">Đã hoàn ứng</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="float-left">
+                    <a onclick="ReloadTable()"
+                       class="btn btn-light-primary px-6 font-weight-bold">
+                        Tìm kiếm
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-12 col-xxl-12 table-responsive">
+                <br />
+                <table id="mytable" class="table table-bordered table-checkable">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Người tạo</th>
+                            <th>Sản phẩm khoa học</th>
+                            <th>Tên hội nghị</th>
+                            <th>Ngày&nbsp;tạo</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
             <br />
-            <table id="mytable" class="table table-bordered table-checkable">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Người tạo</th>
-                        <th>Sản phẩm khoa học</th>
-                        <th>Tên hội nghị</th>
-                        <th>Ngày&nbsp;tạo</th>
-                        <th>Trạng thái</th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
+            <!--end: Datatable-->
         </div>
-        <br/>
         @{
             Html.RenderPartial("_LoaderPanel");
         }
-        <!--end: Datatable-->
-</div>
+    </div>
 </div>
 
 @section scripts{
@@ -41,47 +75,62 @@
             4: "secondary",
             5: "success"
         }
-        $(document).ready(function () {
-            $("#mytable").DataTable({
-                responsive: true,
-                // DOM Layout settings
-                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                lengthMenu: [5, 10, 25, 50],
-                pageLength: 10,
-                language: {
-                    'lengthMenu': 'Display _MENU_',
-                },
-                serverSide: true,
-                ajax: {
-                    url: "/ConferenceSponsor/List",
-                    datatype: "json",
-                    cache: true
-                },
-                columns: [
-                    { data: "RowNumber", name: "RowNumber", orderable: false },
-                    { data: "FullName", name: "FullName" },
-                    { data: "PaperName", name: "PaperName" },
-                    { data: "ConferenceName", name: "ConferenceName" },
-                    { data: "CreatedDate", name: "Date" },
-                    {
-                        data: {}, name: "StatusID", render: function (data) {
-                            if (data.EditAble)
-                                return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
-                            else
-                                return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
-                        }, width: "80px", className: "text-center"
+
+        var mytable = $("#mytable").DataTable({
+            responsive: true,
+            // DOM Layout settings
+            dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
+            serverSide: true,
+            ajax: {
+                url: "/ConferenceSponsor/List",
+                datatype: "json",
+                cache: true,
+                data: {
+                    search_paper: function () {
+                        return $("#search_paper").val();
                     },
-                    {
-                        data: "RequestID", orderable: false, render: function (data) {
-                            return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
-                        }
-                    }
-                ],
-                order: [4, "desc"],
-                initComplete: function (settings, json) {
-                    $("#loader_panel").hide()
+                    search_conference: function () {
+                        return $("#search_conference").val();
+                    },
+                    search_status: function () {
+                        return $("#search_status").val();
+                    },
+                    is_history: false
                 }
-            });
+            },
+            columns: [
+                { data: "RowNumber", name: "RowNumber", orderable: false },
+                { data: "FullName", name: "FullName" },
+                { data: "PaperName", name: "PaperName" },
+                { data: "ConferenceName", name: "ConferenceName" },
+                { data: "CreatedDate", name: "Date" },
+                {
+                    data: {}, name: "StatusID", render: function (data) {
+                        if (data.EditAble)
+                            return "<span class='label label-warning label-pill label-inline'>Cần chỉnh sửa</span>"
+                        else
+                            return "<span class='label label-" + label_status[data.StatusID] + " label-pill label-inline'>" + data.StatusName + "</span>"
+                    }, width: "80px", className: "text-center"
+                },
+                {
+                    data: "RequestID", orderable: false, render: function (data) {
+                        return "<a href='/ConferenceSponsor/Detail?id=" + data + "' class='btn btn-sm btn-clean btn-icon' title='View'> <i class='fas fa-eye'></i> </a>"
+                    }, className: "text-center"
+                }
+            ],
+            order: [4, "desc"],
+            initComplete: function (settings, json) {
+                $("#loader_panel").hide()
+            }
         });
+
+        function ReloadTable() {
+            mytable.ajax.reload();
+        }
     </script>
 }

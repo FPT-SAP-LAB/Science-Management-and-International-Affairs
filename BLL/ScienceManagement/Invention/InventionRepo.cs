@@ -66,6 +66,36 @@ namespace BLL.ScienceManagement.Invention
             return list;
         }
 
+        public List<string> getAuthorEmail()
+        {
+            string sql = @"select distinct ah.email
+                            from [SM_ScientificProduct].Invention p join [SM_ScientificProduct].AuthorInvention ap on p.invention_id = ap.invention_id
+	                            join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+	                            join [SM_ScientificProduct].RequestInvention rp on p.invention_id = rp.invention_id
+                            where rp.status_id in (4, 6, 7)";
+            List<string> list = db.Database.SqlQuery<string>(sql).ToList();
+            return list;
+        }
+
+        public string deleteRequest(int id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestInvention rp = db.RequestInventions.Where(x => x.request_id == id).FirstOrDefault();
+                rp.status_id = 1;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string changeStatus(DetailInvention inven)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -320,30 +350,44 @@ namespace BLL.ScienceManagement.Invention
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
+                List<AddAuthor> list = new List<AddAuthor>();
                 //string sql = @"delete from [SM_ScientificProduct].AuthorInvention where invention_id = @id";
                 //db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
                 //addAuthor(people, id);
                 foreach (var item in people)
                 {
-                    Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
-                    author.name = item.name;
-                    author.email = item.email;
-                    if (item.office_id != 0 && item.office_id != null)
+                    if (item.people_id == 0)
                     {
-                        author.office_id = item.office_id;
-                        author.bank_number = item.bank_number;
-                        author.bank_branch = item.bank_branch;
-                        author.tax_code = item.tax_code;
-                        author.identification_number = item.identification_number;
-                        author.mssv_msnv = item.mssv_msnv;
-                        author.is_reseacher = item.is_reseacher;
-                        author.title_id = item.title_id;
-                        author.contract_id = item.contract_id;
+                        list.Add(item);
                     }
-                    db.Entry(author).State = EntityState.Modified;
+                    else
+                    {
+                        Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
+                        author.name = item.name;
+                        author.email = item.email;
+                        if (item.office_id == 0 || item.office_id == null)
+                        {
+                            author.office_id = null;
+                        }
+                        else
+                        {
+                            author.office_id = item.office_id;
+                            author.bank_number = item.bank_number;
+                            author.bank_branch = item.bank_branch;
+                            author.tax_code = item.tax_code;
+                            author.identification_number = item.identification_number;
+                            author.mssv_msnv = item.mssv_msnv;
+                            author.is_reseacher = item.is_reseacher;
+                            author.title_id = item.title_id;
+                            author.contract_id = 1;
+                            author.identification_file_link = item.identification_file_link;
+                        }
+                        db.Entry(author).State = EntityState.Modified;
+                    }
                 }
                 db.SaveChanges();
                 dbc.Commit();
+                addAuthor(list, id);
                 return "ss";
             }
             catch (Exception e)
@@ -439,6 +483,34 @@ namespace BLL.ScienceManagement.Invention
                 Console.WriteLine(e.Message);
                 return "ff";
             }
+        }
+
+        public List<Invention_Appendix_1> getListAppendix1()
+        {
+            string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, it.name as 'type_name', i.no, i.name
+                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.AuthorInvention ai on i.invention_id = ai.invention_id
+	                            join SM_ScientificProduct.Author ah on ah.people_id = ai.people_id
+	                            join SM_ScientificProduct.InventionType it on i.type_id = it.invention_type_id
+	                            join General.Office o on o.office_id = ah.office_id
+	                            join SM_ScientificProduct.RequestInvention ri on ri.invention_id = i.invention_id
+                            where ri.status_id = 4
+                            order by ah.name";
+            List<Invention_Appendix_1> list = db.Database.SqlQuery<Invention_Appendix_1>(sql).ToList();
+            return list;
+        }
+
+        public List<Invention_Appendix_2> getListAppendix2()
+        {
+            string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, ai.money_reward
+                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.AuthorInvention ai on i.invention_id = ai.invention_id
+	                            join SM_ScientificProduct.Author ah on ah.people_id = ai.people_id
+	                            join SM_ScientificProduct.InventionType it on i.type_id = it.invention_type_id
+	                            join General.Office o on o.office_id = ah.office_id
+	                            join SM_ScientificProduct.RequestInvention ri on ri.invention_id = i.invention_id
+                            where ri.status_id = 4
+                            order by ah.name";
+            List<Invention_Appendix_2> list = db.Database.SqlQuery<Invention_Appendix_2>(sql).ToList();
+            return list;
         }
     }
 }

@@ -46,7 +46,10 @@ namespace GUEST.Controllers
         public JsonResult List()
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
+            string search_paper = Request["search_paper"];
+            string search_conference = Request["search_conference"];
+            int.TryParse(Request["search_status"], out int search_status);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status, CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
@@ -148,9 +151,9 @@ namespace GUEST.Controllers
             return Json(infos, JsonRequestBehavior.AllowGet);
         }
         [AjaxOnly]
-        public JsonResult GetConferenceWithName(string name)
+        public JsonResult GetConferenceWithName(string name, int page)
         {
-            var confer = AppRepos.GetAllConferenceBy(name);
+            var confer = AppRepos.GetAllConferenceBy(name, page);
             return Json(confer, JsonRequestBehavior.AllowGet);
         }
         public class DataAddPage

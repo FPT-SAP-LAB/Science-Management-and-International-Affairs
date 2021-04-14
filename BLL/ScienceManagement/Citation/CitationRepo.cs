@@ -60,6 +60,34 @@ namespace BLL.ScienceManagement.Citation
             return item;
         }
 
+        public List<string> getAuthorEmail()
+        {
+            string sql = @"select distinct ah.email
+                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
+                            where rc.status_id in (4, 6, 7)";
+            List<string> list = db.Database.SqlQuery<string>(sql).ToList();
+            return list;
+        }
+
+        public string deleteRequest(int id)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                RequestCitation rp = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
+                rp.status_id = 1;
+                db.SaveChanges();
+                dbc.Commit();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return "ff";
+            }
+        }
+
         public string changeStatus(string request_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -372,6 +400,38 @@ namespace BLL.ScienceManagement.Citation
                 GoogleDriveService.DeleteFile(file_drive_id);
                 return "ff";
             }
+        }
+
+        public List<Citation_Appendix_1> getListAppendix1()
+        {
+            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, a.sum_scopus, b.sum_scholar
+                            from SM_ScientificProduct.Author ah
+	                            join(select ah.people_id, sum(c.count) as 'sum_scopus'
+	                            from SM_Citation.Citation c join SM_Citation.RequestHasCitation rhc on c.citation_id = rhc.citation_id
+		                            join SM_Citation.RequestCitation rc on rhc.request_id = rc.request_id
+		                            join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
+	                            where rc.status_id = 4 and c.source = 'Scopus'
+	                            group by ah.people_id) as a on ah.people_id = a.people_id
+	                            join(select ah.people_id, sum(c.count) as 'sum_scholar'
+	                            from SM_Citation.Citation c join SM_Citation.RequestHasCitation rhc on c.citation_id = rhc.citation_id
+		                            join SM_Citation.RequestCitation rc on rhc.request_id = rc.request_id
+		                            join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
+	                            where (rc.status_id = 4) and (c.source = 'Google Scholar' or c.source = 'Scholar')
+	                            group by ah.people_id) as b on ah.people_id = b.people_id
+	                            join General.Office o on ah.office_id = o.office_id
+                            order by ah.name";
+            List<Citation_Appendix_1> list = db.Database.SqlQuery<Citation_Appendix_1>(sql).ToList();
+            return list;
+        }
+
+        public List<Citation_Appendix_2> getListAppendix2()
+        {
+            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, rc.total_reward
+                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
+	                            join General.Office o on o.office_id = ah.office_id
+                            where rc.status_id = 4";
+            List<Citation_Appendix_2> list = db.Database.SqlQuery<Citation_Appendix_2>(sql).ToList();
+            return list;
         }
     }
 }

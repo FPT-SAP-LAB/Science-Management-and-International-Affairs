@@ -321,7 +321,7 @@
         </div>
         <div class="card-footer">
             <div class="row justify-content-center">
-                <button id="SendRequestButton" onclick="submitData()" class="btn btn-light-success font-weight-bold">@rm.GetString("Send")</button>
+                <button onclick="submitData()" class="btn btn-light-success font-weight-bold">@rm.GetString("Send")</button>
             </div>
         </div>
     </div>
@@ -335,9 +335,7 @@
         var startDate = new Date();
         var endDate = new Date();
         var conferenceID = 0;
-        var decreaseID = 0;
         var uppy1, uppy2;
-        var save_loader = new LoaderBtn($("#SendRequestButton"))
 
         $(document).ready(function () {
             $(document).find(".selectOffice, .selectTitle, #country, #specialization").select2({
@@ -357,17 +355,20 @@
                     data: function (params) {
                         return {
                             name: params.term, // search term
-                            page: params.page
+                            page: params.page || 1
                         };
                     },
                     processResults: function (data, params) {
-                        data.map(function (obj) {
-                            obj.id = obj.conference_id;
+                        params.page = params.page || 1;
+
+                        data.Results.map(function (obj) {
+                            obj.id = obj.conference_name;
                             return obj;
                         });
-                        if (data.length == 0) {
-                            data.push({
-                                id: decreaseID,
+                        if (data.Results.length == 0) {
+                            data.Results.push({
+                                id: params.term,
+                                conference_id: 0,
                                 conference_name: params.term,
                                 website: "",
                                 keynote_speaker: "",
@@ -377,11 +378,13 @@
                                 organized_unit: "",
                                 co_organized_unit: ""
                             });
-                            decreaseID = decreaseID - 1;
                         }
 
                         return {
-                            results: data
+                            results: data.Results,
+                            pagination: {
+                                more: (params.page * 10) < data.CountFiltered
+                            }
                         };
                     },
                     cache: true
@@ -637,7 +640,7 @@
                 document.getElementById("formality").value = repo.formality_id;
                 document.getElementById("co_organized_unit").value = repo.co_organized_unit;
                 document.getElementById("organized_unit").value = repo.organized_unit;
-                conferenceID = repo.id;
+                conferenceID = repo.conference_id;
             }
             return repo.conference_name || repo.text;
         }
@@ -696,7 +699,7 @@
         function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
             if (a_start <= b_start && b_start <= a_end) return true; // b starts in a
             if (a_start <= b_end && b_end <= a_end) return true; // b ends in a
-            if (b_start < a_start && a_end < b_end) return true; // a in b
+            if (b_start <= a_start && a_end <= b_end) return true; // a in b or equal
             return false;
         }
 
@@ -785,7 +788,7 @@
             })
 
             fd.append("input", JSON.stringify(this.data));
-            save_loader.startLoading();
+            $("#loading").show();
             $.ajax({
                 url: "/ConferenceSponsor/Add",
                 method: "post",
@@ -796,11 +799,11 @@
                     else {
                         toastr.error(data.responseJSON.message);
                     }
-                    save_loader.stopLoading();
+                    $("#loading").hide();
                 },
                 error: function () {
                     toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
+                    $("#loading").hide();
                 },
                 dataType: "json",
                 data: fd,

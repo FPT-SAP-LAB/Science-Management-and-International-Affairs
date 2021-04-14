@@ -93,24 +93,20 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                       CriteriaName = b.name,
                                                       IsAccepted = a.is_accepted
                                                   }).ToList();
-            List<ConferenceParticipantExtend> Participants = (from b in db.ConferenceParticipants
-                                                              join c in db.TitleLanguages on b.title_id equals c.title_id
-                                                              join e in db.Offices on b.office_id equals e.office_id
-                                                              where b.request_id == request_id && c.language_id == language_id
-                                                              select new ConferenceParticipantExtend
-                                                              {
-                                                                  ID = b.mssv_msnv,
-                                                                  FullName = b.name,
-                                                                  OfficeName = e.office_name,
-                                                                  OfficeID = e.office_id,
-                                                                  TitleName = c.name,
-                                                                  TitleID = c.title_id,
-                                                                  Email = b.email
-                                                              }).ToList();
-            for (int i = 0; i < Participants.Count; i++)
-            {
-                Participants[i].RowNumber = 1 + i;
-            }
+            ConferenceParticipantExtend Participants = (from b in db.ConferenceParticipants
+                                                        join c in db.TitleLanguages on b.title_id equals c.title_id
+                                                        join e in db.Offices on b.office_id equals e.office_id
+                                                        where b.request_id == request_id && c.language_id == language_id
+                                                        select new ConferenceParticipantExtend
+                                                        {
+                                                            ID = b.mssv_msnv,
+                                                            FullName = b.name,
+                                                            OfficeName = e.office_name,
+                                                            OfficeID = e.office_id,
+                                                            TitleName = c.name,
+                                                            TitleID = c.title_id,
+                                                            Email = b.email
+                                                        }).FirstOrDefault();
             var Costs = db.Costs.Where(x => x.request_id == request_id).ToList();
             var ApprovalProcesses = (from a in db.ApprovalProcesses
                                      join b in db.Accounts on a.account_id equals b.account_id
@@ -125,7 +121,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                          FullName = e.Person.name,
                                          Comment = a.comment
                                      }).ToList();
-            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail });
+
+            double Budget = 30000000 - db.ConferenceParticipants
+                .Where(x => x.RequestConference.BaseRequest.finished_date.Value.Year == DateTime.Now.Year && x.mssv_msnv.Equals(Participants.ID))
+                .Select(x => x.RequestConference.reimbursement).ToList().Sum();
+            return JsonConvert.SerializeObject(new { Conference, Participants, Costs, ApprovalProcesses, Link, Criterias, DecisionDetail, Budget });
         }
         public AlertModal<string> UpdateCriterias(string criterias, int request_id, int account_id, string comment)
         {
@@ -228,16 +228,32 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         }
         public AlertModal<string> RequestEdit(int request_id)
         {
-            var Request = db.RequestConferences.Find(request_id);
-            if (Request == null)
-                return new AlertModal<string>(false, "Đề nghị không tồn tại");
-            if (Request.status_id >= 2)
-                return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
-            Request.editable = true;
-            db.SaveChanges();
-            return new AlertModal<string>(true, "Cập nhật thành công");
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    NotificationRepo notificationRepo = new NotificationRepo(db);
+
+                    var Request = db.RequestConferences.Find(request_id);
+                    if (Request == null)
+                        return new AlertModal<string>(false, "Đề nghị không tồn tại");
+                    if (Request.status_id >= 2)
+                        return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
+                    Request.editable = true;
+                    string notification_id = notificationRepo.AddByAccountID(Request.BaseRequest.account_id, 4, "/ConferenceSponsor/Detail?id=" + Request.request_id).ToString();
+                    trans.Commit();
+
+                    return new AlertModal<string>(notification_id, true, "Cập nhật thành công");
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Console.WriteLine(e.ToString());
+                }
+            }
+            return new AlertModal<string>(false);
         }
-        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id, int account_id)
+        public AlertModal<string> SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id)
         {
             string DriveId = null;
             var temp = (from a in db.BaseRequests
