@@ -1,6 +1,11 @@
 ﻿
 @{
     Layout = "";
+    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+    if (Request.IsAuthenticated && user == null)
+    {
+        Response.Redirect("~/Authen/Logout");
+    }
 }
 
 <!DOCTYPE html>
@@ -34,7 +39,7 @@
     <link href="~/Content/assets/css/themes/layout/aside/dark.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <!--end::Layout Themes-->
     <link rel="shortcut icon" href="~/Content/assets/media/logos/favicon.ico" />
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    @*<script src="https://apis.google.com/js/platform.js" async defer></script>*@
     <style>
         * {
             font-family: Arial, Helvetica, sans-serif;
@@ -74,12 +79,12 @@
                         </div>
                         <form class="form" id="kt_login_signin_form">
                             <div class="form-group">
-                                <button id="login_btn" class="btn btn-pill btn-success opacity-90 px-15 py-3">
-                                    <i class="fab fa-google icon-lg"></i> Đăng nhập bằng Google
-                                </button>
+                                <a id="login_btn" href="@Url.Action("SignIn","Authen")" class="btn btn-pill btn-success opacity-90 px-15 py-3">
+                                    <i class="fab fa-microsoft icon-lg"></i> Đăng nhập bằng Microsoft
+                                </a>
                             </div>
                         </form>
-                        <div class="g-signin2" hidden id="google_auth_login" data-onsuccess="onSignIn" data-theme="dark"></div>
+                        @*<div class="g-signin2" hidden id="google_auth_login" data-onsuccess="onSignIn" data-theme="dark"></div>*@
                     </div>
                 </div>
             </div>
@@ -155,33 +160,33 @@
     <script>
         var login_btn = new LoaderBtn($("#login_btn"));
         $(document).ready(function () {
-            
+
         });
-        function onSignIn(googleUser) {
-            login_btn.startLoading();
-            var id_token = googleUser.getAuthResponse().id_token;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/Authen/SigninGoogleAsync');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    if (this.response == '""') {
-                        toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
-                        var auth2 = gapi.auth2.getAuthInstance();
-                        auth2.signOut().then(function () {
-                            login_btn.stopLoading();
-                        });
-                    } else {
-                        login_btn.stopLoading();
-                        window.location.href = this.responseURL;
-                    }
-                }
-            };
-            xhr.send('idtoken=' + id_token);
-        }
-        $("#login_btn").click(function () {
-            $("#google_auth_login").find(".abcRioButtonContentWrapper").click()
-        });
+        //function onSignIn(googleUser) {
+        //    login_btn.startLoading();
+        //    var id_token = googleUser.getAuthResponse().id_token;
+        //    var xhr = new XMLHttpRequest();
+        //    xhr.open('POST', '/Authen/SigninGoogleAsync');
+        //    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //    xhr.onload = function () {
+        //        if (this.readyState == 4 && this.status == 200) {
+        //            if (this.response == '""') {
+        //                toastr.warning("Tài khoản của bạn chưa được phép truy cập vào hệ thống. Vui lòng liên hệ người quản lý để biết thêm chi tiết.");
+        //                var auth2 = gapi.auth2.getAuthInstance();
+        //                auth2.signOut().then(function () {
+        //                    login_btn.stopLoading();
+        //                });
+        //            } else {
+        //                login_btn.stopLoading();
+        //                window.location.href = this.responseURL;
+        //            }
+        //        }
+        //    };
+        //    xhr.send('idtoken=' + id_token);
+        //}
+        //$("#login_btn").click(function () {
+        //    window.location.href = '/Authen/SignIn';
+        //});
 
     </script>
 </body>

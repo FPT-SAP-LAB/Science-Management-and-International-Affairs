@@ -8,13 +8,13 @@ namespace UnitTest
     [TestFixture]
     public class Lib
     {
-        [Test]
+        //[Test]
         public void TestMethod1()
         {
             Assert.AreEqual(1, 1);
         }
 
-        [Test]
+        //[Test]
         public void ClassicModel()
         {
             //Doc: https://docs.nunit.org/articles/nunit/writing-tests/assertions/assertion-models/classic.html
@@ -22,7 +22,7 @@ namespace UnitTest
             //For example:
             Assert.AreEqual(1, 1, "Message error 1");
         }
-        [Test]
+        //[Test]
         public void ConstraintModel()
         {
             //Doc: https://docs.nunit.org/articles/nunit/writing-tests/assertions/assertion-models/constraint.html
@@ -32,7 +32,7 @@ namespace UnitTest
             //check array has exactly one value = 3
             Assert.That(array, Has.Exactly(1).EqualTo(3));
         }
-        [Test]
+        //[Test]
         public void MultiAssert()
         {
             Assert.Multiple(() =>
@@ -42,8 +42,8 @@ namespace UnitTest
             });
         }
 
-        [TestCase(1, 4, 5)]
-        [TestCase(10, 7, 17)]
+        //[TestCase(1, 4, 5)]
+        //[TestCase(10, 7, 17)]
         public void TestPreparedTCs(int a, int b, int c)
         {
             Assert.AreEqual(a + b, c, "Message error");
