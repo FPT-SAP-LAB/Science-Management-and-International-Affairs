@@ -30,10 +30,14 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id, rp.status_id, f.link as 'link_file'
-                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-							left join [General].[File] f on p.file_id = f.file_id
-                            where p.paper_id = @id";
+            string sql = @"select p.*, CAST(ptal.id AS nvarchar) as reward_type, CAST(prtl.id AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
+              rp.status_id, f.link as 'link_file'
+            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp
+            on p.paper_id = rp.paper_id
+            join Localization.PaperRewardTypeLanguage prtl on rp.reward_type=prtl.id
+            join Localization.PaperTypeByAreaLanguage ptal on rp.type=ptal.id
+            left join [General].[File] f on p.file_id = f.file_id
+            where p.paper_id = @id and prtl.language_id=1 and ptal.language_id=1";
             item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
             return item;
         }
@@ -1041,7 +1045,7 @@ namespace BLL.ScienceManagement.Paper
                     ap.money_reward = item.money_reward;
                     ap.money_reward_in_decision = item.money_reward;
                 }
-                if (paper.reward_type == "Canhan")
+                if (paper.reward_type == "1")
                 {
                     int people_id = Int32.Parse(id);
                     AuthorPaper ap = db.AuthorPapers
