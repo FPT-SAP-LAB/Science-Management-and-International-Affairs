@@ -11,7 +11,7 @@ namespace UnitTest
     [TestFixture]
     public class Demo
     {
-        [TestCase]
+        //[TestCase]
         public void Demo1()
         {
             //Check list count

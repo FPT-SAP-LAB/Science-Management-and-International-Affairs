@@ -127,7 +127,7 @@
 
         });
         //var rowIdx = 1;
-        var mou_table = $("#mou_table_deleted").DataTable({
+        var mou_table_del = $("#mou_table_deleted").DataTable({
             oLanguage: {
                 oPaginate: {
                     sPrevious: "Trang trước",
@@ -325,7 +325,7 @@
 
         function searchMOU() {
             rowIdx = 1;
-            mou_table.ajax.reload();
+            mou_table_del.ajax.reload();
         }
     </script>
 }
