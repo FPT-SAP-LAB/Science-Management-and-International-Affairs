@@ -39,7 +39,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'people_name',
             name: 'people_name',
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 5px')
             },
             className: 'text-center',
@@ -47,7 +47,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'email',
             name: 'email',
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 5px')
             },
             className: 'text-center',
@@ -55,7 +55,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'partner_name',
             name: 'partner_name',
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 5px')
                 $(td).css({ 'min-width': '0px', 'max-width': '400px' });
             },
@@ -64,7 +64,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'country_name',
             name: 'country_name',
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 5px')
             },
             className: 'text-center',
@@ -79,7 +79,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                 }
                 return moment(data).format('DD-MM-YYYY');
             },
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0')
             },
             className: 'text-center',
@@ -93,7 +93,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                 }
                 return moment(data).format('DD-MM-YYYY');
             },
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0')
             },
             className: 'text-center',
@@ -101,7 +101,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 12px 0 5px')
             },
             className: 'text-center text-nowrap',
@@ -113,7 +113,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                 if (data == true) return `<input type="checkbox" disabled checked/>`
                 return `<input type="checkbox" disabled/>`
             },
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0')
             },
             className: 'text-center',
@@ -121,7 +121,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'note',
             name: 'note',
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 5px')
             },
             className: 'text-center',
@@ -134,7 +134,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
             },
             orderable: false,
-            createdCell: function (td, cellData, rowData, row, col) {
+            createdCell: function (td) {
                 $(td).css('padding', '0 5px')
             },
             className: 'text-center text-nowrap',
