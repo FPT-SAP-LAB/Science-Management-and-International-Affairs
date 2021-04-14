@@ -259,6 +259,10 @@
                                     <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                         <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
                                             <i class="fa fas fa-bell icon-md"></i><span class="pulse-ring"></span>
+                                            <span id="noti-number" class="sibfvsnu px9q9ucb j2ut9x2k p4hiznlx pq6dq46d e9vueds3 ekzkrbhg omvj5yrc jiuqdcnw d82f96u3 gky8063y">
+                                            <span class="bp9cbjyn ljqsnud1 pq6dq46d datstx6m taijpn5t jb3vyjys jxrgncrl qt6c0cv9 qnrpqo6b k4urcfbm">
+                                                60
+                                             </span></span>
                                         </div>
                                     </div>
                                     <!--end::Toggle-->
@@ -909,13 +913,16 @@
                     success: function (data) {
                         if (data.success) {
                             for (var i = 0; i < data.content.length; i++) {
-                                let templateMessage = '<a href="' + data.content[i].URL + '" class="navi-item">' +
+                                let templateMessage = '<a data-id="' + data.content[i].NotificationID + '" href="' + data.content[i].URL + '" class="navi-item not-read-noti">' +
                                     '<div class="navi-link">' +
                                         '<div class="navi-icon mr-2">' +
                                             '<i class="' + data.content[i].Icon + '"></i>' +
                                         '</div>' +
-                                        '<div class="navi-text">' +
-                                            '<div class="font-weight-bold">' +
+                                    '<div class="navi-text">' +
+                                    '<div';
+                                if (data.content[i].IsRead)
+                                    templateMessage += ' class="text-muted"'
+                                templateMessage += '>' +
                                                 data.content[i].Template +
                                             '</div>' +
                                             '<div class="text-muted">' +
@@ -932,6 +939,11 @@
                         toastr.error("Không thể lấy được dữ liệu thông báo");
                     }
                 });
+
+                $(document).on("click", ".not-read-noti", function (e) {
+                    location.href = "/Notification/Read?id=" + $(this).data("id");
+                    return false;
+                })
             })
         </script>
     }
