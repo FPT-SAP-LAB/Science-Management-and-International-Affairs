@@ -93,13 +93,65 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                     },
                     new PartnerInfo
                     {
-                        partner_id = 1,
+                        partnername_add = "New Partner",
+                        partner_id = 0,
+                        website_add = "new.com",
+                        nation_add = 1,
+                        address_add = "TestAddMOU2",
                         represent_add = "TestAddMOU2",
                         phone_add = "0123456789",
                         email_add = "TestAddMOU1",
-                        coop_scope_add = new List<int>() { 3, 5 },
-                        specialization_add = new List<int>() { 3 },
+                        coop_scope_add = new List<int>() { 1, 2 },
+                        specialization_add = new List<int>() { 1 },
                         sign_date_mou_add = "20/5/2020"
+                    }
+                }
+            );
+            mou.addMOU(input, user);
+            Assert.Pass();
+        }
+        [TestCase]
+        public void TestAddMOU3()
+        {
+            //Prepare data:
+            MOURepo mou = new MOURepo();
+            BLL.Authen.LoginRepo.User user = new BLL.Authen.LoginRepo.User
+            {
+                account = new ENTITIES.Account
+                {
+                    account_id = 16
+                }
+            };
+            //Add MOU with 1 new partner.
+            MOUAdd input = new MOUAdd
+            {
+                BasicInfo = new BasicInfo
+                {
+                    mou_code = "2020/9999",
+                    mou_end_date = "20/5/2025",
+                    mou_note = "TestAddMOU2",
+                    office_id = 2,
+                    mou_status_id = 2,
+                    reason = "TestAddMOU2"
+                },
+                PartnerInfo = new List<PartnerInfo>()
+            };
+            input.PartnerInfo.AddRange(
+                new List<PartnerInfo>
+                {
+                    new PartnerInfo
+                    {
+                        partnername_add = "New Partner 2",
+                        partner_id = 0,
+                        website_add = "new.com",
+                        nation_add = 1,
+                        address_add = "TestAddMOU2",
+                        represent_add = "TestAddMOU2",
+                        phone_add = "0123456789",
+                        email_add = "TestAddMOU1",
+                        coop_scope_add = new List<int>() { 1, 2 },
+                        specialization_add = new List<int>() { 1 },
+                        sign_date_mou_add = "20/4/2020"
                     }
                 }
             );
