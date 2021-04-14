@@ -19,7 +19,7 @@ namespace MANAGER
         string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
         static string tenant = System.Configuration.ConfigurationManager.AppSettings["Tenant"];
         string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
-        
+
         public void Configuration(IAppBuilder app)
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
