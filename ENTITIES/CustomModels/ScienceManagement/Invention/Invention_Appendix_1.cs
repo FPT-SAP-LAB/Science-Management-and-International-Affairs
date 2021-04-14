@@ -14,6 +14,5 @@ namespace ENTITIES.CustomModels.ScienceManagement.Invention
         public string type_name { get; set; }
         public string no { get; set; }
         public string name { get; set; }
-
     }
 }

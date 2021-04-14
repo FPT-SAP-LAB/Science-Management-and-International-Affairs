@@ -114,7 +114,6 @@ namespace MANAGER.Controllers
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
-        
         [HttpPost]
         public JsonResult exportExcel()
         {
@@ -129,7 +128,6 @@ namespace MANAGER.Controllers
             ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
             int i = 2;
             int count = 1;
-            Citation_Appendix_1 temp1 = new Citation_Appendix_1();
             foreach (var item in list1)
             {
                 excelWorksheet1.Cells[i, 1].Value = count;
