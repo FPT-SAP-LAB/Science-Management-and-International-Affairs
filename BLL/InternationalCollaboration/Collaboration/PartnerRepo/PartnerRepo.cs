@@ -71,7 +71,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 //                                       && e.language_id == searchPartner.language
                 //                                       select e.name).Distinct().ToList()
                 //            }).Where(x => searchPartner.is_collab == 0 || x.is_collab == searchPartner.is_collab);
-                             
+
                 //int count = temp.Count();
                 //List<PartnerList> listPartner_linq = temp.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
                 //             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
