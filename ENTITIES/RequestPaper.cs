@@ -16,8 +16,8 @@ namespace ENTITIES
     {
         public int request_id { get; set; }
         public Nullable<int> specialization_id { get; set; }
-        public string type { get; set; }
-        public string reward_type { get; set; }
+        public Nullable<int> type { get; set; }
+        public Nullable<int> reward_type { get; set; }
         public int status_id { get; set; }
         public Nullable<int> total_reward { get; set; }
         public int paper_id { get; set; }
@@ -27,6 +27,8 @@ namespace ENTITIES
         public virtual BaseRequest BaseRequest { get; set; }
         public virtual Author Author { get; set; }
         public virtual Paper Paper { get; set; }
+        public virtual PaperRewardType PaperRewardType { get; set; }
         public virtual PaperStatu PaperStatu { get; set; }
+        public virtual PaperTypeByArea PaperTypeByArea { get; set; }
     }
 }

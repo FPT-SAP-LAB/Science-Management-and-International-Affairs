@@ -341,16 +341,16 @@
                                     <span class="menu-text">QUẢN LÝ TIN TỨC, SỰ KIỆN</span>
                                 </a>
                                 @*<div class="menu-submenu ">
-                <i class="menu-arrow"></i>
-                <ul class="menu-subnav">
-                    <li class="menu-item " aria-haspopup="true">
-                        <a href="#" class="menu-link ">
-                            <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                            <span class="menu-text">.......................</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>*@
+                                        <i class="menu-arrow"></i>
+                                        <ul class="menu-subnav">
+                                            <li class="menu-item " aria-haspopup="true">
+                                                <a href="#" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">.......................</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>*@
                             </li>
                             <!---------------------------------------------------------------------------------->
 
@@ -478,11 +478,11 @@
                                             </a>
                                         </li>
                                         @*<li class="menu-item " aria-haspopup="true">
-                                            <a href="/QsUniversity" id="updateJournal" class="menu-link ">
-                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                <span class="menu-text">CẬP NHẬT FILE CHÍNH SÁCH CHO SPKH</span>
-                                            </a>
-                                        </li>*@
+                                                <a href="/QsUniversity" id="updateJournal" class="menu-link ">
+                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                    <span class="menu-text">CẬP NHẬT FILE CHÍNH SÁCH CHO SPKH</span>
+                                                </a>
+                                            </li>*@
                                         <li class="menu-item " aria-haspopup="true">
                                             <a href="/ConditionManagement?language=1" id="updateJournal" class="menu-link ">
                                                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
@@ -540,6 +540,11 @@
                                         <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                             <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
                                                 <i class="fa fas fa-bell icon-md text-success"></i><span class="pulse-ring"></span>
+                                                <span id="noti-number" class="sibfvsnu px9q9ucb j2ut9x2k p4hiznlx pq6dq46d e9vueds3 ekzkrbhg omvj5yrc jiuqdcnw d82f96u3 gky8063y">
+                                                    <span class="bp9cbjyn ljqsnud1 pq6dq46d datstx6m taijpn5t jb3vyjys jxrgncrl qt6c0cv9 qnrpqo6b k4urcfbm">
+                                                        60
+                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                         <!--end::Toggle-->
@@ -825,19 +830,22 @@
                     success: function (data) {
                         if (data.success) {
                             for (var i = 0; i < data.content.length; i++) {
-                                let templateMessage = '<a href="' + data.content[i].URL + '" class="navi-item">' +
+                                let templateMessage = '<a data-id="' + data.content[i].NotificationID + '" href="' + data.content[i].URL + '" class="navi-item not-read-noti">' +
                                     '<div class="navi-link">' +
-                                        '<div class="navi-icon mr-2">' +
-                                            '<i class="' + data.content[i].Icon + '"></i>' +
-                                        '</div>' +
-                                        '<div class="navi-text">' +
-                                            '<div class="font-weight-bold">' +
-                                                data.content[i].Template +
-                                            '</div>' +
-                                            '<div class="text-muted">' +
-                                                data.content[i].StringDate +
-                                            '</div>' +
-                                        '</div>' +
+                                    '<div class="navi-icon mr-2">' +
+                                    '<i class="' + data.content[i].Icon + '"></i>' +
+                                    '</div>' +
+                                    '<div class="navi-text">' +
+                                    '<div';
+                                if (data.content[i].IsRead)
+                                    templateMessage += ' class="text-muted"'
+                                templateMessage += '>' +
+                                    data.content[i].Template +
+                                    '</div>' +
+                                    '<div class="text-muted">' +
+                                    data.content[i].StringDate +
+                                    '</div>' +
+                                    '</div>' +
                                     '</div>' +
                                     '</a>';
                                 $("#event-noti").append(templateMessage);
@@ -848,6 +856,11 @@
                         toastr.error("Không thể lấy được dữ liệu thông báo");
                     }
                 });
+
+                $(document).on("click", ".not-read-noti", function (e) {
+                    location.href = "/Notification/Read?id=" + $(this).data("id");
+                    return false;
+                })
             })
         </script>
     }
