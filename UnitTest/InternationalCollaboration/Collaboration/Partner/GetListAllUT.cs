@@ -82,6 +82,5 @@ namespace UnitTest.InternationalCollaboration.Collaboration.Partner
             int listTest_not_collab = partnerRepo.GetListAll(baseDatatable, searchPartner_not_collab).RecordsTotal;
             Assert.AreEqual(listTest, listTest_is_collab + listTest_not_collab);
         }
-
     }
 }
