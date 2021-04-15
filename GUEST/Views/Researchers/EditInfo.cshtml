@@ -780,22 +780,8 @@
             $("#edit-enable-area").hide()
             $(".researcher_infomation").attr('disabled', false)
         }
-        var KTBootstrapDatetimepicker = function () {
-            // Private functions
-            var baseDemos = function () {
-                $('#kt_datetimepicker_2').datetimepicker({
-                    format: 'DD-MM-YYYY'
-                });
-            }
-            return {
-                // Public functions
-                init: function () {
-                    baseDemos();
-                }
-            };
-        }();
-        jQuery(document).ready(function () {
-            KTBootstrapDatetimepicker.init();
+        $('#kt_datetimepicker_2').datetimepicker({
+            format: 'DD-MM-YYYY'
         });
     </script>
     <script>
