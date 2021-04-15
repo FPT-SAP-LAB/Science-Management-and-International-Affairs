@@ -117,7 +117,6 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
         },
         {
             data: 'collab_id',
-            className: 'text-nowrap',
             render: function (data) {
                 return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=` + data + ` data-toggle="modal" href="#coming_edit_officer">Sửa</a>
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
