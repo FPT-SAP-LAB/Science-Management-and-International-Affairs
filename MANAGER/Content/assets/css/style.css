@@ -26,3 +26,170 @@ thead * {
 #LogoMobile {
     width: 30%;
 }
+/*! CSS Used from: https://static.xx.fbcdn.net/rsrc.php/v3/y5/l/0,cross/EpsgRDp58cqu9jnS-1GfzXqSfvwaA1WCEO9nc8RtTdNbaFheazXyrjiYVl1fd_YRY-.css?_nc_x=MOKvZF2p5k7 */
+#facebook ._-kb span {
+    font-family: inherit;
+}
+
+.bp9cbjyn {
+    align-items: center;
+}
+
+.d82f96u3 {
+    min-width: 19px;
+}
+
+.datstx6m {
+    height: 100%;
+}
+
+.e9vueds3 {
+    font-size: .8125rem;
+}
+
+.ekzkrbhg {
+    font-weight: 500;
+}
+
+.gky8063y {
+    background-color: var(--notification-badge);
+}
+
+.j2ut9x2k {
+    border-bottom-right-radius: 100px;
+}
+
+.jb3vyjys {
+    padding-top: 0;
+}
+
+.jiuqdcnw {
+    line-height: 1;
+}
+
+.jxrgncrl {
+    padding-right: 5px;
+}
+
+.k4urcfbm {
+    width: 100%;
+}
+
+.ljqsnud1 {
+    color: var(--always-white);
+}
+
+.omvj5yrc {
+    height: 19px;
+}
+
+.p4hiznlx {
+    border-bottom-left-radius: 100px;
+}
+
+.pq6dq46d {
+    display: inline-flex;
+}
+
+.px9q9ucb {
+    border-top-right-radius: 100px;
+}
+
+.qnrpqo6b {
+    padding-left: 5px;
+}
+
+.qt6c0cv9 {
+    padding-bottom: 0;
+}
+
+.sibfvsnu {
+    border-top-left-radius: 100px;
+}
+
+.taijpn5t {
+    justify-content: center;
+}
+
+*::-webkit-input-placeholder {
+    color: #606770;
+}
+
+*:focus::-webkit-input-placeholder {
+    color: #bec3c9;
+}
+/*! CSS Used from: https://static.xx.fbcdn.net/rsrc.php/v3/y5/l/0,cross/EpsgRDp58cqu9jnS-1GfzXqSfvwaA1WCEO9nc8RtTdNbaFheazXyrjiYVl1fd_YRY-.css?_nc_x=MOKvZF2p5k7 */
+#facebook ._-kb div {
+    font-family: inherit;
+}
+
+.art1omkt {
+    transition-property: opacity;
+}
+
+.b5wmifdl {
+    opacity: 0;
+}
+
+.bkmhp75w {
+    border-bottom-right-radius: 50%;
+}
+
+.c5ndavph {
+    transition-duration: var(--fds-duration-extra-extra-short-out);
+}
+
+.emlxlaya {
+    border-top-right-radius: 50%;
+}
+
+.hzruof5a {
+    pointer-events: none;
+}
+
+.i09qtzwb {
+    bottom: 0;
+}
+
+.j9ispegn {
+    left: 0;
+}
+
+.kr520xx4 {
+    top: 0;
+}
+
+.n7fi1qx3 {
+    right: 0;
+}
+
+.ot9fgl3s {
+    transition-timing-function: var(--fds-animation-fade-out);
+}
+
+.pmk7jnqg {
+    position: absolute;
+}
+
+.s45kfl79 {
+    border-top-left-radius: 50%;
+}
+
+.spb7xbtv {
+    border-bottom-left-radius: 50%;
+}
+
+*::-webkit-input-placeholder {
+    color: #606770;
+}
+
+*:focus::-webkit-input-placeholder {
+    color: #bec3c9;
+}
+
+#noti-number {
+    position: absolute;
+    background: red;
+    margin-left: 2rem;
+    margin-bottom: 1.5rem
+}

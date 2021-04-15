@@ -38,7 +38,7 @@
             todayHighlight: true,
             templates: arrows,
             format: "dd/mm/yyyy",
-            endDate: "10/04/2021"
+            endDate: today
         });
     }
 

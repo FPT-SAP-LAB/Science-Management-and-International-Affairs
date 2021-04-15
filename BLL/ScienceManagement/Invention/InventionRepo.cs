@@ -293,7 +293,7 @@ namespace BLL.ScienceManagement.Invention
                     request_id = br.request_id,
                     status_id = 3,
                     invention_id = inven.invention_id,
-                    reward_type = "Quydinh"
+                    reward_type = "2"
                 };
                 db.RequestInventions.Add(ri);
                 db.SaveChanges();

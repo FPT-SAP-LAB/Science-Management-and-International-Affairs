@@ -72,8 +72,8 @@
             <div class="col-xl-6 form-group">
                 <label>Loại tiêu chí</label>
                 <select id="loaithuong" class="form-control form-control-lg" disabled>
-                    <option value="Quocte">Quốc tế</option>
-                    <option value="Trongnuoc">Trong nước</option>
+                    <option value="2">Quốc tế</option>
+                    <option value="1">Trong nước</option>
                 </select>
             </div>
             <div class="col-xl-6 form-group thuongtn" style="display: none">
@@ -91,8 +91,8 @@
             <div class="col-xl-6 form-group">
                 <label>Loại khen thưởng</label>
                 <select id="typereward" class="form-control form-control-lg" disabled>
-                    <option value="Quydinh">Theo quy định</option>
-                    <option value="Canhan">Đại diện nhận thưởng</option>
+                    <option value="2">Theo quy định</option>
+                    <option value="1">Đại diện nhận thưởng</option>
                 </select>
             </div>
             <div class="col-xl-6 form-group">
@@ -287,10 +287,18 @@
         </div>
         <hr />
         <div class="row justify-content-center">
-            <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
-            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
-            <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
-            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+            @{
+                if (ViewBag.paper.status_id == 3)
+                {
+                    <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
+                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+                    <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
+                }
+                else
+                {
+                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+                }
+            }
         </div>
     </div>
 </div>
@@ -366,12 +374,12 @@
                 $("#totalreward").prop("disabled", true);
             }
 
-            if ($("#loaithuong").val() == "Trongnuoc") {
+            if ($("#loaithuong").val() == "1") {
                 $(".thuongtn").show();
                 $(".thuongqt").hide();
             }
 
-            if ($("#typereward").val() == "Quydinh") $("#daidien_block").hide();
+            if ($("#typereward").val() == "2") $("#daidien_block").hide();
             else {
                 $(".edit-author-reward").prop('disabled', true);
             }
@@ -513,7 +521,7 @@
                 check = false;
             } else {
                 check = true;
-                if (ck == "Quydinh") {
+                if (ck == "2") {
                     $(".onereward_text").each(function () {
                         var value = $(this).text();
                         //console.log(value);
@@ -568,10 +576,10 @@
                     }
                 }
                 //console.log(sum, parseInt(total));
-                if (sum > parseInt(total) && ck == "Quydinh") {
+                if (sum > parseInt(total) && ck == "2") {
                     $("#loading").hide();
                     toastr.error("Tổng tiền thưởng tác giả quá tổng thưởng bài báo");
-                } else if (sum < parseInt(total) && ck == "Quydinh") {
+                } else if (sum < parseInt(total) && ck == "2") {
                     $("#loading").hide();
                     toastr.error("Tổng tiền thưởng tác giả chưa bằng tổng thưởng bài báo");
                 } else {

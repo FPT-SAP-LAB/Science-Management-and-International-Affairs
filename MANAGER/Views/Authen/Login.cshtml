@@ -2,10 +2,6 @@
 @{
     Layout = "";
     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-    if (Request.IsAuthenticated && user == null)
-    {
-        Response.Redirect("~/Authen/Logout");
-    }
 }
 
 <!DOCTYPE html>
@@ -66,9 +62,9 @@
                 <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
                     <div class="d-flex flex-center mb-15">
                         @*<a href="#">
-                            <img src="~/Content/assets/media/logos/2020-FPT-Edu.png" class="max-h-125px"
-                                 alt="" />
-                        </a>*@
+                                <img src="~/Content/assets/media/logos/2020-FPT-Edu.png" class="max-h-125px"
+                                     alt="" />
+                            </a>*@
                     </div>
                     <div class="login-signin">
                         <div class="mb-20">
@@ -79,8 +75,9 @@
                         </div>
                         <form class="form" id="kt_login_signin_form">
                             <div class="form-group">
-                                <a id="login_btn" href="@Url.Action("SignIn","Authen")" class="btn btn-pill btn-success opacity-90 px-15 py-3">
-                                    <i class="fab fa-microsoft icon-lg"></i> Đăng nhập bằng Microsoft
+                                <a id="login_btn" href="@Url.Action("SignIn","Authen")" class="btn btn-pill btn-success opacity-90 px-15 py-3 align-middle">
+                                    <i class="fab fa-microsoft icon-lg float-left"></i>
+                                    <span>Đăng nhập bằng Microsoft</span>
                                 </a>
                             </div>
                         </form>
@@ -156,8 +153,16 @@
     <script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/pages/custom/login/login-general.js?v=7.0.6"></script>
     <script src="~/Content/assets/js/bundle.js"></script>
-    
+
     <script>
+        @{
+            if (Request.IsAuthenticated && user == null)
+            {
+                @:toastr.error("Tài khoản không có quyền truy cập!");
+                @:setTimeout(function () { location.href = "/Authen/Logout" }, 2000);
+            }
+        }
+
         var login_btn = new LoaderBtn($("#login_btn"));
         $(document).ready(function () {
             

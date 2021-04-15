@@ -108,7 +108,6 @@
     <Compile Include="InternationalCollaboration\Collaboration\MOUPartner\ListMOUPartnerHisUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOUPartner\GetMasterDataUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOUPartner\CheckPartnerExistedUT.cs" />
-    <Compile Include="InternationalCollaboration\Collaboration\MOU\AddMOUUnitTest.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\DeleteMOUUnitTest.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\GetSuggestedMOUCodeUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\GetMasterDataMOUUT.cs" />
@@ -117,6 +116,7 @@
     <Compile Include="InternationalCollaboration\Collaboration\MOU\PartnerInfoIsDuplicatedUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\GetMOUCodeCheckUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\CheckIntersectDateUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\MOU\AddMOUUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\UpdateStatusMOUUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\ViewMOUDeletedUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\ViewMOUUnitTest.cs" />
