@@ -98,7 +98,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, HttpPostedFileBase img)
         {
             repo = new AcademicActivityRepo();
-            bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img);
+            BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
+            bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img,u);
             if (res)
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);

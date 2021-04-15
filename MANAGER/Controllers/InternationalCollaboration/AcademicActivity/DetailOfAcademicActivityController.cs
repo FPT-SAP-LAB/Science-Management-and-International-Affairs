@@ -46,6 +46,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             };
             return Json(data);
         }
+        [HttpPost]
+        public JsonResult getDetailFirst(int language_id, int activity_id)
+        {
+            repo = new DetailOfAcademicActivityRepo();
+            DetailOfAcademicActivityRepo.baseDetail baseDetail = repo.getDetailFirst(language_id, activity_id);
+            DetailOfAcademicActivityRepo.SumDetail data = new DetailOfAcademicActivityRepo.SumDetail
+            {
+                baseDetail = baseDetail,
+                subContent = repo.getSubContents(baseDetail.language_id, activity_id),
+                types = repo.getType(baseDetail.language_id)
+            };
+            return Json(data);
+        }
         [Auther(RightID = "3")]
         [HttpPost]
         public JsonResult updateDetail(DetailOfAcademicActivityRepo.InfoSumDetail obj)
