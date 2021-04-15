@@ -32,49 +32,52 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                string save_office = list.ElementAt(0).office_name;
-                using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
+                if (list.Count != 0)
                 {
-                    Rng.Merge = true;
-                    Rng.Style.Font.Bold = true;
-                    Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                    Rng.Value = save_office;
-                }
-                int stt = 1;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list.ElementAt(i).office_name.Equals(save_office))
+                    string save_office = list.ElementAt(0).office_name;
+                    using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
                     {
-                        excelWorksheet.Cells[i + startRow, 1].Value = stt;
-                        excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
-                        excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).expense_price;
-                        excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).expense_quantity;
-                        excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total;
-                        excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
-                        stt += 1;
+                        Rng.Merge = true;
+                        Rng.Style.Font.Bold = true;
+                        Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        Rng.Value = save_office;
                     }
-                    else
+                    int stt = 1;
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        save_office = list.ElementAt(i).office_name;
-                        using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                        if (list.ElementAt(i).office_name.Equals(save_office))
                         {
-                            Rng.Merge = true;
-                            Rng.Style.Font.Bold = true;
-                            Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                            Rng.Value = save_office;
-                            stt = 1;
-                            excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
-                            excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
-                            excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).expense_price;
-                            excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).expense_quantity;
-                            excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total;
-                            excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            excelWorksheet.Cells[i + startRow, 1].Value = stt;
+                            excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
+                            excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).expense_price;
+                            excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).expense_quantity;
+                            excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total;
+                            excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
+                            stt += 1;
+                        }
+                        else
+                        {
+                            save_office = list.ElementAt(i).office_name;
+                            using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                            {
+                                Rng.Merge = true;
+                                Rng.Style.Font.Bold = true;
+                                Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                                Rng.Value = save_office;
+                                stt = 1;
+                                excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
+                                excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
+                                excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).expense_price;
+                                excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).expense_quantity;
+                                excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total;
+                                excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            }
                         }
                     }
                 }
@@ -105,49 +108,52 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                string save_office = list.ElementAt(0).office_name;
-                using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
+                if (list.Count != 0)
                 {
-                    Rng.Merge = true;
-                    Rng.Style.Font.Bold = true;
-                    Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                    Rng.Value = save_office;
-                }
-                int stt = 1;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list.ElementAt(i).office_name.Equals(save_office))
+                    string save_office = list.ElementAt(0).office_name;
+                    using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
                     {
-                        excelWorksheet.Cells[i + startRow, 1].Value = stt;
-                        excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
-                        excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).price_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).sl_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
-                        stt += 1;
+                        Rng.Merge = true;
+                        Rng.Style.Font.Bold = true;
+                        Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        Rng.Value = save_office;
                     }
-                    else
+                    int stt = 1;
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        save_office = list.ElementAt(i).office_name;
-                        using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                        if (list.ElementAt(i).office_name.Equals(save_office))
                         {
-                            Rng.Merge = true;
-                            Rng.Style.Font.Bold = true;
-                            Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                            Rng.Value = save_office;
-                            stt = 1;
-                            excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
-                            excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
-                            excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).price_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).sl_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            excelWorksheet.Cells[i + startRow, 1].Value = stt;
+                            excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
+                            excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).price_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).sl_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
+                            stt += 1;
+                        }
+                        else
+                        {
+                            save_office = list.ElementAt(i).office_name;
+                            using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                            {
+                                Rng.Merge = true;
+                                Rng.Style.Font.Bold = true;
+                                Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                                Rng.Value = save_office;
+                                stt = 1;
+                                excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
+                                excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
+                                excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).price_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).sl_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            }
                         }
                     }
                 }
@@ -178,51 +184,54 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                string save_office = list.ElementAt(0).office_name;
-                using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
+                if (list.Count != 0)
                 {
-                    Rng.Merge = true;
-                    Rng.Style.Font.Bold = true;
-                    Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                    Rng.Value = save_office;
-                }
-                int stt = 1;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list.ElementAt(i).office_name.Equals(save_office))
+                    string save_office = list.ElementAt(0).office_name;
+                    using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
                     {
-                        excelWorksheet.Cells[i + startRow, 1].Value = stt;
-                        excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
-                        excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).total_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 4].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).total_bandau;
-                        excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total_bandau - list.ElementAt(i).total_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
-                        stt += 1;
+                        Rng.Merge = true;
+                        Rng.Style.Font.Bold = true;
+                        Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        Rng.Value = save_office;
                     }
-                    else
+                    int stt = 1;
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        save_office = list.ElementAt(i).office_name;
-                        using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                        if (list.ElementAt(i).office_name.Equals(save_office))
                         {
-                            Rng.Merge = true;
-                            Rng.Style.Font.Bold = true;
-                            Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                            Rng.Value = save_office;
-                            stt = 1;
-                            excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
-                            excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
-                            excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).total_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 4].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).total_bandau;
-                            excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total_bandau - list.ElementAt(i).total_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            excelWorksheet.Cells[i + startRow, 1].Value = stt;
+                            excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
+                            excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).total_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 4].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).total_bandau;
+                            excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total_bandau - list.ElementAt(i).total_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
+                            stt += 1;
+                        }
+                        else
+                        {
+                            save_office = list.ElementAt(i).office_name;
+                            using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                            {
+                                Rng.Merge = true;
+                                Rng.Style.Font.Bold = true;
+                                Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                                Rng.Value = save_office;
+                                stt = 1;
+                                excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
+                                excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
+                                excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).total_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 4].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).total_bandau;
+                                excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total_bandau - list.ElementAt(i).total_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            }
                         }
                     }
                 }
@@ -253,49 +262,52 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                string save_office = list.ElementAt(0).office_name;
-                using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
+                if (list.Count != 0)
                 {
-                    Rng.Merge = true;
-                    Rng.Style.Font.Bold = true;
-                    Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                    Rng.Value = save_office;
-                }
-                int stt = 1;
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list.ElementAt(i).office_name.Equals(save_office))
+                    string save_office = list.ElementAt(0).office_name;
+                    using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
                     {
-                        excelWorksheet.Cells[i + startRow, 1].Value = stt;
-                        excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
-                        excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).price_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).sl_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
-                        excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total_dieuchinh;
-                        excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
-                        stt += 1;
+                        Rng.Merge = true;
+                        Rng.Style.Font.Bold = true;
+                        Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                        Rng.Value = save_office;
                     }
-                    else
+                    int stt = 1;
+                    for (int i = 0; i < list.Count; i++)
                     {
-                        save_office = list.ElementAt(i).office_name;
-                        using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                        if (list.ElementAt(i).office_name.Equals(save_office))
                         {
-                            Rng.Merge = true;
-                            Rng.Style.Font.Bold = true;
-                            Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                            Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                            Rng.Value = save_office;
-                            stt = 1;
-                            excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
-                            excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
-                            excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).price_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).sl_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
-                            excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total_dieuchinh;
-                            excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            excelWorksheet.Cells[i + startRow, 1].Value = stt;
+                            excelWorksheet.Cells[i + startRow, 2].Value = list.ElementAt(i).expense_category_name;
+                            excelWorksheet.Cells[i + startRow, 3].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 3].Value = list.ElementAt(i).price_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 4].Value = list.ElementAt(i).sl_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 5].Style.Numberformat.Format = "###,###,##0";
+                            excelWorksheet.Cells[i + startRow, 5].Value = list.ElementAt(i).total_dieuchinh;
+                            excelWorksheet.Cells[i + startRow, 6].Value = list.ElementAt(i).note;
+                            stt += 1;
+                        }
+                        else
+                        {
+                            save_office = list.ElementAt(i).office_name;
+                            using (ExcelRange Rng = excelWorksheet.Cells[i + startRow, 1, i + startRow, 6])
+                            {
+                                Rng.Merge = true;
+                                Rng.Style.Font.Bold = true;
+                                Rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                Rng.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                                Rng.Value = save_office;
+                                stt = 1;
+                                excelWorksheet.Cells[i + startRow + 1, 1].Value = stt;
+                                excelWorksheet.Cells[i + startRow + 1, 2].Value = list.ElementAt(i).expense_category_name;
+                                excelWorksheet.Cells[i + startRow + 1, 3].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 3].Value = list.ElementAt(i).price_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 4].Value = list.ElementAt(i).sl_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 5].Style.Numberformat.Format = "###,###,##0";
+                                excelWorksheet.Cells[i + startRow + 1, 5].Value = list.ElementAt(i).total_dieuchinh;
+                                excelWorksheet.Cells[i + startRow + 1, 6].Value = list.ElementAt(i).note;
+                            }
                         }
                     }
                 }

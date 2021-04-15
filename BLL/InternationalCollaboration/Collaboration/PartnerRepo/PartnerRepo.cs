@@ -458,10 +458,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public void GetPreView()
-        {
-            return;
-        }
         public void ExportExcel()
         {
             return;
