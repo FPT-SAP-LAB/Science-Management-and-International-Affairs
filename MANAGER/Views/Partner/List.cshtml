@@ -121,7 +121,7 @@
                                     <th class="text-center">STT</th>
                                     <th class="text-center">Tên đối tác</th>
                                     <th class="text-center">Quốc gia</th>
-                                    <th class="text-center">Website</th>
+                                    <th class="text-center text-nowrap">Website</th>
                                     <th class="text-center">Lĩnh vực</th>
                                     <th class="text-center">Thỏa thuận hợp tác</th>
                                     <th class="text-center">Địa chỉ</th>
@@ -245,18 +245,12 @@
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
                 $(this).parent().css('padding', '0');
-                $('#partner_table th').css('padding', '5px 15px 5px 5px')
-
-                $('#partner_table th').css('padding', '5px 15px 5px 5px')
-                $('#partner_table > thead > tr:nth-child(1) > th:nth-child(3)').css('padding', '5px')
-                $('#partner_table > thead > tr:nth-child(1) > th:nth-child(4)').css('padding', '5px')
-                $('#partner_table > thead > tr:nth-child(1) >th.text-center.text-nowrap.sorting_disabled').css('padding', '5px')
+                $('#partner_table th').css('padding', '5px 5px')
             },
             columns: [
                 {
                     name: "partner_id",
                     data: "no",
-                    orderable: false,
                     createdCell: function (td, cellData, rowData, row, col) {
                         $(td).css('padding', '0 5px')
                     },

@@ -144,7 +144,7 @@
                             <input type="text" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group row">
+                    @*<div class="form-group row">
                         <div class="col-md-4">
                             <div class="form-group row">
                                 <div class="col-md-12">
@@ -180,7 +180,7 @@
                         <div class="col-md-8">
                             <image id="myCanvas" class="img-fluid"></image>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -435,9 +435,10 @@
         var tagifyTo;
 
         var whitelist = @(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.Positions)));
-        for (var i = 0; i < whitelist.length; i++) {
-            whitelist[i].value = whitelist.name;
-        }
+        if (whitelist)
+            for (var i = 0; i < whitelist.length; i++) {
+                whitelist[i].value = whitelist[i].name;
+            }
 
         var MultipleDropDownDemo = function () {
             var demo5 = function () {
@@ -447,11 +448,7 @@
                     delimiters: ", ", // add new tags when a comma or a space character is entered
                     maxTags: 10,
                     keepInvalidTags: false, // do not remove invalid tags (but keep them marked as invalid)
-                    whitelist: [
-                        { language_id: 1, position_id: 1, value: "Trưởng phòng" },
-                        { language_id: 1, position_id: 2, value: "Trưởng bộ môn" },
-                        { language_id: 1, position_id: 3, value: "Hiệu trưởng" }
-                    ],
+                    whitelist: whitelist,
                     templates: {
                         dropdownItem: function (tagData) {
                             try {

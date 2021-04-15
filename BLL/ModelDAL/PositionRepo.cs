@@ -16,7 +16,16 @@ namespace BLL.ModelDAL
         }
         public static int? GetPositionIdByAccountId(ScienceAndInternationalAffairsEntities db, int account_id)
         {
-            return db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault().Position?.position_id;
+            int? position_id = db.Accounts.Find(account_id).position_id;
+            if (position_id == null)
+            {
+                Profile profile = db.Profiles.Where(x => x.account_id == account_id).FirstOrDefault();
+                if (profile == null) return null;
+
+                PeoplePosition peoplePosition = profile.PeoplePositions.FirstOrDefault();
+                position_id = peoplePosition?.position_id;
+            }
+            return position_id;
         }
         public static string GetPositionNameByProfileCode(string code, int language_id)
         {

@@ -114,7 +114,7 @@ class AuthorInfoView {
                                                     </div>
                                                     <div class='d-flex justify-content-between align-items-cente my-1'>
                                                         <span class='text-dark-75 font-weight-bolder mr-2'>CMND file:</span>
-                                                        <a href='#' class='text-muted text-hover-primary'>` + this.link_file + `</a>
+                                                        <a href='`+ this.link_file+`' class='text-muted text-hover-primary'>` + (this.link_file.length > 30 ? (this.link_file.substring(0, 22) + "...") : this.link_file )+ `</a>
                                                     </div>
                                                 </div>
                                             </div>
