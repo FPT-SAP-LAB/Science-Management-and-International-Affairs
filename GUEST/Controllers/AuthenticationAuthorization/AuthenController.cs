@@ -41,6 +41,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
                     email = user.email,
                     role_id = role_id
                 });
+                u = repo.getAccount(user, roleAccept);
             }
             Session["User"] = u;
             if (u.IsValid)
