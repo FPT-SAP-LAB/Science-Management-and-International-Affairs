@@ -15,13 +15,14 @@ namespace MANAGER.Controllers
         {
             return View();
         }
+        [AjaxOnly]
         public JsonResult List(int start)
         {
             try
             {
-                List<Notification> Notis = notificationRepo.List(CurrentAccount.AccountID(Session), start, 1);
-                Notis.ForEach(x => x.StringDate = x.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
-                return Json(new { success = true, content = Notis }, JsonRequestBehavior.AllowGet);
+                BaseServerSideData<Notification> Notis = notificationRepo.List(CurrentAccount.AccountID(Session), start, 1);
+                Notis.Data.ForEach(x => x.StringDate = x.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
+                return Json(new { success = true, content = Notis.Data, unread = Notis.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
