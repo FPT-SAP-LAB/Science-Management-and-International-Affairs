@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq;
+
 namespace MANAGER.Controllers.ScienceManagement.Researchers
 {
     public class ResearchersController : Controller
@@ -200,6 +202,26 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherCandidate = new ResearcherCandidateRepo();
             bool update = researcherCandidate.UpdateProfilePage(id, status);
             return Json(new { success = update });
+        }
+        public JsonResult GetAwards()
+        {
+            researcherBiographyRepo = new ResearchersBiographyRepo();
+            int id = Int32.Parse(Request.QueryString["id"]);
+            ///////////////////////////////////////////////////////////////
+            List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
+            return Json(new
+            {
+                success = true,
+                data = (from a in awards
+                        select new
+                        {
+                            id = a.records.award_id,
+                            index = a.index,
+                            competion_name = a.records.competion_name,
+                            rank = a.records.rank,
+                            award_time = a.records.award_time != null ? a.records.award_time.Value.ToString("dd/MM/yyyy") : ""
+                        })
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -146,8 +146,9 @@ namespace GUEST.Controllers
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult Edit(string id, string editable)
+        //[HttpPost]
+        [Auther(RightID = "26")]
+        public ActionResult Edit(string id)
         {
             ViewBag.title = "Chỉnh sửa khen thưởng bài báo";
             var pagesTree = new List<PageTree>
@@ -155,10 +156,10 @@ namespace GUEST.Controllers
                 new PageTree("Chỉnh sửa khen thưởng bài báo","/Paper/Edit"),
             };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.ckEdit = editable;
 
             DetailPaper item = pr.getDetail(id);
             ViewBag.Paper = item;
+            ViewBag.ckEdit = item.status_id;
 
             int request_id = item.request_id;
 
@@ -261,8 +262,11 @@ namespace GUEST.Controllers
                 index = (string)@object_paper["index"],
                 note_domestic = (string)@object_paper["note_domestic"],
             };
-            DateTime temp_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            paper.publish_date = temp_date;
+            if (paper.date_string != null && paper.date_string != "")
+            {
+                DateTime temp_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                paper.publish_date = temp_date;
+            }
 
             List<CustomCriteria> criteria = new List<CustomCriteria>();
             foreach (var item in object_criteria["criteria"])

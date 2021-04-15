@@ -31,7 +31,8 @@ namespace MANAGER.Controllers
             return View();
         }
 
-        [HttpPost]
+        //[HttpPost]
+        [Auther(RightID = "16")]
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết bằng sáng chế";

@@ -12,6 +12,36 @@ namespace BLL.Authen
     public class LoginRepo
     {
         ScienceAndInternationalAffairsEntities db;
+        public User getAccount(int people_id, List<int> roleAccept)
+        {
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
+                Account a = db.Profiles.Find(people_id).Account;
+                Role r = db.Roles.Find(a.role_id);
+                if (!roleAccept.Contains(r.role_id) && !roleAccept.Contains(0))
+                {
+                    return null;
+                }
+                Profile profile = db.Profiles.Where(x => x.account_id == a.account_id).FirstOrDefault();
+                bool IsValid = profile != null;
+                User u = new User
+                {
+                    url = r.url,
+                    rights = getPermission(a),
+                    account = a,
+                    role_name = r.role_name,
+                    IsValid = IsValid,
+                    PeopleID = profile?.people_id
+                };
+                return u;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
         public User getAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
         {
             db = new ScienceAndInternationalAffairsEntities();
