@@ -15,7 +15,16 @@
             </div>
             <div class="col-xl-6 form-group">
                 <label>Thời gian xuất bản</label>
-                <input class="form-control form-control-lg custom-pickdate" type="text" value="@ViewBag.paper.publish_date.ToString("MM/yyyy")" disabled />
+                @{
+                    if (ViewBag.paper.publish_date != null)
+                    {
+                        <input class="form-control form-control-lg custom-pickdate" type="text" value="@ViewBag.paper.publish_date.ToString("MM/yyyy")" disabled />
+                    }
+                    else
+                    {
+                        <input class="form-control form-control-lg custom-pickdate" type="text" value="" disabled />
+                    }
+                }
             </div>
             <div class="col-xl-6 form-group">
                 <label>Link public toàn văn</label>
