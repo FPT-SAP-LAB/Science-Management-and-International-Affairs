@@ -42,11 +42,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [HttpPost]
-        public JsonResult getBaseAALanguage(int id,int language_id)
+        public JsonResult getBaseAALanguage(int id, int language_id)
         {
             repo = new AcademicActivityRepo();
             detailRepo = new DetailOfAcademicActivityRepo();
-            AcademicActivityRepo.baseAA baseAA = repo.GetbaseAALanguage(id,language_id);
+            AcademicActivityRepo.baseAA baseAA = repo.GetbaseAALanguage(id, language_id);
             AcademicActivityRepo.AAtypes data = new AcademicActivityRepo.AAtypes
             {
                 baseAA = baseAA == null ? new AcademicActivityRepo.baseAA() : baseAA,
@@ -74,7 +74,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         [Auther(RightID = "2")]
         [HttpPost]
-        public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj,int language_id)
+        public JsonResult add_AcademicActivity(AcademicActivityRepo.baseAA obj, int language_id)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         [Auther(RightID = "2")]
         [HttpPost]
-        public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to,int language_id, HttpPostedFileBase img)
+        public JsonResult edit_AcademicActivity(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, HttpPostedFileBase img)
         {
             repo = new AcademicActivityRepo();
             bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img);

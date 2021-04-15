@@ -32,7 +32,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                if(list.Count != 0)
+                if (list.Count != 0)
                 {
                     string save_office = list.ElementAt(0).office_name;
                     using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
@@ -108,7 +108,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                if(list.Count != 0)
+                if (list.Count != 0)
                 {
                     string save_office = list.ElementAt(0).office_name;
                     using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
@@ -184,7 +184,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                if(list.Count != 0)
+                if (list.Count != 0)
                 {
                     string save_office = list.ElementAt(0).office_name;
                     using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])
@@ -262,7 +262,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                 ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                 int startRow = 4;
-                if(list.Count != 0)
+                if (list.Count != 0)
                 {
                     string save_office = list.ElementAt(0).office_name;
                     using (ExcelRange Rng = excelWorksheet.Cells[3, 1, 3, 6])

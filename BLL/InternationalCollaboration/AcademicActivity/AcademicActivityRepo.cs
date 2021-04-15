@@ -143,7 +143,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new baseAA();
             }
         }
-        public baseAA GetbaseAALanguage(int id,int language_id)
+        public baseAA GetbaseAALanguage(int id, int language_id)
         {
             try
             {
@@ -186,7 +186,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.Entry(aa).State = EntityState.Modified;
                     db.SaveChanges();
                     AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
-                    if(al == null)
+                    if (al == null)
                     {
                         int temp_language = language_id == 1 ? 2 : 1;
                         al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == temp_language).FirstOrDefault();
