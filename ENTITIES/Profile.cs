@@ -46,7 +46,6 @@ namespace ENTITIES
         public bool profile_page_active { get; set; }
         public bool is_reseacher { get; set; }
         public int title_id { get; set; }
-        public Nullable<int> position_smia_id { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Country Country { get; set; }
@@ -60,7 +59,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PeoplePosition> PeoplePositions { get; set; }
         public virtual AcademicDegree AcademicDegree { get; set; }
-        public virtual Position Position { get; set; }
         public virtual Title Title { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProfileAcademicDegree> ProfileAcademicDegrees { get; set; }

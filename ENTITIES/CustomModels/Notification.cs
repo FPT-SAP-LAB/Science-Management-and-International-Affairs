@@ -4,6 +4,7 @@ namespace ENTITIES.CustomModels
 {
     public class Notification
     {
+        public int NotificationID { get; set; }
         public string Icon { get; set; }
         public string Template { get; set; }
         public bool IsRead { get; set; }

@@ -50,7 +50,7 @@
 </div>
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title font-weight-bolder">Thêm tài khoản</h3>
@@ -60,16 +60,26 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
+                    <div class="col-sm-4">
                         <label class="col-form-label font-weight-bolder">Email</label>
                         <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="add_email" />
                     </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                    <div class="col-sm-4">
                         <label class="col-form-label font-weight-bolder">Chức danh</label>
                         <select class="form-control" required id="add_role">
                             @foreach (var item in ViewBag.Role)
                             {
                                 <option value="@item.role_id">@item.role_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="col-form-label font-weight-bolder">Chức vụ nội bộ</label>
+                        <select class="form-control" required id="add_position">
+                            <option value="null">Không có</option>
+                            @foreach (var item in ViewBag.Postions)
+                            {
+                                <option value="@item.position_id">@item.name</option>
                             }
                         </select>
                     </div>
@@ -94,16 +104,26 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
+                    <div class="col-sm-4">
                         <label class="col-form-label font-weight-bolder">Email</label>
                         <input class="form-control" type="text" placeholder="Email" autocomplete="off" required id="edit_email" />
                     </div>
-                    <div class="col-sm-5 col-md-5 col-xl-5 col-lg-5">
+                    <div class="col-sm-4">
                         <label class="col-form-label font-weight-bolder">Chức danh</label>
                         <select class="form-control" required id="edit_role">
                             @foreach (var item in ViewBag.Role)
                             {
                                 <option value="@item.role_id">@item.role_name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="col-form-label font-weight-bolder">Chức vụ nội bộ</label>
+                        <select class="form-control" required id="edit_position">
+                            <option value="null">Không có</option>
+                            @foreach (var item in ViewBag.Postions)
+                            {
+                                <option value="@item.position_id">@item.name</option>
                             }
                         </select>
                     </div>
@@ -212,6 +232,7 @@
                 success: function (data) {
                     document.getElementById('edit_email').value = data.email;
                     document.getElementById('edit_role').value = data.role_id;
+                    document.getElementById('edit_position').value = data.position_id;
                     $('#editModal').modal('show');
                 },
                 error: function (data) {
@@ -298,6 +319,7 @@
         $('#btn_add').click(function () {
             let email = document.getElementById('add_email').value;
             let role = document.getElementById('add_role').value;
+            let position = document.getElementById('add_position').value;
             if (email == '' || role == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 return false;
@@ -308,7 +330,8 @@
             }
             let object = {
                 email: email,
-                role_id: role
+                role_id: role,
+                position_id: position
             }
             $.ajax({
                 url: "@Url.Action("add", "Account")",
@@ -338,6 +361,7 @@
         $('#btn_edit').click(function () {
             let email = document.getElementById('edit_email').value;
             let role = document.getElementById('edit_role').value;
+            let position = document.getElementById('edit_position').value;
             if (email == '' || role == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 return false;
@@ -349,7 +373,8 @@
             let object = {
                 account_id : temp_id,
                 email: email,
-                role_id: role
+                role_id: role,
+                position_id: position
             }
             $.ajax({
                 url: "@Url.Action("edit", "Account")",
