@@ -3376,28 +3376,35 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    if (data.baseDetail.article_status_id == 2) {
-                        $('#remove_activity').attr('hidden', false);
+                    if (data.baseDetail != null) {
+                        if (data.baseDetail.article_status_id == 2) {
+                            $('#remove_activity').attr('hidden', false);
+                        } else {
+                            $('#post_activity').attr('hidden', false);
+                        }
+                        document.getElementById('detail_name').value = data.baseDetail.activity_name;
+                        document.getElementById('detail_location').value = data.baseDetail.location;
+                        document.getElementById('detail_language_content').value = data.baseDetail.language_id;
+                        if (document.getElementById('detail_name').value != '') {
+                            document.getElementById('detail_from').value = data.baseDetail.from;
+                            document.getElementById('detail_to').value = data.baseDetail.to;
+                        }
+                        $('#editor-main-content').summernote('code', data.baseDetail.article_content);
+                        data.subContent.forEach(function (x) {
+                            bonusRowContent(x.article_id);
+                            $('#editor-subcontent-' + x.article_id).summernote('code', x.article_content);
+                            document.getElementById('content-' + x.article_id).value = x.version_title;
+                        });
+                        document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
                     } else {
-                        $('#post_activity').attr('hidden', false);
+                        document.getElementById('detail_name').value = '';
+                        document.getElementById('detail_location').value = '';
+                        $('#editor-main-content').summernote('code', '');
                     }
-                    document.getElementById('detail_name').value = data.baseDetail.activity_name;
-                    document.getElementById('detail_location').value = data.baseDetail.location;
-                    if (document.getElementById('detail_name').value != '') {
-                        document.getElementById('detail_from').value = data.baseDetail.from;
-                        document.getElementById('detail_to').value = data.baseDetail.to;
-                    }
-                    $('#editor-main-content').summernote('code', data.baseDetail.article_content);
-                    data.subContent.forEach(function (x) {
-                        bonusRowContent(x.article_id);
-                        $('#editor-subcontent-' + x.article_id).summernote('code', x.article_content);
-                        document.getElementById('content-' + x.article_id).value = x.version_title;
-                    });
                     $('#detail_category').empty();
                     data.types.forEach(function (x) {
-                        $('#detail_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name+'</option>');
+                        $('#detail_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name + '</option>');
                     });
-                    document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
                 },
                 error: function (data) {
                     console.log(data);
@@ -3567,6 +3574,51 @@
                 }
             });
         }
+        function initDetailFirst() {
+            arrIndexContent.forEach(function (x) {
+                $('#row-ckeditor-' + x).remove();
+            });
+            arrIndexContent = [];
+            numberOfIndexContent = 0;
+            var object = {
+                language_id: document.getElementById('detail_language_content').value,
+                activity_id: document.getElementById('activity_id').value
+            }
+            $.ajax({
+                url: "@Url.Action("getDetailFirst", "DetailOfAcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.baseDetail.article_status_id == 2) {
+                        $('#remove_activity').attr('hidden', false);
+                    } else {
+                        $('#post_activity').attr('hidden', false);
+                    }
+                    document.getElementById('detail_name').value = data.baseDetail.activity_name;
+                    document.getElementById('detail_location').value = data.baseDetail.location;
+                    document.getElementById('detail_language_content').value = data.baseDetail.language_id;
+                    if (document.getElementById('detail_name').value != '') {
+                        document.getElementById('detail_from').value = data.baseDetail.from;
+                        document.getElementById('detail_to').value = data.baseDetail.to;
+                    }
+                    $('#editor-main-content').summernote('code', data.baseDetail.article_content);
+                    data.subContent.forEach(function (x) {
+                        bonusRowContent(x.article_id);
+                        $('#editor-subcontent-' + x.article_id).summernote('code', x.article_content);
+                        document.getElementById('content-' + x.article_id).value = x.version_title;
+                    });
+                    $('#detail_category').empty();
+                    data.types.forEach(function (x) {
+                        $('#detail_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name+'</option>');
+                    });
+                    document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
@@ -3574,7 +3626,7 @@
             KTBootstrapDatetimepicker.init();
         });
         jQuery(document).ready(function () {
-            initDetail();
+            initDetailFirst();
             KTSummernoteDemo.init();
             getOffice();
         });
