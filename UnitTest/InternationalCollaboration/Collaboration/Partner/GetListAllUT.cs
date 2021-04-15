@@ -37,7 +37,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.Partner
             List<PartnerList> listTest = partnerRepo.GetListAll(baseDatatable, searchPartner).Data;
             Assert.AreEqual(10, listTest.Count);
         }
-        
+
         [TestCase]
         public void GetListAllUT_2()
         {
@@ -58,7 +58,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.Partner
                 is_collab = 0,
                 is_deleted = 0,
                 language = 1,
-            };  
+            };
             SearchPartner searchPartner_is_collab = new SearchPartner
             {
                 partner_name = "",

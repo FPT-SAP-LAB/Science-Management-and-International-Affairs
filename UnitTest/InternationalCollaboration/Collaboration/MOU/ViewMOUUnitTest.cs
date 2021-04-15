@@ -49,7 +49,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                     Assert.Fail();
                 }
             }
-            Assert.Pass(); 
+            Assert.Pass();
         }
         [TestCase]
         public void TestSearchResultsMOU2()
