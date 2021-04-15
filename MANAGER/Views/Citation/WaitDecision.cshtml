@@ -176,6 +176,7 @@
             formData = new FormData();
             if (uppy1.getFiles()[0] == undefined) {
                 toastr.error("Thiếu file quyết định");
+                $("#loading").hide();
                 return false;
             }
             var number = $("#decisionNo").val();
