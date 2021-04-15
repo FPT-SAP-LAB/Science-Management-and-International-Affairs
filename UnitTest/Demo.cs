@@ -26,5 +26,20 @@ namespace UnitTest
             List<ListMOU> listTest = mou.listAllMOU(baseDatatable, "", "", "").Data;
             Assert.AreEqual(10, listTest.Count);
         }
+        [TestCase]
+        public void Demo2()
+        {
+            //Assert.AreEqual(1, 1);
+            //Assert.Inconclusive();
+        }
+        [TestCase]
+        public void Demo3()
+        {
+            Assert.Multiple(() =>
+            {
+                Demo2();
+                Assert.AreEqual(4,4);
+            });
+        }
     }
 }

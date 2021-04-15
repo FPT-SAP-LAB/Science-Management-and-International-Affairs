@@ -13,11 +13,35 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
     [TestFixture]
     public class GetMOUCodeCheckUT
     {
+        ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         //Pre-condition: TestAddMOU(), TestDeleteMOU() - Integration Test
         [TestCase]
-        public void TestMOUCodeExisted()
+        public void TestAddMOU4_TestMOUCodeExisted1()
         {
-            Assert.Pass();
+            //Arrange
+            new AddMOUUT().TestAddMOU4();
+            MOURepo mou = new MOURepo();
+            string mou_code = "2020/104";
+
+            //Act
+            bool isExisted = mou.getMOUCodeCheck(mou_code);
+
+            //Assert
+            Assert.IsTrue(isExisted);
+        }
+        [TestCase]
+        public void TestAddMOU1_TestMOUCodeExisted2()
+        {
+            //Arrange
+            new DeleteMOUUnitTest().TestAddMOU1_TestDeleteMOU();
+            MOURepo mou = new MOURepo();
+            string mou_code = "2020/101";
+
+            //Act
+            bool isExisted = mou.getMOUCodeCheck(mou_code);
+
+            //Assert
+            Assert.IsFalse(isExisted);
         }
     }
 }
