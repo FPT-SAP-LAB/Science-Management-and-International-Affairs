@@ -99,7 +99,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             repo = new AcademicActivityRepo();
             BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
-            bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img,u);
+            bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img, u);
             if (res)
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);

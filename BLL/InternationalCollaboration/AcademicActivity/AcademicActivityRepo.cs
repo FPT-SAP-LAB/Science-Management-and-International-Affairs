@@ -184,7 +184,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     aa.activity_type_id = activity_type_id;
                     db.Entry(aa).State = EntityState.Modified;
                     db.SaveChanges();
-                    updateOrInsertBaseAA(id,activity_type_id,activity_name,location,from,to,language_id,u);
+                    updateOrInsertBaseAA(id, activity_type_id, activity_name, location, from, to, language_id, u);
                     if (aa.file_id == null)
                     {
                         Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Banner - " + activity_name, 5, false);
@@ -215,7 +215,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void updateOrInsertBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id,Authen.LoginRepo.User u)
+        public void updateOrInsertBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, Authen.LoginRepo.User u)
         {
             AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
             if (al == null)
