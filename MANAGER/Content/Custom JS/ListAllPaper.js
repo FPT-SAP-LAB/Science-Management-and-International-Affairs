@@ -13,6 +13,13 @@
         }
     }
 
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+
     // Private functions
     var demos = function () {
         $('.custom-pickyear').datepicker({
@@ -31,6 +38,7 @@
             todayHighlight: true,
             templates: arrows,
             format: "dd/mm/yyyy",
+            endDate: today
             //maxDate: new Date().getDate()
         });
     }

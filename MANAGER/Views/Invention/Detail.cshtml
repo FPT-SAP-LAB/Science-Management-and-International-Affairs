@@ -50,8 +50,8 @@
             <div class="col-xl-6 form-group" style="display:none">
                 <label>Kiểu thưởng</label>
                 <select id="kieuthuong" class="form-control form-control-lg edit">
-                    <option selected value="Quydinh">Theo quy định</option>
-                    <option value="Canhan">Đại diện nhận thưởng</option>
+                    <option selected value="2">Theo quy định</option>
+                    <option value="1">Đại diện nhận thưởng</option>
                 </select>
             </div>
         </div>
@@ -358,7 +358,7 @@
             } else {
                 check = true;
                 var ck = $("#kieuthuong").val()
-                if (ck == "Quydinh") {
+                if (ck == "2") {
                     $(".onereward_text").each(function () {
                         var value = $(this).text();
                         //console.log(value);

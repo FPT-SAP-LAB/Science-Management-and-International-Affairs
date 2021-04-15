@@ -128,7 +128,11 @@ namespace BLL.ScienceManagement.Citation
                 Author author = db.Authors.Where(x => x.people_id == temp.people_id).FirstOrDefault();
                 author.name = temp.name;
                 author.email = temp.email;
-                if (temp.office_id != 0)
+                if (temp.office_id == 0 || temp.office_id == null)
+                {
+                    author.office_id = null;
+                }
+                else
                 {
                     author.office_id = temp.office_id;
                     author.bank_number = temp.bank_number;
@@ -138,7 +142,7 @@ namespace BLL.ScienceManagement.Citation
                     author.mssv_msnv = temp.mssv_msnv;
                     author.is_reseacher = temp.is_reseacher;
                     author.title_id = temp.title_id;
-                    author.contract_id = temp.contract_id;
+                    author.contract_id = 1;
                     author.identification_file_link = temp.identification_file_link;
                 }
                 db.Entry(author).State = EntityState.Modified;

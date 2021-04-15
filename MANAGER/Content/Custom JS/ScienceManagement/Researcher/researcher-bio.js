@@ -3,6 +3,7 @@ var KTBootstrapDatetimepicker = function () {
     // Private functions
     var baseDemos = function () {
         $('#kt_datetimepicker_7_1').datetimepicker({
+            maxDate: new Date(),
             format: 'YYYY'
         });
         $('#kt_datetimepicker_7_2').datetimepicker({
@@ -19,6 +20,7 @@ var KTBootstrapDatetimepicker = function () {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////
         $('#kt_datetimepicker_7_3').datetimepicker({
+            maxDate: new Date(),
             format: 'YYYY'
         });
         $('#kt_datetimepicker_7_4').datetimepicker({
@@ -34,6 +36,7 @@ var KTBootstrapDatetimepicker = function () {
         });
         /////////////////////////////////////////////////////////////////////////////////////////////////
         $('#kt_datetimepicker_7_5').datetimepicker({
+            maxDate: new Date(),
             format: 'YYYY'
         });
         $('#kt_datetimepicker_7_6').datetimepicker({
@@ -49,6 +52,7 @@ var KTBootstrapDatetimepicker = function () {
         });
         /////////////////////////////////////////////////////////////////////////////////////////////////
         $('#kt_datetimepicker_7_7').datetimepicker({
+            maxDate: new Date(),
             format: 'YYYY'
         });
         $('#kt_datetimepicker_7_8').datetimepicker({
