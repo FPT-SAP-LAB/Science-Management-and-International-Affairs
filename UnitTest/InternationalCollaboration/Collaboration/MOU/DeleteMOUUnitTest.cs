@@ -35,7 +35,6 @@ namespace UnitTest.InternationalCollaboration.Collaboration
 
                 //Assert
                 Assert.Pass();
-
             }
         }
     }
