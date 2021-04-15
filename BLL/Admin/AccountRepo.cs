@@ -89,22 +89,37 @@ namespace BLL.Admin
         }
         public bool add(baseAccount obj)
         {
-            try
+            using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
-                db.Accounts.Add(new Account
+                try
                 {
-                    email = obj.email,
-                    is_login = false,
-                    role_id = obj.role_id,
-                    position_id = obj.position_id
-                });
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
+                    Account account = new Account
+                    {
+                        email = obj.email,
+                        is_login = false,
+                        role_id = obj.role_id,
+                        position_id = obj.position_id
+                    };
+                    List<int> rights = db.RightByRoles.Where(x => x.role_id == obj.role_id).Select(x => x.right_id).ToList();
+                    foreach (var item in rights)
+                    {
+                        db.AccountRights.Add(new AccountRight
+                        {
+                            Account = account,
+                            right_id = item
+                        });
+                    }
+                    db.Accounts.Add(account);
+                    db.SaveChanges();
+                    trans.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    trans.Rollback();
+                    Console.WriteLine(e.ToString());
+                    return false;
+                }
             }
         }
         public string edit(infoAccount obj)
