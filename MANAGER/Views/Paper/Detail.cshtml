@@ -48,6 +48,7 @@
                 </select>
             </div>
         </div>
+
         <h3 class="mb-10 font-weight-bold text-dark">Thông tin nhà xuất bản</h3>
         <div class="row">
             <div class="col-xl-6 form-group">
@@ -67,6 +68,7 @@
                 <input class="form-control form-control-lg" type="text" value="@ViewBag.paper.company" disabled />
             </div>
         </div>
+
         <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
         <div class="row" id="thuong">
             <div class="col-xl-6 form-group">
@@ -367,6 +369,7 @@
                 $("#editconfirm_manager").show();
                 $("#confirmbtn").hide();
                 $("#totalreward").prop("disabled", true);
+                $(".edit-author-reward").prop('disabled', true);
             } else {
                 $("#editconfirm").hide();
                 $("#editconfirm_manager").hide();

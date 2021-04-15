@@ -26,7 +26,7 @@ namespace GUEST.Controllers
         private readonly CommentRepo cr = new CommentRepo();
         private readonly MasterDataRepo md = new MasterDataRepo();
 
-        [Auther(RightID = "2")]
+        [Auther(RightID = "28")]
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đăng ký khen thưởng bằng sáng chế";
@@ -45,8 +45,9 @@ namespace GUEST.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Edit(string id, string editable)
+        //[HttpPost]
+        [Auther(RightID = "28")]
+        public ActionResult Edit(string id)
         {
             ViewBag.title = "Chỉnh sửa khen thưởng bằng sáng chế";
             var pagesTree = new List<PageTree>
@@ -54,10 +55,10 @@ namespace GUEST.Controllers
                 new PageTree("Chỉnh sửa khen thưởng bằng sáng chế","/Invention/Edit"),
             };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.ckEdit = editable;
 
             DetailInvention item = ir.getDetail(id);
             ViewBag.item = item;
+            ViewBag.ckEdit = item.status_id;
 
             int request_id = item.request_id;
             //List<DetailComment> listCmt = cr.GetComment(request_id);
