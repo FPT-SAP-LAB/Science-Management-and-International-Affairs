@@ -65,7 +65,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
             name: 'partner_name',
             createdCell: function (td) {
                 $(td).css('padding', '0 5px')
-                $(td).css({ 'min-width': '0px', 'max-width': '250px' });
+                $(td).css({ 'min-width': '0px', 'max-width': '300px' });
             },
             className: 'text-center',
         },
