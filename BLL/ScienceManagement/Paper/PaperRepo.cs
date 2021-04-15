@@ -1183,7 +1183,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public bool addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
+        public int addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -1283,7 +1283,7 @@ namespace BLL.ScienceManagement.Paper
                         name = item.name,
                         email = item.email
                     };
-                    if (item.office_id != 0)
+                    if (item.office_id != 0 && item.office_id != null)
                     {
                         temp.office_id = item.office_id;
                         temp.bank_number = item.bank_number;
@@ -1339,14 +1339,14 @@ namespace BLL.ScienceManagement.Paper
 
                 dbc.Commit();
 
-                return true;
+                return paper_add.paper_id;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
                 GoogleDriveService.DeleteFile(fl.file_drive_id);
-                return false;
+                return 0;
             }
         }
     }
