@@ -30,9 +30,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on aa.activity_type_id = [at].activity_type_id inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
                         on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
-                        on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
+                        on ar.article_id = ai.article_id inner join 
+						(select av1.article_id, av1.language_id, av2.version_title from 
+						(select min(language_id) 'language_id', article_id from IA_Article.ArticleVersion group by article_id) as av1
+						inner join
+						IA_Article.ArticleVersion av2 on av1.article_id = av2.article_id and av1.language_id = av2.language_id) as av
                         on av.article_id = ai.article_id and al.language_id = av.language_id and at.language_id = al.language_id
-                        WHERE al.language_id = 1 AND YEAR(aa.activity_date_start) = @year";
+                        WHERE YEAR(aa.activity_date_start) = @year";
                 List<ListAA> data = db.Database.SqlQuery<ListAA>(sql,
                         new SqlParameter("year", year)).ToList();
 
@@ -113,15 +117,19 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to'
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to',av.language_id
                         FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
                         on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
-                        on ar.article_id = ai.article_id inner join IA_Article.ArticleVersion av
+                        on ar.article_id = ai.article_id inner join
+						(select av1.article_id, av1.language_id, av2.version_title from 
+						(select min(language_id) 'language_id', article_id from IA_Article.ArticleVersion group by article_id) as av1
+						inner join
+						IA_Article.ArticleVersion av2 on av1.article_id = av2.article_id and av1.language_id = av2.language_id) as av
                         on av.article_id = ai.article_id and al.language_id = av.language_id
-                        WHERE al.language_id = 1 and aa.activity_id = @id";
+                        WHERE aa.activity_id = @activity_id";
                 baseAA obj = db.Database.SqlQuery<baseAA>(sql,
-                            new SqlParameter("id", id)).FirstOrDefault();
+                            new SqlParameter("activity_id", id)).FirstOrDefault();
                 if (obj != null)
                 {
                     obj.from = changeFormatDate(obj.from);
@@ -132,6 +140,31 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                return new baseAA();
+            }
+        }
+        public baseAA GetbaseAALanguage(int id,int language_id)
+        {
+            try
+            {
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to',av.language_id
+                        FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
+                        on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
+                        on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
+                        on ar.article_id = ai.article_id inner join
+						(select av1.article_id, av1.language_id, av2.version_title from 
+						(select min(language_id) 'language_id', article_id from IA_Article.ArticleVersion group by article_id) as av1
+						inner join
+						IA_Article.ArticleVersion av2 on av1.article_id = av2.article_id and av1.language_id = av2.language_id) as av
+                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                        WHERE aa.activity_id = @activity_id and av.language_id = @language_id";
+                baseAA obj = db.Database.SqlQuery<baseAA>(sql,
+                            new SqlParameter("activity_id", id),
+                            new SqlParameter("language_id", language_id)).FirstOrDefault();
+                return obj;
+            }
+            catch (Exception e)
+            {
                 return new baseAA();
             }
         }
@@ -153,13 +186,32 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     db.Entry(aa).State = EntityState.Modified;
                     db.SaveChanges();
                     AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
-                    al.location = location;
-                    db.Entry(al).State = EntityState.Modified;
-                    db.SaveChanges();
-                    ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
-                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
-                    av.version_title = activity_name;
-                    db.SaveChanges();
+                    if(al == null)
+                    {
+                        int temp_language = language_id == 1 ? 2 : 1;
+                        al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == temp_language).FirstOrDefault();
+                        al.location = location;
+                        al.language_id = language_id;
+                        db.Entry(al).State = EntityState.Modified;
+                        db.SaveChanges();
+                        ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
+                        ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
+                        av.version_title = activity_name;
+                        av.language_id = language_id;
+                        db.Entry(av).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        al.location = location;
+                        db.Entry(al).State = EntityState.Modified;
+                        db.SaveChanges();
+                        ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == id && x.main_article == true).FirstOrDefault();
+                        ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == language_id).FirstOrDefault();
+                        av.version_title = activity_name;
+                        db.Entry(av).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                     if (aa.file_id == null)
                     {
                         Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Banner - " + activity_name, 5, false);
@@ -183,7 +235,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     transaction.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     transaction.Rollback();
                     return false;
@@ -552,11 +604,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string location { get; set; }
             public string from { get; set; }
             public string to { get; set; }
+            public int language_id { get; set; }
         }
         public class cloneBase : baseAA
         {
             public int id { get; set; }
             public List<string> content { get; set; }
+        }
+        public class AAtypes
+        {
+            public baseAA baseAA { get; set; }
+            public List<AcademicActivityTypeLanguage> types { get; set; }
         }
     }
 }
