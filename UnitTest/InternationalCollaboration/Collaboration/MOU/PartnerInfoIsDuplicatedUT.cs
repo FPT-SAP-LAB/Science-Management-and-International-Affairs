@@ -16,7 +16,17 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
         [TestCase]
         public void TestDuplicatedPartner()
         {
-            Assert.Pass();
+            //Arrange
+            new AddMOUUT().TestAddMOU4();
+            MOURepo mou = new MOURepo();
+            string partner_name = "Queensland University of Technology";
+            string mou_start_date = "20/05/2020";
+
+            //Act
+            DuplicatePartnerInfo item = mou.partnerInfoIsDuplicated(partner_name, mou_start_date);
+
+            //Assert
+            Assert.IsNotNull(item);
         }
     }
 }

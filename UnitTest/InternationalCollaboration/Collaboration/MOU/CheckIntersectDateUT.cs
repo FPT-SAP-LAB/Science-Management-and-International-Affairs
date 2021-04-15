@@ -1,4 +1,5 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,63 +7,113 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace UnitTest.InternationalCollaboration.Collaboration.MOU
 {
     [TestFixture]
     public class CheckIntersectDateUT
     {
-        //Pre-condition: TestAddMOU() - Integration Test
+        //Pre-condition: TestAddMOU1TID
+        //Integration Test
         [TestCase]
-        public void TestIntersectDate1()
+        public void TestAddMOU1TID_TestIntersectDate1()
         {
-            ////Arrange
-            //List<PartnerInfo> listPartner = new List<PartnerInfo> 
-            //{
-            //    new PartnerInfo
-            //    {
-            //        partner_id = 1
-            //    },
-            //    new PartnerInfo
-            //    {
-            //        partner_id = 2
-            //    }
-            //};
-            //string start_date = "01/01/1900";
-            //string end_date = "01/01/1900";
-            //int office_id = 1;
-            //MOURepo mou = new MOURepo();
+            //Arrange
+            MOURepo mou = new MOURepo();
+            List<int> listPartnerID = new List<int> { 1, 2 };
+            string start_date = "20/05/2021";
+            string end_date = "20/05/2024";
+            int office_id = 2;
+            List<PartnerInfo> listPartner = new List<PartnerInfo>
+            {
+                new PartnerInfo
+                {
+                    partner_id = listPartnerID[0]
+                },
+                new PartnerInfo
+                {
+                    partner_id = listPartnerID[1]
+                }
+            };
 
-            ////Act
-            //IntersectPeriodMOUDate item = mou.checkIntersectPeriodMOUDate(listPartner,start_date,end_date,office_id);
+            //Act
+            TestAddMOU1TID();
+            IntersectPeriodMOUDate item = mou.checkIntersectPeriodMOUDate(listPartner, start_date, end_date, office_id);
 
-            ////Assert
-            //Assert.IsNull(item);
-            Assert.Fail();
+            //Assert
+            Assert.IsNotNull(item);
         }
-        //Pre-condition: TestAddMOU() - Integration Test
         [TestCase]
-        public void TestIntersectDate2()
+        public void TestAddMOU1TID()
         {
-            ////Arrange
-            //List<PartnerInfo> listPartner = new List<PartnerInfo>
-            //{
-            //    new PartnerInfo
-            //    {
-            //        partner_id = 1
-            //    }
-            //};
-            //string start_date = "01/01/1900";
-            //string end_date = "01/01/1900";
-            //int office_id = 1;
-            //MOURepo mou = new MOURepo();
+            //Arrange
+            MOURepo mou = new MOURepo();
+            string mou_code = "2020/1001";
+            string mou_end_date = "20/05/2025";
+            List<string> listStartDate = new List<string> { "20/05/2020", "27/06/2020" };
+            List<int> listPartnerID = new List<int> { 1, 2 };
+            int office_id = 2;
 
-            ////Act
-            //IntersectPeriodMOUDate item = mou.checkIntersectPeriodMOUDate(listPartner, start_date, end_date, office_id);
+            if (isAdded(mou_code))
+            {
+                Assert.Pass("This MOU has been added");
+            }
+            else
+            {
+                BLL.Authen.LoginRepo.User user = new BLL.Authen.LoginRepo.User
+                {
+                    account = new ENTITIES.Account
+                    {
+                        account_id = 16
+                    }
+                };
+                //Add MOU with 1 new partner.
+                MOUAdd input = new MOUAdd
+                {
+                    BasicInfo = new BasicInfo
+                    {
+                        mou_code = mou_code,
+                        mou_end_date = mou_end_date,
+                        mou_note = "TestAddMOU1_TestIntersectDate1",
+                        office_id = office_id,
+                        mou_status_id = 2,
+                        reason = "TestAddMOU1_TestIntersectDate1"
+                    },
+                    PartnerInfo = new List<PartnerInfo>()
+                };
+                input.PartnerInfo.AddRange(
+                    new List<PartnerInfo>
+                    {
+                        new PartnerInfo
+                        {
+                            partner_id = listPartnerID[0],
+                            represent_add = "TestAddMOU1_TestIntersectDate1",
+                            phone_add = "0123456789",
+                            email_add = "TestAddMOU1_TestIntersectDate1",
+                            coop_scope_add = new List<int>() { 1,3,5,7 },
+                            specialization_add = new List<int>() { 3,6 },
+                            sign_date_mou_add = listStartDate[0]
+                        },
+                        new PartnerInfo
+                        {
+                            partner_id = listPartnerID[1],
+                            represent_add = "TestAddMOU1_TestIntersectDate1",
+                            phone_add = "0123456789",
+                            email_add = "TestAddMOU1_TestIntersectDate1",
+                            coop_scope_add = new List<int>() { 2,4,5 },
+                            specialization_add = new List<int>() { 3,4 },
+                            sign_date_mou_add = listStartDate[1]
+                        }
+                    }
+                );
 
-            ////Assert
-            //Assert.IsNull(item);
-            Assert.Fail();
+                //Act
+                mou.addMOU(input, user);
+
+                //Assert
+                Assert.Pass();
+            }
         }
 
         [TestCase("20/05/2020", "20/05/2025", "20/05/2019", "20/05/2026")]
@@ -101,6 +152,10 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
 
             //Assert
             Assert.IsFalse(isInvalid);
+        }
+        public bool isAdded(string mou_code)
+        {
+            return new ScienceAndInternationalAffairsEntities().MOUs.ToList().Any(x => !x.is_deleted && x.mou_code.Equals(mou_code));
         }
     }
 }
