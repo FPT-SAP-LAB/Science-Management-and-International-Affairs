@@ -30,7 +30,7 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, CAST(ptal.id AS nvarchar) as reward_type, CAST(prtl.id AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
+            string sql = @"select p.*, CAST(rp.reward_type AS nvarchar) as reward_type, CAST(rp.type AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
               rp.status_id, f.link as 'link_file'
             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp
             on p.paper_id = rp.paper_id
