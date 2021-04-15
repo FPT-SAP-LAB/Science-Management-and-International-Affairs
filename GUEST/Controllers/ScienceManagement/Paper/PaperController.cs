@@ -282,17 +282,20 @@ namespace GUEST.Controllers
                 {
                     name = (string)item["name"],
                     email = (string)item["email"],
-                    bank_number = Int64.Parse(item["bank_number"].ToString()),
-                    bank_branch = (string)item["bank_branch"],
-                    tax_code = Int64.Parse(item["tax_code"].ToString()),
-                    identification_number = (string)item["identification_number"],
-                    mssv_msnv = (string)item["mssv_msnv"],
-                    office_id = (int)item["office_id"],
-                    contract_id = 1,
-                    title_id = (int)item["title_id"],
-                    is_reseacher = (bool)item["is_reseacher"],
-                    identification_file_link = (string)item["identification_file_link"],
                 };
+                if ((int)item["office_id"] != 0)
+                {
+                    temp.bank_number = Int64.Parse(item["bank_number"].ToString());
+                    temp.bank_branch = (string)item["bank_branch"];
+                    temp.tax_code = Int64.Parse(item["tax_code"].ToString());
+                    temp.identification_number = (string)item["identification_number"];
+                    temp.mssv_msnv = (string)item["mssv_msnv"];
+                    temp.office_id = (int)item["office_id"];
+                    temp.contract_id = 1;
+                    temp.title_id = (int)item["title_id"];
+                    temp.is_reseacher = (bool)item["is_reseacher"];
+                    temp.identification_file_link = (string)item["identification_file_link"];
+                }
                 author.Add(temp);
             }
 
@@ -328,9 +331,11 @@ namespace GUEST.Controllers
                 if (m == "ss") paper.file_id = fl.file_id;
             }
 
-            bool mess = pr.addPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+            int id = pr.addPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+            bool mess = true;
+            if (id == 0) mess = false;
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = id }, JsonRequestBehavior.AllowGet);
         }
     }
 }

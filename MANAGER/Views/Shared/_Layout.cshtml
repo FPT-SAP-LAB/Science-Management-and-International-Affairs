@@ -540,9 +540,8 @@
                                         <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                             <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
                                                 <i class="fa fas fa-bell icon-md text-success"></i><span class="pulse-ring"></span>
-                                                <span id="noti-number" class="sibfvsnu px9q9ucb j2ut9x2k p4hiznlx pq6dq46d e9vueds3 ekzkrbhg omvj5yrc jiuqdcnw d82f96u3 gky8063y">
+                                                <span style="display: none" id="noti-number" class="sibfvsnu px9q9ucb j2ut9x2k p4hiznlx pq6dq46d e9vueds3 ekzkrbhg omvj5yrc jiuqdcnw d82f96u3 gky8063y">
                                                     <span class="bp9cbjyn ljqsnud1 pq6dq46d datstx6m taijpn5t jb3vyjys jxrgncrl qt6c0cv9 qnrpqo6b k4urcfbm">
-                                                        60
                                                     </span>
                                                 </span>
                                             </div>
@@ -552,17 +551,17 @@
                                         <div class="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
                                             <form>
                                                 <!--begin::Header-->
-                                                <div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">
-                                                    <!--begin::Title-->
-                                                    <h4 class="d-flex flex-center rounded-top">
-                                                        <span class="text-white">User Notifications</span>
-                                                        <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
-                                                            23
-                                                            new
-                                                        </span>
-                                                    </h4>
-                                                    <!--end::Title-->
-                                                </div>
+                                                <!--<div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">-->
+                                                <!--begin::Title-->
+                                                <!--<h4 class="d-flex flex-center rounded-top">
+                                                    <span class="text-white">User Notifications</span>
+                                                    <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
+                                                        23
+                                                        new
+                                                    </span>
+                                                </h4>-->
+                                                <!--end::Title-->
+                                                <!--</div>-->
                                                 <!--end::Header-->
                                                 <!--begin::Content-->
                                                 <div class="tab-content">
@@ -769,10 +768,7 @@
             })
         }
         function gp_signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-                window.location.href = '/Authen/Logout';
-            });
+            window.location.href = '/Authen/Logout';
         }
         $(document).ready(async function () {
             await onLoad();
@@ -810,6 +806,8 @@
                         '</div>' +
                     '</a>';
                     $("#event-noti").html(templateMessage + $("#event-noti").html());
+                    $("#noti-number span").text(parseInt($("#noti-number span").text()) + 1);
+                    $("#noti-number").show();
                 };
 
                 $.connection.hub.start().done(function () {
@@ -820,7 +818,9 @@
                         $.connection.hub.start();
                     }, 5000); // Restart connection after 5 seconds.
                 });
+            });
 
+            $(document).ready(function () {
                 $.ajax({
                     url: '/Notification/List',
                     data: {
@@ -850,17 +850,22 @@
                                     '</a>';
                                 $("#event-noti").append(templateMessage);
                             }
+                            $("#noti-number span").text(data.unread)
+                            if (data.unread != 0)
+                                $("#noti-number").show();
+                            if ($("#event-noti a").length == 0)
+                                $("#event-noti").append('<div style="height: inherit" class="d-flex flex-center text-center text-muted">All caught up!<br />No new notifications.</div>')
                         }
                     },
                     error: function (data) {
                         toastr.error("Không thể lấy được dữ liệu thông báo");
                     }
                 });
+            });
 
-                $(document).on("click", ".not-read-noti", function (e) {
-                    location.href = "/Notification/Read?id=" + $(this).data("id");
-                    return false;
-                })
+            $(document).on("click", ".not-read-noti", function (e) {
+                location.href = "/Notification/Read?id=" + $(this).data("id");
+                return false;
             })
         </script>
     }

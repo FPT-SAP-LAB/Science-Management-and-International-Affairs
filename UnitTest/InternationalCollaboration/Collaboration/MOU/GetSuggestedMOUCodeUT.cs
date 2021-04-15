@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace UnitTest.InternationalCollaboration.Collaboration.MOU
 {
@@ -15,7 +16,16 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
         [TestCase]
         public void TestSuggestedMOUCode()
         {
-            Assert.Pass();
+            //Arrange
+            MOURepo mou = new MOURepo();
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+
+            //Act
+            string mou_code = mou.getSuggestedMOUCode();
+            bool isExisted = db.MOUs.Any(x => x.mou_code.Equals(mou_code));
+
+            //Assert
+            Assert.IsFalse(isExisted);
         }
     }
 }
