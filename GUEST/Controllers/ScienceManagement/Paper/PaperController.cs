@@ -262,8 +262,11 @@ namespace GUEST.Controllers
                 index = (string)@object_paper["index"],
                 note_domestic = (string)@object_paper["note_domestic"],
             };
-            DateTime temp_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            paper.publish_date = temp_date;
+            if (paper.date_string != null && paper.date_string != "")
+            {
+                DateTime temp_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                paper.publish_date = temp_date;
+            }
 
             List<CustomCriteria> criteria = new List<CustomCriteria>();
             foreach (var item in object_criteria["criteria"])
