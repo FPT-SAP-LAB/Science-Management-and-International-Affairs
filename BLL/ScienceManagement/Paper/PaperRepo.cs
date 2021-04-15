@@ -30,7 +30,7 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, CAST(ptal.id AS nvarchar) as reward_type, CAST(prtl.id AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
+            string sql = @"select p.*, CAST(rp.reward_type AS nvarchar) as reward_type, CAST(rp.type AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
               rp.status_id, f.link as 'link_file'
             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp
             on p.paper_id = rp.paper_id
@@ -1183,7 +1183,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public bool addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
+        public int addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -1283,7 +1283,7 @@ namespace BLL.ScienceManagement.Paper
                         name = item.name,
                         email = item.email
                     };
-                    if (item.office_id != 0)
+                    if (item.office_id != 0 && item.office_id != null)
                     {
                         temp.office_id = item.office_id;
                         temp.bank_number = item.bank_number;
@@ -1339,14 +1339,14 @@ namespace BLL.ScienceManagement.Paper
 
                 dbc.Commit();
 
-                return true;
+                return paper_add.paper_id;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
                 GoogleDriveService.DeleteFile(fl.file_drive_id);
-                return false;
+                return 0;
             }
         }
     }
