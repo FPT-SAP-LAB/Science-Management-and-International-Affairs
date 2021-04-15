@@ -192,7 +192,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 mou.addMOU(input, user);
 
                 //Assert
-                Assert.Pass(); 
+                Assert.Pass();
             }
         }
         //for testing MOUCodeCheck

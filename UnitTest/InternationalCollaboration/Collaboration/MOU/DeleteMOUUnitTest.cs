@@ -27,7 +27,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
             {
                 //Assert
                 Assert.Pass("Is deleted before");
-            } 
+            }
             else
             {
                 //Act

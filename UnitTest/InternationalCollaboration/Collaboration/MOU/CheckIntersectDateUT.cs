@@ -39,7 +39,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
 
             //Act
             TestAddMOU1TID();
-            IntersectPeriodMOUDate item = mou.checkIntersectPeriodMOUDate(listPartner,start_date,end_date,office_id);
+            IntersectPeriodMOUDate item = mou.checkIntersectPeriodMOUDate(listPartner, start_date, end_date, office_id);
 
             //Assert
             Assert.IsNotNull(item);

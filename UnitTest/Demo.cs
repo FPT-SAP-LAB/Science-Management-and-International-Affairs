@@ -38,7 +38,7 @@ namespace UnitTest
             Assert.Multiple(() =>
             {
                 Demo2();
-                Assert.AreEqual(4,4);
+                Assert.AreEqual(4, 4);
             });
         }
     }
