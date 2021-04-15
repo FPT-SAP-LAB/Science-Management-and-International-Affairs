@@ -180,6 +180,13 @@
             }
             var number = $("#decisionNo").val();
             var date = $("#valid_date").val();
+
+            if (number == "" || date == "") {
+                $("#loading").hide();
+                toastr.error("Cần nhập đủ các trường");
+                return false;
+            }
+
             formData.append('file', uppy1.getFiles()[0].data);
             formData.append('number', number);
             formData.append('date', date);
