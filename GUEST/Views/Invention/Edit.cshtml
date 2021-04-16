@@ -36,14 +36,22 @@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Country")</label>
-                            <select class="form-control edit" id="search_country" name="param">
+                            <select class="form-control select2 notnull edit" id="search_country" name="param" multiple="multiple">
+                                @{
+                                    foreach (var item in ViewBag.listCountry)
+                                    {
+                                        <option value="@item.country_id" @(item.selected == true ? "selected" : "")>@item.country_name</option>
+                                    }
+                                }
+                            </select>
+                            @*<select class="form-control edit" id="search_country" name="param">
                                 @{
                                     foreach (var item in ViewBag.listCountry)
                                     {
                                         <option value="@item.country_id">@item.country_name</option>
                                     }
                                 }
-                            </select>
+                            </select>*@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("FileCM")</label>
@@ -144,7 +152,7 @@
         var invenID = "@ViewBag.invenID";
         var paper_id = "@ViewBag.invenID";
         $('#search_country').select2({
-            allowClear: true
+            //allowClear: true
         });
         $('#kieuthuong').select2({
             allowClear: true
@@ -212,9 +220,9 @@
             if (kieuthuong == "1") $("#kieuthuong").val("1");
             $("#kieuthuong").trigger('change');
 
-            var country = "@ViewBag.item.country_id";
+            @*var country = "@ViewBag.item.country_id";
             $("#search_country").val(country);
-            $("#search_country").trigger('change');
+            $("#search_country").trigger('change');*@
 
             var typeid = "@ViewBag.item.type_name";
             $("#search_type").val(typeid);

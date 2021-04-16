@@ -1041,8 +1041,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="no" Type="nvarchar" MaxLength="150" />
           <Property Name="type_id" Type="int" />
           <Property Name="date" Type="date" />
-          <Property Name="country_id" Type="int" Nullable="false" />
           <Property Name="file_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InventionCountry">
+          <Key>
+            <PropertyRef Name="invention_country_id" />
+          </Key>
+          <Property Name="invention_country_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="invention_id" Type="int" />
+          <Property Name="country_id" Type="int" />
         </EntityType>
         <EntityType Name="InventionType">
           <Key>
@@ -2402,14 +2409,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Invention__count__408F9238">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Invention" Type="Self.Invention" Multiplicity="*" />
+        <Association Name="FK__Invention__count__11F49EE0">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="InventionCountry" Type="Self.InventionCountry" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="country_id" />
             </Principal>
-            <Dependent Role="Invention">
+            <Dependent Role="InventionCountry">
               <PropertyRef Name="country_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -2423,6 +2430,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Invention">
               <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invention__inven__11007AA7">
+          <End Role="Invention" Type="Self.Invention" Multiplicity="0..1" />
+          <End Role="InventionCountry" Type="Self.InventionCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invention">
+              <PropertyRef Name="invention_id" />
+            </Principal>
+            <Dependent Role="InventionCountry">
+              <PropertyRef Name="invention_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4012,6 +4031,40 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="InitCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="InputString" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -4118,6 +4171,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="AuthorInvention" EntityType="Self.AuthorInvention" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="AuthorPaper" EntityType="Self.AuthorPaper" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="Invention" EntityType="Self.Invention" Schema="SM_ScientificProduct" store:Type="Tables" />
+          <EntitySet Name="InventionCountry" EntityType="Self.InventionCountry" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="InventionType" EntityType="Self.InventionType" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="Paper" EntityType="Self.Paper" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="PaperCriteria" EntityType="Self.PaperCriteria" Schema="SM_ScientificProduct" store:Type="Tables" />
@@ -4509,13 +4563,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Language" EntitySet="Language" />
             <End Role="FormalityLanguage" EntitySet="FormalityLanguage" />
           </AssociationSet>
-          <AssociationSet Name="FK__Invention__count__408F9238" Association="Self.FK__Invention__count__408F9238">
+          <AssociationSet Name="FK__Invention__count__11F49EE0" Association="Self.FK__Invention__count__11F49EE0">
             <End Role="Country" EntitySet="Country" />
-            <End Role="Invention" EntitySet="Invention" />
+            <End Role="InventionCountry" EntitySet="InventionCountry" />
           </AssociationSet>
           <AssociationSet Name="FK__Invention__file___2AA05119" Association="Self.FK__Invention__file___2AA05119">
             <End Role="File" EntitySet="File" />
             <End Role="Invention" EntitySet="Invention" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invention__inven__11007AA7" Association="Self.FK__Invention__inven__11007AA7">
+            <End Role="Invention" EntitySet="Invention" />
+            <End Role="InventionCountry" EntitySet="InventionCountry" />
           </AssociationSet>
           <AssociationSet Name="FK__Invention__type___4277DAAA" Association="Self.FK__Invention__type___4277DAAA">
             <End Role="InventionType" EntitySet="InventionType" />
@@ -5122,7 +5180,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="alpha3_code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="numberic" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Conferences" Relationship="Self.FK__Conferenc__count__589C25F3" FromRole="Country" ToRole="Conference" />
-          <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__count__408F9238" FromRole="Country" ToRole="Invention" />
+          <NavigationProperty Name="InventionCountries" Relationship="Self.FK__Invention__count__11F49EE0" FromRole="Country" ToRole="InventionCountry" />
           <NavigationProperty Name="Partners" Relationship="Self.FK__Partner__country__2F9A1060" FromRole="Country" ToRole="Partner" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__country__70FDBF69" FromRole="Country" ToRole="Profile" />
           <NavigationProperty Name="Scholarships" Relationship="Self.FK__Scholarsh__count__7BE56230" FromRole="Country" ToRole="Scholarship" />
@@ -6324,13 +6382,22 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="no" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="type_id" Type="Int32" />
           <Property Name="date" Type="DateTime" Precision="0" />
-          <Property Name="country_id" Type="Int32" Nullable="false" />
           <Property Name="file_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Country" Relationship="Self.FK__Invention__count__408F9238" FromRole="Invention" ToRole="Country" />
           <NavigationProperty Name="File" Relationship="Self.FK__Invention__file___2AA05119" FromRole="Invention" ToRole="File" />
           <NavigationProperty Name="AuthorInventions" Relationship="Self.FK__AuthorInv__inven__3CBF0154" FromRole="Invention" ToRole="AuthorInvention" />
+          <NavigationProperty Name="InventionCountries" Relationship="Self.FK__Invention__inven__11007AA7" FromRole="Invention" ToRole="InventionCountry" />
           <NavigationProperty Name="InventionType" Relationship="Self.FK__Invention__type___4277DAAA" FromRole="Invention" ToRole="InventionType" />
           <NavigationProperty Name="RequestInventions" Relationship="Self.FK__RequestIn__inven__473C8FC7" FromRole="Invention" ToRole="RequestInvention" />
+        </EntityType>
+        <EntityType Name="InventionCountry">
+          <Key>
+            <PropertyRef Name="invention_country_id" />
+          </Key>
+          <Property Name="invention_country_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="invention_id" Type="Int32" />
+          <Property Name="country_id" Type="Int32" />
+          <NavigationProperty Name="Country" Relationship="Self.FK__Invention__count__11F49EE0" FromRole="InventionCountry" ToRole="Country" />
+          <NavigationProperty Name="Invention" Relationship="Self.FK__Invention__inven__11007AA7" FromRole="InventionCountry" ToRole="Invention" />
         </EntityType>
         <EntityType Name="InventionType">
           <Key>
@@ -7023,14 +7090,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Invention__count__408F9238">
-          <End Role="Country" Type="Self.Country" Multiplicity="1" />
-          <End Role="Invention" Type="Self.Invention" Multiplicity="*" />
+        <Association Name="FK__Invention__count__11F49EE0">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="InventionCountry" Type="Self.InventionCountry" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Country">
               <PropertyRef Name="country_id" />
             </Principal>
-            <Dependent Role="Invention">
+            <Dependent Role="InventionCountry">
               <PropertyRef Name="country_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8907,6 +8974,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Invention__inven__11007AA7">
+          <End Role="Invention" Type="Self.Invention" Multiplicity="0..1" />
+          <End Role="InventionCountry" Type="Self.InventionCountry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invention">
+              <PropertyRef Name="invention_id" />
+            </Principal>
+            <Dependent Role="InventionCountry">
+              <PropertyRef Name="invention_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Invention__type___4277DAAA">
           <End Role="InventionType" Type="Self.InventionType" Multiplicity="0..1" />
           <End Role="Invention" Type="Self.Invention" Multiplicity="*" />
@@ -9397,6 +9476,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="AuthorInventions" EntityType="Self.AuthorInvention" />
           <EntitySet Name="AuthorPapers" EntityType="Self.AuthorPaper" />
           <EntitySet Name="Inventions" EntityType="Self.Invention" />
+          <EntitySet Name="InventionCountries" EntityType="Self.InventionCountry" />
           <EntitySet Name="InventionTypes" EntityType="Self.InventionType" />
           <EntitySet Name="Papers" EntityType="Self.Paper" />
           <EntitySet Name="PaperCriterias" EntityType="Self.PaperCriteria" />
@@ -9513,9 +9593,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Country" EntitySet="Countries" />
             <End Role="Conference" EntitySet="Conferences" />
           </AssociationSet>
-          <AssociationSet Name="FK__Invention__count__408F9238" Association="Self.FK__Invention__count__408F9238">
+          <AssociationSet Name="FK__Invention__count__11F49EE0" Association="Self.FK__Invention__count__11F49EE0">
             <End Role="Country" EntitySet="Countries" />
-            <End Role="Invention" EntitySet="Inventions" />
+            <End Role="InventionCountry" EntitySet="InventionCountries" />
           </AssociationSet>
           <AssociationSet Name="FK__Partner__country__2F9A1060" Association="Self.FK__Partner__country__2F9A1060">
             <End Role="Country" EntitySet="Countries" />
@@ -10137,6 +10217,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Paper" EntitySet="Papers" />
             <End Role="AuthorPaper" EntitySet="AuthorPapers" />
           </AssociationSet>
+          <AssociationSet Name="FK__Invention__inven__11007AA7" Association="Self.FK__Invention__inven__11007AA7">
+            <End Role="Invention" EntitySet="Inventions" />
+            <End Role="InventionCountry" EntitySet="InventionCountries" />
+          </AssociationSet>
           <AssociationSet Name="FK__Invention__type___4277DAAA" Association="Self.FK__Invention__type___4277DAAA">
             <End Role="InventionType" EntitySet="InventionTypes" />
             <End Role="Invention" EntitySet="Inventions" />
@@ -10273,7 +10357,48 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11309,8 +11434,16 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="no" ColumnName="no" />
                 <ScalarProperty Name="type_id" ColumnName="type_id" />
                 <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="country_id" ColumnName="country_id" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventionCountries">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.InventionCountry">
+              <MappingFragment StoreEntitySet="InventionCountry">
+                <ScalarProperty Name="invention_country_id" ColumnName="invention_country_id" />
+                <ScalarProperty Name="invention_id" ColumnName="invention_id" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11752,6 +11885,30 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

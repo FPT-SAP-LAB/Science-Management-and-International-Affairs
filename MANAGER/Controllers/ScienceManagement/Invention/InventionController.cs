@@ -39,8 +39,10 @@ namespace MANAGER.Controllers
             DetailInvention item = ir.getDetail(id);
             ViewBag.item = item;
 
-            List<Country> listCountry = ir.getCountry();
-            ViewBag.country = listCountry;
+            //List<Country> listCountry = ir.getCountry();
+            //ViewBag.country = listCountry;
+            List<CustomCountry> listCountry = ir.getListCountryEdit(item.invention_id);
+            ViewBag.listCountry = listCountry;
 
             List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id, "vi-VN");
             ViewBag.author = listAuthor;
