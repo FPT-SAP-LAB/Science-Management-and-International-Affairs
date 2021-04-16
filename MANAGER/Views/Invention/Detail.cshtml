@@ -27,11 +27,11 @@
             </div>
             <div class="col-xl-6 form-group">
                 <label>Quốc gia</label>
-                <select class="form-control" id="search_nam" name="param" disabled>
+                <select class="form-control select2 notnull edit" disabled id="search_country" name="param" multiple="multiple">
                     @{
-                        foreach (var item in ViewBag.country)
+                        foreach (var item in ViewBag.listCountry)
                         {
-                            <option value="@item.country_id">@item.country_name</option>
+                            <option value="@item.country_id" @(item.selected == true ? "selected" : "")>@item.country_name</option>
                         }
                     }
                 </select>
@@ -211,13 +211,32 @@
 @section scripts{
     <script src="~/Scripts/inputFilter.js"></script>
     <script>
+        var KTSelect2 = function () {
+            // Private functions
+            var demos = function () {
+                // multi select
+                $('#search_country').select2({
+                    //placeholder: 'Chọn chức danh',
+                    //tags: true
+                });
+            }
+            // Public functions
+            return {
+                init: function () {
+                    demos();
+                }
+            };
+        }();
+
         var people = [];
         var check = true;
         var id_people_selected;
         $(document).ready(function () {
-            var country_id = "@ViewBag.item.country_id";
-            $("#search_nam").val(country_id);
+            //var country_id = "";
+            //$("#search_nam").val(country_id);
             $("#kieuthuong").val("@ViewBag.item.reward_type");
+            // Initialization
+            KTSelect2.init();
 
             var status = "@ViewBag.item.status_id";
             if (status == "3") {
