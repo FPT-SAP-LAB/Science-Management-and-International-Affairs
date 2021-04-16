@@ -60,14 +60,14 @@ namespace BLL.ScienceManagement.Report
                                           join j in db.Authors on h.people_id equals j.people_id
                                           where m.status_id == 2 && m.type == 2 && j.name == b.name && j.identification_number == b.identification_number
                                           select h.money_reward).Distinct().Sum().ToString(),
-                            conferenceAward="0",
-                            CitationAward="0"
+                            conferenceAward = "0",
+                            CitationAward = "0"
                         });
             var result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
                 .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
 
             int recordsTotal = data.Count();
-            return new BaseServerSideData<ReportByAuthorAward>(result,recordsTotal);
+            return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
     }
 }
