@@ -101,7 +101,6 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
-            orderable: false,
             createdCell: function (td) {
                 $(td).css('padding', '0 12px 0 5px')
             },
@@ -118,7 +117,6 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
             createdCell: function (td) {
                 $(td).css('padding', '0')
             },
-            orderable: false,
             className: 'text-center',
             orderable: false,
         },
