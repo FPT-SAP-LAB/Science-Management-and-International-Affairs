@@ -88,6 +88,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activities During The Year.
+        /// </summary>
+        public static string ActivityNavbar {
+            get {
+                return ResourceManager.GetString("ActivityNavbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add more author.
         /// </summary>
         public static string AddAu {
@@ -457,6 +466,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FPT Education - Office of Science Management and International Affairs.
+        /// </summary>
+        public static string Header {
+            get {
+                return ResourceManager.GetString("Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string homepage {
@@ -511,6 +529,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to International Partners.
+        /// </summary>
+        public static string InternationalPartner {
+            get {
+                return ResourceManager.GetString("InternationalPartner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invention&apos;s name.
         /// </summary>
         public static string InvenName {
@@ -520,11 +547,20 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invention patent.
+        ///   Looks up a localized string similar to Invention patents.
         /// </summary>
         public static string Invention {
             get {
                 return ResourceManager.GetString("Invention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISI/SCOPUS Papers.
+        /// </summary>
+        public static string ISI_SCOPUS {
+            get {
+                return ResourceManager.GetString("ISI/SCOPUS", resourceCulture);
             }
         }
         
@@ -718,6 +754,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Publications.
+        /// </summary>
+        public static string NewPublications {
+            get {
+                return ResourceManager.GetString("NewPublications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to News.
         /// </summary>
         public static string News {
@@ -880,11 +925,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Policy.
+        /// </summary>
+        public static string Policy {
+            get {
+                return ResourceManager.GetString("Policy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         public static string Pre {
             get {
                 return ResourceManager.GetString("Pre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Procedure Guidelines.
+        /// </summary>
+        public static string ProcedureGuidelines {
+            get {
+                return ResourceManager.GetString("ProcedureGuidelines", resourceCulture);
             }
         }
         
@@ -970,6 +1033,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quick Statistics.
+        /// </summary>
+        public static string QuickStatistics {
+            get {
+                return ResourceManager.GetString("QuickStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to record.
         /// </summary>
         public static string Record {
@@ -1033,6 +1105,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Researchers.
+        /// </summary>
+        public static string Researchers {
+            get {
+                return ResourceManager.GetString("Researchers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reward.
         /// </summary>
         public static string Reward {
@@ -1065,6 +1146,24 @@ namespace GUEST.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Science Technology.
+        /// </summary>
+        public static string ScienceManagementNavbar {
+            get {
+                return ResourceManager.GetString("ScienceManagementNavbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scientific Products.
+        /// </summary>
+        public static string ScientificProducts {
+            get {
+                return ResourceManager.GetString("ScientificProducts", resourceCulture);
             }
         }
         
