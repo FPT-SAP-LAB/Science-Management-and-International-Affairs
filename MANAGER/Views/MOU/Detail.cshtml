@@ -1701,7 +1701,7 @@
                 {
                     data: "country_name",
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center', },
                 {
@@ -1714,7 +1714,7 @@
                         }
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -1799,7 +1799,6 @@
                 $(this).parent().css('width', '100%');
                 $(this).parent().css('padding', '0');
                 $('.mou_table th').css('padding', '5px 15px 5px 5px')
-                //document.querySelector("#partner_table > thead > tr:nth-child(1) > th:nth-child(1)")
                 $('.sorting_disabled').css('padding', '5px')
                 $('.header-modify').css('padding', '5px')
             }
@@ -2417,7 +2416,7 @@
                             '<a onclick="confirm_delete_moa(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center text-nowrap',
                 },
