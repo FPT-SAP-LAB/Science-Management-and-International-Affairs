@@ -134,6 +134,102 @@ namespace BLL.ScienceManagement.Invention
             }
         }
 
+        public int addInven_refactor(ENTITIES.Invention inven, string type, List<Country> listCountry, List<AddAuthor> author, File fl, Account acc)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                InventionType ck = db.InventionTypes.Where(x => x.name == type).FirstOrDefault();
+                if (ck == null)
+                {
+                    InventionType ip = new InventionType
+                    {
+                        name = type
+                    };
+                    db.InventionTypes.Add(ip);
+                    db.SaveChanges();
+                }
+                inven.type_id = ck.invention_type_id;
+                db.Inventions.Add(inven);
+                db.SaveChanges();
+
+                BaseRequest b = new BaseRequest
+                {
+                    account_id = acc.account_id,
+                    created_date = DateTime.Today
+                };
+                db.BaseRequests.Add(b);
+                db.SaveChanges();
+
+                RequestInvention ri = new RequestInvention
+                {
+                    request_id = b.request_id,
+                    status_id = 3,
+                    invention_id = inven.invention_id,
+                    reward_type = "2"
+                };
+                db.RequestInventions.Add(ri);
+                db.SaveChanges();
+
+                foreach (var item in listCountry)
+                {
+                    InventionCountry ic = new InventionCountry()
+                    {
+                        invention_id = inven.invention_id,
+                        country_id = item.country_id
+                    };
+                    db.InventionCountries.Add(ic);
+                }
+                db.SaveChanges();
+
+                List<Author> listAuthor = new List<Author>();
+                foreach (var item in author)
+                {
+                    Author temp = new Author
+                    {
+                        name = item.name,
+                        email = item.email
+                    };
+                    if (item.office_id != 0)
+                    {
+                        temp.office_id = item.office_id;
+                        temp.bank_number = item.bank_number;
+                        temp.bank_branch = item.bank_branch;
+                        temp.tax_code = item.tax_code;
+                        temp.identification_number = item.identification_number;
+                        temp.mssv_msnv = item.mssv_msnv;
+                        temp.is_reseacher = item.is_reseacher;
+                        temp.title_id = item.title_id;
+                        temp.contract_id = item.contract_id;
+                    }
+                    db.Authors.Add(temp);
+                    listAuthor.Add(temp);
+                }
+                db.SaveChanges();
+
+                foreach (var item in listAuthor)
+                {
+                    AuthorInvention ai = new AuthorInvention
+                    {
+                        people_id = item.people_id,
+                        invention_id = inven.invention_id,
+                        money_reward = 0
+                    };
+                    db.AuthorInventions.Add(ai);
+                }
+                db.SaveChanges();
+
+                dbc.Commit();
+                return inven.invention_id;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return 0;
+            }
+        }
+
         public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -315,7 +411,6 @@ namespace BLL.ScienceManagement.Invention
                 i.no = inven.no;
                 i.type_id = inven.type_id;
                 i.date = inven.date;
-                i.country_id = inven.country_id;
                 db.SaveChanges();
                 return "ss";
             }
@@ -510,6 +605,16 @@ namespace BLL.ScienceManagement.Invention
                             where ri.status_id = 4
                             order by ah.name";
             List<Invention_Appendix_2> list = db.Database.SqlQuery<Invention_Appendix_2>(sql).ToList();
+            return list;
+        }
+
+        public List<CustomCountry> getListCountryEdit(int id)
+        {
+            string sql = @"select i.invention_id, c.country_id, case when i.invention_id is null then cast(0 as bit) else cast(1 as bit) end as 'selected', c.country_name
+                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.InventionCountry ic on i.invention_id = ic.invention_id
+	                            right join General.Country c on ic.country_id = c.country_id
+                            where i.invention_id = @id or i.invention_id is null";
+            List<CustomCountry> list = db.Database.SqlQuery<CustomCountry>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
     }

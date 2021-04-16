@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("Country")<span style='color:red'>*</span></label>
-                                <select class="form-control form-control-lg select-custom notnull" id="search_country" name="param">
+                                <select class="form-control select2 notnull" id="search_country" name="param" multiple="multiple">
                                     @{
                                         foreach (var item in ViewBag.country)
                                         {
@@ -148,7 +148,7 @@
             //alert($("#temp").text());
         });
         $('#search_country').select2({
-            allowClear: true
+            //allowClear: true
         });
         $('#search_type').select2({
             allowClear: true,
@@ -173,7 +173,6 @@
                     if (response.mess == "ss") {
                         $("#loading").hide();
                         $("#nameEdit2").val(inven_id);
-                        //$("#ckEdit2").val(3);
                         $("#InvenForm").submit();
                     }
                 },
@@ -266,27 +265,47 @@
                 var invention = {
                     name: $("#inven_name").val(),
                     no: $("#patent_number").val(),
-                    date: dateFormat,
-                    country_id: $("#search_country").val()
+                    date: dateFormat
                 };
                 var type = $("#search_type").val();
 
                 formData.append('type', type);
                 formData.append('input', JSON.stringify(invention));
 
+                var countries = [];
+                var arr = $("#search_country").val();
+                for (var i = 0; i < arr.length; i++) {
+                    var temp = arr[i];
+                    var country = {
+                        country_id: temp
+                    };
+                    countries.push(country);
+                }
+
+                const author_temp = JSON.stringify({ people });
+                const country_temp = JSON.stringify({ countries });
+
+                formData.append('countries', country_temp);
+                formData.append('people', author_temp);
+
                 $.ajax({
                     url: "/Invention/addFile",
                     method: "post",
                     complete: function (data) {
                         var mess = data.responseJSON.mess;
-                        if (mess == "ss") {
+                        if (mess) {
                             inven_id = data.responseJSON.id;
-                            addAuthor();
+                            $("#loading").hide();
+                            $("#nameEdit2").val(inven_id);
+                            $("#InvenForm").submit();
+                            //addAuthor();
                         }
+                        $("#loading").hide();
                     },
                     error: function () {
                         toastr.error("Có lỗi xảy ra");
-                        save_loader.stopLoading();
+                        $("#loading").hide();
+                        //save_loader.stopLoading();
                     },
                     dataType: "json",
                     data: formData,
