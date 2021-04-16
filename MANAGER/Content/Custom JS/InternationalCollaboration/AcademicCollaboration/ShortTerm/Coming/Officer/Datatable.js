@@ -30,25 +30,44 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
     columns: [
         {
             name: 'collab_id',
+            data: 'plan_study_start_date',
             render: function (data, type, row, meta) {
                 return meta.row + meta.settings._iDisplayStart + 1;
-            }
+            },
+            className: 'text-center',
         },
         {
             data: 'people_name',
-            name: 'people_name'
+            name: 'people_name',
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: 'email',
-            name: 'email'
+            name: 'email',
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: 'partner_name',
-            name: 'partner_name'
+            name: 'partner_name',
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '90px', 'max-width': '300px' });
+            },
+            className: 'text-center',
         },
         {
             data: 'country_name',
-            name: 'country_name'
+            name: 'country_name',
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: 'plan_study_start_date',
@@ -58,7 +77,11 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
                     return data;
                 }
                 return moment(data).format('DD-MM-YYYY');
-            }
+            },
+            createdCell: function (td) {
+                $(td).css('padding', '0')
+            },
+            className: 'text-center',
         },
         {
             data: 'plan_study_end_date',
@@ -68,36 +91,53 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
                     return data;
                 }
                 return moment(data).format('DD-MM-YYYY');
-            }
+            },
+            createdCell: function (td) {
+                $(td).css('padding', '0')
+            },
+            className: 'text-center',
         },
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
+            createdCell: function (td) {
+                $(td).css('padding', '0 12px 0 5px')
+            },
+            orderable: false,
+            className: 'text-center text-nowrap',
         },
         {
             data: 'note',
-            name: 'note'
+            name: 'note',
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '100px', 'max-width': '500px' });
+            },
+            className: 'text-center',
         },
         {
             data: 'collab_id',
-            className: 'text-nowrap',
             render: function (data) {
                 return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-id=` + data + ` data-toggle="modal" href="#coming_edit_officer">Sửa</a>
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
             },
-            orderable: false
+            orderable: false,
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center text-nowrap',
         }
     ],
     columnDefs: [
-        {
-            targets: [0, 1, 2, 4, 5, 6, 7, 8, 9],
-            className: 'text-nowrap text-center'
-        },
-        {
-            targets: 3,
-            width: '150px',
-            className: 'text-center'
-        },
+        //{
+        //    targets: [0, 1, 2, 4, 5, 6, 7, 8, 9],
+        //    className: 'text-nowrap text-center'
+        //},
+        //{
+        //    targets: 3,
+        //    width: '150px',
+        //    className: 'text-center'
+        //},
         {
             targets: 7,
             render: function (data, type, row) {

@@ -93,7 +93,7 @@ namespace BLL.ModelDAL
                         }).FirstOrDefault();
             return list;
         }
-        public List<Notification> List(int account_id, int start, int language_id = 1)
+        public BaseServerSideData<Notification> List(int account_id, int start, int language_id = 1)
         {
             db = new ScienceAndInternationalAffairsEntities();
             var list = (from a in db.NotificationBases
@@ -107,9 +107,33 @@ namespace BLL.ModelDAL
                             Template = c.notification_template,
                             IsRead = a.is_read,
                             URL = a.URL,
-                            CreatedDate = a.created_date
-                        }).Skip(start).Take(10).ToList();
-            return list;
+                            CreatedDate = a.created_date,
+                            NotificationID = a.notification_id
+                        }).Skip(start).ToList();
+            int unread = (from a in db.NotificationBases
+                          join b in db.NotificationTypes on a.notification_type_id equals b.notification_type_id
+                          join c in db.NotificationTypeLanguages on b.notification_type_id equals c.notification_type_id
+                          where a.account_id == account_id && c.language_id == language_id && !a.is_read
+                          orderby a.created_date descending
+                          select a).Count();
+            return new BaseServerSideData<Notification>(list, unread);
+        }
+        public string Read(int id)
+        {
+            string URL = "/";
+            try
+            {
+                db = new ScienceAndInternationalAffairsEntities();
+                NotificationBase notification = db.NotificationBases.Find(id);
+                notification.is_read = true;
+                db.SaveChanges();
+                URL = notification.URL;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return URL;
         }
     }
 }

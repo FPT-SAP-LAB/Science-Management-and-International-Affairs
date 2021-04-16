@@ -32,7 +32,8 @@ namespace MANAGER.Controllers
             return View();
         }
 
-        [HttpPost]
+        //[HttpPost]
+        [Auther(RightID = "16")]
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết bài báo";
@@ -65,10 +66,10 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Chờ quyết định khen thưởng (giảng viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision2("Quocte", 0);
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision2("2", 0);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision2("Trongnuoc", 0);
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision2("1", 0);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -79,10 +80,10 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Chờ quyết định khen thưởng (nghiên cứu viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("Quocte", 1);
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("2", 1);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("Trongnuoc", 1);
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("1", 1);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -123,7 +124,7 @@ namespace MANAGER.Controllers
             ExcelPackage excelPackage = new ExcelPackage(file);
             ExcelWorkbook excelWorkbook = excelPackage.Workbook;
 
-            List<Paper_Appendix_1> list1 = pr.getListAppendix1_2("Trongnuoc", reseacher);
+            List<Paper_Appendix_1> list1 = pr.getListAppendix1_2("1", reseacher);
             ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
             int i = 2;
             int count = 1;
@@ -146,7 +147,7 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Paper_Appendix_1> list2 = pr.getListAppendix1_2("Quocte", reseacher);
+            List<Paper_Appendix_1> list2 = pr.getListAppendix1_2("2", reseacher);
             ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
             i = 2;
             count = 1;
@@ -169,7 +170,7 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Paper_Apendix_3> list3 = pr.getListAppendix3_4("Trongnuoc", reseacher);
+            List<Paper_Apendix_3> list3 = pr.getListAppendix3_4("1", reseacher);
             ExcelWorksheet excelWorksheet3 = excelWorkbook.Worksheets[2];
             i = 2;
             count = 1;
@@ -187,7 +188,7 @@ namespace MANAGER.Controllers
                 count++;
             }
 
-            List<Paper_Apendix_3> list4 = pr.getListAppendix3_4("Quocte", reseacher);
+            List<Paper_Apendix_3> list4 = pr.getListAppendix3_4("2", reseacher);
             ExcelWorksheet excelWorksheet4 = excelWorkbook.Worksheets[3];
             i = 2;
             count = 1;

@@ -30,10 +30,14 @@ namespace BLL.ScienceManagement.Paper
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DetailPaper item = new DetailPaper();
-            string sql = @"select p.*, rp.type, rp.reward_type, rp.total_reward, rp.specialization_id, rp.request_id, rp.status_id, f.link as 'link_file'
-                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-							left join [General].[File] f on p.file_id = f.file_id
-                            where p.paper_id = @id";
+            string sql = @"select p.*, CAST(rp.reward_type AS nvarchar) as reward_type, CAST(rp.type AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
+              rp.status_id, f.link as 'link_file'
+            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp
+            on p.paper_id = rp.paper_id
+            join Localization.PaperRewardTypeLanguage prtl on rp.reward_type=prtl.id
+            join Localization.PaperTypeByAreaLanguage ptal on rp.type=ptal.id
+            left join [General].[File] f on p.file_id = f.file_id
+            where p.paper_id = @id and prtl.language_id=1 and ptal.language_id=1";
             item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
             return item;
         }
@@ -346,7 +350,7 @@ namespace BLL.ScienceManagement.Paper
                     r.request_id = request_id;
                     r.status_id = 3;
                     r.total_reward = 0;
-                    if (r.reward_type == "Canhan")
+                    if (r.reward_type == 1)
                     {
                         Author author = (from a in db.Authors
                                          join b in db.AuthorPapers on a.people_id equals b.people_id
@@ -890,7 +894,7 @@ namespace BLL.ScienceManagement.Paper
                 rp.reward_type = item.reward_type;
                 rp.status_id = 3;
 
-                if (rp.reward_type == "Canhan")
+                if (rp.reward_type == 1)
                 {
                     Author author = (from a in db.Authors
                                      join b in db.AuthorPapers on a.people_id equals b.people_id
@@ -1041,7 +1045,7 @@ namespace BLL.ScienceManagement.Paper
                     ap.money_reward = item.money_reward;
                     ap.money_reward_in_decision = item.money_reward;
                 }
-                if (paper.reward_type == "Canhan")
+                if (paper.reward_type == "1")
                 {
                     int people_id = Int32.Parse(id);
                     AuthorPaper ap = db.AuthorPapers
@@ -1179,7 +1183,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public bool addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
+        public int addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             DbContextTransaction dbc = db.Database.BeginTransaction();
@@ -1279,7 +1283,7 @@ namespace BLL.ScienceManagement.Paper
                         name = item.name,
                         email = item.email
                     };
-                    if (item.office_id != 0)
+                    if (item.office_id != 0 && item.office_id != null)
                     {
                         temp.office_id = item.office_id;
                         temp.bank_number = item.bank_number;
@@ -1322,7 +1326,7 @@ namespace BLL.ScienceManagement.Paper
                 request.status_id = 3;
                 request.total_reward = 0;
                 request.paper_id = paper_add.paper_id;
-                if (request.reward_type == "Canhan")
+                if (request.reward_type == 1)
                 {
                     Author temp = (from a in db.Authors
                                    join z in db.AuthorPapers on a.people_id equals z.people_id
@@ -1335,14 +1339,14 @@ namespace BLL.ScienceManagement.Paper
 
                 dbc.Commit();
 
-                return true;
+                return paper_add.paper_id;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 dbc.Rollback();
                 GoogleDriveService.DeleteFile(fl.file_drive_id);
-                return false;
+                return 0;
             }
         }
     }

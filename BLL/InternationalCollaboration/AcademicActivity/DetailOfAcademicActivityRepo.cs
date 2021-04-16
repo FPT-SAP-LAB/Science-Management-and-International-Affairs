@@ -32,41 +32,44 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     data.from = changeFormatDate(data.from);
                     data.to = changeFormatDate(data.to);
+                }
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new baseDetail();
+            }
+        }
+        public baseDetail getDetailFirst(int language_id, int activity_id)
+        {
+            try
+            {
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to', al.language_id, av.article_content , ar.article_status_id
+                                    FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
+                                    on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
+                                    on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
+                                    on ar.article_id = ai.article_id inner join (select av1.article_id, av1.language_id, av2.version_title,av2.article_content from 
+						(select min(language_id) 'language_id', article_id from IA_Article.ArticleVersion group by article_id) as av1
+						inner join
+						IA_Article.ArticleVersion av2 on av1.article_id = av2.article_id and av1.language_id = av2.language_id) as av
+                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                                    WHERE [aa].activity_id = @activity_id and ai.main_article = 1 and av.language_id = @language_id";
+                baseDetail data = db.Database.SqlQuery<baseDetail>(sql, new SqlParameter("language_id", language_id),
+                                                                        new SqlParameter("activity_id", activity_id)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.from = changeFormatDate(data.from);
+                    data.to = changeFormatDate(data.to);
                     return data;
                 }
                 else
                 {
-                    using (DbContextTransaction transaction = db.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            db.AcademicActivityLanguages.Add(new AcademicActivityLanguage
-                            {
-                                activity_id = activity_id,
-                                language_id = language_id,
-                                location = String.Empty
-                            });
-                            db.SaveChanges();
-                            ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == activity_id && x.main_article == true).FirstOrDefault();
-                            db.ArticleVersions.Add(new ArticleVersion
-                            {
-                                publish_time = DateTime.Now,
-                                version_title = String.Empty,
-                                article_content = String.Empty,
-                                article_id = ai.article_id,
-                                language_id = language_id
-                            });
-                            db.SaveChanges();
-                            transaction.Commit();
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.ToString());
-                            transaction.Rollback();
-                        }
-                    }
-                    data = db.Database.SqlQuery<baseDetail>(sql, new SqlParameter("language_id", language_id),
+                    int temp_language = language_id == 1 ? 2 : 1;
+                    data = db.Database.SqlQuery<baseDetail>(sql, new SqlParameter("language_id", temp_language),
                                                                         new SqlParameter("activity_id", activity_id)).FirstOrDefault();
+                    data.from = changeFormatDate(data.from);
+                    data.to = changeFormatDate(data.to);
                     return data;
                 }
             }
@@ -165,14 +168,43 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     AcademicActivityRepo aaRepo = new AcademicActivityRepo();
                     infoDetail detail = data.infoDetail;
-                    bool res = aaRepo.updateBaseAA(detail.activity_id, detail.activity_type_id, detail.activity_name, detail.location, detail.from, detail.to, detail.language_id);
-                    ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == detail.activity_id && x.main_article == true).FirstOrDefault();
-                    ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == detail.language_id).FirstOrDefault();
-                    av.article_content = detail.article_content;
-                    db.Entry(av).State = EntityState.Modified;
-                    db.SaveChanges();
-                    updateListSubContent(data.subContent, detail.language_id, detail.activity_id, u, detail.article_status_id);
-                    db.SaveChanges();
+                    string sql = @"select ai.* from SMIA_AcademicActivity.ActivityInfo ai
+                                    inner join IA_Article.Article a on ai.article_id = a.article_id
+                                    inner join IA_Article.ArticleVersion av on av.article_id = a.article_id
+                                    where ai.activity_id = @activity_id and language_id = @language_id";
+                    ActivityInfo cons = db.Database.SqlQuery<ActivityInfo>(sql, new SqlParameter("activity_id", detail.activity_id),
+                        new SqlParameter("language_id", detail.language_id)).FirstOrDefault();
+                    if (cons == null)
+                    {
+                        db.AcademicActivityLanguages.Add(new AcademicActivityLanguage
+                        {
+                            activity_id = data.infoDetail.activity_id,
+                            language_id = detail.language_id,
+                            location = detail.location
+                        });
+                        db.SaveChanges();
+                        ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == detail.activity_id && x.main_article == true).FirstOrDefault();
+                        db.ArticleVersions.Add(new ArticleVersion
+                        {
+                            publish_time = DateTime.Now,
+                            version_title = detail.activity_name,
+                            article_content = detail.article_content,
+                            article_id = ai.article_id,
+                            language_id = detail.language_id
+                        });
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        bool res = aaRepo.updateBaseAA(detail.activity_id, detail.activity_type_id, detail.activity_name, detail.location, detail.from, detail.to, detail.language_id);
+                        ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == detail.activity_id && x.main_article == true).FirstOrDefault();
+                        ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == detail.language_id).FirstOrDefault();
+                        av.article_content = detail.article_content;
+                        db.Entry(av).State = EntityState.Modified;
+                        db.SaveChanges();
+                        updateListSubContent(data.subContent, detail.language_id, detail.activity_id, u, detail.article_status_id);
+                        db.SaveChanges();
+                    }
                     transaction.Commit();
                     return true;
                 }

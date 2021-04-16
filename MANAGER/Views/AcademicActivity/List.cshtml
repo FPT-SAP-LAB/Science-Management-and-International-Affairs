@@ -19,14 +19,14 @@
         <div class="row mb-5">
             <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10">
                 <a href="#" class="btn btn-light-primary px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm sự kiện</a>
-                <div class="dropdown dropdown-inline ml-2">
+                @*<div class="dropdown dropdown-inline ml-2">
                     <button type="button"
                             class="btn btn-light-primary font-weight-bolder dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                         Export
                     </button>
-                    @*<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                         <ul class="navi flex-column navi-hover py-2">
                             <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
                                 Choose an option:
@@ -40,8 +40,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>*@
-                </div>
+                    </div>
+                </div>*@
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
                 <div class="input-group date kt_datetimepicker_3_year" id="kt_datetimepicker_3_year" data-target-input="nearest">
@@ -80,11 +80,18 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
                         <label class="col-form-label font-weight-bolder">Tiêu đề</label>
-                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="add_title" />
+                        <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" spellcheck="false" required id="add_title" />
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
+                        <select class="form-control" id="add_language" onchange="resetCategory()">
+                            <option selected value="1">Tiếng Việt</option>
+                            <option value="2">Tiếng Anh</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
                         <select class="form-control" required id="add_category">
                             @foreach (var item in ViewBag.AAType)
@@ -123,9 +130,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
-                        <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="add_location" />
+                        <input class="form-control" type="text" required autocomplete="off" spellcheck="false" placeholder="Địa điểm" id="add_location" />
                     </div>
                 </div>
             </div>
@@ -148,11 +155,18 @@
             </div>
             <div class="modal-body">
                 <div class="form-group row">
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9">
                         <label class="col-form-label font-weight-bolder">Tiêu đề</label>
                         <input class="form-control" type="text" placeholder="Tiêu đề" autocomplete="off" required id="edit_title" />
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
+                        <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
+                        <select class="form-control" id="edit_language" onchange="reInit()">
+                            <option selected value="1">Tiếng Việt</option>
+                            <option value="2">Tiếng Anh</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
                         <select class="form-control" required id="edit_category">
                             @foreach (var item in ViewBag.AAType)
@@ -191,12 +205,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
+                    <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Địa điểm</label>
                         <input class="form-control" type="text" required autocomplete="off" placeholder="Địa điểm" id="edit_location" />
                     </div>
-                    <div class="col-md-6 col-xl-6 col-lg-6">
-                        <label class="col-form-label">Ảnh đại diện hoạt động</label>
+                    <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
+                        <label class="col-form-label font-weight-bolder">Ảnh đại diện hoạt động</label>
                         <div class="uppy" id="kt_uppy_1">
                             <div class="uppy-wrapper"></div>
                             <div class="uppy-list"></div>
@@ -369,7 +383,7 @@
         function saveTempIdEdit(id) {
             id_edit = id;
             let obj = {
-                id : id
+                id: id
             }
             $.ajax({
                 url: "@Url.Action("getBaseAA", "AcademicActivity")",
@@ -377,12 +391,17 @@
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
-                    document.getElementById('edit_title').value = data.activity_name;
-                        document.getElementById('edit_category').value = data.activity_type_id;
-                        document.getElementById('edit_from').value = data.from;
-                        document.getElementById('edit_to').value = data.to;
-                        document.getElementById('edit_location').value = data.location;
-                        $('#editModal').modal('show');
+                    document.getElementById('edit_title').value = data.baseAA.activity_name;
+                    document.getElementById('edit_from').value = data.baseAA.from;
+                    document.getElementById('edit_to').value = data.baseAA.to;
+                    document.getElementById('edit_location').value = data.baseAA.location;
+                    document.getElementById('edit_language').value = data.baseAA.language_id;
+                    $('#edit_category').empty();
+                    data.types.forEach(function (x) {
+                        $('#edit_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name + '</option>');
+                    });
+                    document.getElementById('edit_category').value = data.baseAA.activity_type_id;
+                    $('#editModal').modal('show');
                 },
                 error: function () {
                 }
@@ -391,12 +410,61 @@
         function saveTempIdCheckin(id) {
             window.location.href = "/CheckIn/List?id=" + id;
         }
+        function resetCategory() {
+            let temp_category = $('#add_category').val();
+            $.ajax({
+                url: "@Url.Action("resetCategory", "AcademicActivity")",
+                data: JSON.stringify({ language_id: $('#add_language').val()}),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    $('#add_category').empty();
+                    data.forEach(function (x) {
+                        $('#add_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name + '</option>');
+                    });
+                    document.getElementById('add_category').value = temp_category;
+                },
+                error: function (data) {
+                    save_loader.stopLoading();
+                }
+            });
+        }
         function showCloneModal(id) {
             id_clone = id;
             $('#cloneModal').modal('show');
         }
         function goDetail(id) {
             window.location.href = '/DetailOfAcademicActivity/Index?id=' + id;
+        }
+        function reInit() {
+            var object = {
+                id: id_edit,
+                language_id: $('#edit_language').val()
+            };
+            let temp_category = $('#edit_category').val();
+            $.ajax({
+                url: "@Url.Action("getBaseAALanguage", "AcademicActivity")",
+                data: JSON.stringify(object),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.baseAA != null) {
+                        document.getElementById('edit_title').value = data.baseAA.activity_name;
+                        document.getElementById('edit_location').value = data.baseAA.location;
+                    } else {
+                        document.getElementById('edit_title').value = '';
+                        document.getElementById('edit_location').value = '';
+                    }
+                    $('#edit_category').empty();
+                    data.types.forEach(function (x) {
+                        $('#edit_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name + '</option>');
+                    });
+                    document.getElementById('edit_category').value = temp_category;
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
         }
         $('#btn_add').click(function () {
             save_loader.startLoading();
@@ -405,7 +473,8 @@
             let from = document.getElementById('add_from').value;
             let to = document.getElementById('add_to').value;
             let location = document.getElementById('add_location').value;
-            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '') {
+            let language_id = document.getElementById('add_language').value;
+            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '' || language_id == '') {
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
                 return false;
             }
@@ -420,10 +489,14 @@
                 from: from,
                 to: to
             }
+            let obje = {
+                obj : object,
+                language_id: language_id
+            }
             save_loader.startLoading();
             $.ajax({
                 url: "@Url.Action("add_AcademicActivity", "AcademicActivity")",
-                data: JSON.stringify(object),
+                data: JSON.stringify(obje),
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 success: function (data) {
@@ -455,18 +528,21 @@
             let from = document.getElementById('edit_from').value;
             let to = document.getElementById('edit_to').value;
             let location = document.getElementById('edit_location').value;
-            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '') {
+            let language_id = document.getElementById('edit_language').value;
+            if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '' || language_id == '') {
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                save_loader.stopLoading();
                 return false;
             }
             if (convertDate(from).getTime() > convertDate(to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                save_loader.stopLoading();
                 return false;
             }
-            
             let files = uppy1.getFiles();
             if (files.length == 0) {
                 toastr.warning('Vui lòng chọn ảnh cho hoạt động');
+                save_loader.stopLoading();
                 return false;
             } else {
                 var reader = new FileReader();
@@ -489,14 +565,14 @@
                         } else {
                             img.append('img', newfile);
                         }
-                        
+
                         img.append('id', id_edit);
                         img.append('activity_type_id', activity_type_id);
                         img.append('activity_name', activity_name);
                         img.append('location', location);
                         img.append('from', from);
                         img.append('to', to);
-
+                        img.append('language_id', language_id);
                         $.ajax({
                             url: '/AcademicActivity/edit_AcademicActivity',
                             data: img,

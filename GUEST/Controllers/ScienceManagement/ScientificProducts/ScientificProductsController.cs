@@ -2,6 +2,7 @@
 using BLL.ScienceManagement.ScientificProduct;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,7 @@ namespace GUEST.Controllers.ScientificProducts
             return Json(new { OnePerson = list }, JsonRequestBehavior.AllowGet);
         }
 
+        //[Auther(RightID = "26")]
         public ActionResult Pending(string type)
         {
             ViewBag.title = "Sản phẩm khoa học đang chờ phê duyệt";

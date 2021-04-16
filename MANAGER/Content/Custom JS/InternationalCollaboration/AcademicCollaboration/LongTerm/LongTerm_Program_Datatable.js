@@ -33,42 +33,63 @@ var collab_program_going_table = $("#collab_program_going_table").DataTable({
         },
         {
             data: "partner_name",
-            name: "partner_name"
+            name: "partner_name",
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '90px', 'max-width': '300px' });
+            },
+            className: 'text-center',
         },
         {
             data: "program_name",
             name: "program_name",
-            className: 'text-center text-nowrap'
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '90px', 'max-width': '300px' });
+            },
+            className: 'text-center',
         },
         {
             data: "full_name",
             name: "full_name",
-            className: 'text-center text-nowrap'
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: "registration_deadline",
             name: "registration_deadline",
-            className: 'text-center text-nowrap'
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: "publish_time",
             name: "publish_time",
-            className: 'text-center text-nowrap',
             render: function (data, type) {
                 if (type === "sort" || type === "") {
                     return data;
                 }
                 return moment(data).format("DD/MM/YYYY HH:mm:ss")
-            }
+            },
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: "program_id",
             name: "program_id",
-            className: 'text-center text-nowrap',
             render: function (data, type, row) {
                 return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
                     '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
-            }
+            },
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center text-nowrap',
         },
     ],
     columnDefs: [{
@@ -83,9 +104,6 @@ var collab_program_going_table = $("#collab_program_going_table").DataTable({
         $(this).parent().css('width', '100%');
     },
 });
-
-$('#collab_program_going_table > thead > tr > th:nth-child(2)').css({ 'min-width': '300px', 'max-width': '300px' });
-$('#collab_program_going_table > thead > tr > th:nth-child(3)').css({ 'min-width': '300px', 'max-width': '300px' });
 
 $('#collab_program_going_search_btn').click(function () {
     collab_program_going_table.ajax.reload();
@@ -123,37 +141,54 @@ var collab_program_coming_table = $("#collab_program_coming_table").DataTable({
         },
         {
             data: "program_name",
-            name: "program_name"
+            name: "program_name",
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '90px', 'max-width': '300px' });
+            },
+            className: 'text-center',
         },
         {
             data: "full_name",
             name: "full_name",
-            className: 'text-center text-nowrap'
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: "registration_deadline",
             name: "registration_deadline",
-            className: 'text-center text-nowrap'
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: "publish_time",
             name: "publish_time",
-            className: 'text-center text-nowrap',
             render: function (data, type) {
                 if (type === "sort" || type === "") {
                     return data;
                 }
                 return moment(data).format("DD/MM/YYYY HH:mm:ss")
-            }
+            },
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center',
         },
         {
             data: "program_id",
             name: "program_id",
-            className: 'text-center text-nowrap',
             render: function (data, type, row) {
-                return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=2 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
-                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=2 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
-            }
+                return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
+            },
+            createdCell: function (td) {
+                $(td).css('padding', '0 5px')
+            },
+            className: 'text-center text-nowrap',
         },
     ],
     columnDefs: [{

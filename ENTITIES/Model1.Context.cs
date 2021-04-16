@@ -83,7 +83,9 @@ namespace ENTITIES
         public virtual DbSet<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
         public virtual DbSet<FormalityLanguage> FormalityLanguages { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
+        public virtual DbSet<PaperRewardTypeLanguage> PaperRewardTypeLanguages { get; set; }
         public virtual DbSet<PaperStatusLanguage> PaperStatusLanguages { get; set; }
+        public virtual DbSet<PaperTypeByAreaLanguage> PaperTypeByAreaLanguages { get; set; }
         public virtual DbSet<PositionLanguage> PositionLanguages { get; set; }
         public virtual DbSet<ResearchAreaLanguage> ResearchAreaLanguages { get; set; }
         public virtual DbSet<SpecializationLanguage> SpecializationLanguages { get; set; }
@@ -125,7 +127,9 @@ namespace ENTITIES
         public virtual DbSet<InventionType> InventionTypes { get; set; }
         public virtual DbSet<Paper> Papers { get; set; }
         public virtual DbSet<PaperCriteria> PaperCriterias { get; set; }
+        public virtual DbSet<PaperRewardType> PaperRewardTypes { get; set; }
         public virtual DbSet<PaperStatu> PaperStatus { get; set; }
+        public virtual DbSet<PaperTypeByArea> PaperTypeByAreas { get; set; }
         public virtual DbSet<PaperWithCriteria> PaperWithCriterias { get; set; }
         public virtual DbSet<RequestInvention> RequestInventions { get; set; }
         public virtual DbSet<RequestPaper> RequestPapers { get; set; }

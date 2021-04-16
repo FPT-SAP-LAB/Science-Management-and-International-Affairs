@@ -146,8 +146,9 @@ namespace GUEST.Controllers
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult Edit(string id, string editable)
+        //[HttpPost]
+        [Auther(RightID = "26")]
+        public ActionResult Edit(string id)
         {
             ViewBag.title = "Chỉnh sửa khen thưởng bài báo";
             var pagesTree = new List<PageTree>
@@ -155,10 +156,10 @@ namespace GUEST.Controllers
                 new PageTree("Chỉnh sửa khen thưởng bài báo","/Paper/Edit"),
             };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.ckEdit = editable;
 
             DetailPaper item = pr.getDetail(id);
             ViewBag.Paper = item;
+            ViewBag.ckEdit = item.status_id;
 
             int request_id = item.request_id;
 
@@ -261,8 +262,11 @@ namespace GUEST.Controllers
                 index = (string)@object_paper["index"],
                 note_domestic = (string)@object_paper["note_domestic"],
             };
-            DateTime temp_date = DateTime.Parse(paper.date_string);
-            paper.publish_date = temp_date;
+            if (paper.date_string != null && paper.date_string != "")
+            {
+                DateTime temp_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                paper.publish_date = temp_date;
+            }
 
             List<CustomCriteria> criteria = new List<CustomCriteria>();
             foreach (var item in object_criteria["criteria"])
@@ -282,25 +286,28 @@ namespace GUEST.Controllers
                 {
                     name = (string)item["name"],
                     email = (string)item["email"],
-                    bank_number = (int)item["bank_number"],
-                    bank_branch = (string)item["bank_branch"],
-                    tax_code = (int)item["tax_code"],
-                    identification_number = (string)item["identification_number"],
-                    mssv_msnv = (string)item["mssv_msnv"],
-                    office_id = (int)item["office_id"],
-                    contract_id = 1,
-                    title_id = (int)item["title_id"],
-                    is_reseacher = (bool)item["is_reseacher"],
-                    identification_file_link = (string)item["identification_file_link"],
                 };
+                if ((int)item["office_id"] != 0)
+                {
+                    temp.bank_number = Int64.Parse(item["bank_number"].ToString());
+                    temp.bank_branch = (string)item["bank_branch"];
+                    temp.tax_code = Int64.Parse(item["tax_code"].ToString());
+                    temp.identification_number = (string)item["identification_number"];
+                    temp.mssv_msnv = (string)item["mssv_msnv"];
+                    temp.office_id = (int)item["office_id"];
+                    temp.contract_id = 1;
+                    temp.title_id = (int)item["title_id"];
+                    temp.is_reseacher = (bool)item["is_reseacher"];
+                    temp.identification_file_link = (string)item["identification_file_link"];
+                }
                 author.Add(temp);
             }
 
             RequestPaper request = new RequestPaper()
             {
                 specialization_id = (int)object_request["specialization_id"],
-                type = (string)object_request["type"],
-                reward_type = (string)object_request["reward_type"],
+                type = Int32.Parse((string)object_request["type"]),
+                reward_type = Int32.Parse((string)object_request["reward_type"]),
             };
 
             LoginRepo.User u = new LoginRepo.User();
@@ -328,9 +335,11 @@ namespace GUEST.Controllers
                 if (m == "ss") paper.file_id = fl.file_id;
             }
 
-            bool mess = pr.addPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+            int id = pr.addPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+            bool mess = true;
+            if (id == 0) mess = false;
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess = mess, id = id }, JsonRequestBehavior.AllowGet);
         }
     }
 }

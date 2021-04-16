@@ -58,13 +58,13 @@
         </div>
     </div>
 </div>
-<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+<form style="visibility: hidden" method="get" action="/Paper/Edit" id="PaperForm">
     <input name="id" id="nameEdit" />
-    <input name="editable" id="ckEdit" />
+    @*<input name="editable" id="ckEdit" />*@
 </form>
-<form style="visibility: hidden" method="post" action="/Invention/Edit" id="InvenForm">
+<form style="visibility: hidden" method="get" action="/Invention/Edit" id="InvenForm">
     <input name="id" id="nameEdit2" />
-    <input name="editable" id="ckEdit2" />
+    @*<input name="editable" id="ckEdit2" />*@
 </form>
 @section scripts{
     <script src="~/Scripts/moment.js"></script>

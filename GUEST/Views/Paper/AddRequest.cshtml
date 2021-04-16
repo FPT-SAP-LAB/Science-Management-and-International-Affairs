@@ -23,16 +23,16 @@
                                     <input autocomplete="off" class="form-control notnull" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input autocomplete="off" readonly class="form-control custom-pickdate notnull" type="text" id="paper_publish_date" />
+                                    <label class="">@rm.GetString("PublishDate")</label>
+                                    <input autocomplete="off" readonly class="form-control custom-pickdate " type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
                                     <input autocomplete="off" class="form-control notnull" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">Link scholar</label>
-                                    <input autocomplete="off" class="form-control notnull" type="text" id="paper_scholar" />
+                                    <label class="">Link scholar</label>
+                                    <input autocomplete="off" class="form-control " type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
@@ -99,8 +99,8 @@
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("CriteriaType")</label>
                             <select id="loaithuong" class="form-control">
-                                <option selected value="Quocte">@rm.GetString("International")</option>
-                                <option value="Trongnuoc">@rm.GetString("Domestic")</option>
+                                <option selected value="2">@rm.GetString("International")</option>
+                                <option value="1">@rm.GetString("Domestic")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group thuongqt">
@@ -144,8 +144,8 @@
                         <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("RewardType")</label>
                             <select id="kieuthuong" class="form-control">
-                                <option value="Quydinh">@rm.GetString("According")</option>
-                                <option value="Canhan">@rm.GetString("Repre")</option>
+                                <option value="2">@rm.GetString("According")</option>
+                                <option value="1">@rm.GetString("Repre")</option>
                             </select>
                         </div>
                         <div class="col-xl-6 form-group" id="block_daidien">
@@ -216,9 +216,9 @@
     </div>
     <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 </div>
-<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+<form style="visibility: hidden" method="get" action="/Paper/Edit" id="PaperForm">
     <input autocomplete="off" name="id" id="nameEdit" />
-    <input autocomplete="off" name="editable" id="ckEdit" />
+    @*<input autocomplete="off" name="editable" id="ckEdit" />*@
 </form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
@@ -247,7 +247,7 @@
                 success: function (response) {
                     $("#loading").hide();
                     $("#nameEdit").val(paper_id);
-                    $("#ckEdit").val(3);
+                    //$("#ckEdit").val(3);
                     $("#PaperForm").submit();
                 },
                 error: function () {
@@ -292,6 +292,7 @@
             });
         }
 
+        $("#add_author_reward_edit").parent().hide()
         var files_data = [];
         $("#submitPaper").click(function () {
             $("#loading").show();
@@ -319,7 +320,7 @@
                     link: $(inputs2[i]).val(),
                     name: $(inputs[i]).val()
                 }
-                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
+                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "2") {
                     toastr.error("Tiêu chí chưa có link chứng minh");
                     ck = false;
                     $("#loading").hide();
@@ -327,13 +328,13 @@
                 }
                 criteria.push(PaperWithCriteria);
             }
-            if (criteria.length == 0 && $("#loaithuong").val() == "Quocte") {
+            if (criteria.length == 0 && $("#loaithuong").val() == 2) {
                 toastr.error("Cần có ít nhất 1 tiêu chí");
                 $("#loading").hide();
                 ck = false;
             }
 
-            if ($("#loaithuong").val() == "Trongnuoc") {
+            if ($("#loaithuong").val() == 1) {
                 if (uppy1.getFiles().length == 0) {
                     toastr.error("Thiếu file chứng minh cho chỉ số tạp chí");
                     $("#loading").hide();
@@ -389,7 +390,7 @@
                                 paper_id = data.responseJSON.id;
                                 addCriteria();
                             }
-                            else alert('loi');
+                            else Swal.fire("Đã xảy ra lỗi! Vui lòng thử lại", "", "error");
                         },
                         error: function () {
                             $("#loading").hide();
@@ -414,7 +415,7 @@
                                 paper_id = response.id;
                                 addCriteria();
                             }
-                            else alert('loi');
+                            else Swal.fire("Đã xảy ra lỗi! Vui lòng thử lại", "", "error");
                         },
                         error: function () {
                             //alert("fail");
@@ -438,14 +439,14 @@
 
             $("#kieuthuong").on("select2:select", function (e) {
                 var temp = $("#kieuthuong").val();
-                if (temp == "Quydinh") $("#block_daidien").hide();
+                if (temp == "2") $("#block_daidien").hide();
                 else $("#block_daidien").show();
             });
 
             $("#loaithuong").on("select2:select", function (e) {
                 var temp = $(this).val();
                 //console.log(temp);
-                if (temp == "Quocte") {
+                if (temp == "2") {
                     $(".thuongqt").show();
                     $(".thuongtn").hide();
                 } else {
@@ -498,19 +499,21 @@
     <script>
         $("#add_refactor").click(function () {
             $("#loading").show();
-            const paper_temp = JSON.stringify({
-                name: $("#paper_name").val(),
-                date_string: $("#paper_publish_date").val(),
-                link_doi: $("#paper_full").val(),
-                link_scholar: $("#paper_scholar").val(),
-                paper_type_id: $("#paper_type").val(),
-                journal_name: $("#paper_journal").val(),
-                vol: $("#paper_vol").val(),
-                page: $("#paper_page").val(),
-                company: $("#paper_publish_name").val(),
-                index: $("#paper_index").val(),
-                note_domestic: $("#paper_note_domestic").val(),
+            //let fd = new FormData();
+            var ck = true;
+            $(".notnull").each(function () {
+                if ($(this).val() == "") {
+                    $("#loading").hide();
+                    toastr.error("Cần nhập đầy đủ các trường có dấu *");
+                    ck = false;
+                    return false;
+                }
             });
+            if (people.length == 0) {
+                ck = false;
+                $("#loading").hide();
+                toastr.error("Chưa có tác giả");
+            }
 
             var inputs = $(".tieuchiname");
             var inputs2 = $(".tieuchilink");
@@ -520,7 +523,7 @@
                     link: $(inputs2[i]).val(),
                     name: $(inputs[i]).val()
                 }
-                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "Quocte") {
+                if ($(inputs2[i]).val() == "" && $("#loaithuong").val() == "2") {
                     toastr.error("Tiêu chí chưa có link chứng minh");
                     ck = false;
                     $("#loading").hide();
@@ -528,52 +531,76 @@
                 }
                 criteria.push(PaperWithCriteria);
             }
-            const criteria_temp = JSON.stringify({ criteria });
-            const author_temp = JSON.stringify({ people });
 
-            const request_temp = JSON.stringify({
-                specialization_id: $("#chuyennganh").val(),
-                type: $("#loaithuong").val(),
-                reward_type: $("#kieuthuong").val(),
-            })
+            if (criteria.length == 0 && $("#loaithuong").val() == 2) {
+                toastr.error("Cần có ít nhất 1 tiêu chí");
+                $("#loading").hide();
+                ck = false;
+            }
+            if (ck) {
+                const paper_temp = JSON.stringify({
+                    name: $("#paper_name").val(),
+                    date_string: $("#paper_publish_date").val(),
+                    link_doi: $("#paper_full").val(),
+                    link_scholar: $("#paper_scholar").val(),
+                    paper_type_id: $("#paper_type").val(),
+                    journal_name: $("#paper_journal").val(),
+                    vol: $("#paper_vol").val(),
+                    page: $("#paper_page").val(),
+                    company: $("#paper_publish_name").val(),
+                    index: $("#paper_index").val(),
+                    note_domestic: $("#paper_note_domestic").val(),
+                });
 
-            //var name = $("#paper_name").val();
-            const formData = new FormData();
+                const criteria_temp = JSON.stringify({ criteria });
+                const author_temp = JSON.stringify({ people });
 
-            if (uppy1.getFiles().length > 0) formData.append('file', uppy1.getFiles()[0].data);
+                const request_temp = JSON.stringify({
+                    specialization_id: $("#chuyennganh").val(),
+                    type: $("#loaithuong").val(),
+                    reward_type: $("#kieuthuong").val(),
+                })
 
-            formData.append('paper_input', paper_temp);
-            formData.append('criteria_input', criteria_temp);
-            formData.append('author_input', author_temp);
-            formData.append('request_input', request_temp);
+                //var name = $("#paper_name").val();
+                const formData = new FormData();
 
-            var daidien = $("#daidien").val();
-            formData.append('daidien', daidien);
+                if (uppy1.getFiles().length > 0) formData.append('file', uppy1.getFiles()[0].data);
 
-            $.ajax({
-                url: "/Paper/AddPaper_Refactor",
-                method: "post",
-                complete: function (data) {
-                    var mess = data.responseJSON.mess;
-                    if (mess) {
+                formData.append('paper_input', paper_temp);
+                formData.append('criteria_input', criteria_temp);
+                formData.append('author_input', author_temp);
+                formData.append('request_input', request_temp);
+
+                var daidien = $("#daidien").val();
+                formData.append('daidien', daidien);
+
+                $.ajax({
+                    url: "/Paper/AddPaper_Refactor",
+                    method: "post",
+                    complete: function (data) {
+                        var mess = data.responseJSON.mess;
+                        if (mess) {
+                            $("#loading").hide();
+                            $("#nameEdit").val(data.responseJSON.id);
+                            $("#ckEdit").val(3);
+                            $("#PaperForm").submit();
+                        }
+                        else Swal.fire("Đã xảy ra lỗi! Vui lòng thử lại", "", "error");
                         $("#loading").hide();
-                        $("#nameEdit").val(paper_id);
-                        $("#ckEdit").val(3);
-                        $("#PaperForm").submit();
-                    }
-                    else alert('loi');
-                    $("#loading").hide();
-                },
-                error: function () {
-                    $("#loading").hide();
-                    toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
-                },
-                dataType: "json",
-                data: formData,
-                processData: false,
-                contentType: false
-            });
+                    },
+                    error: function () {
+                        $("#loading").hide();
+                        toastr.error("Có lỗi xảy ra");
+                        save_loader.stopLoading();
+                    },
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+            } else {
+                ck = true;
+            }
         })
     </script>
 
