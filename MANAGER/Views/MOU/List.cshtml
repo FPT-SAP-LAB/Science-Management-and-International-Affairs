@@ -1165,11 +1165,13 @@
             pageLength: 5,
             lengthChange: false,
             serverSide: true,
+            sorting: [[1, 'asc']],
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
                 $(this).parent().css('width', '100%');
                 $(this).parent().css('padding', '0');
                 $('.mou_table th').css('padding', '5px 15px 5px 5px')
+                $('.mou_table > thead > tr:nth-child(1) > th:nth-child(1)').css('padding', '5px')
                 $('.mou_table > thead > tr:nth-child(1) > th:nth-child(3)').css('padding', '5px')
                 $('.mou_table > thead > tr:nth-child(1) > th:nth-child(4)').css('padding', '5px')
                 $('.mou_table > thead > tr:nth-child(1) >th.text-center.text-nowrap.sorting_disabled').css('padding', '5px')
@@ -1192,6 +1194,7 @@
                         $(td).css('padding', '0')
                     },
                     className: 'text-center',
+                    orderable: false
                 },
                 {
                     data: "mou_code", name: "mou_code",
@@ -1206,6 +1209,7 @@
                     width: '200px',
                     createdCell: function (td, cellData, rowData, row, col) {
                         $(td).css('padding', '0')
+                        $(td).css({ 'min-width': '100px', 'max-width': '300px' })
                     },
                     className: 'text-center',
                 },
@@ -1251,7 +1255,8 @@
                     createdCell: function (td, cellData, rowData, row, col) {
                         $(td).css('padding', '0 5px')
                     },
-                    className: 'text-center text-nowrap', },
+                    className: 'text-center text-nowrap',
+                },
                 {
                     data: "contact_point_email", name: "contact_point_email",
                     createdCell: function (td, cellData, rowData, row, col) {
@@ -1312,7 +1317,6 @@
                 },
                 {
                     data: "mou_status_id",
-                    width: '150px',
                     render: function (data) {
                         var status = {
                             2: {
@@ -1330,7 +1334,7 @@
                         return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -1349,18 +1353,8 @@
                     className: 'text-center text-nowrap',
                 },
         ],
-        columnDefs: [
-            //{
-            //    className: "text-center",
-            //    targets: [0, 4, 9, 12, 13, 14],
-            //},
-            //{
-            //    className: "text-nowrap",
-            //    targets: [5, 6, 8, -1]
-            //},
-        ],
         });
-        $('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
+      //$('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function searchMOU() {
