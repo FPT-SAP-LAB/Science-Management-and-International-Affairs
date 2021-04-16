@@ -1207,7 +1207,7 @@ namespace BLL.ScienceManagement.Paper
                 db.Papers.Add(paper_add);
                 db.SaveChanges();
 
-                if (criteria != null)
+                if (criteria != null && criteria.Count() > 0)
                 {
                     string temp = "";
                     foreach (var item in criteria)
