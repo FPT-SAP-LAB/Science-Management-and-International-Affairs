@@ -106,6 +106,5 @@ namespace BLL.ScienceManagement.Comment
             RequestInvention rp = db.RequestInventions.Where(x => x.request_id == requestID).FirstOrDefault();
             return rp.invention_id;
         }
-
     }
 }
