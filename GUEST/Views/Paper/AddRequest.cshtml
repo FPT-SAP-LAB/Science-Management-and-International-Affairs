@@ -23,16 +23,16 @@
                                     <input autocomplete="off" class="form-control notnull" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input autocomplete="off" readonly class="form-control custom-pickdate notnull" type="text" id="paper_publish_date" />
+                                    <label class="">@rm.GetString("PublishDate")</label>
+                                    <input autocomplete="off" readonly class="form-control custom-pickdate " type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
                                     <input autocomplete="off" class="form-control notnull" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">Link scholar</label>
-                                    <input autocomplete="off" class="form-control notnull" type="text" id="paper_scholar" />
+                                    <label class="">Link scholar</label>
+                                    <input autocomplete="off" class="form-control " type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
@@ -216,9 +216,9 @@
     </div>
     <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 </div>
-<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+<form style="visibility: hidden" method="get" action="/Paper/Edit" id="PaperForm">
     <input autocomplete="off" name="id" id="nameEdit" />
-    <input autocomplete="off" name="editable" id="ckEdit" />
+    @*<input autocomplete="off" name="editable" id="ckEdit" />*@
 </form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
@@ -247,7 +247,7 @@
                 success: function (response) {
                     $("#loading").hide();
                     $("#nameEdit").val(paper_id);
-                    $("#ckEdit").val(3);
+                    //$("#ckEdit").val(3);
                     $("#PaperForm").submit();
                 },
                 error: function () {

@@ -217,7 +217,7 @@
             var form = document.createElement("form");
             var element1 = document.createElement("input");
 
-            form.method = "POST";
+            form.method = "GET";
             form.action = "/Paper/Detail";
 
             element1.value = id;
@@ -266,7 +266,7 @@
                 },
                 error: function () {
                     toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
+                    //save_loader.stopLoading();
                 },
                 dataType: "json",
                 data: formData,

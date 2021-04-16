@@ -234,7 +234,11 @@
                 {
                     data: "office_name", name: "office_name"
                 },
-                { data: "googleScholar", name: "googleScholar" },
+                {
+                    data: "googleScholar", name: "googleScholar", render: function (data) {
+                        return "<a class='btn btn-sm btn-clean btn-icon' href='" + data + "'><i class='fab fa-google'></i> </a>"
+                    }
+                },
                 {
                     data: {}, name: "name", render: function (data) {
                         return "<a  href='/Researchers/ViewInfo?id=" + data.peopleId + "' class='btn btn-sm btn-clean btn-icon' title='Edit'> <i class='far fa-edit'></i> </a>"

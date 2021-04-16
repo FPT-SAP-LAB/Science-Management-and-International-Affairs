@@ -27,7 +27,7 @@ namespace BLL.ScienceManagement.Comment
                                         }).ToList();
             return list;
         }
-        public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id, bool is_manager)
+        public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id, bool is_manager, string path)
         {
             NotificationRepo notificationRepo = new NotificationRepo(db);
 
@@ -51,11 +51,37 @@ namespace BLL.ScienceManagement.Comment
                         content = content.Trim(),
                         date = DateTime.Now
                     });
-                    string notification_id;
-                    if (is_manager)
-                        notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id).ToString();
-                    else
-                        notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 22, 34 }, 1, "/ConferenceSponsor/Detail?id=" + request.request_id));
+                    string notification_id = null;
+                    if (path.Contains("ConferenceSponsor"))
+                    {
+                        if (is_manager)
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id).ToString();
+                        else
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 22, 34 }, 1, "/ConferenceSponsor/Detail?id=" + request.request_id));
+                    }
+                    else if (path.Contains("Paper"))
+                    {
+                        int id = getPaperID(request.request_id);
+                        if (is_manager)
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Paper/Edit?id=" + id).ToString();
+                        else
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Paper/Detail?id=" + id));
+                    }
+                    else if (path.Contains("Invention"))
+                    {
+                        int id = getInvenID(request.request_id);
+                        if (is_manager)
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Invention/Edit?id=" + id).ToString();
+                        else
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Invention/Detail?id=" + id));
+                    }
+                    else if (path.Contains("Citation"))
+                    {
+                        if (is_manager)
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Citation/Edit?id=" + request.request_id).ToString();
+                        else
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Citation/Detail?id=" + request.request_id));
+                    }
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(notification_id, true);
@@ -67,6 +93,18 @@ namespace BLL.ScienceManagement.Comment
                 }
             }
             return new AlertModal<string>(false);
+        }
+
+        public int getPaperID(int requestID)
+        {
+            RequestPaper rp = db.RequestPapers.Where(x => x.request_id == requestID).FirstOrDefault();
+            return rp.paper_id;
+        }
+
+        public int getInvenID(int requestID)
+        {
+            RequestInvention rp = db.RequestInventions.Where(x => x.request_id == requestID).FirstOrDefault();
+            return rp.invention_id;
         }
     }
 }

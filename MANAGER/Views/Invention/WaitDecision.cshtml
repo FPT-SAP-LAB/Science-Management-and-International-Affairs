@@ -157,7 +157,7 @@
             var form = document.createElement("form");
             var element1 = document.createElement("input");
 
-            form.method = "POST";
+            form.method = "GET";
             form.action = "/Invention/Detail";
 
             element1.value = id;
@@ -172,11 +172,18 @@
             $("#loading").show();
             formData = new FormData();
             if (uppy1.getFiles()[0] == undefined) {
+                $("#loading").hide();
                 toastr.error("Thiếu file quyết định");
                 return false;
             }
             var number = $("#decisionNo").val();
             var date = $("#valid_date").val();
+            if (number == "" || date == "") {
+                $("#loading").hide();
+                toastr.error("Cần nhập đủ các trường");
+                return false;
+            }
+
             formData.append('file', uppy1.getFiles()[0].data);
             formData.append('number', number);
             formData.append('date', date);
