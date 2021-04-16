@@ -126,6 +126,9 @@
   <data name="According" xml:space="preserve">
     <value>Theo quy định</value>
   </data>
+  <data name="ActivityNavbar" xml:space="preserve">
+    <value>Lịch hoạt động trong năm</value>
+  </data>
   <data name="AddAu" xml:space="preserve">
     <value>Thêm tác giả</value>
   </data>
@@ -249,6 +252,9 @@
   <data name="FPTProcedure" xml:space="preserve">
     <value>Thủ tục với FPT</value>
   </data>
+  <data name="Header" xml:space="preserve">
+    <value>Tổ chức giáo dục FPT - Khoa học &amp; Hợp tác quốc tế</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Trang chủ</value>
   </data>
@@ -267,11 +273,17 @@
   <data name="InternationalAffair" xml:space="preserve">
     <value>Hợp tác quốc tế</value>
   </data>
+  <data name="InternationalPartner" xml:space="preserve">
+    <value>Đối tác quốc tế</value>
+  </data>
   <data name="InvenName" xml:space="preserve">
     <value>Tên sản phẩm</value>
   </data>
   <data name="Invention" xml:space="preserve">
     <value>Bằng sáng chế/GPHI</value>
+  </data>
+  <data name="ISI/SCOPUS" xml:space="preserve">
+    <value>Bài báo ISI/SCOPUS</value>
   </data>
   <data name="isReseacher" xml:space="preserve">
     <value>Nghiên cứu viên</value>
@@ -336,6 +348,9 @@
   <data name="Name" xml:space="preserve">
     <value>Tên tác giả</value>
   </data>
+  <data name="NewPublications" xml:space="preserve">
+    <value>Công bố mới</value>
+  </data>
   <data name="News" xml:space="preserve">
     <value>Tin tức</value>
   </data>
@@ -390,8 +405,14 @@
   <data name="PatentType" xml:space="preserve">
     <value>Loại SHTT</value>
   </data>
+  <data name="Policy" xml:space="preserve">
+    <value>Chính sách</value>
+  </data>
   <data name="Pre" xml:space="preserve">
     <value>Trang trước</value>
+  </data>
+  <data name="ProcedureGuidelines" xml:space="preserve">
+    <value>Thông tin học bổng</value>
   </data>
   <data name="ProcedureTitle" xml:space="preserve">
     <value>Tiêu đề</value>
@@ -420,6 +441,9 @@
   <data name="Quality" xml:space="preserve">
     <value>Chất lượng</value>
   </data>
+  <data name="QuickStatistics" xml:space="preserve">
+    <value>Thống kê nhanh</value>
+  </data>
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
   </data>
@@ -441,6 +465,9 @@
   <data name="RequestInfo" xml:space="preserve">
     <value>Thông tin yêu cầu</value>
   </data>
+  <data name="Researchers" xml:space="preserve">
+    <value>Nghiên cứu viên</value>
+  </data>
   <data name="Reward" xml:space="preserve">
     <value>Tiền thưởng</value>
   </data>
@@ -452,6 +479,12 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Lưu</value>
+  </data>
+  <data name="ScienceManagementNavbar" xml:space="preserve">
+    <value>Khoa học – Công nghệ</value>
+  </data>
+  <data name="ScientificProducts" xml:space="preserve">
+    <value>Sản phẩm khoa học</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Tìm kiếm</value>
