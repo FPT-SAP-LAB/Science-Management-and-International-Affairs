@@ -24,7 +24,6 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
                     email = userClaims?.FindFirst("preferred_username")?.Value,
                     id = String.Empty,
                     name = userClaims?.FindFirst("name")?.Value,
-                    imageurl = String.Empty
                 };
                 List<int> roleAccept = new List<int>() { 2, 3 };
                 LoginRepo.User u = repo.getAccount(user, roleAccept);

@@ -520,7 +520,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bằng sáng chế.
+        ///   Looks up a localized string similar to Bằng sáng chế/GPHI.
         /// </summary>
         public static string Invention {
             get {
