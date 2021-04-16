@@ -31,7 +31,6 @@
     <link rel="shortcut icon" href="https://daihoc.fpt.edu.vn/favicon.ico" />
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link href="~/Content/Custom CSS/preloader.css" rel="stylesheet" />
 </head>
 <!--end::Head-->
@@ -554,7 +553,7 @@
                                                 </a>
                                                 <div class="navi-separator mt-3"></div>
                                                 <div class="navi-footer px-8 py-5">
-                                                    <a href="javascript:;" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
+                                                    <a href="javascript:;" id="signOut" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
                                                 </div>
                                             </div>
                                             <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
@@ -696,12 +695,6 @@
     <!--end::Content-->
     <!--</div>-->
     <!--end::Demo Panel-->
-
-    <script>
-        var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";
-    </script>
-    <!--begin::Global Config(global config for global JS scripts)-->
-
     <script>
         var KTAppSettings = {
             "breakpoints": {
@@ -763,7 +756,7 @@
         };
     </script>
 
-    <script src=""></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
     @Scripts.Render("~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6",
@@ -791,6 +784,7 @@
     @RenderSection("scripts")
 
     <script>
+        var signOut = new LoaderBtn($("#signOut"));
         $(".change-language").click(function () {
             document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
             document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
@@ -834,6 +828,7 @@
             });
         }
         function gp_signOut() {
+            signOut.startLoading()
             $.ajax({
                 url: '/Authen/Logout',
                 data: {},
@@ -842,8 +837,9 @@
                 success: function (data) {
                     var auth2 = gapi.auth2.getAuthInstance();
                     auth2.signOut().then(function () {
-                        window.location.href = '/Home/Index';
+                        window.location.href = '/';
                     });
+                    signOut.stopLoading()
                 },
                 error: function (data) {
                     alert(data)
