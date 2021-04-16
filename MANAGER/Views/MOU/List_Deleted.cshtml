@@ -87,11 +87,11 @@
                                     <th rowspan="2" class="">Số hiệu</th>
                                     <th colspan="4" class="text-center header-modify">Đối tác</th>
                                     <th colspan="3" class="text-center header-modify">Người đại diện</th>
-                                    <th nowrap="nowrap" rowspan="2" class="text-center">Bản mềm</th>
-                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày ký</th>
-                                    <th nowrap="nowrap" rowspan="2" class="text-center">Ngày hết hạn</th>
-                                    <th rowspan="2" class="text-center" nowrap="nowrap">Đơn vị - Cơ sở ký kết</th>
-                                    <th rowspan="2" class="text-center" nowrap="nowrap">Phạm vi hợp tác</th>
+                                    <th rowspan="2" class="text-center">Bản mềm</th>
+                                    <th rowspan="2" class="text-center">Ngày ký</th>
+                                    <th rowspan="2" class="text-center">Ngày hết hạn</th>
+                                    <th rowspan="2" class="text-center">Đơn vị - Cơ sở ký kết</th>
+                                    <th rowspan="2" class="text-center">Phạm vi hợp tác</th>
                                     <th rowspan="2" class="text-center">Trạng thái</th>
                                 </tr>
                                 <tr>
@@ -140,9 +140,15 @@
             pageLength: 5,
             lengthChange: false,
             serverSide: true,
+            sorting: [[1, 'asc']],
             initComplete: function () {
                 $('#mou_table_deleted').parent().css('overflow-x', 'auto');
                 $('#mou_table_deleted').parent().removeClass();
+                $('.mou_table th').css('padding', '5px 15px 5px 5px')
+                $('.mou_table > thead > tr:nth-child(1) > th:nth-child(1)').css('padding', '5px')
+                $('.mou_table > thead > tr:nth-child(1) > th:nth-child(3)').css('padding', '5px')
+                $('.mou_table > thead > tr:nth-child(1) > th:nth-child(4)').css('padding', '5px')
+                $('.mou_table > thead > tr:nth-child(1) >th.text-center.text-nowrap.sorting_disabled').css('padding', '5px')
             },
             ajax: {
                     url: "@Url.Action("ViewMOUDeleted", "MOU")",
@@ -158,6 +164,7 @@
             columns: [
                 {
                     data: "RowNumber",
+                    orderable: false,
                     createdCell: function (td, cellData, rowData, row, col) {
                         $(td).css('padding', '0')
                     },
@@ -175,7 +182,7 @@
                     name: "partner_name",
                     width: '200px',
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
@@ -304,24 +311,13 @@
                         return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },
             ],
-          
-        columnDefs: [
-            //{
-            //    className: "text-center",
-            //    targets: [0, 4, 9, 12, 13, 14],
-            //},
-            //{
-            //    className: "text-nowrap",
-            //    targets: [5, 6, 8, -1]
-            //},
-        ],
         });
-        $('#mou_table_deleted > thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '200px', 'max-width': '200px' });
+        //$('#mou_table_deleted > thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '200px', 'max-width': '200px' });
 
         function searchMOU() {
             rowIdx = 1;

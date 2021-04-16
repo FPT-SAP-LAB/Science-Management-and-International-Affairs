@@ -46,6 +46,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                 && a.name.Contains(search_paper) && c.conference_name.Contains(search_conference) && (b.status_id == search_status || search_status == 0)
                                 select b).Count();
 
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].RowNumber = baseDatatable.Start + 1 + i;
+                data[i].CreatedDate = data[i].Date.ToString("dd/MM/yyyy");
+            }
             return new BaseServerSideData<ConferenceIndex>(data, recordsTotal);
         }
         public BaseServerSideData<ConferenceIndex> GetHistoryPage(BaseDatatable baseDatatable, string search_paper, string search_conference)
@@ -77,6 +82,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                 && a.name.Contains(search_paper) && c.conference_name.Contains(search_conference)
                                 select b).Count();
 
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].RowNumber = baseDatatable.Start + 1 + i;
+                data[i].CreatedDate = data[i].Date.ToString("dd/MM/yyyy");
+            }
             return new BaseServerSideData<ConferenceIndex>(data, recordsTotal);
         }
     }

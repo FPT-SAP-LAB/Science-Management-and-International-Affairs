@@ -45,3 +45,7 @@ $(".menu-link").each(function () {
         $(this).parent().parent().parent().parent().addClass(' menu-item-here')
     }
 });
+
+$(".datetimepicker-input").keydown(function (e) {
+    e.preventDefault();
+})
