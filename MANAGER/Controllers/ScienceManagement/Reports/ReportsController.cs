@@ -14,7 +14,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
 {
     public class ReportsController : Controller
     {
-        //RewardsReportRepo rewardsReportRepo;
+        RewardsReportRepo rewardsReportRepo;
         //[Auther(RightID = "24")]
         public ActionResult PapersReportsByWorkplace()
         {
@@ -72,5 +72,27 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         //    }
         //    return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
         //}
+        public JsonResult getAwardByAuthors()
+        {
+            try
+            {
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.getAwardReportByAuthor(datatable);
+                for (int i = 0; i < data.Data.Count; i++)
+                {
+                    data.Data[i].rowNum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
     }
 }

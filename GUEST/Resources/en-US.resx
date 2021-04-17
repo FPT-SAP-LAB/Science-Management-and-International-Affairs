@@ -126,6 +126,9 @@
   <data name="According" xml:space="preserve">
     <value>According to the decision</value>
   </data>
+  <data name="ActivityNavbar" xml:space="preserve">
+    <value>Activities During The Year</value>
+  </data>
   <data name="AddAu" xml:space="preserve">
     <value>Add more author</value>
   </data>
@@ -249,6 +252,9 @@
   <data name="FPTProcedure" xml:space="preserve">
     <value>FPT Procedure</value>
   </data>
+  <data name="Header" xml:space="preserve">
+    <value>FPT Education - Office of Science Management and International Affairs</value>
+  </data>
   <data name="homepage" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -267,11 +273,17 @@
   <data name="InternationalAffair" xml:space="preserve">
     <value>International Affair</value>
   </data>
+  <data name="InternationalPartner" xml:space="preserve">
+    <value>International Partners</value>
+  </data>
   <data name="InvenName" xml:space="preserve">
     <value>Invention's name</value>
   </data>
   <data name="Invention" xml:space="preserve">
-    <value>Invention patent</value>
+    <value>Invention patents</value>
+  </data>
+  <data name="ISI/SCOPUS" xml:space="preserve">
+    <value>ISI/SCOPUS Papers</value>
   </data>
   <data name="isReseacher" xml:space="preserve">
     <value>Is reseacher</value>
@@ -336,6 +348,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NewPublications" xml:space="preserve">
+    <value>New Publications</value>
+  </data>
   <data name="News" xml:space="preserve">
     <value>News</value>
   </data>
@@ -390,8 +405,14 @@
   <data name="PatentType" xml:space="preserve">
     <value>Patent type</value>
   </data>
+  <data name="Policy" xml:space="preserve">
+    <value>Policy</value>
+  </data>
   <data name="Pre" xml:space="preserve">
     <value>Previous</value>
+  </data>
+  <data name="ProcedureGuidelines" xml:space="preserve">
+    <value>Procedure Guidelines</value>
   </data>
   <data name="ProcedureTitle" xml:space="preserve">
     <value>Title</value>
@@ -420,6 +441,9 @@
   <data name="Quality" xml:space="preserve">
     <value>Quality</value>
   </data>
+  <data name="QuickStatistics" xml:space="preserve">
+    <value>Quick Statistics</value>
+  </data>
   <data name="Record" xml:space="preserve">
     <value>record</value>
   </data>
@@ -441,6 +465,9 @@
   <data name="RequestInfo" xml:space="preserve">
     <value>Request Infomation</value>
   </data>
+  <data name="Researchers" xml:space="preserve">
+    <value>Researchers</value>
+  </data>
   <data name="Reward" xml:space="preserve">
     <value>Reward</value>
   </data>
@@ -452,6 +479,12 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ScienceManagementNavbar" xml:space="preserve">
+    <value>Science Technology</value>
+  </data>
+  <data name="ScientificProducts" xml:space="preserve">
+    <value>Scientific Products</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
