@@ -164,110 +164,64 @@
 </div>
 @section scripts{
     <script>
-        var table1 = $('#kt_datatable').DataTable({
-            responsive: true,
-
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        order: [[1, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                var initTable2 = function () {
-                    var table = $('#kt_datatable_2');
-
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
-
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        // order: [[0, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                return {
-
-                    //main function to initiate the module
-                    init: function () {
-                        initTable1();
-                        initTable2();
-                    }
-                };
-            }();
-
-            jQuery(document).ready(function () {
-                KTDatatablesBasicBasic.init();
+            var table1 = $('#kt_datatable').DataTable({
+                responsive: true,
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
+            // Order settings
+            order: [[1, 'desc']],
+            serverSide: true,
+            ajax: {
+                url: "/Reports/getAwardByAuthors",
+                data: function (d) {
+                    d.name = $("#search_name").val();
+                    d.nam = $("#search_nam").val()
+                    d.coso = $("#search_coso").val()
+                },
+                datatype: "json",
+                cache: true
+            },
+                columns: [
+                    { data: "rowNum", name: "rowNum", orderable: false },
+                    {
+                        data: {}, name: "name", render: function (data) {
+                            return data.name
+                        }
+                    },
+                    { data: "title", name: "title" },
+                    {
+                        data: "office", name: "office"
+                    },
+                    {
+                        data: "paperAward", name: "paperAward", render: function (data) {
+                            return AddComma(data)
+                        }
+                    },
+                    {
+                        data: "conferenceAward", name: "conferenceAward", render: function (data) {
+                            return AddComma(data)
+                        }
+                    },
+                    {
+                        data: "CitationAward", name: "CitationAward", render: function (data) {
+                            return AddComma(data)
+                        }
+                    },
+                    {
+                        data: "paperAward", name: "paperAward", render: function (data, type, row, meta) {
+                            a = eval(row.paperAward + "+" + row.conferenceAward + "+" + row.CitationAward)
+                            return AddComma(a)
+                        }
+                    },
+                ],
+                initComplete: function (settings, json) {
+                    $("#loader_panel").hide()
+                }
             });
             //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
             list_select = {
@@ -281,87 +235,8 @@
                 });
             }
                 //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+        $("#search_btn").click(function () {
+            table1.ajax.reload()
+        })
         </script>
-    }
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                return {
-
-                    //main function to initiate the module
-                    init: function () {
-                        initTable1();
-                        initTable2();
-                    }
-                };
-            }();
-
-            jQuery(document).ready(function () {
-                KTDatatablesBasicBasic.init();
-            });
-            //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
-            list_select = {
-                "search_nam": "Chọn năm",
-                "search_coso": "Chọn cơ sở"
-            }
-            for (let i in list_select) {
-                $('#' + i).select2({
-                    placeholder: list_select[i],
-                    allowClear: true
-                });
-            }
-                //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-        </script>
-    }
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                return {
-
-                    //main function to initiate the module
-                    init: function () {
-                        initTable1();
-                        initTable2();
-                    }
-                };
-            }();
-
-            jQuery(document).ready(function () {
-                KTDatatablesBasicBasic.init();
-            });
-            //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
-            list_select = {
-                "search_nam": "Chọn năm",
-                "search_coso": "Chọn cơ sở"
-            }
-            for (let i in list_select) {
-                $('#' + i).select2({
-                    placeholder: list_select[i],
-                    allowClear: true
-                });
-            }
-                //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-        </script>
-    }
+}
