@@ -1,10 +1,6 @@
 ﻿@{
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
-    BLL.Authen.LoginRepo.User user = null;
-    if (Session["User"] != null)
-    {
-        user = (BLL.Authen.LoginRepo.User)Session["User"];
-    }
+    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
 }
 
 <!DOCTYPE html>

@@ -13,5 +13,14 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+        public ActionResult Chat()
+        {
+            var pagesTree = new List<PageTree>
+            {
+                new PageTree("Bảng tin","/"),
+            };
+            ViewBag.pagesTree = pagesTree;
+            return View();
+        }
     }
 }
