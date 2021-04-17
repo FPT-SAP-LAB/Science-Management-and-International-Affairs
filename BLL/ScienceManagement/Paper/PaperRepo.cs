@@ -42,6 +42,123 @@ namespace BLL.ScienceManagement.Paper
             return item;
         }
 
+        public bool addPolicy(ENTITIES.File fl, List<CustomPaperPolicy> policy)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                DateTime today = DateTime.Now;
+
+                fl.name = "CS/" + today.ToString();
+                db.Files.Add(fl);
+                db.SaveChanges();
+
+                PaperPolicy pp = new PaperPolicy()
+                {
+                    valid_date = today,
+                    file_id = fl.file_id
+                };
+                db.PaperPolicies.Add(pp);
+                db.SaveChanges();
+
+                List<PaperPolicyCriteria> list = new List<PaperPolicyCriteria>();
+                foreach (var item in policy)
+                {
+                    PaperPolicyCriteria ppc = new PaperPolicyCriteria()
+                    {
+                        policy_id = pp.policy_id
+                    };
+                    db.PaperPolicyCriterias.Add(ppc);
+                    list.Add(ppc);
+                }
+                db.SaveChanges();
+
+                for (int i = 0; i < policy.Count; i++)
+                {
+                    policy[i].policy_criteria_id = list[i].policy_criteria_id;
+                }
+
+                foreach (var item in policy)
+                {
+                    PaperPolicyCriteriaLanguage ppcl = new PaperPolicyCriteriaLanguage()
+                    {
+                        policy_criteria_id = item.policy_criteria_id,
+                        language_id = 1,
+                        name = item.tv
+                    };
+                    db.PaperPolicyCriteriaLanguages.Add(ppcl);
+
+                    PaperPolicyCriteriaLanguage ppclta = new PaperPolicyCriteriaLanguage()
+                    {
+                        policy_criteria_id = item.policy_criteria_id,
+                        language_id = 2,
+                        name = item.ta
+                    };
+                    db.PaperPolicyCriteriaLanguages.Add(ppclta);
+                }
+                db.SaveChanges();
+                dbc.Commit();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                GoogleDriveService.DeleteFile(fl.file_drive_id);
+                return false;
+            }
+        }
+
+        public bool editPolicy(string id, string tv, string ta)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                int policy_criteria_id = Int32.Parse(id);
+                PaperPolicyCriteriaLanguage ppcltv = db.PaperPolicyCriteriaLanguages.Where(x => x.policy_criteria_id == policy_criteria_id).Where(x => x.language_id == 1).FirstOrDefault();
+                ppcltv.name = tv;
+                db.Entry(ppcltv).State = EntityState.Modified;
+
+                PaperPolicyCriteriaLanguage ppclta = db.PaperPolicyCriteriaLanguages.Where(x => x.policy_criteria_id == policy_criteria_id).Where(x => x.language_id == 2).FirstOrDefault();
+                ppclta.name = ta;
+                db.Entry(ppclta).State = EntityState.Modified;
+
+                db.SaveChanges();
+                dbc.Commit();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return false;
+            }
+        }
+
+        public CustomPaperPolicy getOnePolicy(string id)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select a.policy_id, b.policy_criteria_id, b.name as 'tv', c.name as 'ta'
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 1) as b on a.policy_id = b.policy_id join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 2) as c on a.policy_id = c.policy_id
+                            where b.policy_criteria_id = @id";
+            CustomPaperPolicy item = db.Database.SqlQuery<CustomPaperPolicy>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            return item;
+        }
+
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
@@ -1096,41 +1213,85 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
-                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
-	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
-	                            join [General].Account acc on br.account_id = acc.account_id
-	                            join [General].People po on acc.email = po.email
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on o.office_id = po.office_id
-								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
-								join (select p.paper_id, count(ap.people_id) as 'note'
-										from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
-										group by p.paper_id) as a on p.paper_id = a.paper_id
-                            where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher";
-            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
-            return list;
+            //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+            //                     join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+            //                     join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+            //                     join [General].Account acc on br.account_id = acc.account_id
+            //                     join [General].People po on acc.email = po.email
+            //                     join [General].Profile pro on po.people_id = pro.people_id
+            //                     join [General].Office o on o.office_id = po.office_id
+            //join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+            //join (select p.paper_id, count(ap.people_id) as 'note'
+            //		from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
+            //		group by p.paper_id) as a on p.paper_id = a.paper_id
+            //                    where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher";
+            int ty = Int32.Parse(type);
+            bool is_r = reseacher == 0 ? false : true;
+            var data = (from a in db.BaseRequests
+                        join b in db.Profiles on a.account_id equals b.account_id
+                        join c in db.People on b.people_id equals c.people_id
+                        join d in db.RequestPapers on a.request_id equals d.request_id
+                        join e in db.Papers on d.paper_id equals e.paper_id
+                        join f in db.Offices on c.office_id equals f.office_id
+                        where (d.status_id == 4 || d.status_id == 6) && d.type == ty && b.is_reseacher == is_r
+                        select new WaitDecisionPaper
+                        {
+                            name = e.name,
+                            mssv_msnv = b.mssv_msnv,
+                            office_abbreviation = f.office_abbreviation,
+                            author_name = c.name,
+                            journal_name = e.journal_name,
+                            request_id = d.request_id,
+                            paper_id = e.paper_id,
+                            note = (from m in db.AuthorPapers
+                                    where m.paper_id == d.paper_id
+                                    select m.people_id).Count()
+                        }).ToList();
+            //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
+            return data;
         }
 
         public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
-                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
-	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
-	                            join [General].Account acc on br.account_id = acc.account_id
-	                            join [General].People po on acc.email = po.email
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on o.office_id = po.office_id
-								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
-								join (select p.paper_id, count(ap.people_id) as 'note'
-										from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
-										group by p.paper_id) as a on p.paper_id = a.paper_id
-                            where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
-            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
-            return list;
+            //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+            //                     join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+            //                     join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+            //                     join [General].Account acc on br.account_id = acc.account_id
+            //                     join [General].People po on acc.email = po.email
+            //                     join [General].Profile pro on po.people_id = pro.people_id
+            //                     join [General].Office o on o.office_id = po.office_id
+            //join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+            //join (select p.paper_id, count(ap.people_id) as 'note'
+            //		from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
+            //		group by p.paper_id) as a on p.paper_id = a.paper_id
+            //                    where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
+            int ty = Int32.Parse(type);
+            bool is_r = reseacher == 0 ? false : true;
+            var data = (from a in db.BaseRequests
+                        join b in db.Profiles on a.account_id equals b.account_id
+                        join c in db.People on b.people_id equals c.people_id
+                        join d in db.RequestPapers on a.request_id equals d.request_id
+                        join e in db.Papers on d.paper_id equals e.paper_id
+                        join f in db.Offices on c.office_id equals f.office_id
+                        where (d.status_id == 4 || d.status_id == 7) && d.type == ty && b.is_reseacher == is_r
+                        select new WaitDecisionPaper
+                        {
+                            name = e.name,
+                            mssv_msnv = b.mssv_msnv,
+                            office_abbreviation = f.office_abbreviation,
+                            author_name = c.name,
+                            journal_name = e.journal_name,
+                            request_id = d.request_id,
+                            paper_id = e.paper_id,
+                            note = (from m in db.AuthorPapers
+                                    where m.paper_id == d.paper_id
+                                    select m.people_id).Count()
+                        }).ToList();
+            //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
+            return data;
         }
 
         public List<Paper_Appendix_1> getListAppendix1_2(string type, int reseacher)
@@ -1207,7 +1368,7 @@ namespace BLL.ScienceManagement.Paper
                 db.Papers.Add(paper_add);
                 db.SaveChanges();
 
-                if (criteria != null)
+                if (criteria != null && criteria.Count() > 0)
                 {
                     string temp = "";
                     foreach (var item in criteria)
@@ -1348,6 +1509,59 @@ namespace BLL.ScienceManagement.Paper
                 GoogleDriveService.DeleteFile(fl.file_drive_id);
                 return 0;
             }
+        }
+
+        public List<CustomPaperPolicy> getPolicy()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select a.policy_id, b.policy_criteria_id, b.name as 'tv', c.name as 'ta'
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 1) as b on a.policy_id = b.policy_id join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 2) as c on a.policy_id = c.policy_id";
+            List<CustomPaperPolicy> list = db.Database.SqlQuery<CustomPaperPolicy>(sql).ToList();
+            return list;
+        }
+
+        public string getLinkPolicy()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select b.link
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, f.link
+	                            from SM_ScientificProduct.PaperPolicy pp join General.[File] f on pp.file_id = f.file_id) as b on a.policy_id = b.policy_id";
+            string link = db.Database.SqlQuery<string>(sql).FirstOrDefault();
+            return link;
+        }
+
+        public List<CustomPaperPolicy> getPolicyByLanguage(string lang)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            int lang_id = 0;
+            if (lang == "vi-VN") lang_id = 1;
+            else if (lang == "en-US") lang_id = 2;
+            string sql = @"select a.policy_id, b.policy_criteria_id, b.name as 'tv'
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = @lang) as b on a.policy_id = b.policy_id";
+            List<CustomPaperPolicy> list = db.Database.SqlQuery<CustomPaperPolicy>(sql, new SqlParameter("lang", lang_id)).ToList();
+            return list;
         }
     }
 }

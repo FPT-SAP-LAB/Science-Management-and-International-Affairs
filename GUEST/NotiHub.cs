@@ -16,6 +16,8 @@ namespace GUEST
         private static readonly List<NotificationTypeLanguage> TypeLanguage = notficationRepo.Languages();
         public void Send(int notification_id)
         {
+            if (notification_id < 1)
+                return;
             // Call the addNewMessageToPage method to update clients.
             Notification Noti = notficationRepo.Get(notification_id);
             AccountConnections.TryGetValue(Noti.AccountID, out BruhbrubLNguyen[] Connections);
@@ -28,7 +30,7 @@ namespace GUEST
                     foreach (var type in Types)
                     {
                         if (conn.LanguageID == type.language_id)
-                            Clients.Client(conn.ConnectionID).addNewMessageToPage(Noti.URL, Noti.Icon, type.notification_template, Noti.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
+                            Clients.Client(conn.ConnectionID).addNewMessageToPage(Noti, type.notification_template, Noti.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
                     }
                 }
         }

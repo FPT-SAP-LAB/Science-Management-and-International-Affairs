@@ -31,7 +31,6 @@
     <link rel="shortcut icon" href="https://daihoc.fpt.edu.vn/favicon.ico" />
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link href="~/Content/Custom CSS/preloader.css" rel="stylesheet" />
 </head>
 <!--end::Head-->
@@ -108,28 +107,28 @@
                                         <li class="menu-item  menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
                                             <a href="javascript:;" class="menu-link menu-toggle">
                                                 <span class="menu-text">
-                                                    Khoa học công nghệ
+                                                    @rm.GetString("ScienceManagementNavbar")
                                                 </span><span class="menu-desc"></span><i class="menu-arrow"></i>
                                             </a>
                                             <div class="menu-submenu menu-submenu-classic menu-submenu-left">
                                                 <ul class="menu-subnav">
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="#" class="menu-link"> <span class="menu-text">Lịch hoạt động trong năm</span> </a>
+                                                        <a href="#" class="menu-link"> <span class="menu-text">@rm.GetString("ActivityNavbar")</span> </a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="/ScientificProducts" class="menu-link"><span class="menu-text">Sản phẩm khoa học</span></a>
+                                                        <a href="/ScientificProducts" class="menu-link"><span class="menu-text">@rm.GetString("ScientificProducts")</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="/Researchers/List" class="menu-link"><span class="menu-text">Nghiên cứu viên</span></a>
+                                                        <a href="/Researchers/List" class="menu-link"><span class="menu-text">@rm.GetString("Researchers")</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="/Policy" class="menu-link"><span class="menu-text">Chính sách</span></a>
+                                                        <a href="/Policy" class="menu-link"><span class="menu-text">@rm.GetString("Policy")</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="#" class="menu-link"><span class="menu-text">Công bố mới</span></a>
+                                                        <a href="#" class="menu-link"><span class="menu-text">@rm.GetString("NewPublications")</span></a>
                                                     </li>
                                                     <li class="menu-item  menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="#" class="menu-link"><span class="menu-text">Thông tin học bổng</span></a>
+                                                        <a href="#" class="menu-link"><span class="menu-text">@rm.GetString("ProcedureGuidelines")</span></a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -258,7 +257,8 @@
                                     <!--begin::Toggle-->
                                     <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                         <div class="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-1 pulse pulse-primary">
-                                            <i class="fa fas fa-bell icon-md"></i><span class="pulse-ring"></span>
+                                            <i class="fa fas fa-bell icon-md"></i>
+                                            <span style="display: none" id="noti-pulse" class="pulse-ring"></span>
                                             <span style="display: none" id="noti-number" class="sibfvsnu px9q9ucb j2ut9x2k p4hiznlx pq6dq46d e9vueds3 ekzkrbhg omvj5yrc jiuqdcnw d82f96u3 gky8063y">
                                                 <span class="bp9cbjyn ljqsnud1 pq6dq46d datstx6m taijpn5t jb3vyjys jxrgncrl qt6c0cv9 qnrpqo6b k4urcfbm">
                                                 </span>
@@ -553,7 +553,7 @@
                                                 </a>
                                                 <div class="navi-separator mt-3"></div>
                                                 <div class="navi-footer px-8 py-5">
-                                                    <a href="javascript:;" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
+                                                    <a href="javascript:;" id="signOut" class="btn btn-light-primary font-weight-bold" onclick="gp_signOut()">Sign Out</a>
                                                 </div>
                                             </div>
                                             <!--ENABLE THIS WHEN LOGIN SUCCESSFUL-->
@@ -641,7 +641,7 @@
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted font-weight-bold mr-2">2021&copy;</span>
-                            <a href="#" target="_blank" class="text-dark-75 text-hover-primary">FPT Education - Office of Science Management and International Affairs</a>
+                            <a href="#" target="_blank" class="text-dark-75 text-hover-primary">@rm.GetString("Header")</a>
                         </div>
                         <!--end::Copyright-->
                         <!--begin::Nav-->
@@ -695,12 +695,6 @@
     <!--end::Content-->
     <!--</div>-->
     <!--end::Demo Panel-->
-
-    <script>
-        var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";
-    </script>
-    <!--begin::Global Config(global config for global JS scripts)-->
-
     <script>
         var KTAppSettings = {
             "breakpoints": {
@@ -762,7 +756,7 @@
         };
     </script>
 
-    <script src=""></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
     @Scripts.Render("~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6",
@@ -790,6 +784,7 @@
     @RenderSection("scripts")
 
     <script>
+        var signOut = new LoaderBtn($("#signOut"));
         $(".change-language").click(function () {
             document.cookie = "language_name=" + $(this).data("language") + '; Path=/;';
             document.cookie = "language_id=" + $(this).data("id") + '; Path=/;';
@@ -833,6 +828,7 @@
             });
         }
         function gp_signOut() {
+            signOut.startLoading()
             $.ajax({
                 url: '/Authen/Logout',
                 data: {},
@@ -841,8 +837,9 @@
                 success: function (data) {
                     var auth2 = gapi.auth2.getAuthInstance();
                     auth2.signOut().then(function () {
-                        window.location.href = '/Home/Index';
+                        window.location.href = '/';
                     });
+                    signOut.stopLoading()
                 },
                 error: function (data) {
                     alert(data)
@@ -876,25 +873,33 @@
                 // Reference the auto-generated proxy for the hub.
                 hub = $.connection.notiHub;
                 // Create a function that the hub can call back to display messages.
-                hub.client.addNewMessageToPage = function (URL, icon, template, date) {
-                    let templateMessage = '<a href="' + URL + '" class="navi-item">' +
-                        '<div class="navi-link">' +
-                            '<div class="navi-icon mr-2">' +
-                                '<i class="' + icon + '"></i>' +
-                            '</div>' +
-                            '<div class="navi-text">' +
-                                '<div class="font-weight-bold">' +
-                                    template +
-                                '</div>' +
-                                '<div class="text-muted">' +
-                                    date +
-                                '</div>' +
-                            '</div>' +
+                hub.client.addNewMessageToPage = function (Noti, template, date) {
+                    let templateMessage = '<a data-id="' + Noti.NotificationID + '" href="' + Noti.URL + '" class="navi-item';
+                    if (!Noti.IsRead)
+                        templateMessage += ' not-read-noti';
+                    templateMessage += '"><div class="navi-link">' +
+                        '<div class="navi-icon mr-2">' +
+                        '<i class="' + Noti.Icon + '"></i>' +
                         '</div>' +
-                    '</a>';
+                        '<div class="navi-text">' +
+                        '<div';
+                    if (Noti.IsRead)
+                        templateMessage += ' class="text-muted"'
+                    templateMessage += '>' +
+                        template +
+                        '</div>' +
+                        '<div class="text-muted">' +
+                        date +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</a>';
+                    if ($("#event-noti a").length == 0)
+                        $("#event-noti").text("");
                     $("#event-noti").html(templateMessage + $("#event-noti").html());
                     $("#noti-number span").text(parseInt($("#noti-number span").text()) + 1);
                     $("#noti-number").show();
+                    $("#noti-pulse").show();
                 };
 
                 $.connection.hub.start().done(function () {
@@ -915,20 +920,23 @@
                     success: function (data) {
                         if (data.success) {
                             for (var i = 0; i < data.content.length; i++) {
-                                let templateMessage = '<a data-id="' + data.content[i].NotificationID + '" href="' + data.content[i].URL + '" class="navi-item not-read-noti">' +
-                                    '<div class="navi-link">' +
-                                        '<div class="navi-icon mr-2">' +
-                                            '<i class="' + data.content[i].Icon + '"></i>' +
-                                        '</div>' +
+                                let Noti = data.content[i];
+                                let templateMessage = '<a data-id="' + Noti.NotificationID + '" href="' + Noti.URL + '" class="navi-item';
+                                if (!Noti.IsRead)
+                                    templateMessage += ' not-read-noti';
+                                templateMessage += '"><div class="navi-link">' +
+                                    '<div class="navi-icon mr-2">' +
+                                    '<i class="' + Noti.Icon + '"></i>' +
+                                    '</div>' +
                                     '<div class="navi-text">' +
                                     '<div';
-                                if (data.content[i].IsRead)
+                                if (Noti.IsRead)
                                     templateMessage += ' class="text-muted"'
                                 templateMessage += '>' +
-                                                data.content[i].Template +
+                                                Noti.Template +
                                             '</div>' +
                                             '<div class="text-muted">' +
-                                                data.content[i].StringDate +
+                                                Noti.StringDate +
                                             '</div>' +
                                         '</div>' +
                                     '</div>' +
@@ -936,8 +944,10 @@
                                 $("#event-noti").append(templateMessage);
                             }
                             $("#noti-number span").text(data.unread)
-                            if (data.unread != 0)
-                                $("#noti-number").show()
+                            if (data.unread != 0) {
+                                $("#noti-number").show();
+                                $("#noti-pulse").show();
+                            }
                             if ($("#event-noti a").length == 0)
                                 $("#event-noti").append('<div style="height: inherit" class="d-flex flex-center text-center text-muted">All caught up!<br />No new notifications.</div>')
                         }

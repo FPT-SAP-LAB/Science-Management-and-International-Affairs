@@ -27,3 +27,6 @@ $(".number-comma").each(function () {
     $(this).attr('data-value', $(this).val())
     $(this).text(AddComma($(this).val()))
 })
+$(".datetimepicker-input").keydown(function (e) {
+    e.preventDefault();
+})

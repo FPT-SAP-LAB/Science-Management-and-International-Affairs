@@ -4,6 +4,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .mou_table th {
+        font-size: 10px !important
+    }
+
+    .mou_table td {
+        font-size: 10px !important
+    }
+
+        .mou_table td span {
+            font-size: 10px !important
+        }
+
+        .mou_table td a {
+            font-size: 10px !important
+        }
+</style>
 <link href="~/Content/Custom_CSS/MOU/MOU.css" rel="stylesheet" />
 
 <div class="card card-custom ">
@@ -112,7 +129,7 @@
                             </div>
                             <div class="row mb-5 justify-content-center last-row">
                                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <a href="javascript:" onclick="saveBasicInfo()" class="load-btn btn btn-sm btn-light-primary font-weight-bold float-right save-basic-info">Lưu</a>
+                                    <a href="javascript:" onclick="saveBasicInfo()" class="load-btn btn btn-sm btn-light-success font-weight-bold float-right save-basic-info">Lưu</a>
                                 </div>
                             </div>
                             <div class="row mb-5 justify-content-center">
@@ -143,19 +160,11 @@
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                @*<select class="form-control text-center" id="search_nation" name="param" style="width:100% !important">
-                                                        <option value="1">Việt Nam</option>
-                                                        <option value="2">USA</option>
-                                                    </select>*@
                                                 <input type="text" class="form-control text-center" placeholder="Quốc gia" id="search_nation" />
                                             </div>
                                         </div>
                                         <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 mr-3 my-1">
                                             <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
-                                                @*<select class="form-control text-center" id="search_specialization" name="param" style="width:100% !important">
-                                                        <option value="1">IT</option>
-                                                        <option value="2">BA</option>
-                                                    </select>*@
                                                 <input type="text" class="form-control text-center" placeholder="Lĩnh vực" id="search_specialization" />
                                             </div>
                                         </div>
@@ -681,7 +690,7 @@
     </script>
 
     @*mou_basic_info*@
-<script>
+    <script>
         var listStatus = [
             {
                 status_id: 2,
@@ -1294,7 +1303,7 @@
                     button_loader.stopLoading();
                     toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
                     return;
-                } 
+                }
                 else if (compareDate($('#end_date_mou').val(), $('#mou_addition_end_time').val())) { //compare = true <=> sign_date > end_date
                     button_loader.stopLoading();
                     toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
@@ -1673,16 +1682,42 @@
                         "specialization": function () { return $('#search_specialization').val() },
                     },
                     cache: "false"
-                },
+            },
+            order: [[8, "desc"]],
             columns: [
                 {
                     render: function () {
                         return rowIdxMOUPartner++;
-                    }
+                    },
+                    className: 'text-center',
+                    orderable: false,
                 },
-                { data: "partner_name" },
-                { data: "country_name" },
-                { data: "specialization_name" },
+                {
+                    data: "partner_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center', },
+                {
+                    data: "country_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center', },
+                {
+                    data: "specialization_name",
+                    render: function (data) {
+                        if (data == "" || data == null) {
+                            return "";
+                        } else {
+                            return data.replaceAll(',', ', <br/>')
+                        }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
+                },
                 {
                     data: "website",
                     render: function (data) {
@@ -1691,20 +1726,54 @@
                         } else {
                             return '<a target="blank" href="' + data + '"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
                         }
-                    }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                    orderable: false,
                 },
                 {
                     data: "contact_point_name",
-                    className: 'text-nowrap',
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
                 },
                 {
                     data: "contact_point_phone",
-                    className: 'text-nowrap',
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
                 },
-                { data: "contact_point_email" },
-                { data: "mou_start_date_string" },
-                { data: "scope_abbreviation" }
-                ,
+                {
+                    data: "contact_point_email",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "mou_start_date_string",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "scope_abbreviation",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center', render: function (data) {
+                        if (data == "" || data == null) {
+                            return "";
+                        } else {
+                            return data.replaceAll(',', ', ')
+                        }
+                    },
+                },
                 {
                     title: 'Hành động',
                     data:
@@ -1713,9 +1782,11 @@
                         mou_code: "mou_code",
                         partner_name: "partner_name"
                     },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
                     className: 'text-nowrap text-center',
                     orderable: false,
-                    width: '250px',
                     render: function (data, type, full, meta, row) {
                         return '<a onclick="show_status_history(' + data.mou_partner_id + ',\'' + data.mou_code +'\',\'' + data.partner_name + '\')" class="show-status-history" href="#mou_partner_history" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-sm"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Code/Time-schedule.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path d="M504 255.531c.253 136.64-111.18 248.372-247.82 248.468c-59.015.042-113.223-20.53-155.822-54.911c-11.077-8.94-11.905-25.541-1.839-35.607l11.267-11.267c8.609-8.609 22.353-9.551 31.891-1.984C173.062 425.135 212.781 440 256 440c101.705 0 184-82.311 184-184c0-101.705-82.311-184-184-184c-48.814 0-93.149 18.969-126.068 49.932l50.754 50.754c10.08 10.08 2.941 27.314-11.313 27.314H24c-8.837 0-16-7.163-16-16V38.627c0-14.254 17.234-21.393 27.314-11.314l49.372 49.372C129.209 34.136 189.552 8 256 8c136.81 0 247.747 110.78 248 247.531zm-180.912 78.784l9.823-12.63c8.138-10.463 6.253-25.542-4.21-33.679L288 256.349V152c0-13.255-10.745-24-24-24h-16c-13.255 0-24 10.745-24 24v135.651l65.409 50.874c10.463 8.137 25.541 6.253 33.679-4.21z" fill="black"/></svg><!--end::Svg Icon--></span></a> '
                             + '<a href="#edit_partner_mou" onclick=goDetailMOUPartner(' + data.mou_partner_id + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;" data-toggle="modal">Sửa</a>' +
@@ -1723,21 +1794,15 @@
                     }
                 },
             ],
-            columnDefs: [
-                {
-                    targets: [ 0, 2, 3, 4, 5, 6, 7, 8, 9],
-                    className: 'text-center'
-                },
-
-            ],
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
                 $(this).parent().css('width', '100%');
                 $(this).parent().css('padding', '0');
+                $('.mou_table th').css('padding', '5px 15px 5px 5px')
+                $('.sorting_disabled').css('padding', '5px')
+                $('.header-modify').css('padding', '5px')
             }
         });
-
-        $('#partner_table > thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function checkPartnerAdd() {
@@ -1977,7 +2042,7 @@
             $('#mou_partner_specialization_edit').append(HTMLSpedata);
             $('#mou_partner_scope_edit').append(HTMLScopedata);
 
-            //hide select 
+            //hide select
             $('#nation_edit_select').select2({
                 placeholder: 'Chọn quốc gia',
                 allowClear: false,
@@ -2181,10 +2246,17 @@
                     {
                         render: function () {
                             return rowIdx++;
-                        }
+                        },
+                        className: 'text-center',
                     },
-                    { data: "content" },
-                    { data: "full_name" },
+                    {
+                        data: "content",
+                        className: 'text-center',
+                    },
+                    {
+                        data: "full_name",
+                        className: 'text-center',
+                    },
                     {
                         data: "add_time",
                         render: function (data, type) {
@@ -2192,7 +2264,8 @@
                                 return data;
                             }
                             return moment(data).format('DD-MM-YYYY hh:mm:ss A');
-                        }
+                        },
+                        className: 'text-center',
                     }
                 ],
                 initComplete: function () {
@@ -2248,10 +2321,23 @@
                 {
                     render: function () {
                         return rowIdxMOA++;
-                    }
+                    },
+                    className: 'text-center',
                 },
-                { data: "moa_code" },
-                { data: "partner_name" },
+                {
+                    data: "moa_code",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "partner_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
                 {
                     data: "evidence",
                     render: function (data) {
@@ -2260,21 +2346,46 @@
                         } else {
                             return '<a target="blank" href="' + data + '" data-toggle="modal"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7.71 3.5L1.15 15l3.43 6l6.55-11.5M9.73 15L6.3 21h13.12l3.43-6m-.57-1L15.42 2H8.57l6.86 12h6.85z" fill="#626262"/></svg><!--end::Svg Icon--></span></a>';
                         }
-                    }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
                 },
-                { data: "moa_start_date_string" },
-                { data: "moa_end_date_string" },
-                { data: "office_name" },
+                {
+                    data: "moa_start_date_string",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "moa_end_date_string",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
+                {
+                    data: "office_name",
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
+                },
                 {
                     data: "scope_abbreviation",
                     render: function (data) {
                         data = data.replaceAll(',', ', ')
                         return data
-                    }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
                 },
                 {
                     data: "mou_status_id",
-                    width: '50px',
                     render: function (data) {
                         var status = {
                             2: {
@@ -2290,29 +2401,27 @@
                             return data;
                         }
                         return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
-                    }
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0')
+                    },
+                    className: 'text-center',
                 },
                 {
                     title: 'Hành động',
                     data: "moa_id",
-                    className: "text-nowrap",
                     orderable: false,
-                    width: '125px',
                     render: function (data, type, full, meta) {
                         return '<a onclick=goDetailMOA(' + data + ') class="btn btn-sm btn-light-primary px-6 font-weight-bold" style="margin-right: 10px;">Sửa</a>' +
                             '<a onclick="confirm_delete_moa(' + data + ')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
-                    }
-                },
-            ]
-            ,
-            columnDefs: [
-                {
-                    targets:'_all',
-                    className: "text-center",
+                    },
+                    createdCell: function (td, cellData, rowData, row, col) {
+                        $(td).css('padding', '0 5px')
+                    },
+                    className: 'text-center text-nowrap',
                 },
             ],
         });
-        $('#moa_table > thead > tr > th:nth-child(3)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function nextStep() {
@@ -2929,5 +3038,5 @@
                 }
             })
     }
-</script>
+    </script>
 }
