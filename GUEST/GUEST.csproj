@@ -2543,7 +2543,6 @@
     <Content Include="Views\ConferenceSponsor\Edit.cshtml" />
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AdditionalProfile\Index.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
