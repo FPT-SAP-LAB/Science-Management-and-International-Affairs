@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("Country")<span style='color:red'>*</span></label>
-                                <select class="form-control form-control-lg select-custom notnull" id="search_country" name="param">
+                                <select class="form-control select2 notnull" id="search_country" name="param" multiple="multiple">
                                     @{
                                         foreach (var item in ViewBag.country)
                                         {
@@ -70,11 +70,15 @@
                             </div>
                             <div class="card-body">
                                 <ul>
-                                    <li>Thưởng bài báo trong nước, quốc tế</li>
-                                    <li>Ít nhất 1 tác giả có địa chỉ FE</li>
+                                    @{
+                                        foreach (var item in ViewBag.policy)
+                                        {
+                                            <li>@item.tv</li>
+                                        }
+                                    }
                                 </ul>
                                 <br />
-                                <a href="https://drive.google.com/file/d/12X4zCRabwpcY7rqVWoscJ4AqlXtfvoKF/view?usp=sharing" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                <a href="@ViewBag.link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                             </div>
                         </div>
                     </div>
@@ -128,9 +132,9 @@
         </div>
     </div>
 </div>
-<form style="visibility: hidden" method="post" action="/Invention/Edit" id="InvenForm">
+<form style="visibility: hidden" method="get" action="/Invention/Edit" id="InvenForm">
     <input name="id" id="nameEdit2" />
-    <input name="editable" id="ckEdit2" />
+    @*<input name="editable" id="ckEdit2" />*@
 </form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
@@ -142,11 +146,13 @@
         var people = [];
         var fileid;
         var inven_id;
+
+        $("#add_author_reward_edit").parent().hide()
         $("#btemp").click(function () {
             //alert($("#temp").text());
         });
         $('#search_country').select2({
-            allowClear: true
+            //allowClear: true
         });
         $('#search_type').select2({
             allowClear: true,
@@ -171,7 +177,6 @@
                     if (response.mess == "ss") {
                         $("#loading").hide();
                         $("#nameEdit2").val(inven_id);
-                        $("#ckEdit2").val(3);
                         $("#InvenForm").submit();
                     }
                 },
@@ -264,27 +269,47 @@
                 var invention = {
                     name: $("#inven_name").val(),
                     no: $("#patent_number").val(),
-                    date: dateFormat,
-                    country_id: $("#search_country").val()
+                    date: dateFormat
                 };
                 var type = $("#search_type").val();
 
                 formData.append('type', type);
                 formData.append('input', JSON.stringify(invention));
 
+                var countries = [];
+                var arr = $("#search_country").val();
+                for (var i = 0; i < arr.length; i++) {
+                    var temp = arr[i];
+                    var country = {
+                        country_id: temp
+                    };
+                    countries.push(country);
+                }
+
+                const author_temp = JSON.stringify({ people });
+                const country_temp = JSON.stringify({ countries });
+
+                formData.append('countries', country_temp);
+                formData.append('people', author_temp);
+
                 $.ajax({
                     url: "/Invention/addFile",
                     method: "post",
                     complete: function (data) {
                         var mess = data.responseJSON.mess;
-                        if (mess == "ss") {
+                        if (mess) {
                             inven_id = data.responseJSON.id;
-                            addAuthor();
+                            $("#loading").hide();
+                            $("#nameEdit2").val(inven_id);
+                            $("#InvenForm").submit();
+                            //addAuthor();
                         }
+                        $("#loading").hide();
                     },
                     error: function () {
                         toastr.error("Có lỗi xảy ra");
-                        save_loader.stopLoading();
+                        $("#loading").hide();
+                        //save_loader.stopLoading();
                     },
                     dataType: "json",
                     data: formData,

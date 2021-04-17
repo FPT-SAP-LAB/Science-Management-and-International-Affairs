@@ -316,6 +316,7 @@
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\PaperCriteriaController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Paper\ConditionPaperManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
@@ -2521,6 +2522,7 @@
     <Content Include="Views\ConditionManagement\Add.cshtml" />
     <Content Include="Views\DecisionHistory\History.cshtml" />
     <Content Include="Views\ConferenceSponsor\History.cshtml" />
+    <Content Include="Views\ConditionPaperManagement\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -65,7 +65,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
             name: 'partner_name',
             createdCell: function (td) {
                 $(td).css('padding', '0 5px')
-                $(td).css({ 'min-width': '0px', 'max-width': '250px' });
+                $(td).css({ 'min-width': '90px', 'max-width': '300px' });
             },
             className: 'text-center',
         },
@@ -109,6 +109,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
         {
             data: 'collab_status_id',
             name: 'collab_status_id',
+            orderable: false,
             createdCell: function (td) {
                 $(td).css('padding', '0 12px 0 5px')
             },
@@ -125,12 +126,14 @@ var collab_going_table = $('#collab_going_table').DataTable({
                 $(td).css('padding', '0')
             },
             className: 'text-center',
+            orderable: false,
         },
         {
             data: 'note',
             name: 'note',
             createdCell: function (td) {
                 $(td).css('padding', '0 5px')
+                $(td).css({ 'min-width': '90px', 'max-width': '300px' });
             },
             className: 'text-center',
         },

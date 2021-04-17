@@ -27,7 +27,6 @@ namespace GUEST.Controllers
             try
             {
                 BaseServerSideData<Notification> Notis = notificationRepo.List(CurrentAccount.AccountID(Session), start, LanguageResource.GetCurrentLanguageID());
-                Notis.Data.ForEach(x => x.StringDate = x.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
                 return Json(new { success = true, content = Notis.Data, unread = Notis.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)

@@ -38,6 +38,7 @@ namespace User.Controllers
             return View();
         }
 
+        [Auther(RightID = "29")]
         public ActionResult AddRequest()
         {
             ViewBag.title = "Đề xuất khen thưởng số trích dẫn";
@@ -49,6 +50,7 @@ namespace User.Controllers
             return View();
         }
 
+        [Auther(RightID = "29")]
         public ActionResult Pending()
         {
             ViewBag.title = "Số trích dẫn đang xử lý";
@@ -73,8 +75,9 @@ namespace User.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Edit(string id, string editable)
+        [Auther(RightID = "29")]
+        //[HttpPost]
+        public ActionResult Edit(string id)
         {
             ViewBag.title = "Chỉnh sửa số trích dẫn";
             var pagesTree = new List<PageTree>
@@ -82,7 +85,6 @@ namespace User.Controllers
                new PageTree("Chỉnh sửa số trích dẫn","/Citation/Edit"),
            };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.ckEdit = editable;
 
             AuthorInfo author = cr.getAuthor(id);
             ViewBag.author = author;
@@ -94,6 +96,8 @@ namespace User.Controllers
             ViewBag.cmt = listCmt;
 
             ViewBag.request_id = id;
+            RequestCitation rc = cr.getRequestCitation(id);
+            ViewBag.ckEdit = rc.status_id;
 
             return View();
         }

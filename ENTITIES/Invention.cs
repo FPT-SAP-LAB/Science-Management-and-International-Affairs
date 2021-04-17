@@ -18,6 +18,7 @@ namespace ENTITIES
         public Invention()
         {
             this.AuthorInventions = new HashSet<AuthorInvention>();
+            this.InventionCountries = new HashSet<InventionCountry>();
             this.RequestInventions = new HashSet<RequestInvention>();
         }
     
@@ -26,13 +27,14 @@ namespace ENTITIES
         public string no { get; set; }
         public Nullable<int> type_id { get; set; }
         public Nullable<System.DateTime> date { get; set; }
-        public int country_id { get; set; }
         public int file_id { get; set; }
+        public Nullable<bool> is_verified { get; set; }
     
-        public virtual Country Country { get; set; }
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuthorInvention> AuthorInventions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InventionCountry> InventionCountries { get; set; }
         public virtual InventionType InventionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestInvention> RequestInventions { get; set; }

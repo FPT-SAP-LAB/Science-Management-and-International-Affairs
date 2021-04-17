@@ -1,4 +1,5 @@
-﻿using BLL.ModelDAL;
+﻿using BLL.Authen;
+using BLL.ModelDAL;
 using BLL.ScienceManagement.Researcher;
 using ENTITIES;
 using ENTITIES.CustomModels;
@@ -28,11 +29,11 @@ namespace GUEST.Controllers
             Account account = CurrentAccount.Account(Session);
             if (account.account_id == 0)
                 return Redirect("/");
-            string EmailDomain = account.email.Split('@').Last();
-            if (EmailDomain.Equals("fe.edu.vn"))
-            {
-                ViewBag.Positions = PositionLanguageRepo.GetPositionLanguages(LanguageResource.GetCurrentLanguageID());
-            }
+            //string EmailDomain = account.email.Split('@').Last();
+            //if (EmailDomain.Equals("fe.edu.vn"))
+            //{
+            //    ViewBag.Positions = PositionLanguageRepo.GetPositionLanguages(LanguageResource.GetCurrentLanguageID());
+            //}
 
             ViewBag.Titles = titleRepo.GetList(LanguageResource.GetCurrentLanguageID());
             ViewBag.Offices = officeRepo.GetList();
@@ -45,6 +46,12 @@ namespace GUEST.Controllers
         {
             AdditionalProfileRepo additionalProfileRepo = new AdditionalProfileRepo();
             AlertModal<int> result = additionalProfileRepo.Add(identification, person, profile, username, CurrentAccount.AccountID(Session));
+            if (result.success.Value)
+            {
+                LoginRepo repo = new LoginRepo();
+                LoginRepo.User u = repo.getAccount(result.obj, new List<int> { 0 });
+                Session["User"] = u;
+            }
             return Json(result);
         }
     }

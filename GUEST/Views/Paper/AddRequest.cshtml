@@ -23,16 +23,16 @@
                                     <input autocomplete="off" class="form-control notnull" type="text" id="paper_name" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">@rm.GetString("PublishDate")</label>
-                                    <input autocomplete="off" readonly class="form-control custom-pickdate notnull" type="text" id="paper_publish_date" />
+                                    <label class="">@rm.GetString("PublishDate")</label>
+                                    <input autocomplete="off" readonly class="form-control custom-pickdate " type="text" id="paper_publish_date" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">@rm.GetString("LinkFull")</label>
                                     <input autocomplete="off" class="form-control notnull" type="text" id="paper_full" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">Link scholar</label>
-                                    <input autocomplete="off" class="form-control notnull" type="text" id="paper_scholar" />
+                                    <label class="">Link scholar</label>
+                                    <input autocomplete="off" class="form-control " type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
                                     <label class="required-field">Loại ấn phẩm</label>
@@ -66,11 +66,15 @@
                                 </div>
                                 <div class="card-body">
                                     <ul>
-                                        <li>Thưởng sáng chế/GPHI</li>
-                                        <li>Ít nhất 1 tác giả có địa chỉ FE</li>
+                                        @{
+                                            foreach (var item in ViewBag.policy)
+                                            {
+                                                <li>@item.tv</li>
+                                            }
+                                        }
                                     </ul>
                                     <br />
-                                    <a href="https://drive.google.com/file/d/12X4zCRabwpcY7rqVWoscJ4AqlXtfvoKF/view?usp=sharing" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                    <a href="@ViewBag.link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -216,9 +220,9 @@
     </div>
     <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
 </div>
-<form style="visibility: hidden" method="post" action="/Paper/Edit" id="PaperForm">
+<form style="visibility: hidden" method="get" action="/Paper/Edit" id="PaperForm">
     <input autocomplete="off" name="id" id="nameEdit" />
-    <input autocomplete="off" name="editable" id="ckEdit" />
+    @*<input autocomplete="off" name="editable" id="ckEdit" />*@
 </form>
 @section scripts{
     <script src="~/Scripts/ListAllPaper.js"></script>
@@ -247,7 +251,7 @@
                 success: function (response) {
                     $("#loading").hide();
                     $("#nameEdit").val(paper_id);
-                    $("#ckEdit").val(3);
+                    //$("#ckEdit").val(3);
                     $("#PaperForm").submit();
                 },
                 error: function () {
@@ -292,6 +296,7 @@
             });
         }
 
+        $("#add_author_reward_edit").parent().hide()
         var files_data = [];
         $("#submitPaper").click(function () {
             $("#loading").show();
@@ -498,19 +503,21 @@
     <script>
         $("#add_refactor").click(function () {
             $("#loading").show();
-            const paper_temp = JSON.stringify({
-                name: $("#paper_name").val(),
-                date_string: $("#paper_publish_date").val(),
-                link_doi: $("#paper_full").val(),
-                link_scholar: $("#paper_scholar").val(),
-                paper_type_id: $("#paper_type").val(),
-                journal_name: $("#paper_journal").val(),
-                vol: $("#paper_vol").val(),
-                page: $("#paper_page").val(),
-                company: $("#paper_publish_name").val(),
-                index: $("#paper_index").val(),
-                note_domestic: $("#paper_note_domestic").val(),
+            //let fd = new FormData();
+            var ck = true;
+            $(".notnull").each(function () {
+                if ($(this).val() == "") {
+                    $("#loading").hide();
+                    toastr.error("Cần nhập đầy đủ các trường có dấu *");
+                    ck = false;
+                    return false;
+                }
             });
+            if (people.length == 0) {
+                ck = false;
+                $("#loading").hide();
+                toastr.error("Chưa có tác giả");
+            }
 
             var inputs = $(".tieuchiname");
             var inputs2 = $(".tieuchilink");
@@ -528,52 +535,76 @@
                 }
                 criteria.push(PaperWithCriteria);
             }
-            const criteria_temp = JSON.stringify({ criteria });
-            const author_temp = JSON.stringify({ people });
 
-            const request_temp = JSON.stringify({
-                specialization_id: $("#chuyennganh").val(),
-                type: $("#loaithuong").val(),
-                reward_type: $("#kieuthuong").val(),
-            })
+            if (criteria.length == 0 && $("#loaithuong").val() == 2) {
+                toastr.error("Cần có ít nhất 1 tiêu chí");
+                $("#loading").hide();
+                ck = false;
+            }
+            if (ck) {
+                const paper_temp = JSON.stringify({
+                    name: $("#paper_name").val(),
+                    date_string: $("#paper_publish_date").val(),
+                    link_doi: $("#paper_full").val(),
+                    link_scholar: $("#paper_scholar").val(),
+                    paper_type_id: $("#paper_type").val(),
+                    journal_name: $("#paper_journal").val(),
+                    vol: $("#paper_vol").val(),
+                    page: $("#paper_page").val(),
+                    company: $("#paper_publish_name").val(),
+                    index: $("#paper_index").val(),
+                    note_domestic: $("#paper_note_domestic").val(),
+                });
 
-            //var name = $("#paper_name").val();
-            const formData = new FormData();
+                const criteria_temp = JSON.stringify({ criteria });
+                const author_temp = JSON.stringify({ people });
 
-            if (uppy1.getFiles().length > 0) formData.append('file', uppy1.getFiles()[0].data);
+                const request_temp = JSON.stringify({
+                    specialization_id: $("#chuyennganh").val(),
+                    type: $("#loaithuong").val(),
+                    reward_type: $("#kieuthuong").val(),
+                })
 
-            formData.append('paper_input', paper_temp);
-            formData.append('criteria_input', criteria_temp);
-            formData.append('author_input', author_temp);
-            formData.append('request_input', request_temp);
+                //var name = $("#paper_name").val();
+                const formData = new FormData();
 
-            var daidien = $("#daidien").val();
-            formData.append('daidien', daidien);
+                if (uppy1.getFiles().length > 0) formData.append('file', uppy1.getFiles()[0].data);
 
-            $.ajax({
-                url: "/Paper/AddPaper_Refactor",
-                method: "post",
-                complete: function (data) {
-                    var mess = data.responseJSON.mess;
-                    if (mess) {
+                formData.append('paper_input', paper_temp);
+                formData.append('criteria_input', criteria_temp);
+                formData.append('author_input', author_temp);
+                formData.append('request_input', request_temp);
+
+                var daidien = $("#daidien").val();
+                formData.append('daidien', daidien);
+
+                $.ajax({
+                    url: "/Paper/AddPaper_Refactor",
+                    method: "post",
+                    complete: function (data) {
+                        var mess = data.responseJSON.mess;
+                        if (mess) {
+                            $("#loading").hide();
+                            $("#nameEdit").val(data.responseJSON.id);
+                            $("#ckEdit").val(3);
+                            $("#PaperForm").submit();
+                        }
+                        else Swal.fire("Đã xảy ra lỗi! Vui lòng thử lại", "", "error");
                         $("#loading").hide();
-                        $("#nameEdit").val(paper_id);
-                        $("#ckEdit").val(3);
-                        $("#PaperForm").submit();
-                    }
-                    else Swal.fire("Đã xảy ra lỗi! Vui lòng thử lại", "", "error");
-                    $("#loading").hide();
-                },
-                error: function () {
-                    $("#loading").hide();
-                    toastr.error("Có lỗi xảy ra");
-                    save_loader.stopLoading();
-                },
-                dataType: "json",
-                data: formData,
-                processData: false,
-                contentType: false
-            });
+                    },
+                    error: function () {
+                        $("#loading").hide();
+                        toastr.error("Có lỗi xảy ra");
+                        save_loader.stopLoading();
+                    },
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+            } else {
+                ck = true;
+            }
         })
     </script>
 

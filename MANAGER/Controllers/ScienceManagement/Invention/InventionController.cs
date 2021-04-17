@@ -31,15 +31,18 @@ namespace MANAGER.Controllers
             return View();
         }
 
-        [HttpPost]
+        //[HttpPost]
+        [Auther(RightID = "16")]
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết bằng sáng chế";
             DetailInvention item = ir.getDetail(id);
             ViewBag.item = item;
 
-            List<Country> listCountry = ir.getCountry();
-            ViewBag.country = listCountry;
+            //List<Country> listCountry = ir.getCountry();
+            //ViewBag.country = listCountry;
+            List<CustomCountry> listCountry = ir.getListCountryEdit(item.invention_id);
+            ViewBag.listCountry = listCountry;
 
             List<AuthorInfoWithNull> listAuthor = ir.getAuthor(id, "vi-VN");
             ViewBag.author = listAuthor;

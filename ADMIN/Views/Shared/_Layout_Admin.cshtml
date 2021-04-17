@@ -91,7 +91,7 @@
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="@Url.Action("List","Account")" class="menu-link">
                                     <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
+                                        <i class="flaticon2-user icon-md"></i>
                                     </span>
                                     <span class="menu-text">QUẢN LÝ TÀI KHOẢN</span>
                                 </a>
@@ -105,7 +105,7 @@
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="@Url.Action("Index","Role")" class="menu-link">
                                     <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
+                                        <i class="flaticon2-shield icon-md"></i>
                                     </span>
                                     <span class="menu-text">QUẢN LÝ CHỨC DANH</span>
                                 </a>
@@ -119,7 +119,7 @@
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="@Url.Action("Index","Right")" class="menu-link">
                                     <span class="svg-icon menu-icon">
-                                        <i class="fas fa-clipboard-list icon-lg"></i>
+                                        <i class="flaticon2-gear icon-md"></i>
                                     </span>
                                     <span class="menu-text">QUẢN LÝ QUYỀN HẠN</span>
                                 </a>
@@ -262,12 +262,13 @@
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script src="~/Content/assets/plugins/custom/ckeditor/ckeditor-document.bundle.js?v=7.2.2"></script>
     <meta name="google-signin-client_id" content="24917390994-co652l6gu3eeoqaf96oc9h4av23eprot.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     @Scripts.Render(
     "~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6",
     "~/Content/assets/js/pages/widgets.js?v=7.0.6",
     "~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6",
-    "~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6")
+    "~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6",
+    "~/Content/assets/js/platform.js")
     @RenderSection("scripts")
     <script>
         function gp_signOut() {
