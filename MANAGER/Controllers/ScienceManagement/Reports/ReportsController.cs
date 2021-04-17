@@ -85,30 +85,30 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             try
             {
                 int? office_id;
-                if(Request["coso"] == null || Request["coso"]=="")
+                if (Request["coso"] == null || Request["coso"] == "")
                 {
                     office_id = null;
                 }
                 else
                 {
-                {
-                    office_id = Int32.Parse(Request["coso"]);
+                    {
+                        office_id = Int32.Parse(Request["coso"]);
+                    }
+                    SearchFilter searchs = new SearchFilter()
+                    {
+                        office_id = office_id,
+                        name = Request["name"].ToString(),
+                        year = Request["year"]
+                    };
+                    rewardsReportRepo = new RewardsReportRepo();
+                    BaseDatatable datatable = new BaseDatatable(Request);
+                    BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.getAwardReportByAuthor(datatable, searchs);
+                    for (int i = 0; i < data.Data.Count; i++)
+                    {
+                        data.Data[i].rowNum = datatable.Start + 1 + i;
+                    }
+                    return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
                 }
-                SearchFilter searchs = new SearchFilter()
-                {
-                    office_id= office_id,
-                    name= Request["name"].ToString(),
-                    year= Request["year"]
-                };
-                rewardsReportRepo = new RewardsReportRepo();
-                BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.getAwardReportByAuthor(datatable,searchs);
-                for (int i = 0; i < data.Data.Count; i++)
-                {
-                    data.Data[i].rowNum = datatable.Start + 1 + i;
-                }
-                return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
-            }
             catch (Exception e)
             {
                 return Json(new

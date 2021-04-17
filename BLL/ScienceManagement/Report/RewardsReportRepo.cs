@@ -62,14 +62,14 @@ namespace BLL.ScienceManagement.Report
                                           join n in db.Papers on m.paper_id equals n.paper_id
                                           join h in db.AuthorPapers on n.paper_id equals h.paper_id
                                           join j in db.Authors on h.people_id equals j.people_id
-                                          where m.status_id == 2 
-                                          && m.type == 2 
-                                          && j.name == b.name 
+                                          where m.status_id == 2
+                                          && m.type == 2
+                                          && j.name == b.name
                                           && j.identification_number == b.identification_number
                                           select h.money_reward).Distinct().Sum().ToString(),
                             conferenceAward = "0",
                             CitationAward = "0",
-                            PublicYear=f.publish_date.Value.Year.ToString()
+                            PublicYear = f.publish_date.Value.Year.ToString()
                         });
             if (search.office_id != null)
             {
@@ -81,7 +81,7 @@ namespace BLL.ScienceManagement.Report
             }
             if (search.year != null)
             {
-                data = data.Where(x => x.PublicYear==search.year);
+                data = data.Where(x => x.PublicYear == search.year);
             }
             var result = data.Distinct().OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
                 .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
@@ -89,7 +89,7 @@ namespace BLL.ScienceManagement.Report
             int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
-        
+
         public List<String> getListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
