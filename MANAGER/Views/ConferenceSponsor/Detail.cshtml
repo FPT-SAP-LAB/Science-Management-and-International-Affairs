@@ -972,6 +972,10 @@
             newForm.appendTo("body").submit();
         }
 
+        function RequestEdit() {
+            createAndSubmitForm("/ConferenceSponsor/RequestEdit", "");
+        }
+
         function EndRequest() {
             Swal.fire({
                 title: "Bạn có chắc chắn muốn kết thúc đề nghị không?",
@@ -989,7 +993,6 @@
         }
 
         function RequestEdit() {
-            $("#loading").show();
             $.ajax({
                 url: "/ConferenceSponsor/RequestEdit",
                 method: "post",
@@ -999,15 +1002,13 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.success) {
-                        if (data.obj != 0 && data.obj != '0' && hub != undefined) {
+                        if (data.obj != 0 && data.obj != '0') {
                             hub.server.send(data.obj);
+                            location.reload();
                         }
-                        location.reload();
                     }
-                    else {
-                        $("#loading").hide();
+                    else
                         toastr.error(data.content);
-                    }
                 }
             });
         }
