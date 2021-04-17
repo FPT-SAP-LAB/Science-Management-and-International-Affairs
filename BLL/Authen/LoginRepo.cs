@@ -92,12 +92,12 @@ namespace BLL.Authen
             try
             {
                 List<int> data = new List<int>();
-                List<RightByRole> rightRoles = db.RightByRoles.Where(x => x.role_id == a.role_id).ToList();
+                //List<RightByRole> rightRoles = db.RightByRoles.Where(x => x.role_id == a.role_id).ToList();
                 List<baseRight> rightAccount = getRightByAccount(a.account_id);
-                foreach (RightByRole r in rightRoles)
-                {
-                    data.Add(r.right_id);
-                }
+                //foreach (RightByRole r in rightRoles)
+                //{
+                //    data.Add(r.right_id);
+                //}
                 foreach (baseRight r in rightAccount)
                 {
                     data.Add(r.right_id);
