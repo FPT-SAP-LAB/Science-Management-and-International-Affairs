@@ -1,6 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Tổ chức giáo dục FPT - Khoa học & Hợp tác quốc tế";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("Header");
 }
 <style>
     #banner {
@@ -55,12 +56,12 @@
                         <!--begin::Body-->
                         <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
                             <div class="mr-2">
-                                <h3 class="font-weight-bolder">Khoa học - Công nghệ</h3>
+                                <h3 class="font-weight-bolder">@rm.GetString("ScienceManagementNavbar")</h3>
                                 <div class="text-dark-50 font-size-lg mt-2">
-                                    abcxyz
+                                    @*abcxyz*@
                                 </div>
                             </div>
-                            <a href="@Url.Action("Index","AcademicActivity")" class="btn btn-primary font-weight-bold py-3 px-6">Xem thêm</a>
+                            <a href="@Url.Action("Index","AcademicActivity")" class="btn btn-primary font-weight-bold py-3 px-6">@rm.GetString("LoadMore")</a>
                         </div>
                         <!--end::Body-->
                     </div>
@@ -73,12 +74,12 @@
                         <!--begin::Body-->
                         <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
                             <div class="mr-2">
-                                <h3 class="font-weight-bolder">Hợp tác quốc tế</h3>
+                                <h3 class="font-weight-bolder">@rm.GetString("InternationalAffair")</h3>
                                 <div class="text-dark-50 font-size-lg mt-2">
-                                    abcxyz
+                                    @*abcxyz*@
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-primary font-weight-bold py-3 px-6">Xem thêm</a>
+                            <a href="#" class="btn btn-primary font-weight-bold py-3 px-6">@rm.GetString("LoadMore")</a>
                         </div>
                         <!--end::Body-->
                     </div>
@@ -109,7 +110,7 @@
                                         <h1><b>40</b></h1>
                                     </a>
                                     <div class="text-dark-75">
-                                        Nghiên cứu viên
+                                        @rm.GetString("Researchers")
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +139,7 @@
                                         <h1><b>480</b></h1>
                                     </a>
                                     <div class="text-dark-75">
-                                        Bài báo ISI/SCOPUS
+                                        @rm.GetString("ISI/SCOPUS")
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +168,7 @@
                                         <h1><b>25</b></h1>
                                     </a>
                                     <div class="text-dark-75">
-                                        Bằng sáng chế
+                                        @rm.GetString("Invention")
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +197,7 @@
                                         <h1><b>180</b></h1>
                                     </a>
                                     <div class="text-dark-75">
-                                        <b>Đối tác quốc tế</b>
+                                        @rm.GetString("InternationalPartner")
                                     </div>
                                 </div>
                             </div>
@@ -217,11 +218,11 @@
                                 <span class="card-icon">
                                     <i class="flaticon2-chat-1 text-primary"></i>
                                 </span>
-                                <h3 class="card-label">Tin tức</h3>
+                                <h3 class="card-title font-weight-bolder text-dark">@rm.GetString("News")</h3>
                             </div>
                             <!-- <div class="card-toolbar">
                                 <a href="#" class="btn btn-sm btn-light-primary font-weight-bold">
-                                    <i class="flaticon2-cube"></i>Xem thêm</a>
+                                    <i class="flaticon2-cube"></i>@rm.GetString("LoadMore")</a>
                             </div> -->
                         </div>
                         <div class="card-body">
@@ -341,7 +342,7 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between">
                             <!-- <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a> -->
-                            <a href="#" class="btn btn-outline-secondary font-weight-bold">Xem thêm</a>
+                            <a href="#" class="btn btn-outline-secondary font-weight-bold">@rm.GetString("LoadMore")</a>
                         </div>
                     </div>
                     <!--end::Mixed Widget 10-->
@@ -350,7 +351,7 @@
                     <div class="card card-custom card-stretch gutter-b">
                         <!--begin::Header-->
                         <div class="card-header border-0">
-                            <h3 class="card-title font-weight-bolder text-dark">Thống kê nhanh</h3>
+                            <h3 class="card-title font-weight-bolder text-dark">@rm.GetString("QuickStatistics")</h3>
                             <div class="card-toolbar">
                                 <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left" data-original-title="Quick actions">
                                     <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

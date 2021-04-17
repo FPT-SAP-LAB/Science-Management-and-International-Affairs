@@ -24,28 +24,30 @@
     }
 </style>
 
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <a href="javascript:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm tài khoản</a>
-            </div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <a href="javascript:;" class="btn btn-light-primary btn-sm px-6 font-weight-bold" data-toggle="modal" data-target="#addModal">Thêm tài khoản</a>
         </div>
+    </div>
+    <div class="table-responsive">
         <table id="datatable_account" class="table table-bordered table-checkable">
             <thead>
                 <tr>
                     <th class="text-center">STT</th>
-                    <th class="text-center">Họ và tên</th>
+                    <th class="text-center" style="min-width: 85px">Họ và tên</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">Chức danh</th>
-                    <th class="text-center">Trạng thái</th>
-                    <th class="text-center">Quyền hạn</th>
-                    <th class="text-center">Hoạt động</th>
+                    <th class="text-center" style="min-width: 85px">Trạng thái</th>
+                    <th class="text-center" style="min-width: 83px">Quyền hạn</th>
+                    <th class="text-center" style="min-width: 143px">Hoạt động</th>
                 </tr>
             </thead>
             <tbody>
             </tbody>
         </table>
     </div>
+</div>
 
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">

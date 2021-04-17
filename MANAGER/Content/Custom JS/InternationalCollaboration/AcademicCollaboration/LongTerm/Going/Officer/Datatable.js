@@ -22,7 +22,8 @@ var collab_going_table = $('#collab_going_table').DataTable({
                 office_name: () => { return $("#search_working_facility_tab_1_table_1").val() }
             }
         },
-        cache: "false"
+        cache: "false",
+
     },
     searching: false,
     lengthChange: false,
@@ -76,7 +77,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
                 $(td).css('padding', '0 5px')
             },
             className: 'text-center',
-           
+
         },
         {
             data: 'plan_study_start_date',
@@ -151,15 +152,6 @@ var collab_going_table = $('#collab_going_table').DataTable({
         }
     ],
     columnDefs: [
-        //{
-        //    targets: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
-        //    className: 'text-nowrap text-center'
-        //},
-        //{
-        //    targets: 3,
-        //    width: '150px',
-        //    className: 'text-center'
-        //},
         {
             targets: 8,
             render: function (data, type, row) {
@@ -214,3 +206,26 @@ var collab_going_table = $('#collab_going_table').DataTable({
 $("#collab_going_search").click(function () {
     collab_going_table.ajax.reload();
 });
+
+$('#exportExcel_going').click(function () {
+    collab_going_table.ajax.reload();
+    $.ajax({
+        url: "/AcademicCollaboration/ExportACExcel",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        datatype: "json",
+        cache: false,
+        success: function (data) {
+            if (data.success) {
+                window.location = '../AcademicCollaboration/' + 'Download?fileGuid=' + data.data.FileGuid
+                    + '&fileName=' + data.data.FileName;
+                toastr.success("Đang tải xuống")
+            } else {
+                toastr.error("Có lỗi xảy ra")
+            }
+        },
+        error: function () {
+            toastr.error("Có lỗi xảy ra")
+        }
+    });
+})

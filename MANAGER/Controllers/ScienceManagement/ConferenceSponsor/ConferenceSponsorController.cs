@@ -38,11 +38,6 @@ namespace MANAGER.Controllers
                 output = IndexRepos.GetHistoryPage(datatable, search_paper, search_conference);
             else
                 output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status);
-            for (int i = 0; i < output.Data.Count; i++)
-            {
-                output.Data[i].RowNumber = datatable.Start + 1 + i;
-                output.Data[i].CreatedDate = output.Data[i].Date.ToString("dd/MM/yyyy");
-            }
             return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Detail(int id)
@@ -70,7 +65,7 @@ namespace MANAGER.Controllers
         public JsonResult RequestEdit(int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            return Json(DetailRepos.RequestEdit(request_id));
+            return Json(DetailRepos.RequestEdit(request_id, Startup.GuestURI));
         }
         [HttpPost]
         public ActionResult UpdateCosts(string data, int request_id, string comment)

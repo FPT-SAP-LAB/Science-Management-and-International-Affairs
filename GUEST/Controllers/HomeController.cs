@@ -9,19 +9,7 @@ namespace GUEST.Controllers
     {
         public ActionResult Index()
         {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Bảng tin","/"),
-            };
-            ViewBag.pagesTree = pagesTree;
-            return View();
-        }
-        public ActionResult Chat()
-        {
-            var pagesTree = new List<PageTree>
-            {
-                new PageTree("Bảng tin","/"),
-            };
+            var pagesTree = new List<PageTree>();
             ViewBag.pagesTree = pagesTree;
             return View();
         }

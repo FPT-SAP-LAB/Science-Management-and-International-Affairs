@@ -319,6 +319,7 @@
     <Compile Include="CustomModels\ScienceManagement\Paper\WaiDecisionHaveReseacher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\PaperByWorkUnit.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Report\ReportByAuthorAward.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherCandidate.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherView.cs" />
     <Compile Include="CustomModels\Select2Ajax.cs" />
