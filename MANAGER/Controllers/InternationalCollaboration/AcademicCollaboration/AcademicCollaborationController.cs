@@ -36,7 +36,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-
                 Session.Timeout = 120;
                 Session["obj_searching"] = obj_searching;
                 Session["direction"] = direction;
@@ -827,6 +826,5 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 });
             }
         }
-
     }
 }

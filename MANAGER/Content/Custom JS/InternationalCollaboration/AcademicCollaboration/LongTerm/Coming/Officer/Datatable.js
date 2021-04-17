@@ -207,7 +207,7 @@ $("#collab_coming_search").click(function () {
     collab_coming_table.ajax.reload();
 });
 
-function exportExcel_coming() {
+$('#exportExcel_coming').click(function () {
     collab_coming_table.ajax.reload();
     $.ajax({
         url: "/AcademicCollaboration/ExportACExcel",
@@ -228,4 +228,4 @@ function exportExcel_coming() {
             toastr.error("Có lỗi xảy ra")
         }
     });
-}
+})
