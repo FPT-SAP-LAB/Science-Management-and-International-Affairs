@@ -485,7 +485,8 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                         if (String.IsNullOrWhiteSpace(listPartner.ElementAt(i).specialization_name))
                         {
                             excelWorksheet.Cells[i + startRow, 5].Value = listPartner.ElementAt(i).specialization_name;
-                        }else
+                        }
+                        else
                         {
                             excelWorksheet.Cells[i + startRow, 5].Value = listPartner.ElementAt(i).specialization_name.Replace(",", ", \r");
                         }

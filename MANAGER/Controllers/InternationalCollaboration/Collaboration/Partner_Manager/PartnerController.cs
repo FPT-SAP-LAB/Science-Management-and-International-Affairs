@@ -338,7 +338,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                return Json(new { success = false}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
 
