@@ -195,10 +195,6 @@ var collab_going_table = $('#collab_going_table').DataTable({
             }
         }
     ],
-    drawCallback: function (data) {
-        var api = this.api();
-        data_to_excel = api.rows({ page: 'current' }).data();
-    },
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
         $(this).parent().css('padding', '0');
