@@ -188,7 +188,7 @@ namespace BLL.Admin
                     List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == account_id).ToList();
                     db.AccountRights.RemoveRange(rv);
                     db.SaveChanges();
-                    if(arrAccept != null)
+                    if (arrAccept != null)
                     {
                         Account a = db.Accounts.Find(account_id);
                         //List<baseRight> rightRole = getRightByRole(a.role_id);
