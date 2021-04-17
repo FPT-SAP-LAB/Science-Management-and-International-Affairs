@@ -88,7 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_add">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_add">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_edit">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_edit">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -183,7 +183,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary px-6 font-weight-bold" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-light-success px-6 font-weight-bold" data-dismiss="modal" id="btn_right">Xác nhận</button>
+                <button type="button" class="btn btn-light-success px-6 font-weight-bold" id="btn_right">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -272,6 +272,7 @@
                             }
                         },
                         error: function (data) {
+                            toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                         }
                     });
                 }
@@ -305,6 +306,7 @@
                 success: function (data) {
                     if (data != '') {
                         toastr.success(data);
+                        $('#rightModal').modal('hide');
                         $('#rightModal').find('input:checkbox')
                             .each(function () {
                                 $("#" + this.id).prop("checked", false);
@@ -314,6 +316,7 @@
                     }
                 },
                 error: function (data) {
+                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                 }
             });
         });
@@ -343,6 +346,7 @@
                     if (data != '') {
                         toastr.success(data);
                         clearModal('#addModal');
+                        $('#addModal').modal('hide');
                         stt = 1;
                         datatable.ajax.reload();
                     } else {
@@ -350,6 +354,7 @@
                     }
                 },
                 error: function (data) {
+                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                 }
             });
         });
@@ -386,6 +391,7 @@
                     if (data == 1) {
                         toastr.success('Chỉnh sửa tài khoản thành công.');
                         clearModal('#editModal');
+                        $('#editModal').modal('hide');
                         stt = 1;
                         datatable.ajax.reload();
                     } else if (data == 2) {
@@ -395,7 +401,7 @@
                     }
                 },
                 error: function (data) {
-                    alert(data)
+                    toastr.error("Có lỗi xảy ra. Vui lòng thử lại");
                 }
             });
         });
