@@ -323,6 +323,7 @@
     <Compile Include="CustomModels\ScienceManagement\Report\ReportByAuthorAward.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherCandidate.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherView.cs" />
+    <Compile Include="CustomModels\ScienceManagement\SearchFilter\SearchFilter.cs" />
     <Compile Include="CustomModels\Select2Ajax.cs" />
     <Compile Include="CustomModels\SmtpMailService.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ListOnePerson_Citation.cs" />
