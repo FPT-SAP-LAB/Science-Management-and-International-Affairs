@@ -2369,6 +2369,8 @@
     <Content Include="Content\assets\excel\Collaboration\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Partner.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Download\Partner.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Download\AC.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\AC.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
