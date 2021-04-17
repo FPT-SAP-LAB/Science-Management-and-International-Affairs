@@ -143,6 +143,7 @@
             sorting: [[1, 'asc']],
             initComplete: function () {
                 $('#mou_table_deleted').parent().css('overflow-x', 'auto');
+                $('#mou_table_deleted').parent().css('width', '100%');
                 $('#mou_table_deleted').parent().removeClass();
                 $('.mou_table th').css('padding', '5px 15px 5px 5px')
                 $('.mou_table > thead > tr:nth-child(1) > th:nth-child(1)').css('padding', '5px')
@@ -287,7 +288,7 @@
                         return data
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '0')
+                        $(td).css('padding', '0 5px')
                     },
                     className: 'text-center',
                 },

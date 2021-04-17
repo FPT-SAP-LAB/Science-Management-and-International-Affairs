@@ -14,10 +14,11 @@ namespace MANAGER
 {
     public class Startup
     {
-        string clientId = System.Configuration.ConfigurationManager.AppSettings["ClientId"];
-        string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
-        static string tenant = System.Configuration.ConfigurationManager.AppSettings["Tenant"];
-        string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
+        public readonly static string clientId = System.Configuration.ConfigurationManager.AppSettings["ClientId"];
+        public readonly static string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
+        public readonly static string tenant = System.Configuration.ConfigurationManager.AppSettings["Tenant"];
+        public readonly static string GuestURI = System.Configuration.ConfigurationManager.AppSettings["GuestURI"];
+        public readonly static string authority = string.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
         public void Configuration(IAppBuilder app)
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);

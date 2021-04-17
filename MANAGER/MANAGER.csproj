@@ -2365,6 +2365,12 @@
     <Content Include="Excel_template\Download\Invention.xlsx" />
     <Content Include="Excel_template\Citation.xlsx" />
     <Content Include="Excel_template\Download\Citation.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Download\MOU.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\MOU.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Partner.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Download\Partner.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Download\AC.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\AC.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
@@ -2531,7 +2537,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\assets\excel\" />
     <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Coming\Program\" />
     <Folder Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Program\" />
     <Folder Include="Content\Custom JS\ScienceManagement\ConferenceSponsor\" />

@@ -722,6 +722,22 @@
                 toastr.error("Thiếu tên đại học thuộc top QS");
                 return false;
             }
+            if ($("#selectConference").val().trim() == "") {
+                toastr.error("Thiếu tên hội nghị");
+                return false;
+            }
+            if ($("#website").val().trim() == "") {
+                toastr.error("Thiếu website hội nghị");
+                return false;
+            }
+            if ($("#organized_unit").val().trim() == "") {
+                toastr.error("Thiếu đơn vị tổ chức");
+                return false;
+            }
+            if ($("#keynote_speaker").val().trim() == "") {
+                toastr.error("Thiếu diễn giả/ thành viên BTC");
+                return false;
+            }
 
             let conferenceSelect = $('#selectConference').select2('data')[0];
             if (conferenceSelect == undefined)
@@ -785,7 +801,12 @@
                     detail: detail,
                 }
                 this.data.Cost.push(cost)
-            })
+            });
+
+            if (this.data.Cost.length == 0) {
+                toastr.error("Thiếu chi phí dự kiến");
+                return false;
+            }
 
             fd.append("input", JSON.stringify(this.data));
             $("#loading").show();
