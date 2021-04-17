@@ -165,8 +165,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         {
                             excelWorksheet.Cells[i + startRow, 9].Value = "Đã hoàn thành";
                         }
-                        excelWorksheet.Cells[i + startRow, 10].Value = 
-                            AC_List.ElementAt(i).is_supported == true? "Có hỗ trợ": "Không hỗ trợ";
+                        excelWorksheet.Cells[i + startRow, 10].Value =
+                            AC_List.ElementAt(i).is_supported == true ? "Có hỗ trợ" : "Không hỗ trợ";
                         excelWorksheet.Cells[i + startRow, 11].Value = AC_List.ElementAt(i).note;
                     }
                     string Flocation = "/Content/assets/excel/Collaboration/Download/AC.xlsx";
