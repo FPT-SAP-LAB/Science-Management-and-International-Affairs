@@ -226,7 +226,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }
             }
         }
-        public AlertModal<string> RequestEdit(int request_id, string uri)
+        public AlertModal<string> RequestEdit(int request_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -235,21 +235,15 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     NotificationRepo notificationRepo = new NotificationRepo(db);
 
                     var Request = db.RequestConferences.Find(request_id);
-                    Account account = Request.BaseRequest.Account;
-
                     if (Request == null)
                         return new AlertModal<string>(false, "Đề nghị không tồn tại");
                     if (Request.status_id >= 2)
                         return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
                     Request.editable = true;
-                    int notification_id = notificationRepo.AddByAccountID(account.account_id, 4, "/ConferenceSponsor/Detail?id=" + Request.request_id);
+                    string notification_id = notificationRepo.AddByAccountID(Request.BaseRequest.account_id, 4, "/ConferenceSponsor/Detail?id=" + Request.request_id).ToString();
                     trans.Commit();
 
-                    Notification notification = notificationRepo.Get(notification_id, 1);
-
-                    SmtpMailService.Send(account.email, notification.Template, "<a href=\"" + uri + notification.URL + "\">" + uri + notification.URL + "</a>", true);
-
-                    return new AlertModal<string>(notification_id.ToString(), true, "Cập nhật thành công");
+                    return new AlertModal<string>(notification_id, true, "Cập nhật thành công");
                 }
                 catch (Exception e)
                 {

@@ -65,7 +65,7 @@ namespace MANAGER.Controllers
         public JsonResult RequestEdit(int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            return Json(DetailRepos.RequestEdit(request_id, Startup.GuestURI));
+            return Json(DetailRepos.RequestEdit(request_id));
         }
         [HttpPost]
         public ActionResult UpdateCosts(string data, int request_id, string comment)

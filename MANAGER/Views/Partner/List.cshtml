@@ -90,7 +90,7 @@
                                                     <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
                                                         Choose an option:
                                                     </li>
-                                                    <li class="navi-item"  onclick="exportExcel()">
+                                                    <li class="navi-item">
                                                         <a href="#" class="navi-link">
                                                             <span class="navi-icon">
                                                                 <i class="la la-file-excel-o"></i>
@@ -412,29 +412,6 @@
                 }
             })
         };
-    </script>
-    <script>
-           function exportExcel() {
-        $.ajax({
-            url: "@Url.Action("ExportPartnerExcel", "Partner")",
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            datatype: "json",
-            cache: false,
-            success: function (data) {
-                if (data.success) {
-                    window.location = '../Partner/' + 'Download?fileGuid=' + data.data.FileGuid
-                        + '&filename=' + data.data.FileName;
-                    toastr.success("Đang tải xuống")
-                } else {
-                    toastr.error("Có lỗi xảy ra")
-                }
-            },
-            error: function () {
-                toastr.error("Có lỗi xảy ra")
-            }
-        });
-    }
     </script>
 }
 

@@ -28,6 +28,7 @@ namespace ENTITIES
         public Nullable<int> type_id { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public int file_id { get; set; }
+        public Nullable<bool> is_verified { get; set; }
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
