@@ -89,7 +89,8 @@ namespace BLL.ModelDAL
                             URL = a.URL,
                             CreatedDate = a.created_date,
                             AccountID = a.account_id,
-                            TypeID = a.notification_type_id
+                            TypeID = a.notification_type_id,
+                            NotificationID = a.notification_id
                         }).FirstOrDefault();
             return list;
         }
@@ -110,6 +111,7 @@ namespace BLL.ModelDAL
                             CreatedDate = a.created_date,
                             NotificationID = a.notification_id
                         }).Skip(start).ToList();
+            list.ForEach(x => x.StringDate = x.CreatedDate.ToString("HH:mm dd/MM/yyyy"));
             int unread = (from a in db.NotificationBases
                           join b in db.NotificationTypes on a.notification_type_id equals b.notification_type_id
                           join c in db.NotificationTypeLanguages on b.notification_type_id equals c.notification_type_id

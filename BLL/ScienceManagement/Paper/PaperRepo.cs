@@ -1116,21 +1116,43 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
-                            from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
-	                            join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
-	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
-	                            join [General].Account acc on br.account_id = acc.account_id
-	                            join [General].People po on acc.email = po.email
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on o.office_id = po.office_id
-								join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
-								join (select p.paper_id, count(ap.people_id) as 'note'
-										from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
-										group by p.paper_id) as a on p.paper_id = a.paper_id
-                            where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
-            List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
-            return list;
+            //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
+            //                     join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
+            //                     join [SM_Request].BaseRequest br on rp.request_id = br.request_id
+            //                     join [General].Account acc on br.account_id = acc.account_id
+            //                     join [General].People po on acc.email = po.email
+            //                     join [General].Profile pro on po.people_id = pro.people_id
+            //                     join [General].Office o on o.office_id = po.office_id
+            //join [SM_ScientificProduct].Author ah on ap.people_id = ah.people_id
+            //join (select p.paper_id, count(ap.people_id) as 'note'
+            //		from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
+            //		group by p.paper_id) as a on p.paper_id = a.paper_id
+            //                    where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
+            int ty = Int32.Parse(type);
+            bool is_r = reseacher == 0 ? false : true;
+            var data = (from a in db.BaseRequests
+                        join b in db.Profiles on a.account_id equals b.account_id
+                        join c in db.People on b.people_id equals c.people_id
+                        join d in db.RequestPapers on a.request_id equals d.request_id
+                        join e in db.Papers on d.paper_id equals e.paper_id
+                        join f in db.Offices on c.office_id equals f.office_id
+                        where (d.status_id == 4 || d.status_id == 7) && d.type == ty && b.is_reseacher == is_r
+                        select new WaitDecisionPaper
+                        {
+                            name = e.name,
+                            mssv_msnv = b.mssv_msnv,
+                            office_abbreviation = f.office_abbreviation,
+                            author_name = c.name,
+                            journal_name = e.journal_name,
+                            request_id = d.request_id,
+                            paper_id = e.paper_id,
+                            note = (from m in db.AuthorPapers
+                                    where m.paper_id == d.paper_id
+                                    select m.people_id).Count()
+                        }).ToList();
+            //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
+            return data;
         }
 
         public List<Paper_Appendix_1> getListAppendix1_2(string type, int reseacher)
