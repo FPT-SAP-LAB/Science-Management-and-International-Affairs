@@ -11,6 +11,7 @@ using MANAGER.Support;
 using BLL.Authen;
 using Newtonsoft.Json;
 using BLL.ModelDAL;
+using System.IO;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {
@@ -34,6 +35,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             try
             {
+                Session.Timeout = 120;
+                Session["searchPartner"] = searchPartner;
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
                 BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.GetListAll(baseDatatable, searchPartner);
                 return Json(new
@@ -64,6 +67,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
         {
             try
             {
+                Session.Timeout = 120;
+                Session["searchPartner"] = searchPartner;
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
                 BaseServerSideData<PartnerList> baseServerSideData = partnerRePo.GetListAll(baseDatatable, searchPartner);
                 return Json(new
@@ -316,6 +321,38 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 Console.WriteLine(e);
                 AlertModal<string> json = new AlertModal<string>(false, "Có lỗi xảy ra");
                 return Json(new { json.success, json.content });
+            }
+        }
+
+        public ActionResult ExportPartnerExcel()
+        {
+            try
+            {
+                SearchPartner searchPartner = (SearchPartner)Session["searchPartner"];
+                MemoryStream memoryStream = partnerRePo.ExportPartnerExcel(searchPartner);
+                string downloadFile = "PartnerDownload.xlsx";
+                string handle = Guid.NewGuid().ToString();
+                TempData[handle] = memoryStream.ToArray();
+                return Json(new { success = true, data = new { FileGuid = handle, FileName = downloadFile } }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public virtual ActionResult Download(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
+            {
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                return new EmptyResult();
             }
         }
     }
