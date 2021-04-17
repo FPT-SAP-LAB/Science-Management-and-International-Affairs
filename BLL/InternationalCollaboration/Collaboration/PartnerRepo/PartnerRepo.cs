@@ -2,17 +2,14 @@
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Hosting;
 
 namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 {
@@ -461,103 +458,9 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
-        public MemoryStream ExportPartnerExcel(SearchPartner searchPartner)
+        public void ExportExcel()
         {
-            try
-            {
-                string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
-                string filename = "Partner.xlsx";
-                FileInfo file = new FileInfo(path + filename);
-                List<PartnerList> listPartner = ListPartnerToExportExcel(searchPartner);
-
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                using (ExcelPackage excelPackage = new ExcelPackage(file))
-                {
-                    ExcelWorkbook excelWorkbook = excelPackage.Workbook;
-                    ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
-                    int startRow = 2;
-                    for (int i = 0; i < listPartner.Count; i++)
-                    {
-                        excelWorksheet.Cells[i + startRow, 1].Value = listPartner.ElementAt(i).no;
-                        excelWorksheet.Cells[i + startRow, 2].Value = listPartner.ElementAt(i).partner_name;
-                        excelWorksheet.Cells[i + startRow, 3].Value = listPartner.ElementAt(i).country_name;
-                        excelWorksheet.Cells[i + startRow, 4].Value = listPartner.ElementAt(i).website;
-                        if (String.IsNullOrWhiteSpace(listPartner.ElementAt(i).specialization_name))
-                        {
-                            excelWorksheet.Cells[i + startRow, 5].Value = listPartner.ElementAt(i).specialization_name;
-                        }
-                        else
-                        {
-                            excelWorksheet.Cells[i + startRow, 5].Value = listPartner.ElementAt(i).specialization_name.Replace(",", ", \r");
-                        }
-                        excelWorksheet.Cells[i + startRow, 6].Value = listPartner.ElementAt(i).is_collab == 1 ? "Chưa có" : "Đã có";
-                        excelWorksheet.Cells[i + startRow, 7].Value = listPartner.ElementAt(i).address;
-                    }
-                    string Flocation = "/Content/assets/excel/Collaboration/Download/Partner.xlsx";
-                    string savePath = HostingEnvironment.MapPath(Flocation);
-                    string handle = Guid.NewGuid().ToString();
-                    excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/Partner.xlsx")));
-
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        excelPackage.SaveAs(memoryStream);
-                        memoryStream.Position = 0;
-                        return memoryStream;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public List<PartnerList> ListPartnerToExportExcel(SearchPartner searchPartner)
-        {
-            try
-            {
-                db = new ScienceAndInternationalAffairsEntities();
-                string sql = @" select * from (select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
-                                a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
-                                STRING_AGG(a.[name], ',') 'specialization_name', a.country_name from 
-                                (select distinct t1.partner_name, t1.partner_id, t1.is_deleted, t1.website, t1.address,
-		                        t4.[name],
-		                        t5.country_name,
-                                case when t2.partner_id is null     
-		                        then 1 else 2 end as 'is_collab'
-                                from IA_Collaboration.Partner t1 
-                                left join IA_Collaboration.MOUPartner t2 on
-                                t2.partner_id = t1.partner_id left join IA_Collaboration.MOU t6
-		                        on t6.mou_id = t2.mou_id 
-                                left join IA_Collaboration.MOUPartnerSpecialization t3 on
-                                t3.mou_partner_id = t2.mou_partner_id
-                                left join Localization.SpecializationLanguage t4 on 
-                                t4.specialization_id = t3.specialization_id 
-		                        left join General.Country t5 on 
-		                        t1.country_id = t5.country_id 
-                                where ( t1.is_deleted = {0}) and (t4.language_id = {1} or t4.language_id is null)) as a
-								group by a.partner_name, a.partner_id, 
-		                        a.is_deleted, a.website, a.address, a.partner_id,
-		                        a.country_name, a.is_collab
-								) as xyz
-								where isnull(xyz.partner_name, '') like {2} and
-								isnull(xyz.specialization_name, '') like {3} and
-								isnull(xyz.country_name, '') like {4} and
-								isnull(xyz.is_collab , '') like {5} ";
-
-                List<PartnerList> listPartner = db.Database.SqlQuery<PartnerList>(sql,
-                   searchPartner.is_deleted, searchPartner.language,
-                     searchPartner.partner_name == null ? "%%" : "%" + searchPartner.partner_name + "%",
-                   "%" + searchPartner.specialization == null ? "%%" : "%" + searchPartner.specialization + "%",
-                   "%" + searchPartner.nation == null ? "%%" : "%" + searchPartner.nation + "%",
-                    searchPartner.is_collab == 0 ? "%%" : "%" + searchPartner.is_collab + "%").ToList();
-
-                return listPartner;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return;
         }
     }
 }
