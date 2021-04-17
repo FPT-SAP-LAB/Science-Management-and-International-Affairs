@@ -42,6 +42,123 @@ namespace BLL.ScienceManagement.Paper
             return item;
         }
 
+        public bool addPolicy(ENTITIES.File fl, List<CustomPaperPolicy> policy)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                DateTime today = DateTime.Now;
+
+                fl.name = "CS/" + today.ToString();
+                db.Files.Add(fl);
+                db.SaveChanges();
+
+                PaperPolicy pp = new PaperPolicy()
+                {
+                    valid_date = today,
+                    file_id = fl.file_id
+                };
+                db.PaperPolicies.Add(pp);
+                db.SaveChanges();
+
+                List<PaperPolicyCriteria> list = new List<PaperPolicyCriteria>();
+                foreach (var item in policy)
+                {
+                    PaperPolicyCriteria ppc = new PaperPolicyCriteria()
+                    {
+                        policy_id = pp.policy_id
+                    };
+                    db.PaperPolicyCriterias.Add(ppc);
+                    list.Add(ppc);
+                }
+                db.SaveChanges();
+
+                for (int i = 0; i < policy.Count; i++)
+                {
+                    policy[i].policy_criteria_id = list[i].policy_criteria_id;
+                }
+
+                foreach (var item in policy)
+                {
+                    PaperPolicyCriteriaLanguage ppcl = new PaperPolicyCriteriaLanguage()
+                    {
+                        policy_criteria_id = item.policy_criteria_id,
+                        language_id = 1,
+                        name = item.tv
+                    };
+                    db.PaperPolicyCriteriaLanguages.Add(ppcl);
+
+                    PaperPolicyCriteriaLanguage ppclta = new PaperPolicyCriteriaLanguage()
+                    {
+                        policy_criteria_id = item.policy_criteria_id,
+                        language_id = 2,
+                        name = item.ta
+                    };
+                    db.PaperPolicyCriteriaLanguages.Add(ppclta);
+                }
+                db.SaveChanges();
+                dbc.Commit();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                GoogleDriveService.DeleteFile(fl.file_drive_id);
+                return false;
+            }
+        }
+
+        public bool editPolicy(string id, string tv, string ta)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                int policy_criteria_id = Int32.Parse(id);
+                PaperPolicyCriteriaLanguage ppcltv = db.PaperPolicyCriteriaLanguages.Where(x => x.policy_criteria_id == policy_criteria_id).Where(x => x.language_id == 1).FirstOrDefault();
+                ppcltv.name = tv;
+                db.Entry(ppcltv).State = EntityState.Modified;
+
+                PaperPolicyCriteriaLanguage ppclta = db.PaperPolicyCriteriaLanguages.Where(x => x.policy_criteria_id == policy_criteria_id).Where(x => x.language_id == 2).FirstOrDefault();
+                ppclta.name = ta;
+                db.Entry(ppclta).State = EntityState.Modified;
+
+                db.SaveChanges();
+                dbc.Commit();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return false;
+            }
+        }
+
+        public CustomPaperPolicy getOnePolicy(string id)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select a.policy_id, b.policy_criteria_id, b.name as 'tv', c.name as 'ta'
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 1) as b on a.policy_id = b.policy_id join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 2) as c on a.policy_id = c.policy_id
+                            where b.policy_criteria_id = @id";
+            CustomPaperPolicy item = db.Database.SqlQuery<CustomPaperPolicy>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            return item;
+        }
+
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
@@ -1392,6 +1509,59 @@ namespace BLL.ScienceManagement.Paper
                 GoogleDriveService.DeleteFile(fl.file_drive_id);
                 return 0;
             }
+        }
+
+        public List<CustomPaperPolicy> getPolicy()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select a.policy_id, b.policy_criteria_id, b.name as 'tv', c.name as 'ta'
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 1) as b on a.policy_id = b.policy_id join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = 2) as c on a.policy_id = c.policy_id";
+            List<CustomPaperPolicy> list = db.Database.SqlQuery<CustomPaperPolicy>(sql).ToList();
+            return list;
+        }
+
+        public string getLinkPolicy()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select b.link
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, f.link
+	                            from SM_ScientificProduct.PaperPolicy pp join General.[File] f on pp.file_id = f.file_id) as b on a.policy_id = b.policy_id";
+            string link = db.Database.SqlQuery<string>(sql).FirstOrDefault();
+            return link;
+        }
+
+        public List<CustomPaperPolicy> getPolicyByLanguage(string lang)
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            int lang_id = 0;
+            if (lang == "vi-VN") lang_id = 1;
+            else if (lang == "en-US") lang_id = 2;
+            string sql = @"select a.policy_id, b.policy_criteria_id, b.name as 'tv'
+                            from 
+	                            (select MAX(pp.policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperPolicy pp 
+	                            ) as a join
+	                            (select pp.policy_id, ppcl.name, ppc.policy_criteria_id
+	                            from SM_ScientificProduct.PaperPolicy pp join SM_ScientificProduct.PaperPolicyCriteria ppc on pp.policy_id = ppc.policy_id
+		                            join Localization.PaperPolicyCriteriaLanguage ppcl on ppcl.policy_criteria_id = ppc.policy_criteria_id
+	                            where language_id = @lang) as b on a.policy_id = b.policy_id";
+            List<CustomPaperPolicy> list = db.Database.SqlQuery<CustomPaperPolicy>(sql, new SqlParameter("lang", lang_id)).ToList();
+            return list;
         }
     }
 }
