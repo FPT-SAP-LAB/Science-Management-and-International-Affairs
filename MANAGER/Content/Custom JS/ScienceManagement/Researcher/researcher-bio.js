@@ -268,8 +268,10 @@ class WorkEvent {
         this.end = end;
     }
 }
-function resetAndCloseModals(success) {
+$('.modal').on('hidden.bs.modal', function (e) {
     $(".modal").find('input').val('')
+})
+function resetAndCloseModals(success) {
     $('.modal').modal('hide');
     submit_new_work.stopLoading()
     submit_new_acad.stopLoading()
@@ -287,38 +289,41 @@ function resetAndCloseModals(success) {
 }
 $(function () {
     $("#submit_new_acad").click(function () {
-        submit_new_acad.startLoading();
-        var url = new URL(window.location.href);
-        people_id = url.searchParams.get("id");
-        degree = $("#acad_hocvi").val();
-        acad_location = $("#acad_location").val();
-        start = $("#add_acad_start").val();
-        end = $("#add_acad_end").val();
-        let data = new AcadEvent(people_id, degree, acad_location, start, end);
-        var fd = new FormData();
-        fd.append('data', JSON.stringify({ data: data }));
-        $.ajax({
-            url: "/Biography/AddNewAcadEvent",
-            type: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if (response.success == true) {
-                    table1.ajax.reload();
-                    resetAndCloseModals(response.success);
+        if (validateNonEmptyField(["#acad_hocvi", "#acad_location", "#add_acad_start", "#add_acad_end"])) {
+            submit_new_acad.startLoading();
+            var url = new URL(window.location.href);
+            people_id = url.searchParams.get("id");
+            degree = $("#acad_hocvi").val();
+            acad_location = $("#acad_location").val();
+            start = $("#add_acad_start").val();
+            end = $("#add_acad_end").val();
+            let data = new AcadEvent(people_id, degree, acad_location, start, end);
+            var fd = new FormData();
+            fd.append('data', JSON.stringify({ data: data }));
+            $.ajax({
+                url: "/Biography/AddNewAcadEvent",
+                type: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success == true) {
+                        table1.ajax.reload()
+                        resetAndCloseModals(response.success);
+                    }
+                    else {
+                        table1.ajax.reload()
+                        resetAndCloseModals(response.success)
+                    }
+                },
+                error: function () {
+                    //alert("fail");
                 }
-                else {
-                    table1.ajax.reload();
-                    resetAndCloseModals(response.success)
-                }
-            },
-            error: function () {
-                //alert("fail");
-            }
-        });
+            });
+        }
     })
     $("#submit_new_work").click(function () {
+        if (validateNonEmptyField(["#work_location", "#work_title", "#add_work_start", "#add_work_end"])) {
         submit_new_work.startLoading();
         var url = new URL(window.location.href);
         people_id = url.searchParams.get("id");
@@ -337,11 +342,11 @@ $(function () {
             contentType: false,
             success: function (response) {
                 if (response.success == true) {
-                    table2.ajax.reload();
+                    table2.ajax.reload()
                     resetAndCloseModals(response.success);
                 }
                 else {
-                    table2.ajax.reload();
+                    table2.ajax.reload()
                     resetAndCloseModals(response.success)
                 }
             },
@@ -349,46 +354,49 @@ $(function () {
                 //alert("fail");
             }
         });
+    }
     })
     $("#submit_new_award").click(function () {
-        submit_new_award.startLoading();
-        var url = new URL(window.location.href);
-        data = new FormData()
-        people_id = url.searchParams.get("id");
-        add_award_name = $("#add_award_name").val();
-        add_award_rank = $("#add_award_rank").val();
-        add_award_date = $("#add_award_date").val();
-        data.append("people_id", people_id)
-        data.append("add_award_name", add_award_name)
-        data.append("add_award_rank", add_award_rank)
-        data.append("add_award_date", add_award_date)
-
-        $.ajax({
-            url: "/Biography/AddAward",
-            type: "POST",
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if (response.success == true) {
-                    table3.ajax.reload();
-                    resetAndCloseModals(response.success);
+        if (validateNonEmptyField(["#add_award_name", "#add_award_rank", "#add_award_date"])) {
+            submit_new_award.startLoading();
+            var url = new URL(window.location.href);
+            data = new FormData()
+            people_id = url.searchParams.get("id");
+            add_award_name = $("#add_award_name").val();
+            add_award_rank = $("#add_award_rank").val();
+            add_award_date = $("#add_award_date").val();
+            data.append("people_id", people_id)
+            data.append("add_award_name", add_award_name)
+            data.append("add_award_rank", add_award_rank)
+            data.append("add_award_date", add_award_date)
+            $.ajax({
+                url: "/Biography/AddAward",
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success == true) {
+                        table3.ajax.reload();
+                        resetAndCloseModals(response.success);
+                    }
+                    else {
+                        table3.ajax.reload();
+                        resetAndCloseModals(response.success)
+                    }
+                },
+                error: function () {
+                    //alert("fail");
                 }
-                else {
-                    table3.ajax.reload();
-                    resetAndCloseModals(response.success)
-                }
-            },
-            error: function () {
-                //alert("fail");
-            }
-        });
+            });
+        }
     })
     $("#acad_history_table").on("click", ".edit-acad", (function () {
         id = $(this).data('id');
         degree = $(this).parent().parent().find(".acad-degree").data('id')
         place = $(this).parent().parent().find(".acad-place").text()
         time = $(this).parent().parent().find(".acad-time").text()
+        console.log(degree)
         $("#acad_suahocvi").val(degree);
         $("#edit_location").val(place)
         $("#edit-acad-start").val(time.split('-')[0].trim())
@@ -396,37 +404,39 @@ $(function () {
         $("#delete_acad").attr("data-id", $(this).data('id'));
     }));
     $("#submit_edit_acad").click(function () {
-        submit_edit_acad.startLoading()
-        let data = {
-            people_id: id.split('-')[0],
-            acad_id: id.split('-')[1],
-            degree: $("#acad_suahocvi").val(),
-            location: $("#edit_location").val(),
-            start: $("#edit-acad-start").val(),
-            end: $("#edit-acad-end").val()
-        }
-        var fd = new FormData();
-        fd.append('data', JSON.stringify({ data: data }));
-        $.ajax({
-            url: "/Biography/EditAcadEvent",
-            type: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if (response.success == true) {
-                    table1.ajax.reload();
-                    resetAndCloseModals(response.success);
-                }
-                else {
-                    table1.ajax.reload();
-                    resetAndCloseModals(response.success);
-                }
-            },
-            error: function () {
-                //alert("fail");
+        if (validateNonEmptyField(["#acad_suahocvi", "#edit_location", "#edit-acad-start", "#edit-acad-end"])) {
+            submit_edit_acad.startLoading()
+            let data = {
+                people_id: id.split('-')[0],
+                acad_id: id.split('-')[1],
+                degree: $("#acad_suahocvi").val(),
+                location: $("#edit_location").val(),
+                start: $("#edit-acad-start").val(),
+                end: $("#edit-acad-end").val()
             }
-        });
+            var fd = new FormData();
+            fd.append('data', JSON.stringify({ data: data }));
+            $.ajax({
+                url: "/Biography/EditAcadEvent",
+                type: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success == true) {
+                        table1.ajax.reload()
+                        resetAndCloseModals(response.success);
+                    }
+                    else {
+                        table1.ajax.reload()
+                        resetAndCloseModals(response.success);
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        }
     });
     $("#work_history_table").on("click", ".edit-work", function () {
         id = $(this).data('id');
@@ -440,7 +450,7 @@ $(function () {
         $("#delete_work").attr("data-id", $(this).data('id'));
     })
     $("#submit_edit_work").click(function () {
-        submit_edit_acad.startLoading()
+        submit_edit_work.startLoading()
         var url = new URL(window.location.href);
         people_id = url.searchParams.get("id");
         let data = {
@@ -566,6 +576,7 @@ $(function () {
     }));
 
     $("#submit_edit_award").click(function () {
+        if (validateNonEmptyField(["#edit_award_name", "#edit_award_rank", "#sua_award_date"])) {
         submit_edit_award.startLoading()
         var url = new URL(window.location.href);
         people_id = url.searchParams.get("id");
@@ -595,6 +606,7 @@ $(function () {
                 //alert("fail");
             }
         });
+    }
     })
 
     $("#delete_award").click(function () {

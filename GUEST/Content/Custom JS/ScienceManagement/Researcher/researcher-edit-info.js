@@ -27,45 +27,46 @@ $(function () {
         enableEdit()
     })
     $("#save-btn").click(function () {
-        save_loader.startLoading()
-        $("#progress-bar").show()
-        $(".researcher_infomation").attr('disabled', false)
-        ////////////////////xử lý ở đây/////////////////////
-        var url = new URL(window.location.href);
-        people_id = url.searchParams.get("id");
-        name = $("#researcher_name").val()
-        dob = $("#researcher_dob").val()
-        nationality = $("#country_select").select2('data');
-        title = $("#title_select").select2('data');
-        position = $("#position_select").select2('data');
-        phone = $("#researcher_phone").val()
-        email = $("#researcher_email").val()
-        website = $("#researcher_website").val()
-        googlescholar = $("#researcher_gscholar").val()
-        cv = $("#researcher_cv").val()
-        fields = $("#interested_fields_select").select2('data');
-        let info = new Researcher(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields)
-        var fd = new FormData();
-        console.log(info)
-        fd.append('info', JSON.stringify({ info: info }));
-        $.ajax({
-            url: "/Researchers/EditResearcher",
-            type: "POST",
-            data: fd,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if (response.mess == "ss") {
-                    //editRequest();
-                    window.location.reload()
+        if (validateNonEmptyField(["#researcher_name", "#researcher_dob"])) {
+            save_loader.startLoading()
+            $("#progress-bar").show()
+            $(".researcher_infomation").attr('disabled', false)
+            ////////////////////xử lý ở đây/////////////////////
+            var url = new URL(window.location.href);
+            people_id = url.searchParams.get("id");
+            name = $("#researcher_name").val()
+            dob = $("#researcher_dob").val()
+            nationality = $("#country_select").select2('data');
+            title = $("#title_select").select2('data');
+            position = $("#position_select").select2('data');
+            phone = $("#researcher_phone").val()
+            email = $("#researcher_email").val()
+            website = $("#researcher_website").val()
+            googlescholar = $("#researcher_gscholar").val()
+            cv = $("#researcher_cv").val()
+            fields = $("#interested_fields_select").select2('data');
+            let info = new Researcher(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields)
+            var fd = new FormData();
+            console.log(info)
+            fd.append('info', JSON.stringify({ info: info }));
+            $.ajax({
+                url: "/Researchers/EditResearcher",
+                type: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.mess == "ss") {
+                        //editRequest();
+                        window.location.reload()
+                    }
+                    else window.location.reload()
+                },
+                error: function () {
+                    //alert("fail");
                 }
-                else window.location.reload()
-            },
-            error: function () {
-                //alert("fail");
-            }
-        });
-        ////////////////////xử lý ở đây/////////////////////
+            });
+        }
     })
     $("#cancel-btn").click(function () {
         Swal.fire({
