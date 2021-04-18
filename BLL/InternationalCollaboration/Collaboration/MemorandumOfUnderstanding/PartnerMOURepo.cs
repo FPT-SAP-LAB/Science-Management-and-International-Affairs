@@ -129,7 +129,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             partner_name = input.partnername_add,
                             website = input.website_add,
                             address = input.address_add,
-                            country_id = input.nation_add,
+                            country_id = (int) input.nation_add,
                             article_id = a.article_id
                         });
                         //checkpoint 2
@@ -139,7 +139,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     else //old partner
                     {
-                        partner_id_item = input.partner_id;
+                        partner_id_item = (int) input.partner_id;
                     }
                     //add to MOUPartner via each partner of MOU
                     db.MOUPartners.Add(new ENTITIES.MOUPartner
@@ -256,7 +256,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             partner_name = input.partnername_add,
                             website = input.website_add,
                             address = input.address_add,
-                            country_id = input.nation_add,
+                            country_id = (int)input.nation_add,
                             article_id = a.article_id
                         });
                         //checkpoint 2
@@ -266,7 +266,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     else //old partner
                     {
-                        partner_id_item = input.partner_id;
+                        partner_id_item = (int) input.partner_id;
                     }
 
                     //edit MOUPartner

@@ -12,6 +12,7 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using OfficeOpenXml;
 using MANAGER.Support;
+using Newtonsoft.Json.Linq;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -99,12 +100,21 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "5")]
-        public ActionResult Add_Mou(MOUAdd input)
+        public ActionResult Add_Mou(string input, HttpPostedFileBase evidence)
         {
             try
             {
+                JObject inputObj = JObject.Parse(input);
+                MOUAdd obj = inputObj.ToObject<MOUAdd>();
                 BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-                mou.addMOU(input, user);
+                //upload file to gg drive.
+                Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                if (evidence != null)
+                {
+                    f = mou.uploadEvidenceFile(evidence, obj.BasicInfo.mou_code, 1, false);
+                }
+                //update info in database
+                mou.addMOU(obj, user, f , evidence);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

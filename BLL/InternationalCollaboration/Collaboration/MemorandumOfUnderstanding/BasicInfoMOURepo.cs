@@ -297,7 +297,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                     totalRelatedPS.Add(ps);
                                 }
                             }
-                            db.SaveChanges();
                         }
                         //checkpoint 2
                         db.SaveChanges();
@@ -400,7 +399,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                     });
                                     totalRelatedPS.Add(psCheck);
                                 }
-                                db.SaveChanges();
                             }
                         }
                     }

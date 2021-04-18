@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Hosting;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
@@ -246,7 +247,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public void addMOU(MOUAdd input, BLL.Authen.LoginRepo.User user)
+        public void addMOU(MOUAdd input, BLL.Authen.LoginRepo.User user,
+            Google.Apis.Drive.v3.Data.File file, HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -266,7 +268,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_code = input.BasicInfo.mou_code,
                         mou_end_date = mou_end_date,
                         mou_note = input.BasicInfo.mou_note,
-                        evidence = input.BasicInfo.evidence is null ? "" : input.BasicInfo.evidence,
+                        //evidence = input.BasicInfo.evidence is null ? "" : input.BasicInfo.evidence,
+                        //add ??
                         office_id = input.BasicInfo.office_id,
                         account_id = user is null ? 1 : user.account.account_id,
                         add_time = DateTime.Now,
@@ -314,7 +317,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
                                 address = item.address_add,
-                                country_id = item.nation_add,
+                                country_id = (int) item.nation_add,
                                 article_id = a.article_id
                             });
                             //checkpoint 2
@@ -324,7 +327,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                         else //old partner
                         {
-                            partner_id_item = item.partner_id;
+                            partner_id_item = (int) item.partner_id;
                         }
                         //add to MOUPartner via each partner of MOU
                         db.MOUPartners.Add(new ENTITIES.MOUPartner
@@ -864,6 +867,84 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         public bool DateRangeisInvalid(DateTime start, DateTime end, DateTime test_start, DateTime test_end)
         {
             return !(test_end < start || test_start > end);
+        }
+
+        public static Google.Apis.Drive.v3.Data.File UploadMOUFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        {
+            return UploadMOUFile(new List<HttpPostedFileBase> { InputFile }, FolderName, TypeFolder, isFolder)[0];
+        }
+
+        public static List<Google.Apis.Drive.v3.Data.File> UploadMOUFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, bool isFolder)
+        {
+            string SubFolderName, SecondSubFolderName;
+            switch (TypeFolder)
+            {
+                case 1:
+                    SubFolderName = "MOU";
+                    SecondSubFolderName = "BaseFile";
+                    break;
+                case 2:
+                    SubFolderName = "MOU";
+                    SecondSubFolderName = "AdditionalFile";
+                    break;
+                case 3:
+                    SubFolderName = "MOA";
+                    SecondSubFolderName = "BaseFile";
+                    break;
+                case 4:
+                    SubFolderName = "MOA";
+                    SecondSubFolderName = "AdditionalFile";
+                    break;
+                default:
+                    throw new ArgumentException("Loại folder không tồn tại");
+            }
+
+            var MOUFolder = GoogleDriveService.FindFirstFolder(SubFolderName, GoogleDriveService.IADrive) ?? GoogleDriveService.CreateFolder(SubFolderName, GoogleDriveService.IADrive);
+            var TypeMOUFolder = GoogleDriveService.FindFirstFolder(SecondSubFolderName, MOUFolder.Id) ?? GoogleDriveService.CreateFolder(SecondSubFolderName, MOUFolder.Id);
+
+            var folder = GoogleDriveService.FindFirstFolder(FolderName, TypeMOUFolder.Id) ?? GoogleDriveService.CreateFolder(FolderName, TypeMOUFolder.Id);
+
+            List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
+
+            foreach (HttpPostedFileBase item in InputFiles)
+            {
+                var file = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+
+                UploadedFiles.Add(file);
+
+                GoogleDriveService.ShareWithAnyone(file.Id);
+            }
+
+            if (isFolder)
+            {
+                return new List<Google.Apis.Drive.v3.Data.File>
+                {
+                    folder //return parent files
+                };
+            }
+            else
+            {
+                return UploadedFiles;
+            }
+        }
+
+        public Google.Apis.Drive.v3.Data.File uploadEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        {
+            string file_id = "";
+            try
+            {
+                Google.Apis.Drive.v3.Data.File f = UploadMOUFile(InputFile, FolderName, TypeFolder, isFolder);
+                file_id = InputFile.FileName;
+                return f;
+            }
+            catch (Exception e)
+            {
+                if (file_id != "")
+                {
+                    GoogleDriveService.DeleteFile(file_id);
+                }
+                throw e;
+            }
         }
     }
 }

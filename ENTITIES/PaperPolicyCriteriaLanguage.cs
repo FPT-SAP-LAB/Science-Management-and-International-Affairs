@@ -10,10 +10,16 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class PaperPolicyCriteriaLanguage
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int paper_criteria_policy_id { get; set; }
+        public Nullable<int> policy_criteria_id { get; set; }
+        public Nullable<int> language_id { get; set; }
+        public string name { get; set; }
+    
+        public virtual Language Language { get; set; }
+        public virtual PaperPolicyCriteria PaperPolicyCriteria { get; set; }
     }
 }
