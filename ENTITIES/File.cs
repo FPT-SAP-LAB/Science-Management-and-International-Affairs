@@ -20,6 +20,10 @@ namespace ENTITIES
             this.RequestConferences = new HashSet<RequestConference>();
             this.Decisions = new HashSet<Decision>();
             this.Inventions = new HashSet<Invention>();
+            this.MOAs = new HashSet<MOA>();
+            this.MOABonus = new HashSet<MOABonu>();
+            this.MOUs = new HashSet<MOU>();
+            this.MOUBonus = new HashSet<MOUBonu>();
             this.Papers = new HashSet<Paper>();
             this.PaperPolicies = new HashSet<PaperPolicy>();
             this.Profiles = new HashSet<Profile>();
@@ -43,6 +47,14 @@ namespace ENTITIES
         public virtual ICollection<Decision> Decisions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invention> Inventions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOA> MOAs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOABonu> MOABonus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOU> MOUs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOUBonu> MOUBonus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Paper> Papers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

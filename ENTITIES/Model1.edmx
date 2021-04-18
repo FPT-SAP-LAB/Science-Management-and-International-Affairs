@@ -343,7 +343,7 @@
           <Property Name="moa_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="moa_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="moa_end_date" Type="date" Nullable="false" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" />
+          <Property Name="evidence" Type="int" />
           <Property Name="moa_note" Type="nvarchar" MaxLength="150" />
           <Property Name="mou_id" Type="int" Nullable="false" />
           <Property Name="account_id" Type="int" Nullable="false" />
@@ -359,7 +359,7 @@
           <Property Name="moa_bonus_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="moa_bonus_decision_date" Type="date" Nullable="false" />
           <Property Name="moa_bonus_end_date" Type="date" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="evidence" Type="int" />
           <Property Name="account_id" Type="int" />
           <Property Name="add_time" Type="datetime" />
         </EntityType>
@@ -399,7 +399,7 @@
           <Property Name="mou_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="mou_end_date" Type="date" />
           <Property Name="mou_note" Type="nvarchar" MaxLength="150" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" />
+          <Property Name="evidence" Type="int" />
           <Property Name="office_id" Type="int" />
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="add_time" Type="datetime" Nullable="false" />
@@ -415,7 +415,7 @@
           <Property Name="mou_bonus_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="mou_bonus_decision_date" Type="date" Nullable="false" />
           <Property Name="mou_bonus_end_date" Type="date" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="evidence" Type="int" />
           <Property Name="account_id" Type="int" />
           <Property Name="add_time" Type="datetime" />
         </EntityType>
@@ -2495,6 +2495,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__MOA__evidence__3726238F">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOA" Type="Self.MOA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOA">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__MOA__mou_id__589C25F3">
           <End Role="MOU" Type="Self.MOU" Multiplicity="1" />
           <End Role="MOA" Type="Self.MOA" Multiplicity="*" />
@@ -2504,6 +2516,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="MOA">
               <PropertyRef Name="mou_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOABonus__eviden__390E6C01">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOABonus" Type="Self.MOABonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOABonus">
+              <PropertyRef Name="evidence" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2591,6 +2615,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__MOU__evidence__3631FF56">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOU" Type="Self.MOU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOU">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__MOU__office_id__2334397B">
           <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="MOU" Type="Self.MOU" Multiplicity="*" />
@@ -2600,6 +2636,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="MOU">
               <PropertyRef Name="office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOUBonus__eviden__381A47C8">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOUBonus" Type="Self.MOUBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOUBonus">
+              <PropertyRef Name="evidence" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4105,40 +4153,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="InitCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="InputString" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -4660,9 +4674,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Account" />
             <End Role="MOA" EntitySet="MOA" />
           </AssociationSet>
+          <AssociationSet Name="FK__MOA__evidence__3726238F" Association="Self.FK__MOA__evidence__3726238F">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOA" EntitySet="MOA" />
+          </AssociationSet>
           <AssociationSet Name="FK__MOA__mou_id__589C25F3" Association="Self.FK__MOA__mou_id__589C25F3">
             <End Role="MOU" EntitySet="MOU" />
             <End Role="MOA" EntitySet="MOA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOABonus__eviden__390E6C01" Association="Self.FK__MOABonus__eviden__390E6C01">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOABonus" EntitySet="MOABonus" />
           </AssociationSet>
           <AssociationSet Name="FK__MOABonus__moa_id__18B6AB08" Association="Self.FK__MOABonus__moa_id__18B6AB08">
             <End Role="MOA" EntitySet="MOA" />
@@ -4692,9 +4714,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Account" />
             <End Role="MOU" EntitySet="MOU" />
           </AssociationSet>
+          <AssociationSet Name="FK__MOU__evidence__3631FF56" Association="Self.FK__MOU__evidence__3631FF56">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOU" EntitySet="MOU" />
+          </AssociationSet>
           <AssociationSet Name="FK__MOU__office_id__2334397B" Association="Self.FK__MOU__office_id__2334397B">
             <End Role="Office" EntitySet="Office" />
             <End Role="MOU" EntitySet="MOU" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOUBonus__eviden__381A47C8" Association="Self.FK__MOUBonus__eviden__381A47C8">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOUBonus" EntitySet="MOUBonus" />
           </AssociationSet>
           <AssociationSet Name="FK__MOUBonus__mou_id__24285DB4" Association="Self.FK__MOUBonus__mou_id__24285DB4">
             <End Role="MOU" EntitySet="MOU" />
@@ -5289,6 +5319,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__Conferenc__invit__23BE4960" FromRole="File" ToRole="RequestConference" />
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
+          <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__evidence__3726238F" FromRole="File" ToRole="MOA" />
+          <NavigationProperty Name="MOABonus" Relationship="Self.FK__MOABonus__eviden__390E6C01" FromRole="File" ToRole="MOABonus" />
+          <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__evidence__3631FF56" FromRole="File" ToRole="MOU" />
+          <NavigationProperty Name="MOUBonus" Relationship="Self.FK__MOUBonus__eviden__381A47C8" FromRole="File" ToRole="MOUBonus" />
           <NavigationProperty Name="Papers" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="File" ToRole="Paper" />
           <NavigationProperty Name="PaperPolicies" Relationship="Self.FK__PaperPoli__file___24134F1B" FromRole="File" ToRole="PaperPolicy" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="File" ToRole="Profile" />
@@ -5649,13 +5683,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="moa_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="moa_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="moa_end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="moa_note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="mou_id" Type="Int32" Nullable="false" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="is_deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__MOA__account_id__4865BE2A" FromRole="MOA" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOA__evidence__3726238F" FromRole="MOA" ToRole="File" />
           <NavigationProperty Name="MOU" Relationship="Self.FK__MOA__mou_id__589C25F3" FromRole="MOA" ToRole="MOU" />
           <NavigationProperty Name="MOABonus" Relationship="Self.FK__MOABonus__moa_id__18B6AB08" FromRole="MOA" ToRole="MOABonus" />
           <NavigationProperty Name="MOAPartnerScopes" Relationship="Self.FK__MOAPartne__moa_i__5E54FF49" FromRole="MOA" ToRole="MOAPartnerScope" />
@@ -5671,10 +5706,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="moa_bonus_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="moa_bonus_decision_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="moa_bonus_end_date" Type="DateTime" Precision="0" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="account_id" Type="Int32" />
           <Property Name="add_time" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_MOABonus_Account" FromRole="MOABonus" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOABonus__eviden__390E6C01" FromRole="MOABonus" ToRole="File" />
           <NavigationProperty Name="MOA" Relationship="Self.FK__MOABonus__moa_id__18B6AB08" FromRole="MOABonus" ToRole="MOA" />
           <NavigationProperty Name="MOAPartnerScopes" Relationship="Self.FK__MOAPartne__moa_b__5D60DB10" FromRole="MOABonus" ToRole="MOAPartnerScope" />
         </EntityType>
@@ -5721,13 +5757,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="mou_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mou_end_date" Type="DateTime" Precision="0" />
           <Property Name="mou_note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="office_id" Type="Int32" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="is_deleted" Type="Boolean" Nullable="false" />
           <Property Name="noti_count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__MOU__account_id__51EF2864" FromRole="MOU" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOU__evidence__3631FF56" FromRole="MOU" ToRole="File" />
           <NavigationProperty Name="Office" Relationship="Self.FK__MOU__office_id__2334397B" FromRole="MOU" ToRole="Office" />
           <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__mou_id__589C25F3" FromRole="MOU" ToRole="MOA" />
           <NavigationProperty Name="MOUBonus" Relationship="Self.FK__MOUBonus__mou_id__24285DB4" FromRole="MOU" ToRole="MOUBonus" />
@@ -5744,10 +5781,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="mou_bonus_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mou_bonus_decision_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="mou_bonus_end_date" Type="DateTime" Precision="0" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="account_id" Type="Int32" />
           <Property Name="add_time" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_MOUBonus_Account" FromRole="MOUBonus" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOUBonus__eviden__381A47C8" FromRole="MOUBonus" ToRole="File" />
           <NavigationProperty Name="MOU" Relationship="Self.FK__MOUBonus__mou_id__24285DB4" FromRole="MOUBonus" ToRole="MOU" />
           <NavigationProperty Name="MOUPartnerScopes" Relationship="Self.FK__MOUPartne__mou_b__67DE6983" FromRole="MOUBonus" ToRole="MOUPartnerScope" />
         </EntityType>
@@ -7298,6 +7336,54 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Invention">
               <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOA__evidence__3726238F">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOA" Type="Self.MOA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOA">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOABonus__eviden__390E6C01">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOABonus" Type="Self.MOABonu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOABonus">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOU__evidence__3631FF56">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOU" Type="Self.MOU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOU">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOUBonus__eviden__381A47C8">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOUBonus" Type="Self.MOUBonu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOUBonus">
+              <PropertyRef Name="evidence" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9799,6 +9885,22 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="File" EntitySet="Files" />
             <End Role="Invention" EntitySet="Inventions" />
           </AssociationSet>
+          <AssociationSet Name="FK__MOA__evidence__3726238F" Association="Self.FK__MOA__evidence__3726238F">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOA" EntitySet="MOAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOABonus__eviden__390E6C01" Association="Self.FK__MOABonus__eviden__390E6C01">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOABonus" EntitySet="MOABonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOU__evidence__3631FF56" Association="Self.FK__MOU__evidence__3631FF56">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOU" EntitySet="MOUs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOUBonus__eviden__381A47C8" Association="Self.FK__MOUBonus__eviden__381A47C8">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOUBonus" EntitySet="MOUBonus" />
+          </AssociationSet>
           <AssociationSet Name="FK__Paper__file_id__37FA4C37" Association="Self.FK__Paper__file_id__37FA4C37">
             <End Role="File" EntitySet="Files" />
             <End Role="Paper" EntitySet="Papers" />
@@ -10551,48 +10653,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12108,30 +12169,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

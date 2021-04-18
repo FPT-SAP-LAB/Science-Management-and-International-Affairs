@@ -24,7 +24,6 @@ namespace GUEST.Controllers
     public class InventionController : Controller
     {
         private readonly InventionRepo ir = new InventionRepo();
-        private readonly PaperRepo pr = new PaperRepo();
         private readonly CommentRepo cr = new CommentRepo();
         private readonly MasterDataRepo md = new MasterDataRepo();
 
@@ -43,17 +42,6 @@ namespace GUEST.Controllers
 
             List<InventionType> listType = ir.getType();
             ViewBag.type = listType;
-
-            string lang = "";
-            if (Request.Cookies["language_name"] != null)
-            {
-                lang = Request.Cookies["language_name"].Value;
-            }
-            List<CustomPaperPolicy> listPolicy = pr.getPolicyByLanguage(lang);
-            ViewBag.policy = listPolicy;
-
-            string link = pr.getLinkPolicy();
-            ViewBag.link = link;
 
             return View();
         }

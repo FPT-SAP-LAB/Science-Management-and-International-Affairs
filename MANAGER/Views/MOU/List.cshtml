@@ -248,6 +248,7 @@
     <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>
     <script>
         "use strict";
+        var uppy_mou;
 
         // Class definition
         var KTUppy = function () {
@@ -266,7 +267,7 @@
 
             // Private functions
 
-            var initUppy5 = function (id_input) {
+            var initUppy5_MOU = function (id_input) {
                 // Uppy variables
                 // For more info refer: https://uppy.io/
                 var elemId = id_input;
@@ -275,7 +276,7 @@
                 var $uploadedList = $(id + ' .uppy-list');
                 var timeout;
 
-                var uppyMin = Uppy.Core({
+                uppy_mou = Uppy.Core({
                     debug: true,
                     autoProceed: true,
                     showProgressDetails: true,
@@ -286,12 +287,12 @@
                     }
                 });
 
-                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
-                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+                uppy_mou.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppy_mou.use(Informer, { target: id + ' .uppy-informer' });
 
                 // demo file upload server
-                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
-                uppyMin.use(StatusBar, {
+                uppy_mou.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppy_mou.use(StatusBar, {
                     target: id + ' .uppy-status',
                     hideUploadButton: true,
                     hideAfterFinish: false
@@ -302,14 +303,14 @@
 
                 var $fileLabel = $(id + ' .uppy-input-label');
 
-                uppyMin.on('upload', function (data) {
+                uppy_mou.on('upload', function (data) {
                     $fileLabel.text("Uploading...");
                     $statusBar.addClass('uppy-status-ongoing');
                     $statusBar.removeClass('uppy-status-hidden');
                     clearTimeout(timeout);
                 });
 
-                uppyMin.on('complete', function (file) {
+                uppy_mou.on('complete', function (file) {
                     $.each(file.successful, function (index, value) {
                         var sizeLabel = "bytes";
                         var filesize = value.size;
@@ -334,7 +335,7 @@
 
                 $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                     var itemId = $(this).attr('data-id');
-                    uppyMin.removeFile(itemId);
+                    uppy_mou.removeFile(itemId);
                     $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                 });
             }
@@ -342,8 +343,8 @@
 
             return {
                 // public functions
-                init: function (id_input) {
-                    initUppy5(id_input);
+                init: function () {
+                    initUppy5_MOU("mou_upload");
                     setTimeout(function () {
 
                     }, 2000);
@@ -733,8 +734,11 @@
         }
     }
 
+    var evidence;
     function addMOU() {
             //collect basicInfo data.
+            evidence = uppy_mou.getFiles();
+
             var BasicInfo = {
                 mou_code: $('#mou_code_add').val() ,
                 mou_end_date: $('#end_date_mou').val(),
@@ -743,17 +747,24 @@
                 reason: $('#note_mou').val(),
                 mou_note: $('#mou_area').val()
             };
-
             var MOUAdd = {
                 BasicInfo: BasicInfo,
-                PartnerInfo: listTempPartnerMOUAdd,
+                PartnerInfo: listTempPartnerMOUAdd
             };
+            let formData = new FormData();
+            formData.append("input", JSON.stringify(MOUAdd));
+            formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+
             $.ajax({
                 url: "@Url.Action("Add_Mou", "MOU")",
+                //url: "/MOU/Add_Mou",
                 type: "POST",
-                data: JSON.stringify(MOUAdd),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
+                //data: JSON.stringify(MOUAdd),
+                data: formData,
+                contentType: false,
+                //contentType: "application/json;charset=utf-8",
+                processData: false,
+                dataType: "json",
                 cache: false,
                 success: function (data) {
                     add_mou_loader.stopLoading();
@@ -1354,7 +1365,6 @@
                 },
         ],
         });
-      //$('thead > tr:nth-child(2) > th:nth-child(1)').css({ 'min-width': '300px', 'max-width': '300px' });
     }
 
     function searchMOU() {
