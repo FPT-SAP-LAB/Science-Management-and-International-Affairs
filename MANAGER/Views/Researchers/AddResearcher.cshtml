@@ -77,7 +77,7 @@
                                             <input type="hidden" name="profile_avatar_remove" />
                                         </label>
 
-                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" id="cancel_avatar" data-toggle="tooltip" title="Cancel avatar">
                                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                                         </span>
 
@@ -220,166 +220,218 @@
                 </div>
                 <div class="tab-pane fade" id="researcher_info_2" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row">
-                        <label class="col-xl-3"></label>
-                        <div class="col-lg-12 col-xl-12">
-                            <h5 class="font-weight-bold ">Quá trình học tập</h5>
+                        <!--begin::Aside-->
+                        <!--end::Aside-->
+                        <!--begin::Content-->
+                        <div class="col-12">
+                            <!--begin::Card-->
+                            <!--begin::Header-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="card-label font-weight-bolder text-dark">TIẾU SỬ HỌC TẬP</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="acad_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Học vị</th>
+                                                <th>Nơi học tập</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm tiểu sử học tập
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-12 col-xl-12">
-                            <table class="custom-add-table table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Học vị</th>
-                                        <th>Nơi học tập</th>
-                                        <th>Thời gian</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (AcadBiography a in ViewBag.acadList)
-                                    {
-                                        <tr>
-                                            <td>@a.rownum</td>
-                                            <td class="acad-degree" data-id="@a.acad_id">@a.degree</td>
-                                            <td class="acad-place">@a.place</td>
-                                            <td class="acad-time">@a.time</td>
-                                            <td><a data-id="@a.people_id-@a.acad_id" data-toggle="modal" data-target="#modal_suatieusu_hoctap" class="btn btn-sm btn-clean btn-icon edit-acad" title="Edit"> <i class="far fa-edit"></i> </a></td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-lg-12 col-xl-12" style="text-align: right">
-                            <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                Thêm tiểu sử học tập
-                            </button>
-                        </div>
+                        <!--end::Content-->
                     </div>
+                    <!--enddd::Profile Personal Information-->
                     <div class="row">
-                        <label class="col-xl-3"></label>
-                        <div class="col-lg-12 col-xl-12">
-                            <h5 class="font-weight-bold ">Quá trình công tác</h5>
+                        <!--begin::Aside-->
+                        <!--end::Aside-->
+                        <!--begin::Content-->
+                        <div class="col-12">
+                            <!--begin::Card-->
+                            <!--begin::Header-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="card-label font-weight-bolder text-dark">TIẾU SỬ CÔNG TÁC</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="work_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Đơn vị công tác</th>
+                                                <th>Chức vụ/ vai trò</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_themtieusu_congtac" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm tiểu sử công tác
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-12 col-xl-12">
-                            <table class="custom-add-table table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Đơn vị công tác</th>
-                                        <th>Chức danh</th>
-                                        <th>Thời gian</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (BaseRecord<WorkingProcess> a in ViewBag.workList)
-                                    {
-                                        <tr>
-                                            <td>@a.index</td>
-                                            <td class="work_unit">@a.records.work_unit</td>
-                                            <td class="work_title">@a.records.title</td>
-                                            <td class="work_time">@a.records.start_year-@a.records.end_year</td>
-                                            <td><a data-id="@a.records.id" class="btn btn-sm btn-clean btn-icon edit-work" data-toggle="modal" data-target="#modal_suatieusu_work" title="Edit"> <i class="far fa-edit"></i> </a></td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="col-lg-12 col-xl-12" style="text-align: right">
-                            <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                Thêm tiểu sử công tác
-                            </button>
-                        </div>
+                        <!--end::Content-->
                     </div>
                 </div>
                 <div class="tab-pane fade" id="researcher_info_3" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row">
-                        <div class="col-lg-12 col-xl-12">
-                            <h5 class="font-weight-bold ">Tạp chí/sách</h5>
-                        </div>
+                        <!--begin::Aside-->
+                        <!--end::Aside-->
+                        <!--begin::Content-->
                         <div class="col-12">
-                            <table class="table table-bordered table-checkable" id="tapchi_list">
-                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Đồng tác giả</th><th>Ngày xuất bản</th></tr></thead>
-                                <tbody>
-                                    @foreach (ResearcherPublications a in ViewBag.publications)
-                                    {
-                                        <tr>
-                                            <td>@a.rownum</td>
-                                            <td>@a.paper_name</td>
-                                            <td>@a.journal_or_cfr_name</td>
-                                            <td>
-                                                @foreach (string author in a.co_author)
-                                                {
-                                                    <span>@author, </span>
-                                                }
-                                            </td>
-                                            <td>@a.publish_date.Value.Year</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                            <!--begin::Card-->
+                            <!--begin::Header-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="card-label font-weight-bolder text-dark">TẠP CHÍ/SÁCH</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="table table-bordered table-checkable" id="tapchi_list">
+                                        <thead><tr class="tableizer-firstrow"><th>STT</th><th>Tạp chí/Sách</th><th>Tên bài báo</th><th>Đồng tác giả</th><th>Ngày xuất bản</th></tr></thead>
+                                        <tbody>
+                                            @foreach (ResearcherPublications a in ViewBag.publications)
+                                            {
+                                                <tr>
+                                                    <td>@a.rownum</td>
+                                                    <td>@a.paper_name</td>
+                                                    <td>@a.journal_or_cfr_name</td>
+                                                    <td>
+                                                        @foreach (string author in a.co_author)
+                                                        {
+                                                            <span>@author, </span>
+                                                        }
+                                                    </td>
+                                                    <td>@a.publish_date.Value.Year</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @*<div class="col-lg-12 col-xl-12" style="text-align: right">
+                                        <button data-toggle="modal" data-target="#modal_them_award" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                            <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                            Thêm giải thưởng
+                                        </button>
+                                    </div>*@
+                            </div>
                         </div>
-                        @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                                <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                    Chi
-                                </button>
-                            </div>*@
+                        <!--end::Content-->
                     </div>
                     <div class="row">
+                        <!--begin::Aside-->
+                        <!--end::Aside-->
+                        <!--begin::Content-->
                         <div class="col-12">
-                            <h5 class="font-weight-bold ">Kỷ yếu hội thảo</h5>
+                            <!--begin::Card-->
+                            <!--begin::Header-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="card-label font-weight-bolder text-dark">KỶ YẾU HỘI THẢO</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="table table-bordered table-checkable" id="conferences_list">
+                                        <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Đồng Tác giả</th><th>Năm</th></tr></thead>
+                                        <tbody>
+                                            @foreach (ResearcherPublications a in ViewBag.conferences)
+                                            {
+                                                <tr>
+                                                    <td>@a.rownum</td>
+                                                    <td>@a.paper_name</td>
+                                                    <td>@a.journal_or_cfr_name</td>
+                                                    <td>
+                                                        @foreach (string author in a.co_author)
+                                                        {
+                                                            <span>@author, </span>
+                                                        }
+                                                    </td>
+                                                    <td>@a.publish_date.Value.Year</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @*<div class="col-lg-12 col-xl-12" style="text-align: right">
+                                        <button data-toggle="modal" data-target="#modal_them_award" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                            <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                            Thêm giải thưởng
+                                        </button>
+                                    </div>*@
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <table class="table table-bordered table-checkable" id="conferences_list">
-                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Hội nghị</th><th>Tên bài báo</th><th>Đồng Tác giả</th><th>Năm</th></tr></thead>
-                                <tbody>
-                                    @foreach (ResearcherPublications a in ViewBag.conferences)
-                                    {
-                                        <tr>
-                                            <td>@a.rownum</td>
-                                            <td>@a.paper_name</td>
-                                            <td>@a.journal_or_cfr_name</td>
-                                            <td>
-                                                @foreach (string author in a.co_author)
-                                                {
-                                                    <span>@author, </span>
-                                                }
-                                            </td>
-                                            <td>@a.publish_date.Value.Year</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        @*<div class="col-lg-12 col-xl-12" style="text-align: right">
-                                <button href="#" data-toggle="modal" data-target="#modal_themtieusu_congtac" class="add-btn btn btn-light-success px-6 font-weight-bold">
-                                    <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                    Thêm tiểu sử công tác
-                                </button>
-                            </div>*@
+                        <!--end::Content-->
                     </div>
                 </div>
                 <div class="tab-pane fade" id="researcher_info_4" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row">
-                        <div class="col-lg-12 col-xl-12">
-                            <table class="table table-bordered table-checkable" id="award_list">
-                                <thead><tr class="tableizer-firstrow"><th>STT</th><th>Cuộc thi, giải thưởng</th><th>Thứ hạng</th><th>Thời gian</th></tr></thead>
-                                <tbody>
-                                    @foreach (BaseRecord<Award> a in ViewBag.awards)
-                                    {
-                                        <tr>
-                                            <td>@a.index</td>
-                                            <td>@a.records.competion_name</td>
-                                            <td>@a.records.rank</td>
-                                            <td>@a.records.award_time</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                        <!--begin::Aside-->
+                        <!--end::Aside-->
+                        <!--begin::Content-->
+                        <div class="col-12">
+                            <!--begin::Card-->
+                            <!--begin::Header-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="card-label font-weight-bolder text-dark">GIẢI THƯỞNG</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-xl-3"></label>
+                                <div class="col-lg-12 col-xl-12">
+                                    <table class="custom-add-table table table-bordered" id="award_history_table">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Cuộc thi/giải thưởng</th>
+                                                <th>Thứ hạng</th>
+                                                <th>Thời gian</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12 col-xl-12" style="text-align: right">
+                                    <button data-toggle="modal" data-target="#modal_them_award" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
+                                        <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
+                                        Thêm giải thưởng
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                        <!--end::Content-->
                     </div>
                 </div>
             </div>
@@ -669,6 +721,133 @@
         </div>
     </div>
 
+    <!--Modal them award-->
+    <div class="modal fade" id="modal_them_award" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm giải thưởng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Tên cuộc thi" id="add_award_name">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Thứ hạng" id="add_award_rank">
+                                <span><i class="far fa-hand-rock"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group date" id="date_award" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="add_award_date" placeholder="Thời gian" data-target="#date_award" />
+                                        <div class="input-group-append" data-target="#date_award" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_award">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_edit_award" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin giải thưởng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Tên cuộc thi" id="edit_award_name">
+                                <span><i class="fas fa-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div class="input-icon">
+                                <input type="text" class="form-control" placeholder="Thứ hạng" id="edit_award_rank">
+                                <span><i class="far fa-hand-rock"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group date" id="edit_date_award" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="sua_award_date" placeholder="Thời gian" data-target="#edit_date_award" />
+                                        <div class="input-group-append" data-target="#edit_date_award" data-toggle="datetimepicker">
+                                            <span class="input-group-text">
+                                                <i class="ki ki-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_award">Lưu</button>
+                    <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_award">Xoá</button>
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="avatar_change" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh hồ sơ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-7 pb-2" style=" text-align: center;">
+                        <div class="image-input image-input-outline" id="kt_image_avatar">
+                            <div class="image-input-wrapper" id="avatar_preview"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" id="delete_avt" data-dismiss="modal">Huỷ</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" id="submit_edit_avt">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 @section scripts{
     @if (!ViewBag.profile_page_active)
@@ -741,6 +920,9 @@
             jQuery(document).ready(function () {
                 KTBootstrapDatetimepicker.init();
             });
+        </script>
+        <script>
+
         </script>
         <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-edit-info.js"></script>
         <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-change-avt.js"></script>
@@ -834,10 +1016,10 @@
                     // begin first table
                     table.DataTable({
                         responsive: true,
-
+                        bInfo: false,
                         // DOM Layout settings
                         dom: `<'row'<'col-sm-12'tr>>
-                                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                         lengthMenu: [5, 10, 25, 50],
 
@@ -845,6 +1027,7 @@
 
                         language: {
                             'lengthMenu': 'Display _MENU_',
+                            "zeroRecords": "Chưa có thông tin"
                         },
 
                         // Order settings
@@ -900,10 +1083,10 @@
                     // begin first table
                     table.DataTable({
                         responsive: true,
-
+                        bInfo: false,
                         // DOM Layout settings
                         dom: `<'row'<'col-sm-12'tr>>
-                                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                         lengthMenu: [5, 10, 25, 50],
 
@@ -911,6 +1094,7 @@
 
                         language: {
                             'lengthMenu': 'Display _MENU_',
+                            "zeroRecords": "Chưa có thông tin"
                         },
                         order: [[0, 'asc']],
 
@@ -965,7 +1149,7 @@
 
                         // DOM Layout settings
                         dom: `<'row'<'col-sm-12'tr>>
-                                                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                                                  <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
                         lengthMenu: [5, 10, 25, 50],
 
