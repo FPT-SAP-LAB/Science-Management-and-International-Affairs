@@ -14,6 +14,13 @@ var table1 = $('#acad_history_table').DataTable({
         'lengthMenu': 'Display _MENU_',
         "zeroRecords": "Chưa có thông tin"
     },
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
     // Order settings
     order: [[1, 'desc']],
     serverSide: true,
@@ -59,6 +66,13 @@ var table2 = $('#work_history_table').DataTable({
     pageLength: 10,
     bLengthChange: false,
     bInfo: false,
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
     language: {
         'lengthMenu': 'Display _MENU_',
         "zeroRecords": "Chưa có thông tin"
@@ -108,6 +122,13 @@ var table3 = $('#award_history_table').DataTable({
     pageLength: 10,
     bLengthChange: false,
     bInfo: false,
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
     language: {
         'lengthMenu': 'Display _MENU_',
         "zeroRecords": "Chưa có thông tin"
