@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
+
 namespace BLL.ScienceManagement.Report
 {
     public class RewardsReportRepo
@@ -41,33 +43,57 @@ namespace BLL.ScienceManagement.Report
         //    int recordsTotal = data.Count();
         //    return new BaseServerSideData<ArticlesInCountryReport>(res, recordsTotal);
         //}
-        public BaseServerSideData<ReportByAuthorAward> getAwardReportByAuthor(BaseDatatable baseDatatable, int account_id = 0, int language_id = 1)
+        public BaseServerSideData<ReportByAuthorAward> getAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         {
             var data = (from a in db.AuthorPapers
                         join b in db.Authors on a.people_id equals b.people_id
                         join c in db.Titles on b.title_id equals c.title_id
                         join d in db.TitleLanguages on c.title_id equals d.title_id
                         join e in db.Offices on b.office_id equals e.office_id
+                        join f in db.Papers on a.paper_id equals f.paper_id
                         where d.language_id == 1
                         select new ReportByAuthorAward
                         {
                             name = b.name,
                             title = d.name,
                             office = e.office_name,
+                            office_id = e.office_id,
                             paperAward = (from m in db.RequestPapers
                                           join n in db.Papers on m.paper_id equals n.paper_id
                                           join h in db.AuthorPapers on n.paper_id equals h.paper_id
                                           join j in db.Authors on h.people_id equals j.people_id
-                                          where m.status_id == 2 && m.type == 2 && j.name == b.name && j.identification_number == b.identification_number
+                                          where m.status_id == 2
+                                          && m.type == 2
+                                          && j.name == b.name
+                                          && j.identification_number == b.identification_number
                                           select h.money_reward).Distinct().Sum().ToString(),
                             conferenceAward = "0",
-                            CitationAward = "0"
+                            CitationAward = "0",
+                            PublicYear = f.publish_date.Value.Year.ToString()
                         });
-            var result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            if (search.office_id != null)
+            {
+                data = data.Where(x => x.office_id == search.office_id);
+            }
+            if (search.name != null)
+            {
+                data = data.Where(x => x.name.Contains(search.name));
+            }
+            if (search.year != null)
+            {
+                data = data.Where(x => x.PublicYear == search.year);
+            }
+            var result = data.Distinct().OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
                 .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
 
             int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
+        }
+
+        public List<String> getListYearPaper()
+        {
+            var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
+            return data;
         }
     }
 }

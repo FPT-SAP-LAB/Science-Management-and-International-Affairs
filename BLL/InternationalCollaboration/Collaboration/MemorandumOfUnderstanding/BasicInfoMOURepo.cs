@@ -145,7 +145,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     mou.mou_code = newBasicInfo.mou_code;
                     mou.mou_end_date = mou_end_date;
                     mou.mou_note = newBasicInfo.mou_note;
-                    mou.evidence = newBasicInfo.evidence;
+                    //mou.evidence = newBasicInfo.evidence;
                     mou.office_id = newBasicInfo.office_id;
                     db.Entry(mou).State = EntityState.Modified;
                     db.SaveChanges();
@@ -253,8 +253,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_bonus_end_date = end_date,
                         mou_id = mou_id,
                         account_id = user is null ? 1 : user.account.account_id,
-                        add_time = DateTime.Now,
-                        evidence = ""
+                        add_time = DateTime.Now
+                        //,
+                        //evidence = ""
                     });
                     //checkpoint 1
                     db.SaveChanges();
@@ -297,7 +298,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                     totalRelatedPS.Add(ps);
                                 }
                             }
-                            db.SaveChanges();
                         }
                         //checkpoint 2
                         db.SaveChanges();
@@ -400,7 +400,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                     });
                                     totalRelatedPS.Add(psCheck);
                                 }
-                                db.SaveChanges();
                             }
                         }
                     }
