@@ -20,7 +20,14 @@ var table1 = $('#acad_history_table').DataTable({
             url: "/Researchers/getAcadList?id=" + people_id,
             datatype: "json",
             cache: true
-        },
+         },
+         columnDefs: [
+             { width: "10%", targets: 0 },
+             { width: "30%", targets: 1 },
+             { width: "30%", targets: 2 },
+             { width: "20%", targets: 3 },
+             { width: "10%", targets: 4 }
+         ],
         columns: [
             { data: "rownum", name: "rownum", orderable: false },
             {
@@ -63,7 +70,14 @@ var table2 = $('#work_history_table').DataTable({
         },
         // Order settings
         order: [[1, 'desc']],
-        serverSide: true,
+    serverSide: true,
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
         ajax: {
             url: "/Researchers/getWorkList?id=" + people_id,
             datatype: "json",
@@ -109,6 +123,13 @@ var table3 = $('#award_history_table').DataTable({
     language: {
         'lengthMenu': 'Display _MENU_',
     },
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
     // Order settings
     order: [[1, 'desc']],
     serverSide: true,
