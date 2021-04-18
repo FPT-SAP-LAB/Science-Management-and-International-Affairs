@@ -12,27 +12,20 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class MOUBonu
+    public partial class PaperPolicy
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MOUBonu()
+        public PaperPolicy()
         {
-            this.MOUPartnerScopes = new HashSet<MOUPartnerScope>();
+            this.PaperPolicyCriterias = new HashSet<PaperPolicyCriteria>();
         }
     
-        public int mou_bonus_id { get; set; }
-        public int mou_id { get; set; }
-        public string mou_bonus_code { get; set; }
-        public System.DateTime mou_bonus_decision_date { get; set; }
-        public Nullable<System.DateTime> mou_bonus_end_date { get; set; }
-        public Nullable<int> evidence { get; set; }
-        public Nullable<int> account_id { get; set; }
-        public Nullable<System.DateTime> add_time { get; set; }
+        public int policy_id { get; set; }
+        public System.DateTime valid_date { get; set; }
+        public Nullable<int> file_id { get; set; }
     
-        public virtual Account Account { get; set; }
         public virtual File File { get; set; }
-        public virtual MOU MOU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOUPartnerScope> MOUPartnerScopes { get; set; }
+        public virtual ICollection<PaperPolicyCriteria> PaperPolicyCriterias { get; set; }
     }
 }
