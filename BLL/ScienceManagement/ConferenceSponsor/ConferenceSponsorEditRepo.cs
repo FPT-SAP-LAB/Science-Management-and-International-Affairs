@@ -93,7 +93,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     participant.request_id = request_id;
                     participantRepo.AddWithTempData(db, participant);
 
-                    foreach (var item in request.EligibilityCriterias)
+                    foreach (var item in request.EligibilityConditions)
                     {
                         item.is_accepted = false;
                     }

@@ -632,6 +632,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             }
                             catch (Exception e)
                             {
+                                Console.WriteLine(e.ToString());
                                 dbContext.Rollback();
                                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                             }
@@ -647,7 +648,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 catch (Exception e)
                 {
                     trans.Rollback();
-                    throw e;
+                    Console.WriteLine(e.ToString());
+                    return new AlertModal<AcademicCollaboration_Ext>(false);
                 }
             }
         }
@@ -1097,6 +1099,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             }
                             catch (Exception e)
                             {
+                                Console.WriteLine(e.ToString());
                                 dbContext.Rollback();
                                 return new AlertModal<AcademicCollaboration_Ext>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                             }
@@ -1183,6 +1186,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         }
                         catch (Exception e)
                         {
+                            Console.WriteLine(e.ToString());
                             dbContext.Rollback();
                             return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                         }

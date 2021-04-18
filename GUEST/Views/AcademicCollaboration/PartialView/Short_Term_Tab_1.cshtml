@@ -102,6 +102,9 @@
 </div>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 text-center my-5 py-3">
-        <a id="load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6">@rm.GetString("LoadMore")</a>
+        @if (ViewBag.ListProgram.Count > 0)
+        {
+            <a id="load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6">@rm.GetString("LoadMore")</a>
+        }
     </div>
 </div>

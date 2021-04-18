@@ -519,6 +519,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return new HttpStatusCodeResult(400);
             }
         }
