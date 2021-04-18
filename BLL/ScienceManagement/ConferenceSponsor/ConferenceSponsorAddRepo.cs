@@ -91,15 +91,32 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 try
                 {
                     DateTime create_date = DateTime.Now;
-                    Account account = db.Accounts.Find(account_id);  // Sẽ chỉnh sau khi xong tạo account
+                    Account account = db.Accounts.Find(account_id);
                     DataTable dt = new DataTable();
                     JObject @object = JObject.Parse(input);
 
                     Conference conference = @object["Conference"].ToObject<Conference>();
                     DateTime attendance_start = DateTime.Parse(@object["attendance_start"].ToString());
                     DateTime attendance_end = DateTime.Parse(@object["attendance_end"].ToString());
+                    string paper_name = @object["paper_name"].ToString().Trim();
+                    List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
+
+                    if (paper_name == "")
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu tên bài báo" });
+                    if (conference.qs_university.Trim() == "")
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu tên đại học thuộc top QS" });
+                    if (conference.conference_name.Trim() == "")
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu tên hội nghị" });
+                    if (conference.website.Trim() == "")
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu website hội nghị" });
+                    if (conference.organized_unit.Trim() == "")
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu đơn vị tổ chức" });
+                    if (conference.co_organized_unit.Trim() == "")
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu diễn giả/ thành viên BTC" });
                     if (!DateRangeOverlaps(attendance_start, attendance_end, conference.time_start, conference.time_end))
                         return JsonConvert.SerializeObject(new { success = false, message = "Hai khoảng thời gian không hợp lệ" });
+                    if (costs.Count == 0)
+                        return JsonConvert.SerializeObject(new { success = false, message = "Thiếu chi phí dự kiến" });
 
                     Conference temp = db.Conferences.Find(conference.conference_id);
                     int conference_id = 0;
@@ -165,7 +182,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     ENTITIES.Paper Paper = new ENTITIES.Paper()
                     {
-                        name = @object["paper_name"].ToString(),
+                        name = paper_name,
                         file_id = Fpaper.file_id
                     };
                     db.Papers.Add(Paper);
@@ -188,7 +205,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     db.RequestConferences.Add(support);
                     db.SaveChanges();
 
-                    List<Cost> costs = @object["Cost"].ToObject<List<Cost>>();
                     foreach (var item in costs)
                     {
                         int total = int.Parse(dt.Compute(item.detail.Replace(",", ""), "").ToString());

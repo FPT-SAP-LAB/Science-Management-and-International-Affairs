@@ -1195,8 +1195,13 @@
             } else {
                 $(id3).val('0');
             }
-
         }
+        function TotalMoney(id) {
+            let val = parseFloat($(id).val()).toLocaleString('en');
+            if (val != 'NaN') {
+                $('#edit_thanhtien_kpThucTe').val(val);
+            }
+        } 
         function convertDate(date) {
             correctFormat = date.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
                 myDate = new Date(correctFormat);
@@ -2675,19 +2680,29 @@
         });
         $('#btn_edit_kpThucTe').click(function () {
             save_loader.startLoading();
+            let total = $('#edit_ghichu_kpThucTe').val();
+            for (let i = 0; i < total.length; i++) {
+                if (total.includes(',')) {
+                    total = total.replace(',');
+                } else return;
+            }
             var object = {
                 expense_category_id: id_edit_KPtypes,
                 expense_category_name: $('#edit_noidung_kpThucTe').val(),
                 expense_price: $('#edit_dongia_kpThucTe').val(),
                 expense_quantity: $('#edit_soluong_kpThucTe').val(),
-                total : 0,
-                note: $('#edit_ghichu_kpThucTe').val(),
+                total: $('#edit_thanhtien_kpThucTe').val(),
+                note: total,
                 link : ''
             };
-            if (object.expense_category_name == '' || object.expense_price == '' || object.expense_quantity == '') {
+            if (object.expense_category_name == '') {
                 toastr.warning("Bạn chưa điền hết các trường thông tin.");
                 save_loader.stopLoading();
                 return false;
+            }
+            if (((object.expense_price * object.expense_quantity) != object.total) || (object.expense_price == '' || object.expense_quantity == '')) {
+                object.expense_price = object.total;
+                object.expense_quantity = 1;
             }
             var obj = new FormData();
             obj.append('activity_office_id', id_edit_KP);
@@ -2711,6 +2726,8 @@
                         $('#kt_uppy_editKPThucTe .uppy-list').html('');
                         clearModal('#editModal_KPThucTe');
                         $('#editModal_KPThucTe').modal('hide');
+                        $('#edit_dongia_kpThucTe').val('');
+                        $('#edit_soluong_kpThucTe').val('');
                         if (typeof datatableKPThucTe != 'undefined') {
                             datatableKPThucTe.ajax.reload();
                         } else
