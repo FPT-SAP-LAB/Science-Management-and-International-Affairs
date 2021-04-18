@@ -49,3 +49,19 @@ $(".menu-link").each(function () {
 $(".datetimepicker-input").keydown(function (e) {
     e.preventDefault();
 })
+$(function () {
+    $(".required-field").append('<span style="color:red"> *</span>')
+})
+function validateNonEmptyField(field) {
+    isValid = true;
+    for (var i in field) {
+        if ($(field[i]).val() === null || $(field[i]).val().trim() == "") {
+            $(field[i]).addClass("is-invalid");
+            isValid = false;
+        }
+    }
+    return isValid;
+}
+$("body").on("focusout", ".is-invalid", function () {
+    $(this).removeClass("is-invalid")
+})
