@@ -58,11 +58,19 @@ namespace ENTITIES.CustomModels
 
             var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, folder.Id);
 
-            if (Emails != null)
-                foreach (var item in Emails)
-                {
-                    ShareWithEmail(item, file.Id);
-                }
+            try
+            {
+                if (Emails != null)
+                    foreach (var item in Emails)
+                    {
+                        ShareWithEmail(item, file.Id);
+                    }
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("exceeded your sharing quota"))
+                    ShareWithAnyone(file.Id);
+            }
             return file;
         }
 

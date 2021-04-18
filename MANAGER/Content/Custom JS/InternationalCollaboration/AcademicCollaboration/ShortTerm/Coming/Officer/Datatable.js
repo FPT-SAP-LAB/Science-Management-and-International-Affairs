@@ -191,3 +191,26 @@ var exchange_coming_table = $('#exchange_coming_table').DataTable({
 $("#collab_coming_search").click(function () {
     exchange_coming_table.ajax.reload();
 });
+
+$('#exportExcel_coming').click(function () {
+    exchange_coming_table.ajax.reload();
+    $.ajax({
+        url: "/AcademicCollaboration/ExportACExcel",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        datatype: "json",
+        cache: false,
+        success: function (data) {
+            if (data.success) {
+                window.location = '../AcademicCollaboration/' + 'Download?fileGuid=' + data.data.FileGuid
+                    + '&fileName=' + data.data.FileName;
+                toastr.success("Đang tải xuống")
+            } else {
+                toastr.error("Có lỗi xảy ra")
+            }
+        },
+        error: function () {
+            toastr.error("Có lỗi xảy ra")
+        }
+    })
+})

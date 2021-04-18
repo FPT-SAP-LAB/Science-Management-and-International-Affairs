@@ -94,6 +94,25 @@ namespace BLL.ModelDAL
                         }).FirstOrDefault();
             return list;
         }
+        public Notification Get(int notification_id, int language_id)
+        {
+            var list = (from a in db.NotificationBases
+                        join b in db.NotificationTypes on a.notification_type_id equals b.notification_type_id
+                        join c in db.NotificationTypeLanguages on a.notification_type_id equals c.notification_type_id
+                        where a.notification_id == notification_id && c.language_id == language_id
+                        select new Notification
+                        {
+                            Icon = b.icon,
+                            IsRead = a.is_read,
+                            URL = a.URL,
+                            CreatedDate = a.created_date,
+                            AccountID = a.account_id,
+                            TypeID = a.notification_type_id,
+                            NotificationID = a.notification_id,
+                            Template = c.notification_template
+                        }).FirstOrDefault();
+            return list;
+        }
         public BaseServerSideData<Notification> List(int account_id, int start, int language_id = 1)
         {
             db = new ScienceAndInternationalAffairsEntities();

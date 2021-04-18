@@ -26,7 +26,7 @@ namespace ENTITIES
         public int moa_id { get; set; }
         public string moa_code { get; set; }
         public System.DateTime moa_end_date { get; set; }
-        public string evidence { get; set; }
+        public Nullable<int> evidence { get; set; }
         public string moa_note { get; set; }
         public int mou_id { get; set; }
         public int account_id { get; set; }
@@ -34,6 +34,7 @@ namespace ENTITIES
         public bool is_deleted { get; set; }
     
         public virtual Account Account { get; set; }
+        public virtual File File { get; set; }
         public virtual MOU MOU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOABonu> MOABonus { get; set; }
