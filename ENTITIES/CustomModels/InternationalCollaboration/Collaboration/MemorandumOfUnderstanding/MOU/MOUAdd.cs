@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU
 {
@@ -11,5 +12,6 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public MOUAdd() { }
         public BasicInfo BasicInfo { get; set; }
         public List<PartnerInfo> PartnerInfo { get; set; }
+        public HttpPostedFileBase Evidence { get; set; }
     }
 }

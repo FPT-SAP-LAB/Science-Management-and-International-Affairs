@@ -109,7 +109,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
                 );
 
                 //Act
-                mou.addMOU(input, user);
+                //mou.addMOU(input, user);
 
                 //Assert
                 Assert.Pass();

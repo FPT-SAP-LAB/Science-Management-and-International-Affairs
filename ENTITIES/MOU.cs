@@ -28,7 +28,7 @@ namespace ENTITIES
         public string mou_code { get; set; }
         public Nullable<System.DateTime> mou_end_date { get; set; }
         public string mou_note { get; set; }
-        public string evidence { get; set; }
+        public Nullable<int> evidence { get; set; }
         public Nullable<int> office_id { get; set; }
         public int account_id { get; set; }
         public System.DateTime add_time { get; set; }
@@ -36,6 +36,7 @@ namespace ENTITIES
         public int noti_count { get; set; }
     
         public virtual Account Account { get; set; }
+        public virtual File File { get; set; }
         public virtual Office Office { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOA> MOAs { get; set; }
