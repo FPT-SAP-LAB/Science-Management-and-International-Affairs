@@ -14,7 +14,12 @@
             this.fields = fields
     }
 }
-
+function enableEdit() {
+    $("#edit-control-area").removeAttr('hidden')
+    $("#edit-control-area").css('display', 'block')
+    $("#edit-enable-area").hide()
+    $(".researcher_infomation").attr('disabled', false)
+}
 $(function () {
     var save_loader = new LoaderBtn($("#save-btn"))
     $("#edit-control-area").hide()

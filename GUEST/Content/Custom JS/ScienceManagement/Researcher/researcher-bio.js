@@ -254,6 +254,8 @@ var delete_acad = new LoaderBtn($("#delete_acad"))
 var delete_work = new LoaderBtn($("#delete_work"))
 var submit_edit_award = new LoaderBtn($("#submit_edit_award"))
 var delete_award = new LoaderBtn($("#delete_award"))
+var delete_avt = new LoaderBtn($("#delete_avt"))
+var submit_edit_avt = new LoaderBtn($("#submit_edit_avt"))
 class WorkEvent {
     constructor(people_id, title, location, start, end) {
         this.people_id = people_id;
@@ -272,6 +274,8 @@ function resetAndCloseModals(success) {
     submit_edit_work.stopLoading()
     delete_acad.stopLoading()
     delete_work.stopLoading()
+    delete_avt.stopLoading()
+    submit_edit_avt.stopLoading()
     if (success) {
         toastr.success("Cập nhật thành công!");
     } else {
