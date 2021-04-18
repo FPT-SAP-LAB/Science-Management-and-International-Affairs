@@ -1,6 +1,6 @@
 ﻿//3.EDIT MODAL
 var uppy5; //init uppy5
-
+var file_action;
 //3.1.Init select2 for select element in edit modal
 ///3.2.1.THÔNG TIN CÁ NHÂN
 $('#coming_edit_officer_name').select2({
@@ -302,7 +302,8 @@ $('#coming_edit_officer_status').select2({
 
 //3.2.GET CORESSPONDING DATA
 $('#coming_edit_officer').on('show.bs.modal', function (e) {
-    let acad_collab_id = $(e.relatedTarget).data('id');
+    let acad_collab_id = $(e.relatedTarget).data('acad_collab_id');
+    file_action = 'none';
     $.ajax({
         url: "/AcademicCollaboration/getAcademicCollaboration",
         type: "GET",
@@ -340,37 +341,17 @@ $('#coming_edit_officer').on('show.bs.modal', function (e) {
                     $("#coming_edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
                     $("#coming_edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
-                    let file_content = '';
-                    let file_link = '';
-                    let target = '';
-                    if (acadCollab.file_id == null) {
-                        file_content = 'Chưa có bản mềm.';
-                        file_link = 'javascript:;';
-                    } else {
-                        file_content = acadCollab.file_name;
-                        file_link = acadCollab.file_link;
-                        target = 'target="_blank"';
+                    let elemId = 'coming_edit_officer_upload';
+                    let id = '#' + elemId;
+                    let $statusBar = $(id + ' .uppy-status');
+                    let $uploadedList = $(id + ' .uppy-list');
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + acadCollab.file_id + '"><div class="uppy-list-label">' + acadCollab.file_name + '</div><span class="uppy-list-remove" data-id="' + acadCollab.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    if (acadCollab.file_id != null) {
+                        $uploadedList.append(uploadListHtml);
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
                     }
-                    $("#coming_edit_officer_upload #coming_edit_file_content_upload").append(
-                        `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
-                        white-space: nowrap;" `+ target + ` href="` + file_link + `"><span>` + file_content + `</span></a>`);
-
-                    //console.log(acadCollab.file_id);
-                    //console.log(acadCollab.file_name);
-                    //console.log(acadCollab.file_link);
-                    //console.log(acadCollab.file_drive_id);
-
-                    file = {
-                        file_id: acadCollab.file_id === null ? 0 : acadCollab.file_id,
-                        name: acadCollab.file_name === null ? null : acadCollab.file_name,
-                        link: acadCollab.file_link === null ? "" : acadCollab.file_link,
-                        file_drive_id: acadCollab.file_drive_id === null ? "" : acadCollab.file_drive_id
-                    }
-
-                    console.log(file);
-
                     collab_id = acadCollab.collab_id;
-
                     $("#coming_edit_officer_note").val(acadCollab.note);
                 } else {
                     toastr.error(data.content);
@@ -440,9 +421,8 @@ $('#coming_edit_officer_save').on('click', function () {
             coming_edit_officer_save.startLoading();
 
             let formData = new FormData();
-            let file_stringify = JSON.stringify(file);
-            formData.append("old_evidence_stringify", file_stringify);
             formData.append("new_evidence", evidence.length == 0 ? null : evidence[0].data);
+            formData.append("file_action", file_action);
             formData.append("folder_name", person_name + " - " + partner_name);
 
             formData.append("direction_id", 2); //coming case
@@ -515,7 +495,6 @@ function clearContentComingEditModal() {
     $('#coming_edit_officer_end_plan_date').val('');
 
     //clear upload file
-    $('#coming_edit_officer_upload #coming_edit_file_content_upload').html('');
     $('#coming_edit_officer_upload .uppy-list').html('');
     uppy5.removeFile(uppy5.getFiles().length == 0 ? '' : uppy5.getFiles()[0].id);
 

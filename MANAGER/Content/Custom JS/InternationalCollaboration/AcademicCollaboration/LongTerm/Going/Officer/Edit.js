@@ -1,5 +1,6 @@
 ﻿//3.EDIT MODAL
 var uppy2; //init uppy2
+var file_action;
 
 //3.1.Init select2 for select element in edit modal
 ///3.2.1.THÔNG TIN CÁ NHÂN
@@ -303,6 +304,7 @@ $('#going_edit_officer_status').select2({
 //3.2.GET CORESSPONDING DATA
 $('#going_edit_officer').on('show.bs.modal', function (e) {
     let acad_collab_id = $(e.relatedTarget).data('acad_collab_id');
+    file_action = 'none';
     $.ajax({
         url: "/AcademicCollaboration/getAcademicCollaboration",
         type: "GET",
@@ -340,37 +342,17 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                     $("#going_edit_officer_start_date").val(acadCollab.actual_study_start_date == null ? "" : moment(acadCollab.actual_study_start_date).format("DD/MM/YYYY"));
                     $("#going_edit_officer_end_date").val(acadCollab.actual_study_end_date == null ? "" : moment(acadCollab.actual_study_end_date).format("DD/MM/YYYY"));
 
-                    //if (acadCollab.file_id != null) {
-                    //    uppy2.addFile({
-                    //        name: acadCollab.file_name, // file name
-                    //        type: '*', // file type
-                    //        data: new Blob(), // file blob
-                    //    });
-                    //} 
-
-                    let file_content = '';
-                    let file_link = '';
-                    let target = '';
-                    if (acadCollab.file_id == null) {
-                        file_content = 'Chưa có bản mềm.';
-                        file_link = 'javascript:;';
-                    } else {
-                        file_content = acadCollab.file_name;
-                        file_link = acadCollab.file_link;
-                        target = 'target="_blank"';
+                    //load available exist file
+                    let elemId = 'going_edit_officer_upload';
+                    let id = '#' + elemId;
+                    let $statusBar = $(id + ' .uppy-status');
+                    let $uploadedList = $(id + ' .uppy-list');
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + acadCollab.file_id + '"><div class="uppy-list-label">' + acadCollab.file_name + '</div><span class="uppy-list-remove" data-id="' + acadCollab.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    if (acadCollab.file_id != null) {
+                        $uploadedList.append(uploadListHtml);
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
                     }
-                    $("#going_edit_officer_upload #going_edit_file_content_upload").append(
-                        `<a class="form-control" style="text-overflow: ellipsis; overflow: hidden; 
-                        white-space: nowrap;" `+ target + ` href="` + file_link + `"><span>` + file_content + `</span></a>`);
-
-                    file = {
-                        file_id: acadCollab.file_id === null ? 0 : acadCollab.file_id,
-                        name: acadCollab.file_name === null ? null : acadCollab.file_name,
-                        link: acadCollab.file_link === null ? "" : acadCollab.file_link,
-                        file_drive_id: acadCollab.file_drive_id === null ? "" : acadCollab.file_drive_id
-                    }
-
-                    //console.log(file);
                     collab_id = acadCollab.collab_id;
                     $("#going_edit_officer_support").prop("checked", acadCollab.is_supported);
                     $("#going_edit_officer_note").val(acadCollab.note);
@@ -431,8 +413,6 @@ $('#going_edit_officer_save').on('click', function () {
 
         let obj_person = objPerson(available_person, person_name, person_id, person_email, person_profile_office_id);
 
-        console.log(obj_person);
-
         let obj_partner = objPartner(available_partner, partner_name, partner_id, partner_country_id, collab_scope_id);
 
         let obj_academic_collab = objAcadCollab(collab_id, status_id, plan_start_date, plan_end_date, actual_start_date, actual_end_date, support, note);
@@ -445,9 +425,8 @@ $('#going_edit_officer_save').on('click', function () {
             going_edit_officer_save.startLoading();
 
             let formData = new FormData();
-            let file_stringify = JSON.stringify(file);
-            formData.append("old_evidence_stringify", file_stringify);
             formData.append("new_evidence", evidence.length == 0 ? null : evidence[0].data);
+            formData.append("file_action", file_action);
             formData.append("folder_name", person_name + " - " + partner_name);
 
             formData.append("direction_id", 1); //going case
@@ -487,9 +466,6 @@ $('#going_edit_officer_save').on('click', function () {
                     going_edit_officer_save.stopLoading();
                 }
             });
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
         }
     }
 });
@@ -520,7 +496,6 @@ function clearContentEditModal() {
     $('#going_edit_officer_end_plan_date').val('');
 
     //clear upload file
-    $('#going_edit_officer_upload #going_edit_file_content_upload').html('');
     $('#going_edit_officer_upload .uppy-list').html('');
     uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
 

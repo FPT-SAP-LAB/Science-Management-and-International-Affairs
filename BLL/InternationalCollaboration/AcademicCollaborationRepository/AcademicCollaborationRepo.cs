@@ -456,19 +456,82 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
 
         public Google.Apis.Drive.v3.Data.File uploadEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
         {
-            string file_id = "";
             try
             {
-                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
-                file_id = InputFile.FileName;
+                Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                if (InputFile != null)
+                {
+                    f = GoogleDriveService.UploadIAFile(InputFile, FolderName, TypeFolder, isFolder);
+                }
                 return f;
             }
             catch (Exception e)
             {
-                if (file_id != "")
+                if (InputFile.FileName != "")
                 {
-                    GoogleDriveService.DeleteFile(file_id);
+                    GoogleDriveService.DeleteFile(InputFile.FileName);
                 }
+                throw e;
+            }
+        }
+
+        public File saveFileToFile(Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence)
+        {
+            File evidence_file = new File();
+            try
+            {
+                if (evidence != null)
+                {
+                    //add infor to File
+                    if (evidence.FileName != null) evidence_file.name = evidence.FileName;
+                    if (f.WebViewLink != null) evidence_file.link = f.WebViewLink;
+                    if (f.Id != null) evidence_file.file_drive_id = f.Id;
+                    db.Files.Add(evidence_file);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return evidence_file;
+        }
+
+        public void saveFileAndCollabHistory(HttpPostedFileBase evidence, string file_action, string folder_name,
+            int collab_id, int status_id, string note, int account_id)
+        {
+            File evidence_file = new File();
+            Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+            try
+            {
+                switch (file_action) {
+                    case "add":
+                        //add file to Google Drive
+                        f = uploadEvidenceFile(evidence, folder_name, 4, false);
+                        //add infor to File
+                        evidence_file = saveFileToFile(f, evidence);
+                        //add to Collab Status History
+                        saveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        break;
+                    case "edit":
+                        //add file to Google Drive
+                        f = uploadEvidenceFile(evidence, folder_name, 4, false);
+                        //add infor to File
+                        evidence_file = saveFileToFile(f, evidence);
+                        //add to Collab Status History
+                        saveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        break;
+                    case "remove":
+                        //add to Collab Status History
+                        saveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        break;
+                    case "none":
+                        break;
+                    default:
+                        break;
+                }
+            } catch (Exception e)
+            {
                 throw e;
             }
         }
@@ -477,7 +540,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             SaveAcadCollab_Person obj_person,
             SaveAcadCollab_Partner obj_partner,
             SaveAcadCollab_AcademicCollaboration obj_academic_collab,
-            Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence, int account_id)
+            HttpPostedFileBase evidence, string folder_name, 
+            int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -528,10 +592,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             partner_scope_id = partner_scope.partner_scope_id;
                             //add Academic Collab
                             var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
-                            //add infor to File
-                            var evidence_file = saveFile(f, evidence);
-                            //add infor to CollaborationStatusHistory
-                            var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                            //add file and collab staus history
+                            saveFileAndCollabHistory(evidence, "add", folder_name, academic_collaboration.collab_id, obj_academic_collab.status_id, null, account_id);
                         }
                         else
                         {
@@ -552,10 +614,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             partner_scope_id = partner_scope.partner_scope_id;
                             //add Academic Collab
                             var academic_collaboration = saveAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope_id, obj_academic_collab);
-                            //add infor to File
-                            var evidence_file = saveFile(f, evidence);
-                            //add infor to CollaborationStatusHistory
-                            var collab_status_hist = saveCollabStatusHistory(evidence, academic_collaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                            //add file and collab staus history
+                            saveFileAndCollabHistory(evidence, "add", folder_name, academic_collaboration.collab_id, obj_academic_collab.status_id, null, account_id);
                         }
                         trans.Commit();
                         //change status corressponding MOU/MOA
@@ -813,29 +873,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             return academic_collaboration;
         }
 
-        public File saveFile(Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence)
-        {
-            File evidence_file = new File();
-            try
-            {
-                if (evidence != null)
-                {
-                    //add infor to File
-                    if (evidence.FileName != null) evidence_file.name = evidence.FileName;
-                    if (f.WebViewLink != null) evidence_file.link = f.WebViewLink;
-                    if (f.Id != null) evidence_file.file_drive_id = f.Id;
-                    db.Files.Add(evidence_file);
-                    db.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            return evidence_file;
-        }
-
-        public CollaborationStatusHistory saveCollabStatusHistory(HttpPostedFileBase evidence, int collab_id, int collab_status_id, string note, File evidence_file, int account_id)
+        public void saveCollabStatusHistory(HttpPostedFileBase evidence, int collab_id, int collab_status_id, string note, File evidence_file, int account_id)
         {
             CollaborationStatusHistory collab_status_hist = new CollaborationStatusHistory();
             try
@@ -854,7 +892,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             {
                 throw e;
             }
-            return collab_status_hist;
         }
 
         //EDIT
@@ -911,27 +948,28 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public Google.Apis.Drive.v3.Data.File updateEvidenceFile(File old_evidence, HttpPostedFileBase new_evidence, string folder_name, int type_folder, bool is_folder)
-        {
-            Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
-            //update file
-            if (new_evidence != null)
-            {
-                //update file
-                f = uploadEvidenceFile(new_evidence, folder_name, type_folder, is_folder);
-            }
-            else if (new_evidence == null && old_evidence.file_id != 0)
-            {
-                GoogleDriveService.DeleteFile(old_evidence.file_drive_id);
-            }
-            return f;
-        }
+        //public Google.Apis.Drive.v3.Data.File updateEvidenceFile(File old_evidence, HttpPostedFileBase new_evidence, string folder_name, int type_folder, bool is_folder)
+        //{
+        //    Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+        //    //update file
+        //    if (new_evidence != null)
+        //    {
+        //        //add new file
+        //        f = uploadEvidenceFile(new_evidence, folder_name, type_folder, is_folder);
+        //    }
+        //    else if (new_evidence == null && old_evidence.file_id != 0)
+        //    {
+        //        GoogleDriveService.DeleteFile(old_evidence.file_drive_id);
+        //    }
+        //    return f;
+        //}
 
         public AlertModal<AcademicCollaboration_Ext> updateAcademicCollaboration(int direction_id, int collab_type_id,
             SaveAcadCollab_Person obj_person,
             SaveAcadCollab_Partner obj_partner,
             SaveAcadCollab_AcademicCollaboration obj_academic_collab,
-            Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase new_evidence, int account_id)
+            HttpPostedFileBase new_evidence, string file_action, string folder_name,
+            int account_id)
         {
             AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
             AcademicCollaboration academicCollaboration = new AcademicCollaboration();
@@ -997,10 +1035,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                     decreaseReferenceCountOfPartnerScope(old_partner_scope);
                                     //update infor to AcademicCollaboration
                                     academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
-                                    //add file
-                                    var evidence_file = saveFile(f, new_evidence);
-                                    //add infor to CollaborationStatusHistory
-                                    var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                                    //add file and collab staus history
+                                    saveFileAndCollabHistory(new_evidence, file_action, folder_name, academicCollaboration.collab_id, obj_academic_collab.status_id, null, account_id);
                                     //incease 1 to new referecen_count PartnerScope
                                     increaseReferenceCountOfPartnerScope(partner_scope);
                                     if (old_partner_scope.reference_count <= 0)
@@ -1013,10 +1049,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 {
                                     //update infor to AcademicCollaboration
                                     academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
-                                    //add file
-                                    var evidence_file = saveFile(f, new_evidence);
-                                    //add infor to CollaborationStatusHistory
-                                    var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                                    //add file and collab staus history
+                                    saveFileAndCollabHistory(new_evidence, file_action, folder_name, academicCollaboration.collab_id, obj_academic_collab.status_id, null, account_id);
                                 }
                             }
                             else
@@ -1030,10 +1064,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                 partner_scope = savePartnerScope(partner_id, obj_partner.collab_scope_id);
                                 //update infor to AcademicCollaboration
                                 academicCollaboration = updateAcademicCollaboration(direction_id, collab_type_id, person_id, partner_scope.partner_scope_id, obj_academic_collab);
-                                //add file
-                                var evidence_file = saveFile(f, new_evidence);
-                                //add infor to CollaborationStatusHistory
-                                var collab_status_hist = saveCollabStatusHistory(new_evidence, academicCollaboration.collab_id, obj_academic_collab.status_id, null, evidence_file, account_id);
+                                //add file and collab staus history
+                                saveFileAndCollabHistory(new_evidence, file_action, folder_name, academicCollaboration.collab_id, obj_academic_collab.status_id, null, account_id);
                                 //delete 0 ref_cou partner_scope
                                 if (old_partner_scope.reference_count <= 0)
                                 {
@@ -1200,17 +1232,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     if (!(String.IsNullOrEmpty(status_id)))
                     {
                         int num_status_id = Int32.Parse(status_id);
-                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
-                        File file = new File();
-                        if (evidence_file != null)
-                        {
-                            //upload to Drive
-                            f = uploadEvidenceFile(evidence_file, folder_name, 4, false);
-                            //add file to db
-                            file = saveFile(f, evidence_file);
-                        }
-                        //add academic collab status history
-                        var collab_staus_hist = saveCollabStatusHistory(evidence_file, collab_id, num_status_id, note, file, account_id);
+                        //add file and collab staus history
+                        saveFileAndCollabHistory(evidence_file, "add", folder_name, collab_id, num_status_id, note, account_id);
                         db.SaveChanges();
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Chuyển trạng thái hợp tác học thuật thành công.");
