@@ -21,7 +21,6 @@ namespace ENTITIES
             this.Decisions = new HashSet<Decision>();
             this.Inventions = new HashSet<Invention>();
             this.Papers = new HashSet<Paper>();
-            this.PaperPolicies = new HashSet<PaperPolicy>();
             this.Profiles = new HashSet<Profile>();
             this.Profiles1 = new HashSet<Profile>();
             this.RequestConferencePolicies = new HashSet<RequestConferencePolicy>();
@@ -45,8 +44,6 @@ namespace ENTITIES
         public virtual ICollection<Invention> Inventions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Paper> Papers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperPolicy> PaperPolicies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

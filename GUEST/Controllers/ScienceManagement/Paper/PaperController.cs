@@ -45,13 +45,6 @@ namespace GUEST.Controllers
 
             List<PaperCriteria> listCriteria = md.getPaperCriteria();
             ViewBag.listCriteria = listCriteria;
-
-            List<CustomPaperPolicy> listPolicy = pr.getPolicyByLanguage(lang);
-            ViewBag.policy = listPolicy;
-
-            string link = pr.getLinkPolicy();
-            ViewBag.link = link;
-
             return View();
         }
 

@@ -625,15 +625,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Property Name="notification_template" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="notification_type_name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="PaperPolicyCriteriaLanguage">
-          <Key>
-            <PropertyRef Name="paper_criteria_policy_id" />
-          </Key>
-          <Property Name="paper_criteria_policy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="policy_criteria_id" Type="int" />
-          <Property Name="language_id" Type="int" />
-          <Property Name="name" Type="nvarchar" MaxLength="500" />
-        </EntityType>
         <EntityType Name="PaperRewardTypeLanguage">
           <Key>
             <PropertyRef Name="id" />
@@ -1094,21 +1085,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="criteria_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="status" Type="nvarchar" MaxLength="150" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
-        </EntityType>
-        <EntityType Name="PaperPolicy">
-          <Key>
-            <PropertyRef Name="policy_id" />
-          </Key>
-          <Property Name="policy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="valid_date" Type="date" Nullable="false" />
-          <Property Name="file_id" Type="int" />
-        </EntityType>
-        <EntityType Name="PaperPolicyCriteria">
-          <Key>
-            <PropertyRef Name="policy_criteria_id" />
-          </Key>
-          <Property Name="policy_criteria_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="policy_id" Type="int" />
         </EntityType>
         <EntityType Name="PaperRewardType">
           <Key>
@@ -2855,54 +2831,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaperPoli__file___24134F1B">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="PaperPolicy" Type="Self.PaperPolicy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="PaperPolicy">
-              <PropertyRef Name="file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PaperPoli__langu__2AC04CAA">
-          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
-          <End Role="PaperPolicyCriteriaLanguage" Type="Self.PaperPolicyCriteriaLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language">
-              <PropertyRef Name="language_id" />
-            </Principal>
-            <Dependent Role="PaperPolicyCriteriaLanguage">
-              <PropertyRef Name="language_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PaperPoli__polic__26EFBBC6">
-          <End Role="PaperPolicy" Type="Self.PaperPolicy" Multiplicity="0..1" />
-          <End Role="PaperPolicyCriteria" Type="Self.PaperPolicyCriteria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaperPolicy">
-              <PropertyRef Name="policy_id" />
-            </Principal>
-            <Dependent Role="PaperPolicyCriteria">
-              <PropertyRef Name="policy_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PaperPoli__polic__29CC2871">
-          <End Role="PaperPolicyCriteria" Type="Self.PaperPolicyCriteria" Multiplicity="0..1" />
-          <End Role="PaperPolicyCriteriaLanguage" Type="Self.PaperPolicyCriteriaLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaperPolicyCriteria">
-              <PropertyRef Name="policy_criteria_id" />
-            </Principal>
-            <Dependent Role="PaperPolicyCriteriaLanguage">
-              <PropertyRef Name="policy_criteria_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__PaperStat__langu__0A338187">
           <End Role="Language" Type="Self.Language" Multiplicity="1" />
           <End Role="PaperStatusLanguage" Type="Self.PaperStatusLanguage" Multiplicity="*" />
@@ -4105,40 +4033,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="InitCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="InputString" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -4201,7 +4095,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="ConferenceCriteriaLanguage" EntityType="Self.ConferenceCriteriaLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="FormalityLanguage" EntityType="Self.FormalityLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="Language" EntityType="Self.Language" Schema="Localization" store:Type="Tables" />
-          <EntitySet Name="PaperPolicyCriteriaLanguage" EntityType="Self.PaperPolicyCriteriaLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="PaperRewardTypeLanguage" EntityType="Self.PaperRewardTypeLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="PaperStatusLanguage" EntityType="Self.PaperStatusLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="PaperTypeByAreaLanguage" EntityType="Self.PaperTypeByAreaLanguage" Schema="Localization" store:Type="Tables" />
@@ -4250,8 +4143,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="InventionType" EntityType="Self.InventionType" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="Paper" EntityType="Self.Paper" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="PaperCriteria" EntityType="Self.PaperCriteria" Schema="SM_ScientificProduct" store:Type="Tables" />
-          <EntitySet Name="PaperPolicy" EntityType="Self.PaperPolicy" Schema="SM_ScientificProduct" store:Type="Tables" />
-          <EntitySet Name="PaperPolicyCriteria" EntityType="Self.PaperPolicyCriteria" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="PaperRewardType" EntityType="Self.PaperRewardType" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="PaperStatus" EntityType="Self.PaperStatus" Schema="SM_ScientificProduct" store:Type="Tables" />
           <EntitySet Name="PaperTypeByArea" EntityType="Self.PaperTypeByArea" Schema="SM_ScientificProduct" store:Type="Tables" />
@@ -4780,22 +4671,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="PaperType" EntitySet="PaperType" />
             <End Role="Paper" EntitySet="Paper" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__file___24134F1B" Association="Self.FK__PaperPoli__file___24134F1B">
-            <End Role="File" EntitySet="File" />
-            <End Role="PaperPolicy" EntitySet="PaperPolicy" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__langu__2AC04CAA" Association="Self.FK__PaperPoli__langu__2AC04CAA">
-            <End Role="Language" EntitySet="Language" />
-            <End Role="PaperPolicyCriteriaLanguage" EntitySet="PaperPolicyCriteriaLanguage" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__polic__26EFBBC6" Association="Self.FK__PaperPoli__polic__26EFBBC6">
-            <End Role="PaperPolicy" EntitySet="PaperPolicy" />
-            <End Role="PaperPolicyCriteria" EntitySet="PaperPolicyCriteria" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__polic__29CC2871" Association="Self.FK__PaperPoli__polic__29CC2871">
-            <End Role="PaperPolicyCriteria" EntitySet="PaperPolicyCriteria" />
-            <End Role="PaperPolicyCriteriaLanguage" EntitySet="PaperPolicyCriteriaLanguage" />
-          </AssociationSet>
           <AssociationSet Name="FK__PaperStat__langu__0A338187" Association="Self.FK__PaperStat__langu__0A338187">
             <End Role="Language" EntitySet="Language" />
             <End Role="PaperStatusLanguage" EntitySet="PaperStatusLanguage" />
@@ -5290,7 +5165,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
           <NavigationProperty Name="Papers" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="File" ToRole="Paper" />
-          <NavigationProperty Name="PaperPolicies" Relationship="Self.FK__PaperPoli__file___24134F1B" FromRole="File" ToRole="PaperPolicy" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="Profiles1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="RequestConferencePolicies" Relationship="Self.FK__RewardPol__file___24E777C3" FromRole="File" ToRole="RequestConferencePolicy" />
@@ -5981,7 +5855,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="AcademicActivityTypeLanguages" Relationship="Self.FK__AcademicA__langu__5772F790" FromRole="Language" ToRole="AcademicActivityTypeLanguage" />
           <NavigationProperty Name="ConferenceStatusLanguages" Relationship="Self.FK__Conferenc__langu__047AA831" FromRole="Language" ToRole="ConferenceStatusLanguage" />
           <NavigationProperty Name="NotificationTypeLanguages" Relationship="Self.FK__Notificat__langu__4242D080" FromRole="Language" ToRole="NotificationTypeLanguage" />
-          <NavigationProperty Name="PaperPolicyCriteriaLanguages" Relationship="Self.FK__PaperPoli__langu__2AC04CAA" FromRole="Language" ToRole="PaperPolicyCriteriaLanguage" />
           <NavigationProperty Name="PaperStatusLanguages" Relationship="Self.FK__PaperStat__langu__0A338187" FromRole="Language" ToRole="PaperStatusLanguage" />
           <NavigationProperty Name="PositionLanguages" Relationship="Self.FK__PositionL__langu__0C1BC9F9" FromRole="Language" ToRole="PositionLanguage" />
           <NavigationProperty Name="ResearchAreaLanguages" Relationship="Self.FK__ResearchA__langu__0E04126B" FromRole="Language" ToRole="ResearchAreaLanguage" />
@@ -5990,17 +5863,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="AcademicActivityPhaseLanguages" Relationship="Self.FK_AcademicActivityPhaseLanguage_Language" FromRole="Language" ToRole="AcademicActivityPhaseLanguage" />
           <NavigationProperty Name="PaperRewardTypeLanguages" Relationship="Self.PaperRewardTypeLanguage_Language_language_id_fk" FromRole="Language" ToRole="PaperRewardTypeLanguage" />
           <NavigationProperty Name="PaperTypeByAreaLanguages" Relationship="Self.PaperTypeLanguage_Language_language_id_fk" FromRole="Language" ToRole="PaperTypeByAreaLanguage" />
-        </EntityType>
-        <EntityType Name="PaperPolicyCriteriaLanguage">
-          <Key>
-            <PropertyRef Name="paper_criteria_policy_id" />
-          </Key>
-          <Property Name="paper_criteria_policy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="policy_criteria_id" Type="Int32" />
-          <Property Name="language_id" Type="Int32" />
-          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Language" Relationship="Self.FK__PaperPoli__langu__2AC04CAA" FromRole="PaperPolicyCriteriaLanguage" ToRole="Language" />
-          <NavigationProperty Name="PaperPolicyCriteria" Relationship="Self.FK__PaperPoli__polic__29CC2871" FromRole="PaperPolicyCriteriaLanguage" ToRole="PaperPolicyCriteria" />
         </EntityType>
         <EntityType Name="PaperRewardTypeLanguage">
           <Key>
@@ -6547,25 +6409,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="status" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PaperWithCriterias" Relationship="Self.FK__PaperWith__crite__45544755" FromRole="PaperCriteria" ToRole="PaperWithCriteria" />
-        </EntityType>
-        <EntityType Name="PaperPolicy">
-          <Key>
-            <PropertyRef Name="policy_id" />
-          </Key>
-          <Property Name="policy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="valid_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="file_id" Type="Int32" />
-          <NavigationProperty Name="File" Relationship="Self.FK__PaperPoli__file___24134F1B" FromRole="PaperPolicy" ToRole="File" />
-          <NavigationProperty Name="PaperPolicyCriterias" Relationship="Self.FK__PaperPoli__polic__26EFBBC6" FromRole="PaperPolicy" ToRole="PaperPolicyCriteria" />
-        </EntityType>
-        <EntityType Name="PaperPolicyCriteria">
-          <Key>
-            <PropertyRef Name="policy_criteria_id" />
-          </Key>
-          <Property Name="policy_criteria_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="policy_id" Type="Int32" />
-          <NavigationProperty Name="PaperPolicyCriteriaLanguages" Relationship="Self.FK__PaperPoli__polic__29CC2871" FromRole="PaperPolicyCriteria" ToRole="PaperPolicyCriteriaLanguage" />
-          <NavigationProperty Name="PaperPolicy" Relationship="Self.FK__PaperPoli__polic__26EFBBC6" FromRole="PaperPolicyCriteria" ToRole="PaperPolicy" />
         </EntityType>
         <EntityType Name="PaperRewardType">
           <Key>
@@ -7309,18 +7152,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <PropertyRef Name="file_id" />
             </Principal>
             <Dependent Role="Paper">
-              <PropertyRef Name="file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PaperPoli__file___24134F1B">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="PaperPolicy" Type="Self.PaperPolicy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="PaperPolicy">
               <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8511,18 +8342,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaperPoli__langu__2AC04CAA">
-          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
-          <End Role="PaperPolicyCriteriaLanguage" Type="Self.PaperPolicyCriteriaLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language">
-              <PropertyRef Name="language_id" />
-            </Principal>
-            <Dependent Role="PaperPolicyCriteriaLanguage">
-              <PropertyRef Name="language_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__PaperStat__langu__0A338187">
           <End Role="Language" Type="Self.Language" Multiplicity="1" />
           <End Role="PaperStatusLanguage" Type="Self.PaperStatusLanguage" Multiplicity="*" />
@@ -8616,18 +8435,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="PaperTypeByAreaLanguage">
               <PropertyRef Name="language_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PaperPoli__polic__29CC2871">
-          <End Role="PaperPolicyCriteria" Type="Self.PaperPolicyCriteria" Multiplicity="0..1" />
-          <End Role="PaperPolicyCriteriaLanguage" Type="Self.PaperPolicyCriteriaLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaperPolicyCriteria">
-              <PropertyRef Name="policy_criteria_id" />
-            </Principal>
-            <Dependent Role="PaperPolicyCriteriaLanguage">
-              <PropertyRef Name="policy_criteria_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9209,18 +9016,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaperPoli__polic__26EFBBC6">
-          <End Role="PaperPolicy" Type="Self.PaperPolicy" Multiplicity="0..1" />
-          <End Role="PaperPolicyCriteria" Type="Self.PaperPolicyCriteria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaperPolicy">
-              <PropertyRef Name="policy_id" />
-            </Principal>
-            <Dependent Role="PaperPolicyCriteria">
-              <PropertyRef Name="policy_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="RequestPaper_PaperRewardType_id_fk">
           <End Role="PaperRewardType" Type="Self.PaperRewardType" Multiplicity="0..1" />
           <End Role="RequestPaper" Type="Self.RequestPaper" Multiplicity="*" />
@@ -9610,7 +9405,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="ConferenceCriteriaLanguages" EntityType="Self.ConferenceCriteriaLanguage" />
           <EntitySet Name="FormalityLanguages" EntityType="Self.FormalityLanguage" />
           <EntitySet Name="Languages" EntityType="Self.Language" />
-          <EntitySet Name="PaperPolicyCriteriaLanguages" EntityType="Self.PaperPolicyCriteriaLanguage" />
           <EntitySet Name="PaperRewardTypeLanguages" EntityType="Self.PaperRewardTypeLanguage" />
           <EntitySet Name="PaperStatusLanguages" EntityType="Self.PaperStatusLanguage" />
           <EntitySet Name="PaperTypeByAreaLanguages" EntityType="Self.PaperTypeByAreaLanguage" />
@@ -9656,8 +9450,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="InventionTypes" EntityType="Self.InventionType" />
           <EntitySet Name="Papers" EntityType="Self.Paper" />
           <EntitySet Name="PaperCriterias" EntityType="Self.PaperCriteria" />
-          <EntitySet Name="PaperPolicies" EntityType="Self.PaperPolicy" />
-          <EntitySet Name="PaperPolicyCriterias" EntityType="Self.PaperPolicyCriteria" />
           <EntitySet Name="PaperRewardTypes" EntityType="Self.PaperRewardType" />
           <EntitySet Name="PaperStatus" EntityType="Self.PaperStatu" />
           <EntitySet Name="PaperTypeByAreas" EntityType="Self.PaperTypeByArea" />
@@ -9802,10 +9594,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <AssociationSet Name="FK__Paper__file_id__37FA4C37" Association="Self.FK__Paper__file_id__37FA4C37">
             <End Role="File" EntitySet="Files" />
             <End Role="Paper" EntitySet="Papers" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__file___24134F1B" Association="Self.FK__PaperPoli__file___24134F1B">
-            <End Role="File" EntitySet="Files" />
-            <End Role="PaperPolicy" EntitySet="PaperPolicies" />
           </AssociationSet>
           <AssociationSet Name="FK__Profile__avatar___1881A0DE" Association="Self.FK__Profile__avatar___1881A0DE">
             <End Role="File" EntitySet="Files" />
@@ -10199,10 +9987,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Language" EntitySet="Languages" />
             <End Role="NotificationTypeLanguage" EntitySet="NotificationTypeLanguages" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__langu__2AC04CAA" Association="Self.FK__PaperPoli__langu__2AC04CAA">
-            <End Role="Language" EntitySet="Languages" />
-            <End Role="PaperPolicyCriteriaLanguage" EntitySet="PaperPolicyCriteriaLanguages" />
-          </AssociationSet>
           <AssociationSet Name="FK__PaperStat__langu__0A338187" Association="Self.FK__PaperStat__langu__0A338187">
             <End Role="Language" EntitySet="Languages" />
             <End Role="PaperStatusLanguage" EntitySet="PaperStatusLanguages" />
@@ -10234,10 +10018,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <AssociationSet Name="PaperTypeLanguage_Language_language_id_fk" Association="Self.PaperTypeLanguage_Language_language_id_fk">
             <End Role="Language" EntitySet="Languages" />
             <End Role="PaperTypeByAreaLanguage" EntitySet="PaperTypeByAreaLanguages" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__polic__29CC2871" Association="Self.FK__PaperPoli__polic__29CC2871">
-            <End Role="PaperPolicyCriteria" EntitySet="PaperPolicyCriterias" />
-            <End Role="PaperPolicyCriteriaLanguage" EntitySet="PaperPolicyCriteriaLanguages" />
           </AssociationSet>
           <AssociationSet Name="PaperRewardTypeLanguage_PaperRewardType_id_fk" Association="Self.PaperRewardTypeLanguage_PaperRewardType_id_fk">
             <End Role="PaperRewardType" EntitySet="PaperRewardTypes" />
@@ -10431,10 +10211,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="PaperCriteria" EntitySet="PaperCriterias" />
             <End Role="PaperWithCriteria" EntitySet="PaperWithCriterias" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaperPoli__polic__26EFBBC6" Association="Self.FK__PaperPoli__polic__26EFBBC6">
-            <End Role="PaperPolicy" EntitySet="PaperPolicies" />
-            <End Role="PaperPolicyCriteria" EntitySet="PaperPolicyCriterias" />
-          </AssociationSet>
           <AssociationSet Name="RequestPaper_PaperRewardType_id_fk" Association="Self.RequestPaper_PaperRewardType_id_fk">
             <End Role="PaperRewardType" EntitySet="PaperRewardTypes" />
             <End Role="RequestPaper" EntitySet="RequestPapers" />
@@ -10551,48 +10327,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11220,16 +10955,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaperPolicyCriteriaLanguages">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.PaperPolicyCriteriaLanguage">
-              <MappingFragment StoreEntitySet="PaperPolicyCriteriaLanguage">
-                <ScalarProperty Name="paper_criteria_policy_id" ColumnName="paper_criteria_policy_id" />
-                <ScalarProperty Name="policy_criteria_id" ColumnName="policy_criteria_id" />
-                <ScalarProperty Name="language_id" ColumnName="language_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PaperRewardTypeLanguages">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.PaperRewardTypeLanguage">
               <MappingFragment StoreEntitySet="PaperRewardTypeLanguage">
@@ -11689,23 +11414,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaperPolicies">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.PaperPolicy">
-              <MappingFragment StoreEntitySet="PaperPolicy">
-                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
-                <ScalarProperty Name="valid_date" ColumnName="valid_date" />
-                <ScalarProperty Name="file_id" ColumnName="file_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PaperPolicyCriterias">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.PaperPolicyCriteria">
-              <MappingFragment StoreEntitySet="PaperPolicyCriteria">
-                <ScalarProperty Name="policy_criteria_id" ColumnName="policy_criteria_id" />
-                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PaperRewardTypes">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.PaperRewardType">
               <MappingFragment StoreEntitySet="PaperRewardType">
@@ -12108,30 +11816,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
