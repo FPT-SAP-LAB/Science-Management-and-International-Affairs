@@ -36,6 +36,13 @@
                             }
                         </select>
                     </div>
+                    <div class="col-xl-6 form-group">
+                        <label class="required-field">Nghiên cứu viên</label>
+                        <label class="checkbox">
+                            <input class="form-control edit" type="checkbox" name="Checkboxes1" id="add_author_isReseacher" @(ViewBag.author.is_reseacher ? "checked" : "") />
+                            <span></span>
+                        </label>
+                    </div>
                     @*<div class="col-xl-6 form-group">
                             <label>Loại hợp đồng</label>
                             <input class="form-control form-control-lg" type="text" value="@ViewBag.author.contract_name" disabled />
