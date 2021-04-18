@@ -24,6 +24,13 @@ var table1 = $('#acad_history_table').DataTable({
     // Order settings
     order: [[1, 'desc']],
     serverSide: true,
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
     ajax: {
         url: "/Researchers/getAcadList?id=" + people_id,
         datatype: "json",
@@ -58,7 +65,6 @@ var table1 = $('#acad_history_table').DataTable({
 });
 
 var table2 = $('#work_history_table').DataTable({
-    responsive: true,
     // DOM Layout settings
     searching: false,
     bPaginate: false,
@@ -77,6 +83,13 @@ var table2 = $('#work_history_table').DataTable({
         'lengthMenu': 'Display _MENU_',
         "zeroRecords": "Chưa có thông tin"
     },
+    columnDefs: [
+        { width: "10%", targets: 0 },
+        { width: "30%", targets: 1 },
+        { width: "30%", targets: 2 },
+        { width: "20%", targets: 3 },
+        { width: "10%", targets: 4 }
+    ],
     // Order settings
     order: [[1, 'desc']],
     serverSide: true,
@@ -114,8 +127,6 @@ var table2 = $('#work_history_table').DataTable({
 });
 
 var table3 = $('#award_history_table').DataTable({
-    responsive: true,
-    // DOM Layout settings
     searching: false,
     bPaginate: false,
     lengthMenu: [5],
