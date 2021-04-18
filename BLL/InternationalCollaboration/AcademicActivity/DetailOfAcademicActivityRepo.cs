@@ -366,7 +366,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         //save file if null, else just save activityPartner
                         if (f != null)
                         {
-                            file = academicCollaborationRepo.saveFile(f, evidence_file);
+                            file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
                         }
 
                         //update to PartnerScope
@@ -487,13 +487,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             {
                                 //update file on Google Drive
                                 f = GoogleDriveService.UpdateFile(evidence_file.FileName, evidence_file.InputStream, evidence_file.ContentType, old_file.file_drive_id);
-                                new_file = academicCollaborationRepo.saveFile(f, evidence_file);
+                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
                             }
                             else
                             {
                                 //upload to Goolge Drive
                                 f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
-                                new_file = academicCollaborationRepo.saveFile(f, evidence_file);
+                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
                             }
                         }
                         else
