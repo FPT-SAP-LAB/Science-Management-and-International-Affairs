@@ -13,19 +13,19 @@ namespace BLL.ModelDAL
         public string GetCurrentLink()
         {
             db = new ScienceAndInternationalAffairsEntities();
-            RequestConferencePolicy policy = GetCurrentPolicy(db);
+            Policy policy = GetCurrentPolicy(db);
             if (policy == null)
                 return null;
             else
                 return policy.File.link;
         }
-        public RequestConferencePolicy GetCurrentPolicy(ScienceAndInternationalAffairsEntities db = null)
+        public Policy GetCurrentPolicy(ScienceAndInternationalAffairsEntities db = null)
         {
             if (db == null)
                 this.db = new ScienceAndInternationalAffairsEntities();
             else
                 this.db = db;
-            return this.db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
+            return this.db.Policies.Where(x => x.expired_date == null && x.policy_type_id == 1).FirstOrDefault();
         }
     }
 }

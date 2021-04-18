@@ -12,22 +12,30 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Criterion
+    public partial class Policy
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Criterion()
+        public Policy()
         {
-            this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
-            this.EligibilityCriterias = new HashSet<EligibilityCriteria>();
+            this.Conditions = new HashSet<Condition>();
+            this.RequestConferences = new HashSet<RequestConference>();
         }
     
-        public int criteria_id { get; set; }
         public int policy_id { get; set; }
+        public System.DateTime valid_date { get; set; }
+        public Nullable<System.DateTime> expired_date { get; set; }
+        public int file_id { get; set; }
+        public Nullable<int> article_id { get; set; }
+        public int account_id { get; set; }
+        public int policy_type_id { get; set; }
     
+        public virtual Account Account { get; set; }
+        public virtual File File { get; set; }
+        public virtual Article Article { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
-        public virtual RequestConferencePolicy RequestConferencePolicy { get; set; }
+        public virtual ICollection<Condition> Conditions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
+        public virtual ICollection<RequestConference> RequestConferences { get; set; }
+        public virtual Policy_type Policy_type { get; set; }
     }
 }
