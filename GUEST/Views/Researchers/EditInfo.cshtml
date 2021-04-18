@@ -35,9 +35,9 @@
                                 <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin cho nghiên cứu viên</span>
                             </div>
                             <div class="card-toolbar">
-                                <div id="edit-control-area">
+                                <div id="edit-control-area" hidden>
                                     <button type="reset" id="save-btn" class="btn btn-success mr-2">Lưu</button>
-                                    <button type="reset" id="cancel-btn" class="btn btn-secondary">Huỷ</button>
+                                    <button type="reset" id="cancel-btn"  class="btn btn-secondary">Huỷ</button>
                                 </div>
                                 <div id="edit-enable-area">
                                     <button type="reset" id="edit-enable-btn" class="btn btn-primary mr-2">Chỉnh sửa thông tin</button>
@@ -65,13 +65,13 @@
                                                 <input type="hidden" name="profile_avatar_remove" />
                                             </label>
 
-                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" id="cancel_avatar" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
                                                 <i class="ki ki-bold-close icon-xs text-muted"></i>
                                             </span>
 
-                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                                            @*<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
                                                 <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>
+                                            </span>*@
                                         </div>
                                         <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
                                     </div>
@@ -728,12 +728,37 @@
         </div>
     </div>
 </div>
+
+<!--------------avatar-->
+<div class="modal fade" id="avatar_change" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh hồ sơ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mt-7 pb-2" style=" text-align: center;">
+                    <div class="image-input image-input-outline" id="kt_image_avatar">
+                        <div class="image-input-wrapper" id="avatar_preview"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" id="delete_avt" data-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="submit_edit_avt">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         $(function () {
             var save_loader = new LoaderBtn($("#save-btn"))
             $("#save-btn").click(function () {
-                save_loader.startLoading()
                 $(".researcher_infomation").attr('disabled', false)
             })
         })
@@ -775,19 +800,15 @@
         jQuery(document).ready(function () {
             KTSelect2.init();
         });
-        function enableEdit() {
-            $("#edit-control-area").show()
-            $("#edit-enable-area").hide()
-            $(".researcher_infomation").attr('disabled', false)
-        }
+
         $('#kt_datetimepicker_2').datetimepicker({
             maxDate: new Date(),
             format: 'DD-MM-YYYY'
         });
     </script>
-    <script>
-    </script>
     <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-bio.js"></script>
     <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-change-avt.js"></script>
     <script src="~/Content/Custom JS/ScienceManagement/Researcher/researcher-edit-info.js"></script>
+    
+
 }
