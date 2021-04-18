@@ -504,7 +504,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
             try
             {
-                switch (file_action) {
+                switch (file_action)
+                {
                     case "add":
                         //add file to Google Drive
                         f = uploadEvidenceFile(evidence, folder_name, 4, false);
@@ -530,7 +531,8 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     default:
                         break;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -540,7 +542,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             SaveAcadCollab_Person obj_person,
             SaveAcadCollab_Partner obj_partner,
             SaveAcadCollab_AcademicCollaboration obj_academic_collab,
-            HttpPostedFileBase evidence, string folder_name, 
+            HttpPostedFileBase evidence, string folder_name,
             int account_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
