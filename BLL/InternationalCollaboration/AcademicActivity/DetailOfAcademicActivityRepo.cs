@@ -383,6 +383,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     dbContext.Rollback();
                     return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
                 }

@@ -26,9 +26,9 @@ namespace ENTITIES
             this.MOUBonus = new HashSet<MOUBonu>();
             this.Papers = new HashSet<Paper>();
             this.PaperPolicies = new HashSet<PaperPolicy>();
+            this.Policies = new HashSet<Policy>();
             this.Profiles = new HashSet<Profile>();
             this.Profiles1 = new HashSet<Profile>();
-            this.RequestConferencePolicies = new HashSet<RequestConferencePolicy>();
             this.AcademicActivities = new HashSet<AcademicActivity>();
             this.ActivityExpenseDetails = new HashSet<ActivityExpenseDetail>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
@@ -60,11 +60,11 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperPolicy> PaperPolicies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Policy> Policies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestConferencePolicy> RequestConferencePolicies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivity> AcademicActivities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

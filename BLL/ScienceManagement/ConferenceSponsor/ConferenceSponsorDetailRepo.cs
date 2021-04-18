@@ -83,13 +83,13 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                       ValidDate = b.valid_date
                                   }).FirstOrDefault();
             }
-            string Link = db.RequestConferencePolicies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
-            List<ConferenceCriteria> Criterias = (from a in db.EligibilityCriterias
-                                                  join b in db.ConferenceCriteriaLanguages on a.criteria_id equals b.criteria_id
+            string Link = db.Policies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
+            List<ConferenceCriteria> Criterias = (from a in db.EligibilityConditions
+                                                  join b in db.ConferenceConditionLanguages on a.condition_id equals b.condition_id
                                                   where b.language_id == language_id && a.request_id == request_id
                                                   select new ConferenceCriteria
                                                   {
-                                                      CriteriaID = a.criteria_id,
+                                                      CriteriaID = a.condition_id,
                                                       CriteriaName = b.name,
                                                       IsAccepted = a.is_accepted
                                                   }).ToList();
@@ -108,17 +108,21 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                                             Email = b.email
                                                         }).FirstOrDefault();
             var Costs = db.Costs.Where(x => x.request_id == request_id).ToList();
+            //  Account microsoft sẽ không có profile, account FU sẽ ưu tiên lấy chức vụ => sinh viên
             var ApprovalProcesses = (from a in db.ApprovalProcesses
                                      join b in db.Accounts on a.account_id equals b.account_id
-                                     join e in db.Profiles on b.account_id equals e.account_id
-                                     join c in db.PositionLanguages.Where(x => x.language_id == language_id) on a.position_id equals c.position_id into Processes
+                                     join e in db.Profiles on b.account_id equals e.account_id into Processes
                                      from d in Processes.DefaultIfEmpty()
                                      where a.request_id == request_id
                                      select new ConferenceApprovalProcess
                                      {
                                          CreatedDate = a.created_date,
-                                         PositionName = d == null ? "Sinh viên" : d.name,
-                                         FullName = e.Person.name,
+                                         PositionName = d != null ?
+                                         (d.PeoplePositions.Count == 0 ? "Sinh viên"
+                                         : db.PeoplePositions.FirstOrDefault().Position.PositionLanguages.Where(x => x.language_id == language_id).FirstOrDefault().name
+                                         )
+                                         : db.PositionLanguages.Where(x => x.Position.position_id == b.position_id && x.language_id == language_id).FirstOrDefault().name,
+                                         FullName = d == null ? b.full_name : d.Person.name,
                                          Comment = a.comment
                                      }).ToList();
 
@@ -146,7 +150,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         return new AlertModal<string>(false, "Đề nghị không tồn tại");
                     if (Request.status_id != 1)
                         return new AlertModal<string>(false, "Đề nghị đã đóng xét duyệt");
-                    var ListCri = Request.EligibilityCriterias.Where(x => !x.is_accepted && CriteriaIDs.Contains(x.criteria_id));
+                    var ListCri = Request.EligibilityConditions.Where(x => !x.is_accepted && CriteriaIDs.Contains(x.condition_id));
 
                     if (ListCri.Count() > 0)
                     {
@@ -155,7 +159,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                             item.is_accepted = true;
                         }
                         db.SaveChanges();
-                        if (Request.EligibilityCriterias.All(x => x.is_accepted))
+                        if (Request.EligibilityConditions.All(x => x.is_accepted))
                         {
                             Request.status_id = 2;
                             Request.Conference.is_verified = true;
