@@ -114,7 +114,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     f = mou.uploadEvidenceFile(evidence, obj.BasicInfo.mou_code, 1, false);
                 }
                 //update info in database
-                mou.addMOU(obj, user, f , evidence);
+                mou.addMOU(obj, user, f, evidence);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

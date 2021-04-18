@@ -317,7 +317,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
                                 address = item.address_add,
-                                country_id = (int) item.nation_add,
+                                country_id = (int)item.nation_add,
                                 article_id = a.article_id
                             });
                             //checkpoint 2
@@ -327,7 +327,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                         else //old partner
                         {
-                            partner_id_item = (int) item.partner_id;
+                            partner_id_item = (int)item.partner_id;
                         }
                         //add to MOUPartner via each partner of MOU
                         db.MOUPartners.Add(new ENTITIES.MOUPartner
