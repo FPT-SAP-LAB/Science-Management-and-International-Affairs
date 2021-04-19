@@ -136,7 +136,7 @@ namespace BLL.Admin
                     }
                 }
                 a.email = obj.email;
-                if(a.role_id != obj.role_id)
+                if (a.role_id != obj.role_id)
                 {
                     List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == obj.account_id).ToList();
                     db.AccountRights.RemoveRange(rv);
