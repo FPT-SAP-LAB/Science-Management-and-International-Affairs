@@ -105,6 +105,9 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 for (int i = 0; i < data.Data.Count; i++)
                 {
                     data.Data[i].rowNum = datatable.Start + 1 + i;
+                    data.Data[i].paperAward= data.Data[i].paperAward == "" ? "0" : data.Data[i].paperAward;
+                    data.Data[i].conferenceAward = data.Data[i].conferenceAward == "" ? "0" : data.Data[i].conferenceAward;
+                    data.Data[i].CitationAward = data.Data[i].CitationAward == "" ? "0" : data.Data[i].CitationAward;
                 }
                 return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }

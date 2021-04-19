@@ -145,8 +145,8 @@
         <table class="table table-bordered table-checkable" id="kt_datatable">
             <thead>
                 <tr>
-                    <th>STT</th>
                     <th>Tên tác giả</th>
+                    <th>MSNV/MSSV</th>
                     <th>Chức danh</th>
                     <th>Đơn vị</th>
                     <th>Thưởng bài báo</th>
@@ -184,15 +184,15 @@
                     d.coso = $("#search_coso").val()
                 },
                 datatype: "json",
-                cache: true
+                cache: false
             },
                 columns: [
-                    { data: "rowNum", name: "rowNum", orderable: false },
                     {
                         data: {}, name: "name", render: function (data) {
                             return data.name
                         }
                     },
+                    { data: "msnv_mssv", name: "msnv_mssv" },
                     { data: "title", name: "title" },
                     {
                         data: "office", name: "office"
