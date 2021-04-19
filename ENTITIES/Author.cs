@@ -26,9 +26,9 @@ namespace ENTITIES
         public int people_id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
-        public string bank_number { get; set; }
+        public Nullable<long> bank_number { get; set; }
         public string bank_branch { get; set; }
-        public string tax_code { get; set; }
+        public Nullable<long> tax_code { get; set; }
         public string identification_number { get; set; }
         public string mssv_msnv { get; set; }
         public Nullable<bool> is_reseacher { get; set; }
