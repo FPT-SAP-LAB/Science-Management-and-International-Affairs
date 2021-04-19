@@ -30,14 +30,13 @@ namespace BLL.ScienceManagement.MasterData
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).Where(x => x.status == "active").FirstOrDefault();
+                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).FirstOrDefault();
                 if (ck != null) return -1;
                 else
                 {
                     PaperCriteria pc = new PaperCriteria
                     {
                         name = name,
-                        status = "active"
                     };
                     db.PaperCriterias.Add(pc);
                     db.SaveChanges();
@@ -59,8 +58,7 @@ namespace BLL.ScienceManagement.MasterData
             try
             {
                 int criteria_id = Int32.Parse(cri_id);
-                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
-                pc.status = "inactive";
+                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id && x.Policy.policy_type_id == 2 && x.Policy.expired_date == null).FirstOrDefault();
                 db.Entry(pc).State = EntityState.Modified;
                 db.SaveChanges();
                 dbc.Commit();
