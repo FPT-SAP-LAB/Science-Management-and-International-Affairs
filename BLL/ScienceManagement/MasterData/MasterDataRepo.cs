@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
@@ -8,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.ScienceManagement.MasterData
 {
@@ -30,14 +32,13 @@ namespace BLL.ScienceManagement.MasterData
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).Where(x => x.status == "active").FirstOrDefault();
+                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).FirstOrDefault();
                 if (ck != null) return -1;
                 else
                 {
                     PaperCriteria pc = new PaperCriteria
                     {
                         name = name,
-                        status = "active"
                     };
                     db.PaperCriterias.Add(pc);
                     db.SaveChanges();
@@ -53,14 +54,65 @@ namespace BLL.ScienceManagement.MasterData
             }
         }
 
+        public bool addNewPolicy(HttpPostedFileBase file, List<PaperCriteria> list, Account acc)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadPolicyFile(file);
+                ENTITIES.File fl = new ENTITIES.File
+                {
+                    link = f.WebViewLink,
+                    file_drive_id = f.Id,
+                    name = f.Name
+                };
+                db.Files.Add(fl);
+                db.SaveChanges();
+
+                string sql_getLastPolicyPaper = @"select MAX(p.policy_id) as 'policy_id', p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id
+                                                from SM_Request.Policy p
+                                                where p.policy_type_id = 2 
+                                                group by p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id";
+                Policy p = db.Database.SqlQuery<Policy>(sql_getLastPolicyPaper).FirstOrDefault();
+                p.expired_date = DateTime.Now;
+                db.Entry(p).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Policy newPolicy = new Policy()
+                {
+                    valid_date = DateTime.Now,
+                    file_id = fl.file_id,
+                    account_id = acc.account_id,
+                    policy_type_id = 2
+                };
+                db.Policies.Add(newPolicy);
+                db.SaveChanges();
+
+                foreach (var item in list)
+                {
+                    item.policy_id = newPolicy.policy_id;
+                    db.PaperCriterias.Add(item);
+                }
+                db.SaveChanges();
+
+                dbc.Commit();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return false;
+            }
+        }
+
         public string DeletePaperCriteria(string cri_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 int criteria_id = Int32.Parse(cri_id);
-                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
-                pc.status = "inactive";
+                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id && x.Policy.policy_type_id == 2 && x.Policy.expired_date == null).FirstOrDefault();
                 db.Entry(pc).State = EntityState.Modified;
                 db.SaveChanges();
                 dbc.Commit();
@@ -77,9 +129,10 @@ namespace BLL.ScienceManagement.MasterData
         public List<PaperCriteria> getPaperCriteria()
         {
             List<PaperCriteria> list = new List<PaperCriteria>();
-            string sql = @"select c.*
-                            from [SM_ScientificProduct].PaperCriteria c
-                            where c.status = 'active'";
+            string sql = @"select pc.*
+                            from SM_ScientificProduct.PaperCriteria pc join
+	                            (select MAX(policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperCriteria) as a on pc.policy_id = a.policy_id";
             list = db.Database.SqlQuery<PaperCriteria>(sql).ToList();
             return list;
         }
