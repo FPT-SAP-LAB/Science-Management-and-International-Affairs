@@ -66,11 +66,9 @@
                                 </div>
                                 <div class="card-body">
                                     <ul>
-                                        <li>Thưởng sáng chế/GPHI</li>
-                                        <li>Ít nhất 1 tác giả có địa chỉ FE</li>
                                     </ul>
                                     <br />
-                                    <a href="https://drive.google.com/file/d/12X4zCRabwpcY7rqVWoscJ4AqlXtfvoKF/view?usp=sharing" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                    <a href="" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -537,6 +535,15 @@
                 $("#loading").hide();
                 ck = false;
             }
+
+            if ($("#loaithuong").val() == "1") {
+                if (uppy1.getFiles()[0] == undefined) {
+                    toastr.error("Thiếu file chứng minh");
+                    $("#loading").hide();
+                    ck = false;
+                }
+            }
+
             if (ck) {
                 const paper_temp = JSON.stringify({
                     name: $("#paper_name").val(),
