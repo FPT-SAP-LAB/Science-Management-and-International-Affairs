@@ -177,11 +177,8 @@ namespace BLL.ScienceManagement.MasterData
         public List<AddAuthor> getListPeopleFE()
         {
             List<AddAuthor> list = new List<AddAuthor>();
-            string sql = @"select pro.mssv_msnv, po.name, po.people_id
-                            from [General].People po 
-	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
+            string sql = @"select distinct po.mssv_msnv
+                            from SM_ScientificProduct.Author po 
 	                            join [General].Office ofi on po.office_id = ofi.office_id";
             list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
             return list;
@@ -190,11 +187,10 @@ namespace BLL.ScienceManagement.MasterData
         public AddAuthor getAuthor(string ms)
         {
             AddAuthor item = new AddAuthor();
-            string sql = @"select po.*, pc.contract_id, pro.title_id, o.office_abbreviation, pro.mssv_msnv, pro.bank_branch, pro.bank_number, pro.tax_code, pro.identification_number, pro.is_reseacher
-                            from [General].People po join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on po.office_id = o.office_id
-                            where pro.mssv_msnv = @ms";
+            string sql = @"select ah.*, o.office_abbreviation
+                            from SM_ScientificProduct.Author ah join General.Office o on ah.office_id = o.office_id
+                            where ah.mssv_msnv = @ms
+                            order by ah.people_id desc";
             item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;
         }
