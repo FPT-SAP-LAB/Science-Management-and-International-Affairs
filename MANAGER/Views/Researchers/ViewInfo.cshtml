@@ -63,13 +63,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">Họ tên</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">Họ tên</label>
                                         <div class="col-lg-9 col-xl-6">
                                             <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_name" disabled type="text" value="@ViewBag.profile.name" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label text-right">Ngày sinh</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">Ngày sinh</label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
                                                 <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@(ViewBag.profile.dob==null?"":ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture))" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
@@ -143,7 +143,7 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group input-group-lg input-group-solid">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-                                                <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_email" disabled value="@ViewBag.profile.email" placeholder="Email" />
+                                                <input type="text" class="form-control form-control-lg form-control-solid" id="researcher_email" disabled value="@ViewBag.profile.email" placeholder="Email" />
                                             </div>
                                         </div>
                                     </div>

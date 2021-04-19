@@ -10,10 +10,15 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class EligibilityCondition
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int condition_id { get; set; }
+        public int request_id { get; set; }
+        public bool is_accepted { get; set; }
+    
+        public virtual Condition Condition { get; set; }
+        public virtual RequestConference RequestConference { get; set; }
     }
 }

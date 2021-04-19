@@ -205,10 +205,13 @@
     <Compile Include="CommentBase.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Condition.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Conference.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ConferenceCriteriaLanguage.cs">
+    <Compile Include="ConferenceConditionLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ConferenceParticipant.cs">
@@ -227,9 +230,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Country.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Criterion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="CustomModels\AlertModal.cs" />
@@ -316,7 +316,6 @@
     <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_1.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_2.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\Title2Name.cs" />
-    <Compile Include="CustomModels\ScienceManagement\Paper\CustomPaperPolicy.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaiDecisionHaveReseacher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\PaperByWorkUnit.cs" />
@@ -373,7 +372,7 @@
     <Compile Include="Direction.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="EligibilityCriteria.cs">
+    <Compile Include="EligibilityCondition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="File.cs">
@@ -529,6 +528,12 @@
     <Compile Include="PlanParticipant.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Policy.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Policy_type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Position.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -564,9 +569,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="RequestConference.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RequestConferencePolicy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="RequestDecision.cs">
@@ -624,12 +626,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="SpecializationLanguage.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="SSCI.cs">

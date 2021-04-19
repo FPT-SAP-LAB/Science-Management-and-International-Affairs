@@ -2680,19 +2680,19 @@
         });
         $('#btn_edit_kpThucTe').click(function () {
             save_loader.startLoading();
-            let total = $('#edit_ghichu_kpThucTe').val();
+            let total = $('#edit_thanhtien_kpThucTe').val();
             for (let i = 0; i < total.length; i++) {
                 if (total.includes(',')) {
-                    total = total.replace(',');
-                } else return;
+                    total = total.replace(',','');
+                } else i = 999;
             }
             var object = {
                 expense_category_id: id_edit_KPtypes,
                 expense_category_name: $('#edit_noidung_kpThucTe').val(),
                 expense_price: $('#edit_dongia_kpThucTe').val(),
                 expense_quantity: $('#edit_soluong_kpThucTe').val(),
-                total: $('#edit_thanhtien_kpThucTe').val(),
-                note: total,
+                total: total,
+                note: $('#edit_ghichu_kpThucTe').val(),
                 link : ''
             };
             if (object.expense_category_name == '') {

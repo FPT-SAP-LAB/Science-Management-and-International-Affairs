@@ -173,9 +173,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             }
             ///////////////////////////////////////////////////////////////////
             researcherBiographyRepo = new ResearchersBiographyRepo();
-            ///////////////////////////////////////////////////////////////
-            List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
-            ViewBag.acadList = acadList;
+
             /////////////////////////////////////////////////////////////
             List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
@@ -222,6 +220,53 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                             award_time = a.records.award_time != null ? a.records.award_time.Value.ToString("dd/MM/yyyy") : ""
                         })
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getAcadList()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                int id = Int32.Parse(Request.QueryString["id"]);
+                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+                return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult getWorkList()
+        {
+            try
+            {
+                researcherBiographyRepo = new ResearchersBiographyRepo();
+                int id = Int32.Parse(Request.QueryString["id"]);
+                List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
+                workList = workList.Select(x => { x.records.Profile = null; return x; }).ToList();
+                return Json(new
+                {
+                    success = true,
+                    data = (from a in workList
+                            select new
+                            {
+                                index = a.index,
+                                id = a.records.id,
+                                people_id = a.records.pepple_id,
+                                work_unit = a.records.work_unit,
+                                title = a.records.title,
+                                start_year = a.records.start_year,
+                                end_year = a.records.end_year
+                            })
+                },
+                JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

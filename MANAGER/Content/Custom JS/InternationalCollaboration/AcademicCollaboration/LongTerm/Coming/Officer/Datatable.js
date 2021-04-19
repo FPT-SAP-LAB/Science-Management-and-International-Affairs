@@ -132,7 +132,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
         {
             data: 'collab_id',
             render: function (data) {
-                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-acad_collab_id=` + data + ` data-toggle="modal" href="#going_edit_officer">Sửa</a>
+                return `<a class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;" data-acad_collab_id=` + data + ` data-toggle="modal" href="#coming_edit_officer">Sửa</a>
                         <a id="delete_officer" class="btn btn-sm btn-light-danger px-6" data-id=` + data + `>Xóa</a>`
             },
             orderable: false,
@@ -206,3 +206,26 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
 $("#collab_coming_search").click(function () {
     collab_coming_table.ajax.reload();
 });
+
+$('#exportExcel_coming').click(function () {
+    collab_coming_table.ajax.reload();
+    $.ajax({
+        url: "/AcademicCollaboration/ExportACExcel",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        datatype: "json",
+        cache: false,
+        success: function (data) {
+            if (data.success) {
+                window.location = '../AcademicCollaboration/' + 'Download?fileGuid=' + data.data.FileGuid
+                    + '&fileName=' + data.data.FileName;
+                toastr.success("Đang tải xuống")
+            } else {
+                toastr.error("Có lỗi xảy ra")
+            }
+        },
+        error: function () {
+            toastr.error("Có lỗi xảy ra")
+        }
+    });
+})

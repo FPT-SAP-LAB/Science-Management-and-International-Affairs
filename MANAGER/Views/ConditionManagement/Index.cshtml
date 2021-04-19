@@ -30,9 +30,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (ENTITIES.ConferenceCriteriaLanguage item in ViewBag.ConferenceCriteriaLanguages)
+                    @foreach (ENTITIES.ConferenceConditionLanguage item in ViewBag.ConferenceCriteriaLanguages)
                     {
-                        <tr data-id="@item.conference_criteria_language_id">
+                        <tr data-id="@item.conference_condition_language_id">
                             <td>
                                 <input disabled type="text" class="form-control" value="@item.name" />
                             </td>

@@ -343,7 +343,7 @@
           <Property Name="moa_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="moa_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="moa_end_date" Type="date" Nullable="false" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" />
+          <Property Name="evidence" Type="int" />
           <Property Name="moa_note" Type="nvarchar" MaxLength="150" />
           <Property Name="mou_id" Type="int" Nullable="false" />
           <Property Name="account_id" Type="int" Nullable="false" />
@@ -359,7 +359,7 @@
           <Property Name="moa_bonus_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="moa_bonus_decision_date" Type="date" Nullable="false" />
           <Property Name="moa_bonus_end_date" Type="date" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="evidence" Type="int" />
           <Property Name="account_id" Type="int" />
           <Property Name="add_time" Type="datetime" />
         </EntityType>
@@ -399,7 +399,7 @@
           <Property Name="mou_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="mou_end_date" Type="date" />
           <Property Name="mou_note" Type="nvarchar" MaxLength="150" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" />
+          <Property Name="evidence" Type="int" />
           <Property Name="office_id" Type="int" />
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="add_time" Type="datetime" Nullable="false" />
@@ -415,7 +415,7 @@
           <Property Name="mou_bonus_code" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="mou_bonus_decision_date" Type="date" Nullable="false" />
           <Property Name="mou_bonus_end_date" Type="date" />
-          <Property Name="evidence" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="evidence" Type="int" />
           <Property Name="account_id" Type="int" />
           <Property Name="add_time" Type="datetime" />
         </EntityType>
@@ -574,12 +574,12 @@
           <Property Name="type_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="ConferenceCriteriaLanguage">
+        <EntityType Name="ConferenceConditionLanguage">
           <Key>
-            <PropertyRef Name="conference_criteria_language_id" />
+            <PropertyRef Name="conference_condition_language_id" />
           </Key>
-          <Property Name="conference_criteria_language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="criteria_id" Type="int" Nullable="false" />
+          <Property Name="conference_condition_language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="condition_id" Type="int" Nullable="false" />
           <Property Name="language_id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
@@ -764,6 +764,13 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="comment" Type="nvarchar" MaxLength="50" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Condition">
+          <Key>
+            <PropertyRef Name="condition_id" />
+          </Key>
+          <Property Name="condition_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="policy_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Conference">
           <Key>
             <PropertyRef Name="conference_id" />
@@ -812,19 +819,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="is_accepted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Criteria">
+        <EntityType Name="EligibilityCondition">
           <Key>
-            <PropertyRef Name="criteria_id" />
-          </Key>
-          <Property Name="criteria_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="policy_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="EligibilityCriteria">
-          <Key>
-            <PropertyRef Name="criteria_id" />
+            <PropertyRef Name="condition_id" />
             <PropertyRef Name="request_id" />
           </Key>
-          <Property Name="criteria_id" Type="int" Nullable="false" />
+          <Property Name="condition_id" Type="int" Nullable="false" />
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="is_accepted" Type="bit" Nullable="false" />
         </EntityType>
@@ -858,15 +858,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="attendance_end" Type="datetime" Nullable="false" />
           <Property Name="specialization_id" Type="int" Nullable="false" />
           <Property Name="folder_id" Type="int" />
-        </EntityType>
-        <EntityType Name="RequestConferencePolicy">
-          <Key>
-            <PropertyRef Name="policy_id" />
-          </Key>
-          <Property Name="policy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="valid_date" Type="date" Nullable="false" />
-          <Property Name="expired_date" Type="date" />
-          <Property Name="file_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ContractType">
           <Key>
@@ -917,6 +908,25 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="valid_date" Type="date" Nullable="false" />
           <Property Name="file_id" Type="int" Nullable="false" />
           <Property Name="decision_number" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Policy">
+          <Key>
+            <PropertyRef Name="policy_id" />
+          </Key>
+          <Property Name="policy_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="valid_date" Type="date" Nullable="false" />
+          <Property Name="expired_date" Type="date" />
+          <Property Name="file_id" Type="int" Nullable="false" />
+          <Property Name="article_id" Type="int" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="policy_type_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Policy_type">
+          <Key>
+            <PropertyRef Name="policy_type_id" />
+          </Key>
+          <Property Name="policy_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="policy_type_name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="RequestDecision">
           <Key>
@@ -2194,14 +2204,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Conferenc__crite__65C116E7">
-          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
-          <End Role="ConferenceCriteriaLanguage" Type="Self.ConferenceCriteriaLanguage" Multiplicity="*" />
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1" />
+          <End Role="ConferenceConditionLanguage" Type="Self.ConferenceConditionLanguage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Criteria">
-              <PropertyRef Name="criteria_id" />
+            <Principal Role="Condition">
+              <PropertyRef Name="condition_id" />
             </Principal>
-            <Dependent Role="ConferenceCriteriaLanguage">
-              <PropertyRef Name="criteria_id" />
+            <Dependent Role="ConferenceConditionLanguage">
+              <PropertyRef Name="condition_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2243,12 +2253,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
         </Association>
         <Association Name="FK__Conferenc__langu__66B53B20">
           <End Role="Language" Type="Self.Language" Multiplicity="1" />
-          <End Role="ConferenceCriteriaLanguage" Type="Self.ConferenceCriteriaLanguage" Multiplicity="*" />
+          <End Role="ConferenceConditionLanguage" Type="Self.ConferenceConditionLanguage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Language">
               <PropertyRef Name="language_id" />
             </Principal>
-            <Dependent Role="ConferenceCriteriaLanguage">
+            <Dependent Role="ConferenceConditionLanguage">
               <PropertyRef Name="language_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -2274,18 +2284,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="ConferenceParticipant">
               <PropertyRef Name="request_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Conferenc__rewar__178D7CA5">
-          <End Role="RequestConferencePolicy" Type="Self.RequestConferencePolicy" Multiplicity="1" />
-          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RequestConferencePolicy">
-              <PropertyRef Name="policy_id" />
-            </Principal>
-            <Dependent Role="RequestConference">
-              <PropertyRef Name="policy_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2337,18 +2335,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Criteria__reward__1A69E950">
-          <End Role="RequestConferencePolicy" Type="Self.RequestConferencePolicy" Multiplicity="1" />
-          <End Role="Criteria" Type="Self.Criteria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RequestConferencePolicy">
-              <PropertyRef Name="policy_id" />
-            </Principal>
-            <Dependent Role="Criteria">
-              <PropertyRef Name="policy_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CustomPro__peopl__2B947552">
           <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
           <End Role="CustomProfile" Type="Self.CustomProfile" Multiplicity="*" />
@@ -2374,25 +2360,25 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Eligibili__crite__220B0B18">
-          <End Role="Criteria" Type="Self.Criteria" Multiplicity="1" />
-          <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1" />
+          <End Role="EligibilityCondition" Type="Self.EligibilityCondition" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Criteria">
-              <PropertyRef Name="criteria_id" />
+            <Principal Role="Condition">
+              <PropertyRef Name="condition_id" />
             </Principal>
-            <Dependent Role="EligibilityCriteria">
-              <PropertyRef Name="criteria_id" />
+            <Dependent Role="EligibilityCondition">
+              <PropertyRef Name="condition_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Eligibili__reque__22FF2F51">
           <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="1" />
-          <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
+          <End Role="EligibilityCondition" Type="Self.EligibilityCondition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestConference">
               <PropertyRef Name="request_id" />
             </Principal>
-            <Dependent Role="EligibilityCriteria">
+            <Dependent Role="EligibilityCondition">
               <PropertyRef Name="request_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -2495,6 +2481,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__MOA__evidence__3726238F">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOA" Type="Self.MOA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOA">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__MOA__mou_id__589C25F3">
           <End Role="MOU" Type="Self.MOU" Multiplicity="1" />
           <End Role="MOA" Type="Self.MOA" Multiplicity="*" />
@@ -2504,6 +2502,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="MOA">
               <PropertyRef Name="mou_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOABonus__eviden__390E6C01">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOABonus" Type="Self.MOABonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOABonus">
+              <PropertyRef Name="evidence" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2591,6 +2601,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__MOU__evidence__3631FF56">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOU" Type="Self.MOU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOU">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__MOU__office_id__2334397B">
           <End Role="Office" Type="Self.Office" Multiplicity="0..1" />
           <End Role="MOU" Type="Self.MOU" Multiplicity="*" />
@@ -2600,6 +2622,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="MOU">
               <PropertyRef Name="office_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOUBonus__eviden__381A47C8">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOUBonus" Type="Self.MOUBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOUBonus">
+              <PropertyRef Name="evidence" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3110,6 +3144,42 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="PlanParticipant">
               <PropertyRef Name="participant_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Policy__account___4D1564AE">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Policy__article___4C214075">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="article_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Policy__file_id__4B2D1C3C">
+          <End Role="File" Type="Self.File" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3627,18 +3697,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RewardPol__file___24E777C3">
-          <End Role="File" Type="Self.File" Multiplicity="1" />
-          <End Role="RequestConferencePolicy" Type="Self.RequestConferencePolicy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="RequestConferencePolicy">
-              <PropertyRef Name="file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Right__module_id__3B0BC30C">
           <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
           <End Role="Right" Type="Self.Right" Multiplicity="*" />
@@ -3937,6 +3995,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Condition_Policy">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="Condition" Type="Self.Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="policy_id" />
+            </Principal>
+            <Dependent Role="Condition">
+              <PropertyRef Name="policy_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MOABonus_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="MOABonus" Type="Self.MOABonus" Multiplicity="*" />
@@ -3985,6 +4055,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Policy_Policy_type">
+          <End Role="Policy_type" Type="Self.Policy_type" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy_type">
+              <PropertyRef Name="policy_type_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="policy_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Procedure_Direction">
           <End Role="Direction" Type="Self.Direction" Multiplicity="1" />
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
@@ -4006,6 +4088,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="RequestConference">
               <PropertyRef Name="folder_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestConference_Policy">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="policy_id" />
+            </Principal>
+            <Dependent Role="RequestConference">
+              <PropertyRef Name="policy_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4105,40 +4199,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="InitCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="InputString" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ScienceAndInternationalAffairsModelStoreContainer">
           <EntitySet Name="CommentBase" EntityType="Self.CommentBase" Schema="Comment" store:Type="Tables" />
           <EntitySet Name="CommentRequest" EntityType="Self.CommentRequest" Schema="Comment" store:Type="Tables" />
@@ -4198,7 +4258,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Scholarship" EntityType="Self.Scholarship" Schema="IA_Scholarship" store:Type="Tables" />
           <EntitySet Name="AcademicDegreeLanguage" EntityType="Self.AcademicDegreeLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="AcademicDegreeTypeLanguage" EntityType="Self.AcademicDegreeTypeLanguage" Schema="Localization" store:Type="Tables" />
-          <EntitySet Name="ConferenceCriteriaLanguage" EntityType="Self.ConferenceCriteriaLanguage" Schema="Localization" store:Type="Tables" />
+          <EntitySet Name="ConferenceConditionLanguage" EntityType="Self.ConferenceConditionLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="FormalityLanguage" EntityType="Self.FormalityLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="Language" EntityType="Self.Language" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="PaperPolicyCriteriaLanguage" EntityType="Self.PaperPolicyCriteriaLanguage" Schema="Localization" store:Type="Tables" />
@@ -4215,16 +4275,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="RequestCitation" EntityType="Self.RequestCitation" Schema="SM_Citation" store:Type="Tables" />
           <EntitySet Name="RequestHasCitation" EntityType="Self.RequestHasCitation" Schema="SM_Citation" store:Type="Tables" />
           <EntitySet Name="ApprovalProcess" EntityType="Self.ApprovalProcess" Schema="SM_Conference" store:Type="Tables" />
+          <EntitySet Name="Condition" EntityType="Self.Condition" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="Conference" EntityType="Self.Conference" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="ConferenceParticipant" EntityType="Self.ConferenceParticipant" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="ConferenceStatus" EntityType="Self.ConferenceStatus" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="Cost" EntityType="Self.Cost" Schema="SM_Conference" store:Type="Tables" />
-          <EntitySet Name="Criteria" EntityType="Self.Criteria" Schema="SM_Conference" store:Type="Tables" />
-          <EntitySet Name="EligibilityCriteria" EntityType="Self.EligibilityCriteria" Schema="SM_Conference" store:Type="Tables" />
+          <EntitySet Name="EligibilityCondition" EntityType="Self.EligibilityCondition" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="Formality" EntityType="Self.Formality" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="QsUniversity" EntityType="Self.QsUniversity" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="RequestConference" EntityType="Self.RequestConference" Schema="SM_Conference" store:Type="Tables" />
-          <EntitySet Name="RequestConferencePolicy" EntityType="Self.RequestConferencePolicy" Schema="SM_Conference" store:Type="Tables" />
           <EntitySet Name="ContractType" EntityType="Self.ContractType" Schema="SM_MasterData" store:Type="Tables" />
           <EntitySet Name="PaperType" EntityType="Self.PaperType" Schema="SM_MasterData" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="SM_MasterData" store:Type="Tables" />
@@ -4232,6 +4291,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Title" EntityType="Self.Title" Schema="SM_MasterData" store:Type="Tables" />
           <EntitySet Name="BaseRequest" EntityType="Self.BaseRequest" Schema="SM_Request" store:Type="Tables" />
           <EntitySet Name="Decision" EntityType="Self.Decision" Schema="SM_Request" store:Type="Tables" />
+          <EntitySet Name="Policy" EntityType="Self.Policy" Schema="SM_Request" store:Type="Tables" />
+          <EntitySet Name="Policy_type" EntityType="Self.Policy_type" Schema="SM_Request" store:Type="Tables" />
           <EntitySet Name="RequestDecision" EntityType="Self.RequestDecision" Schema="SM_Request" store:Type="Tables" />
           <EntitySet Name="AcademicDegree" EntityType="Self.AcademicDegree" Schema="SM_Researcher" store:Type="Tables" />
           <EntitySet Name="AcademicDegreeType" EntityType="Self.AcademicDegreeType" Schema="SM_Researcher" store:Type="Tables" />
@@ -4561,8 +4622,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Conference" EntitySet="Conference" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__crite__65C116E7" Association="Self.FK__Conferenc__crite__65C116E7">
-            <End Role="Criteria" EntitySet="Criteria" />
-            <End Role="ConferenceCriteriaLanguage" EntitySet="ConferenceCriteriaLanguage" />
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="ConferenceConditionLanguage" EntitySet="ConferenceConditionLanguage" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__forma__59904A2C" Association="Self.FK__Conferenc__forma__59904A2C">
             <End Role="Formality" EntitySet="Formality" />
@@ -4578,7 +4639,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__langu__66B53B20" Association="Self.FK__Conferenc__langu__66B53B20">
             <End Role="Language" EntitySet="Language" />
-            <End Role="ConferenceCriteriaLanguage" EntitySet="ConferenceCriteriaLanguage" />
+            <End Role="ConferenceConditionLanguage" EntitySet="ConferenceConditionLanguage" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__offic__5B78929E" Association="Self.FK__Conferenc__offic__5B78929E">
             <End Role="Office" EntitySet="Office" />
@@ -4587,10 +4648,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <AssociationSet Name="FK__Conferenc__reque__0CDAE408" Association="Self.FK__Conferenc__reque__0CDAE408">
             <End Role="RequestConference" EntitySet="RequestConference" />
             <End Role="ConferenceParticipant" EntitySet="ConferenceParticipant" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Conferenc__rewar__178D7CA5" Association="Self.FK__Conferenc__rewar__178D7CA5">
-            <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicy" />
-            <End Role="RequestConference" EntitySet="RequestConference" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__statu__056ECC6A" Association="Self.FK__Conferenc__statu__056ECC6A">
             <End Role="ConferenceStatus" EntitySet="ConferenceStatus" />
@@ -4608,10 +4665,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="RequestConference" EntitySet="RequestConference" />
             <End Role="Cost" EntitySet="Cost" />
           </AssociationSet>
-          <AssociationSet Name="FK__Criteria__reward__1A69E950" Association="Self.FK__Criteria__reward__1A69E950">
-            <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicy" />
-            <End Role="Criteria" EntitySet="Criteria" />
-          </AssociationSet>
           <AssociationSet Name="FK__CustomPro__peopl__2B947552" Association="Self.FK__CustomPro__peopl__2B947552">
             <End Role="Profile" EntitySet="Profile" />
             <End Role="CustomProfile" EntitySet="CustomProfile" />
@@ -4621,12 +4674,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Decision" EntitySet="Decision" />
           </AssociationSet>
           <AssociationSet Name="FK__Eligibili__crite__220B0B18" Association="Self.FK__Eligibili__crite__220B0B18">
-            <End Role="Criteria" EntitySet="Criteria" />
-            <End Role="EligibilityCriteria" EntitySet="EligibilityCriteria" />
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="EligibilityCondition" EntitySet="EligibilityCondition" />
           </AssociationSet>
           <AssociationSet Name="FK__Eligibili__reque__22FF2F51" Association="Self.FK__Eligibili__reque__22FF2F51">
             <End Role="RequestConference" EntitySet="RequestConference" />
-            <End Role="EligibilityCriteria" EntitySet="EligibilityCriteria" />
+            <End Role="EligibilityCondition" EntitySet="EligibilityCondition" />
           </AssociationSet>
           <AssociationSet Name="FK__Form__phase_id__2DB1C7EE" Association="Self.FK__Form__phase_id__2DB1C7EE">
             <End Role="AcademicActivityPhase" EntitySet="AcademicActivityPhase" />
@@ -4660,9 +4713,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Account" />
             <End Role="MOA" EntitySet="MOA" />
           </AssociationSet>
+          <AssociationSet Name="FK__MOA__evidence__3726238F" Association="Self.FK__MOA__evidence__3726238F">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOA" EntitySet="MOA" />
+          </AssociationSet>
           <AssociationSet Name="FK__MOA__mou_id__589C25F3" Association="Self.FK__MOA__mou_id__589C25F3">
             <End Role="MOU" EntitySet="MOU" />
             <End Role="MOA" EntitySet="MOA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOABonus__eviden__390E6C01" Association="Self.FK__MOABonus__eviden__390E6C01">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOABonus" EntitySet="MOABonus" />
           </AssociationSet>
           <AssociationSet Name="FK__MOABonus__moa_id__18B6AB08" Association="Self.FK__MOABonus__moa_id__18B6AB08">
             <End Role="MOA" EntitySet="MOA" />
@@ -4692,9 +4753,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Account" />
             <End Role="MOU" EntitySet="MOU" />
           </AssociationSet>
+          <AssociationSet Name="FK__MOU__evidence__3631FF56" Association="Self.FK__MOU__evidence__3631FF56">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOU" EntitySet="MOU" />
+          </AssociationSet>
           <AssociationSet Name="FK__MOU__office_id__2334397B" Association="Self.FK__MOU__office_id__2334397B">
             <End Role="Office" EntitySet="Office" />
             <End Role="MOU" EntitySet="MOU" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOUBonus__eviden__381A47C8" Association="Self.FK__MOUBonus__eviden__381A47C8">
+            <End Role="File" EntitySet="File" />
+            <End Role="MOUBonus" EntitySet="MOUBonus" />
           </AssociationSet>
           <AssociationSet Name="FK__MOUBonus__mou_id__24285DB4" Association="Self.FK__MOUBonus__mou_id__24285DB4">
             <End Role="MOU" EntitySet="MOU" />
@@ -4864,6 +4933,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ParticipantRole" EntitySet="ParticipantRole" />
             <End Role="PlanParticipant" EntitySet="PlanParticipant" />
           </AssociationSet>
+          <AssociationSet Name="FK__Policy__account___4D1564AE" Association="Self.FK__Policy__account___4D1564AE">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Policy" EntitySet="Policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Policy__article___4C214075" Association="Self.FK__Policy__article___4C214075">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Policy" EntitySet="Policy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Policy__file_id__4B2D1C3C" Association="Self.FK__Policy__file_id__4B2D1C3C">
+            <End Role="File" EntitySet="File" />
+            <End Role="Policy" EntitySet="Policy" />
+          </AssociationSet>
           <AssociationSet Name="FK__PositionL__langu__0C1BC9F9" Association="Self.FK__PositionL__langu__0C1BC9F9">
             <End Role="Language" EntitySet="Language" />
             <End Role="PositionLanguage" EntitySet="PositionLanguage" />
@@ -5032,10 +5113,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Form" EntitySet="Form" />
             <End Role="Response" EntitySet="Response" />
           </AssociationSet>
-          <AssociationSet Name="FK__RewardPol__file___24E777C3" Association="Self.FK__RewardPol__file___24E777C3">
-            <End Role="File" EntitySet="File" />
-            <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicy" />
-          </AssociationSet>
           <AssociationSet Name="FK__Right__module_id__3B0BC30C" Association="Self.FK__Right__module_id__3B0BC30C">
             <End Role="Module" EntitySet="Module" />
             <End Role="Right" EntitySet="Right" />
@@ -5132,6 +5209,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="File" EntitySet="File" />
             <End Role="CollaborationStatusHistory" EntitySet="CollaborationStatusHistory" />
           </AssociationSet>
+          <AssociationSet Name="FK_Condition_Policy" Association="Self.FK_Condition_Policy">
+            <End Role="Policy" EntitySet="Policy" />
+            <End Role="Condition" EntitySet="Condition" />
+          </AssociationSet>
           <AssociationSet Name="FK_MOABonus_Account" Association="Self.FK_MOABonus_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="MOABonus" EntitySet="MOABonus" />
@@ -5148,12 +5229,20 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Account" />
             <End Role="MOUBonus" EntitySet="MOUBonus" />
           </AssociationSet>
+          <AssociationSet Name="FK_Policy_Policy_type" Association="Self.FK_Policy_Policy_type">
+            <End Role="Policy_type" EntitySet="Policy_type" />
+            <End Role="Policy" EntitySet="Policy" />
+          </AssociationSet>
           <AssociationSet Name="FK_Procedure_Direction" Association="Self.FK_Procedure_Direction">
             <End Role="Direction" EntitySet="Direction" />
             <End Role="Procedure" EntitySet="Procedure" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestConference_File" Association="Self.FK_RequestConference_File">
             <End Role="File" EntitySet="File" />
+            <End Role="RequestConference" EntitySet="RequestConference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestConference_Policy" Association="Self.FK_RequestConference_Policy">
+            <End Role="Policy" EntitySet="Policy" />
             <End Role="RequestConference" EntitySet="RequestConference" />
           </AssociationSet>
           <AssociationSet Name="FK_RightByRole_Right" Association="Self.FK_RightByRole_Right">
@@ -5240,6 +5329,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__account_id__51EF2864" FromRole="Account" ToRole="MOU" />
           <NavigationProperty Name="NotificationBases" Relationship="Self.FK__Notificat__accou__3B95D2F1" FromRole="Account" ToRole="NotificationBase" />
           <NavigationProperty Name="NotificationSubscribes" Relationship="Self.FK__Notificat__accou__3E723F9C" FromRole="Account" ToRole="NotificationSubscribe" />
+          <NavigationProperty Name="Policies" Relationship="Self.FK__Policy__account___4D1564AE" FromRole="Account" ToRole="Policy" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Account" ToRole="Profile" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_Account" FromRole="Account" ToRole="ActivityPartner" />
           <NavigationProperty Name="MOABonus" Relationship="Self.FK_MOABonus_Account" FromRole="Account" ToRole="MOABonus" />
@@ -5289,11 +5379,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="RequestConferences" Relationship="Self.FK__Conferenc__invit__23BE4960" FromRole="File" ToRole="RequestConference" />
           <NavigationProperty Name="Decisions" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="File" ToRole="Decision" />
           <NavigationProperty Name="Inventions" Relationship="Self.FK__Invention__file___2AA05119" FromRole="File" ToRole="Invention" />
+          <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__evidence__3726238F" FromRole="File" ToRole="MOA" />
+          <NavigationProperty Name="MOABonus" Relationship="Self.FK__MOABonus__eviden__390E6C01" FromRole="File" ToRole="MOABonus" />
+          <NavigationProperty Name="MOUs" Relationship="Self.FK__MOU__evidence__3631FF56" FromRole="File" ToRole="MOU" />
+          <NavigationProperty Name="MOUBonus" Relationship="Self.FK__MOUBonus__eviden__381A47C8" FromRole="File" ToRole="MOUBonus" />
           <NavigationProperty Name="Papers" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="File" ToRole="Paper" />
           <NavigationProperty Name="PaperPolicies" Relationship="Self.FK__PaperPoli__file___24134F1B" FromRole="File" ToRole="PaperPolicy" />
+          <NavigationProperty Name="Policies" Relationship="Self.FK__Policy__file_id__4B2D1C3C" FromRole="File" ToRole="Policy" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="Profiles1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="File" ToRole="Profile" />
-          <NavigationProperty Name="RequestConferencePolicies" Relationship="Self.FK__RewardPol__file___24E777C3" FromRole="File" ToRole="RequestConferencePolicy" />
           <NavigationProperty Name="AcademicActivities" Relationship="Self.FK_AcademicActivity_File" FromRole="File" ToRole="AcademicActivity" />
           <NavigationProperty Name="ActivityExpenseDetails" Relationship="Self.FK_ActivityExpenseDetail_File" FromRole="File" ToRole="ActivityExpenseDetail" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_File" FromRole="File" ToRole="ActivityPartner" />
@@ -5582,6 +5676,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="ArticleStatu" Relationship="Self.FK__Article__article__5F492382" FromRole="Article" ToRole="ArticleStatus" />
           <NavigationProperty Name="ArticleCategory" Relationship="Self.FK__Article__categor__603D47BB" FromRole="Article" ToRole="ArticleCategory" />
           <NavigationProperty Name="Partners" Relationship="Self.FK__Partner__article__2EA5EC27" FromRole="Article" ToRole="Partner" />
+          <NavigationProperty Name="Policies" Relationship="Self.FK__Policy__article___4C214075" FromRole="Article" ToRole="Policy" />
           <NavigationProperty Name="ResearchCollaborations" Relationship="Self.FK__ResearchC__artic__3B0BC30C" FromRole="Article" ToRole="ResearchCollaboration" />
           <NavigationProperty Name="Scholarships" Relationship="Self.FK__Scholarsh__artic__6E8B6712" FromRole="Article" ToRole="Scholarship" />
           <NavigationProperty Name="ArticleVersions" Relationship="Self.FK_ArticleVersion_Article" FromRole="Article" ToRole="ArticleVersion" />
@@ -5649,13 +5744,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="moa_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="moa_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="moa_end_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="moa_note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="mou_id" Type="Int32" Nullable="false" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="is_deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__MOA__account_id__4865BE2A" FromRole="MOA" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOA__evidence__3726238F" FromRole="MOA" ToRole="File" />
           <NavigationProperty Name="MOU" Relationship="Self.FK__MOA__mou_id__589C25F3" FromRole="MOA" ToRole="MOU" />
           <NavigationProperty Name="MOABonus" Relationship="Self.FK__MOABonus__moa_id__18B6AB08" FromRole="MOA" ToRole="MOABonus" />
           <NavigationProperty Name="MOAPartnerScopes" Relationship="Self.FK__MOAPartne__moa_i__5E54FF49" FromRole="MOA" ToRole="MOAPartnerScope" />
@@ -5671,10 +5767,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="moa_bonus_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="moa_bonus_decision_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="moa_bonus_end_date" Type="DateTime" Precision="0" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="account_id" Type="Int32" />
           <Property Name="add_time" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_MOABonus_Account" FromRole="MOABonus" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOABonus__eviden__390E6C01" FromRole="MOABonus" ToRole="File" />
           <NavigationProperty Name="MOA" Relationship="Self.FK__MOABonus__moa_id__18B6AB08" FromRole="MOABonus" ToRole="MOA" />
           <NavigationProperty Name="MOAPartnerScopes" Relationship="Self.FK__MOAPartne__moa_b__5D60DB10" FromRole="MOABonus" ToRole="MOAPartnerScope" />
         </EntityType>
@@ -5721,13 +5818,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="mou_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mou_end_date" Type="DateTime" Precision="0" />
           <Property Name="mou_note" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="office_id" Type="Int32" />
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="add_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="is_deleted" Type="Boolean" Nullable="false" />
           <Property Name="noti_count" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__MOU__account_id__51EF2864" FromRole="MOU" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOU__evidence__3631FF56" FromRole="MOU" ToRole="File" />
           <NavigationProperty Name="Office" Relationship="Self.FK__MOU__office_id__2334397B" FromRole="MOU" ToRole="Office" />
           <NavigationProperty Name="MOAs" Relationship="Self.FK__MOA__mou_id__589C25F3" FromRole="MOU" ToRole="MOA" />
           <NavigationProperty Name="MOUBonus" Relationship="Self.FK__MOUBonus__mou_id__24285DB4" FromRole="MOU" ToRole="MOUBonus" />
@@ -5744,10 +5842,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="mou_bonus_code" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mou_bonus_decision_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="mou_bonus_end_date" Type="DateTime" Precision="0" />
-          <Property Name="evidence" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="evidence" Type="Int32" />
           <Property Name="account_id" Type="Int32" />
           <Property Name="add_time" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_MOUBonus_Account" FromRole="MOUBonus" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__MOUBonus__eviden__381A47C8" FromRole="MOUBonus" ToRole="File" />
           <NavigationProperty Name="MOU" Relationship="Self.FK__MOUBonus__mou_id__24285DB4" FromRole="MOUBonus" ToRole="MOU" />
           <NavigationProperty Name="MOUPartnerScopes" Relationship="Self.FK__MOUPartne__mou_b__67DE6983" FromRole="MOUBonus" ToRole="MOUPartnerScope" />
         </EntityType>
@@ -5942,16 +6041,16 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="Language" Relationship="Self.FK__AcademicD__langu__1940BAED" FromRole="AcademicDegreeTypeLanguage" ToRole="Language" />
           <NavigationProperty Name="AcademicDegreeType" Relationship="Self.FK__AcademicD__type___1A34DF26" FromRole="AcademicDegreeTypeLanguage" ToRole="AcademicDegreeType" />
         </EntityType>
-        <EntityType Name="ConferenceCriteriaLanguage">
+        <EntityType Name="ConferenceConditionLanguage">
           <Key>
-            <PropertyRef Name="conference_criteria_language_id" />
+            <PropertyRef Name="conference_condition_language_id" />
           </Key>
-          <Property Name="conference_criteria_language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="criteria_id" Type="Int32" Nullable="false" />
+          <Property Name="conference_condition_language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="condition_id" Type="Int32" Nullable="false" />
           <Property Name="language_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Criterion" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="ConferenceCriteriaLanguage" ToRole="Criteria" />
-          <NavigationProperty Name="Language" Relationship="Self.FK__Conferenc__langu__66B53B20" FromRole="ConferenceCriteriaLanguage" ToRole="Language" />
+          <NavigationProperty Name="Condition" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="ConferenceConditionLanguage" ToRole="Condition" />
+          <NavigationProperty Name="Language" Relationship="Self.FK__Conferenc__langu__66B53B20" FromRole="ConferenceConditionLanguage" ToRole="Language" />
         </EntityType>
         <EntityType Name="FormalityLanguage">
           <Key>
@@ -5975,7 +6074,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="ArticleVersions" Relationship="Self.FK_ArticleVersion_Language" FromRole="Language" ToRole="ArticleVersion" />
           <NavigationProperty Name="AcademicDegreeLanguages" Relationship="Self.FK__AcademicD__langu__23BE4960" FromRole="Language" ToRole="AcademicDegreeLanguage" />
           <NavigationProperty Name="AcademicDegreeTypeLanguages" Relationship="Self.FK__AcademicD__langu__1940BAED" FromRole="Language" ToRole="AcademicDegreeTypeLanguage" />
-          <NavigationProperty Name="ConferenceCriteriaLanguages" Relationship="Self.FK__Conferenc__langu__66B53B20" FromRole="Language" ToRole="ConferenceCriteriaLanguage" />
+          <NavigationProperty Name="ConferenceConditionLanguages" Relationship="Self.FK__Conferenc__langu__66B53B20" FromRole="Language" ToRole="ConferenceConditionLanguage" />
           <NavigationProperty Name="FormalityLanguages" Relationship="Self.FK__Formality__langu__075714DC" FromRole="Language" ToRole="FormalityLanguage" />
           <NavigationProperty Name="AcademicActivityLanguages" Relationship="Self.FK__AcademicA__langu__4183B671" FromRole="Language" ToRole="AcademicActivityLanguage" />
           <NavigationProperty Name="AcademicActivityTypeLanguages" Relationship="Self.FK__AcademicA__langu__5772F790" FromRole="Language" ToRole="AcademicActivityTypeLanguage" />
@@ -6139,6 +6238,16 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="Position" Relationship="Self.FK__ApprovalP__posit__2EC5E7B8" FromRole="ApprovalProcess" ToRole="Position" />
           <NavigationProperty Name="RequestConference" Relationship="Self.FK__ApprovalP__reque__2DD1C37F" FromRole="ApprovalProcess" ToRole="RequestConference" />
         </EntityType>
+        <EntityType Name="Condition">
+          <Key>
+            <PropertyRef Name="condition_id" />
+          </Key>
+          <Property Name="condition_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="policy_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ConferenceConditionLanguages" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="Condition" ToRole="ConferenceConditionLanguage" />
+          <NavigationProperty Name="EligibilityConditions" Relationship="Self.FK__Eligibili__crite__220B0B18" FromRole="Condition" ToRole="EligibilityCondition" />
+          <NavigationProperty Name="Policy" Relationship="Self.FK_Condition_Policy" FromRole="Condition" ToRole="Policy" />
+        </EntityType>
         <EntityType Name="Conference">
           <Key>
             <PropertyRef Name="conference_id" />
@@ -6196,26 +6305,16 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="is_accepted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RequestConference" Relationship="Self.FK__Cost__request_id__0BE6BFCF" FromRole="Cost" ToRole="RequestConference" />
         </EntityType>
-        <EntityType Name="Criterion">
+        <EntityType Name="EligibilityCondition">
           <Key>
-            <PropertyRef Name="criteria_id" />
-          </Key>
-          <Property Name="criteria_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="policy_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ConferenceCriteriaLanguages" Relationship="Self.FK__Conferenc__crite__65C116E7" FromRole="Criteria" ToRole="ConferenceCriteriaLanguage" />
-          <NavigationProperty Name="RequestConferencePolicy" Relationship="Self.FK__Criteria__reward__1A69E950" FromRole="Criteria" ToRole="RequestConferencePolicy" />
-          <NavigationProperty Name="EligibilityCriterias" Relationship="Self.FK__Eligibili__crite__220B0B18" FromRole="Criteria" ToRole="EligibilityCriteria" />
-        </EntityType>
-        <EntityType Name="EligibilityCriteria">
-          <Key>
-            <PropertyRef Name="criteria_id" />
+            <PropertyRef Name="condition_id" />
             <PropertyRef Name="request_id" />
           </Key>
-          <Property Name="criteria_id" Type="Int32" Nullable="false" />
+          <Property Name="condition_id" Type="Int32" Nullable="false" />
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="is_accepted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Criterion" Relationship="Self.FK__Eligibili__crite__220B0B18" FromRole="EligibilityCriteria" ToRole="Criteria" />
-          <NavigationProperty Name="RequestConference" Relationship="Self.FK__Eligibili__reque__22FF2F51" FromRole="EligibilityCriteria" ToRole="RequestConference" />
+          <NavigationProperty Name="Condition" Relationship="Self.FK__Eligibili__crite__220B0B18" FromRole="EligibilityCondition" ToRole="Condition" />
+          <NavigationProperty Name="RequestConference" Relationship="Self.FK__Eligibili__reque__22FF2F51" FromRole="EligibilityCondition" ToRole="RequestConference" />
         </EntityType>
         <EntityType Name="Formality">
           <Key>
@@ -6257,22 +6356,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="ConferenceParticipants" Relationship="Self.FK__Conferenc__reque__0CDAE408" FromRole="RequestConference" ToRole="ConferenceParticipant" />
           <NavigationProperty Name="ConferenceStatu" Relationship="Self.FK__Conferenc__statu__1881A0DE" FromRole="RequestConference" ToRole="ConferenceStatus" />
           <NavigationProperty Name="Costs" Relationship="Self.FK__Cost__request_id__0BE6BFCF" FromRole="RequestConference" ToRole="Cost" />
-          <NavigationProperty Name="EligibilityCriterias" Relationship="Self.FK__Eligibili__reque__22FF2F51" FromRole="RequestConference" ToRole="EligibilityCriteria" />
-          <NavigationProperty Name="RequestConferencePolicy" Relationship="Self.FK__Conferenc__rewar__178D7CA5" FromRole="RequestConference" ToRole="RequestConferencePolicy" />
+          <NavigationProperty Name="EligibilityConditions" Relationship="Self.FK__Eligibili__reque__22FF2F51" FromRole="RequestConference" ToRole="EligibilityCondition" />
           <NavigationProperty Name="Paper" Relationship="Self.FK__RequestCo__paper__1881A0DE" FromRole="RequestConference" ToRole="Paper" />
           <NavigationProperty Name="BaseRequest" Relationship="Self.FK__RequestCo__reque__1975C517" FromRole="RequestConference" ToRole="BaseRequest" />
-        </EntityType>
-        <EntityType Name="RequestConferencePolicy">
-          <Key>
-            <PropertyRef Name="policy_id" />
-          </Key>
-          <Property Name="policy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="valid_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="expired_date" Type="DateTime" Precision="0" />
-          <Property Name="file_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="File" Relationship="Self.FK__RewardPol__file___24E777C3" FromRole="RequestConferencePolicy" ToRole="File" />
-          <NavigationProperty Name="Criteria" Relationship="Self.FK__Criteria__reward__1A69E950" FromRole="RequestConferencePolicy" ToRole="Criteria" />
-          <NavigationProperty Name="RequestConferences" Relationship="Self.FK__Conferenc__rewar__178D7CA5" FromRole="RequestConferencePolicy" ToRole="RequestConference" />
+          <NavigationProperty Name="Policy" Relationship="Self.FK_RequestConference_Policy" FromRole="RequestConference" ToRole="Policy" />
         </EntityType>
         <EntityType Name="ContractType">
           <Key>
@@ -6345,6 +6432,32 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="decision_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="File" Relationship="Self.FK__Decision__file_i__39E294A9" FromRole="Decision" ToRole="File" />
           <NavigationProperty Name="RequestDecisions" Relationship="Self.FK__RequestDe__decis__1881A0DE" FromRole="Decision" ToRole="RequestDecision" />
+        </EntityType>
+        <EntityType Name="Policy">
+          <Key>
+            <PropertyRef Name="policy_id" />
+          </Key>
+          <Property Name="policy_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="valid_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="expired_date" Type="DateTime" Precision="0" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <Property Name="article_id" Type="Int32" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="policy_type_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Policy__account___4D1564AE" FromRole="Policy" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK__Policy__file_id__4B2D1C3C" FromRole="Policy" ToRole="File" />
+          <NavigationProperty Name="Article" Relationship="Self.FK__Policy__article___4C214075" FromRole="Policy" ToRole="Article" />
+          <NavigationProperty Name="Conditions" Relationship="Self.FK_Condition_Policy" FromRole="Policy" ToRole="Condition" />
+          <NavigationProperty Name="RequestConferences" Relationship="Self.FK_RequestConference_Policy" FromRole="Policy" ToRole="RequestConference" />
+          <NavigationProperty Name="Policy_type" Relationship="Self.FK_Policy_Policy_type" FromRole="Policy" ToRole="Policy_type" />
+        </EntityType>
+        <EntityType Name="Policy_type">
+          <Key>
+            <PropertyRef Name="policy_type_id" />
+          </Key>
+          <Property Name="policy_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="policy_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Policies" Relationship="Self.FK_Policy_Policy_type" FromRole="Policy_type" ToRole="Policy" />
         </EntityType>
         <EntityType Name="RequestDecision">
           <Key>
@@ -7133,6 +7246,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Policy__account___4D1564AE">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Profile__account__0BB1B5A5">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -7301,6 +7426,54 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__MOA__evidence__3726238F">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOA" Type="Self.MOA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOA">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOABonus__eviden__390E6C01">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOABonus" Type="Self.MOABonu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOABonus">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOU__evidence__3631FF56">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOU" Type="Self.MOU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOU">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOUBonus__eviden__381A47C8">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="MOUBonus" Type="Self.MOUBonu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="MOUBonus">
+              <PropertyRef Name="evidence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Paper__file_id__37FA4C37">
           <End Role="File" Type="Self.File" Multiplicity="0..1" />
           <End Role="Paper" Type="Self.Paper" Multiplicity="*" />
@@ -7321,6 +7494,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <PropertyRef Name="file_id" />
             </Principal>
             <Dependent Role="PaperPolicy">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Policy__file_id__4B2D1C3C">
+          <End Role="File" Type="Self.File" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="Policy">
               <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -7346,18 +7531,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="identification_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__RewardPol__file___24E777C3">
-          <End Role="File" Type="Self.File" Multiplicity="1" />
-          <End Role="RequestConferencePolicy" Type="Self.RequestConferencePolicy" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="RequestConferencePolicy">
-              <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7993,6 +8166,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Policy__article___4C214075">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="article_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="article_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ResearchC__artic__3B0BC30C">
           <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
           <End Role="ResearchCollaboration" Type="Self.ResearchCollaboration" Multiplicity="*" />
@@ -8416,25 +8601,25 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Conferenc__crite__65C116E7">
-          <End Role="Criteria" Type="Self.Criterion" Multiplicity="1" />
-          <End Role="ConferenceCriteriaLanguage" Type="Self.ConferenceCriteriaLanguage" Multiplicity="*" />
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1" />
+          <End Role="ConferenceConditionLanguage" Type="Self.ConferenceConditionLanguage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Criteria">
-              <PropertyRef Name="criteria_id" />
+            <Principal Role="Condition">
+              <PropertyRef Name="condition_id" />
             </Principal>
-            <Dependent Role="ConferenceCriteriaLanguage">
-              <PropertyRef Name="criteria_id" />
+            <Dependent Role="ConferenceConditionLanguage">
+              <PropertyRef Name="condition_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Conferenc__langu__66B53B20">
           <End Role="Language" Type="Self.Language" Multiplicity="1" />
-          <End Role="ConferenceCriteriaLanguage" Type="Self.ConferenceCriteriaLanguage" Multiplicity="*" />
+          <End Role="ConferenceConditionLanguage" Type="Self.ConferenceConditionLanguage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Language">
               <PropertyRef Name="language_id" />
             </Principal>
-            <Dependent Role="ConferenceCriteriaLanguage">
+            <Dependent Role="ConferenceConditionLanguage">
               <PropertyRef Name="language_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -8801,6 +8986,30 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Eligibili__crite__220B0B18">
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1" />
+          <End Role="EligibilityCondition" Type="Self.EligibilityCondition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Condition">
+              <PropertyRef Name="condition_id" />
+            </Principal>
+            <Dependent Role="EligibilityCondition">
+              <PropertyRef Name="condition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Condition_Policy">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="Condition" Type="Self.Condition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="policy_id" />
+            </Principal>
+            <Dependent Role="Condition">
+              <PropertyRef Name="policy_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Conferenc__confe__5E54FF49">
           <End Role="Conference" Type="Self.Conference" Multiplicity="1" />
           <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
@@ -8885,51 +9094,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Criteria__reward__1A69E950">
-          <End Role="RequestConferencePolicy" Type="Self.RequestConferencePolicy" Multiplicity="1" />
-          <End Role="Criteria" Type="Self.Criterion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RequestConferencePolicy">
-              <PropertyRef Name="policy_id" />
-            </Principal>
-            <Dependent Role="Criteria">
-              <PropertyRef Name="policy_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Eligibili__crite__220B0B18">
-          <End Role="Criteria" Type="Self.Criterion" Multiplicity="1" />
-          <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Criteria">
-              <PropertyRef Name="criteria_id" />
-            </Principal>
-            <Dependent Role="EligibilityCriteria">
-              <PropertyRef Name="criteria_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Eligibili__reque__22FF2F51">
           <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="1" />
-          <End Role="EligibilityCriteria" Type="Self.EligibilityCriteria" Multiplicity="*" />
+          <End Role="EligibilityCondition" Type="Self.EligibilityCondition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RequestConference">
               <PropertyRef Name="request_id" />
             </Principal>
-            <Dependent Role="EligibilityCriteria">
+            <Dependent Role="EligibilityCondition">
               <PropertyRef Name="request_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Conferenc__rewar__178D7CA5">
-          <End Role="RequestConferencePolicy" Type="Self.RequestConferencePolicy" Multiplicity="1" />
-          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RequestConferencePolicy">
-              <PropertyRef Name="policy_id" />
-            </Principal>
-            <Dependent Role="RequestConference">
-              <PropertyRef Name="policy_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8954,6 +9127,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="RequestConference">
               <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestConference_Policy">
+          <End Role="Policy" Type="Self.Policy" Multiplicity="1" />
+          <End Role="RequestConference" Type="Self.RequestConference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy">
+              <PropertyRef Name="policy_id" />
+            </Principal>
+            <Dependent Role="RequestConference">
+              <PropertyRef Name="policy_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9050,6 +9235,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Principal>
             <Dependent Role="RequestDecision">
               <PropertyRef Name="decision_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Policy_Policy_type">
+          <End Role="Policy_type" Type="Self.Policy_type" Multiplicity="1" />
+          <End Role="Policy" Type="Self.Policy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Policy_type">
+              <PropertyRef Name="policy_type_id" />
+            </Principal>
+            <Dependent Role="Policy">
+              <PropertyRef Name="policy_type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9607,7 +9804,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Scholarships" EntityType="Self.Scholarship" />
           <EntitySet Name="AcademicDegreeLanguages" EntityType="Self.AcademicDegreeLanguage" />
           <EntitySet Name="AcademicDegreeTypeLanguages" EntityType="Self.AcademicDegreeTypeLanguage" />
-          <EntitySet Name="ConferenceCriteriaLanguages" EntityType="Self.ConferenceCriteriaLanguage" />
+          <EntitySet Name="ConferenceConditionLanguages" EntityType="Self.ConferenceConditionLanguage" />
           <EntitySet Name="FormalityLanguages" EntityType="Self.FormalityLanguage" />
           <EntitySet Name="Languages" EntityType="Self.Language" />
           <EntitySet Name="PaperPolicyCriteriaLanguages" EntityType="Self.PaperPolicyCriteriaLanguage" />
@@ -9623,16 +9820,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Citations" EntityType="Self.Citation" />
           <EntitySet Name="RequestCitations" EntityType="Self.RequestCitation" />
           <EntitySet Name="ApprovalProcesses" EntityType="Self.ApprovalProcess" />
+          <EntitySet Name="Conditions" EntityType="Self.Condition" />
           <EntitySet Name="Conferences" EntityType="Self.Conference" />
           <EntitySet Name="ConferenceParticipants" EntityType="Self.ConferenceParticipant" />
           <EntitySet Name="ConferenceStatus" EntityType="Self.ConferenceStatu" />
           <EntitySet Name="Costs" EntityType="Self.Cost" />
-          <EntitySet Name="Criteria" EntityType="Self.Criterion" />
-          <EntitySet Name="EligibilityCriterias" EntityType="Self.EligibilityCriteria" />
+          <EntitySet Name="EligibilityConditions" EntityType="Self.EligibilityCondition" />
           <EntitySet Name="Formalities" EntityType="Self.Formality" />
           <EntitySet Name="QsUniversities" EntityType="Self.QsUniversity" />
           <EntitySet Name="RequestConferences" EntityType="Self.RequestConference" />
-          <EntitySet Name="RequestConferencePolicies" EntityType="Self.RequestConferencePolicy" />
           <EntitySet Name="ContractTypes" EntityType="Self.ContractType" />
           <EntitySet Name="PaperTypes" EntityType="Self.PaperType" />
           <EntitySet Name="Positions" EntityType="Self.Position" />
@@ -9640,6 +9836,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Titles" EntityType="Self.Title" />
           <EntitySet Name="BaseRequests" EntityType="Self.BaseRequest" />
           <EntitySet Name="Decisions" EntityType="Self.Decision" />
+          <EntitySet Name="Policies" EntityType="Self.Policy" />
+          <EntitySet Name="Policy_type" EntityType="Self.Policy_type" />
           <EntitySet Name="RequestDecisions" EntityType="Self.RequestDecision" />
           <EntitySet Name="AcademicDegrees" EntityType="Self.AcademicDegree" />
           <EntitySet Name="AcademicDegreeTypes" EntityType="Self.AcademicDegreeType" />
@@ -9743,6 +9941,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Account" EntitySet="Accounts" />
             <End Role="NotificationSubscribe" EntitySet="NotificationSubscribes" />
           </AssociationSet>
+          <AssociationSet Name="FK__Policy__account___4D1564AE" Association="Self.FK__Policy__account___4D1564AE">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Policy" EntitySet="Policies" />
+          </AssociationSet>
           <AssociationSet Name="FK__Profile__account__0BB1B5A5" Association="Self.FK__Profile__account__0BB1B5A5">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Profile" EntitySet="Profiles" />
@@ -9799,6 +10001,22 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="File" EntitySet="Files" />
             <End Role="Invention" EntitySet="Inventions" />
           </AssociationSet>
+          <AssociationSet Name="FK__MOA__evidence__3726238F" Association="Self.FK__MOA__evidence__3726238F">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOA" EntitySet="MOAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOABonus__eviden__390E6C01" Association="Self.FK__MOABonus__eviden__390E6C01">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOABonus" EntitySet="MOABonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOU__evidence__3631FF56" Association="Self.FK__MOU__evidence__3631FF56">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOU" EntitySet="MOUs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOUBonus__eviden__381A47C8" Association="Self.FK__MOUBonus__eviden__381A47C8">
+            <End Role="File" EntitySet="Files" />
+            <End Role="MOUBonus" EntitySet="MOUBonus" />
+          </AssociationSet>
           <AssociationSet Name="FK__Paper__file_id__37FA4C37" Association="Self.FK__Paper__file_id__37FA4C37">
             <End Role="File" EntitySet="Files" />
             <End Role="Paper" EntitySet="Papers" />
@@ -9807,6 +10025,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="File" EntitySet="Files" />
             <End Role="PaperPolicy" EntitySet="PaperPolicies" />
           </AssociationSet>
+          <AssociationSet Name="FK__Policy__file_id__4B2D1C3C" Association="Self.FK__Policy__file_id__4B2D1C3C">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Policy" EntitySet="Policies" />
+          </AssociationSet>
           <AssociationSet Name="FK__Profile__avatar___1881A0DE" Association="Self.FK__Profile__avatar___1881A0DE">
             <End Role="File" EntitySet="Files" />
             <End Role="Profile" EntitySet="Profiles" />
@@ -9814,10 +10036,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <AssociationSet Name="FK__Profile__identif__789EE131" Association="Self.FK__Profile__identif__789EE131">
             <End Role="File" EntitySet="Files" />
             <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RewardPol__file___24E777C3" Association="Self.FK__RewardPol__file___24E777C3">
-            <End Role="File" EntitySet="Files" />
-            <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicies" />
           </AssociationSet>
           <AssociationSet Name="FK_AcademicActivity_File" Association="Self.FK_AcademicActivity_File">
             <End Role="File" EntitySet="Files" />
@@ -10027,6 +10245,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Article" EntitySet="Articles" />
             <End Role="Partner" EntitySet="Partners" />
           </AssociationSet>
+          <AssociationSet Name="FK__Policy__article___4C214075" Association="Self.FK__Policy__article___4C214075">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Policy" EntitySet="Policies" />
+          </AssociationSet>
           <AssociationSet Name="FK__ResearchC__artic__3B0BC30C" Association="Self.FK__ResearchC__artic__3B0BC30C">
             <End Role="Article" EntitySet="Articles" />
             <End Role="ResearchCollaboration" EntitySet="ResearchCollaborations" />
@@ -10168,12 +10390,12 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="AcademicDegreeTypeLanguage" EntitySet="AcademicDegreeTypeLanguages" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__crite__65C116E7" Association="Self.FK__Conferenc__crite__65C116E7">
-            <End Role="Criteria" EntitySet="Criteria" />
-            <End Role="ConferenceCriteriaLanguage" EntitySet="ConferenceCriteriaLanguages" />
+            <End Role="Condition" EntitySet="Conditions" />
+            <End Role="ConferenceConditionLanguage" EntitySet="ConferenceConditionLanguages" />
           </AssociationSet>
           <AssociationSet Name="FK__Conferenc__langu__66B53B20" Association="Self.FK__Conferenc__langu__66B53B20">
             <End Role="Language" EntitySet="Languages" />
-            <End Role="ConferenceCriteriaLanguage" EntitySet="ConferenceCriteriaLanguages" />
+            <End Role="ConferenceConditionLanguage" EntitySet="ConferenceConditionLanguages" />
           </AssociationSet>
           <AssociationSet Name="FK__Formality__forma__0662F0A3" Association="Self.FK__Formality__forma__0662F0A3">
             <End Role="Formality" EntitySet="Formalities" />
@@ -10295,6 +10517,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="RequestConference" EntitySet="RequestConferences" />
             <End Role="ApprovalProcess" EntitySet="ApprovalProcesses" />
           </AssociationSet>
+          <AssociationSet Name="FK__Eligibili__crite__220B0B18" Association="Self.FK__Eligibili__crite__220B0B18">
+            <End Role="Condition" EntitySet="Conditions" />
+            <End Role="EligibilityCondition" EntitySet="EligibilityConditions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Condition_Policy" Association="Self.FK_Condition_Policy">
+            <End Role="Policy" EntitySet="Policies" />
+            <End Role="Condition" EntitySet="Conditions" />
+          </AssociationSet>
           <AssociationSet Name="FK__Conferenc__confe__5E54FF49" Association="Self.FK__Conferenc__confe__5E54FF49">
             <End Role="Conference" EntitySet="Conferences" />
             <End Role="RequestConference" EntitySet="RequestConferences" />
@@ -10323,21 +10553,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="RequestConference" EntitySet="RequestConferences" />
             <End Role="Cost" EntitySet="Costs" />
           </AssociationSet>
-          <AssociationSet Name="FK__Criteria__reward__1A69E950" Association="Self.FK__Criteria__reward__1A69E950">
-            <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicies" />
-            <End Role="Criteria" EntitySet="Criteria" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Eligibili__crite__220B0B18" Association="Self.FK__Eligibili__crite__220B0B18">
-            <End Role="Criteria" EntitySet="Criteria" />
-            <End Role="EligibilityCriteria" EntitySet="EligibilityCriterias" />
-          </AssociationSet>
           <AssociationSet Name="FK__Eligibili__reque__22FF2F51" Association="Self.FK__Eligibili__reque__22FF2F51">
             <End Role="RequestConference" EntitySet="RequestConferences" />
-            <End Role="EligibilityCriteria" EntitySet="EligibilityCriterias" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Conferenc__rewar__178D7CA5" Association="Self.FK__Conferenc__rewar__178D7CA5">
-            <End Role="RequestConferencePolicy" EntitySet="RequestConferencePolicies" />
-            <End Role="RequestConference" EntitySet="RequestConferences" />
+            <End Role="EligibilityCondition" EntitySet="EligibilityConditions" />
           </AssociationSet>
           <AssociationSet Name="FK__RequestCo__paper__1881A0DE" Association="Self.FK__RequestCo__paper__1881A0DE">
             <End Role="Paper" EntitySet="Papers" />
@@ -10345,6 +10563,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </AssociationSet>
           <AssociationSet Name="FK__RequestCo__reque__1975C517" Association="Self.FK__RequestCo__reque__1975C517">
             <End Role="BaseRequest" EntitySet="BaseRequests" />
+            <End Role="RequestConference" EntitySet="RequestConferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestConference_Policy" Association="Self.FK_RequestConference_Policy">
+            <End Role="Policy" EntitySet="Policies" />
             <End Role="RequestConference" EntitySet="RequestConferences" />
           </AssociationSet>
           <AssociationSet Name="FK__Author__contract__46136164" Association="Self.FK__Author__contract__46136164">
@@ -10378,6 +10600,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <AssociationSet Name="FK__RequestDe__decis__1881A0DE" Association="Self.FK__RequestDe__decis__1881A0DE">
             <End Role="Decision" EntitySet="Decisions" />
             <End Role="RequestDecision" EntitySet="RequestDecisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Policy_Policy_type" Association="Self.FK_Policy_Policy_type">
+            <End Role="Policy_type" EntitySet="Policy_type" />
+            <End Role="Policy" EntitySet="Policies" />
           </AssociationSet>
           <AssociationSet Name="FK__AcademicD__type___314D4EA8" Association="Self.FK__AcademicD__type___314D4EA8">
             <End Role="AcademicDegreeType" EntitySet="AcademicDegreeTypes" />
@@ -10551,48 +10777,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="ContractType" EntitySet="ContractTypes" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11193,11 +11378,11 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ConferenceCriteriaLanguages">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ConferenceCriteriaLanguage">
-              <MappingFragment StoreEntitySet="ConferenceCriteriaLanguage">
-                <ScalarProperty Name="conference_criteria_language_id" ColumnName="conference_criteria_language_id" />
-                <ScalarProperty Name="criteria_id" ColumnName="criteria_id" />
+          <EntitySetMapping Name="ConferenceConditionLanguages">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ConferenceConditionLanguage">
+              <MappingFragment StoreEntitySet="ConferenceConditionLanguage">
+                <ScalarProperty Name="conference_condition_language_id" ColumnName="conference_condition_language_id" />
+                <ScalarProperty Name="condition_id" ColumnName="condition_id" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
@@ -11345,6 +11530,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Conditions">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Condition">
+              <MappingFragment StoreEntitySet="Condition">
+                <ScalarProperty Name="condition_id" ColumnName="condition_id" />
+                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Conferences">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Conference">
               <MappingFragment StoreEntitySet="Conference">
@@ -11397,18 +11590,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Criteria">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Criterion">
-              <MappingFragment StoreEntitySet="Criteria">
-                <ScalarProperty Name="criteria_id" ColumnName="criteria_id" />
-                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EligibilityCriterias">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.EligibilityCriteria">
-              <MappingFragment StoreEntitySet="EligibilityCriteria">
-                <ScalarProperty Name="criteria_id" ColumnName="criteria_id" />
+          <EntitySetMapping Name="EligibilityConditions">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.EligibilityCondition">
+              <MappingFragment StoreEntitySet="EligibilityCondition">
+                <ScalarProperty Name="condition_id" ColumnName="condition_id" />
                 <ScalarProperty Name="request_id" ColumnName="request_id" />
                 <ScalarProperty Name="is_accepted" ColumnName="is_accepted" />
               </MappingFragment>
@@ -11445,16 +11630,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="attendance_end" ColumnName="attendance_end" />
                 <ScalarProperty Name="specialization_id" ColumnName="specialization_id" />
                 <ScalarProperty Name="folder_id" ColumnName="folder_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RequestConferencePolicies">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.RequestConferencePolicy">
-              <MappingFragment StoreEntitySet="RequestConferencePolicy">
-                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
-                <ScalarProperty Name="valid_date" ColumnName="valid_date" />
-                <ScalarProperty Name="expired_date" ColumnName="expired_date" />
-                <ScalarProperty Name="file_id" ColumnName="file_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11512,6 +11687,27 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="valid_date" ColumnName="valid_date" />
                 <ScalarProperty Name="file_id" ColumnName="file_id" />
                 <ScalarProperty Name="decision_number" ColumnName="decision_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Policies">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Policy">
+              <MappingFragment StoreEntitySet="Policy">
+                <ScalarProperty Name="policy_id" ColumnName="policy_id" />
+                <ScalarProperty Name="valid_date" ColumnName="valid_date" />
+                <ScalarProperty Name="expired_date" ColumnName="expired_date" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="article_id" ColumnName="article_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="policy_type_id" ColumnName="policy_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Policy_type">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.Policy_type">
+              <MappingFragment StoreEntitySet="Policy_type">
+                <ScalarProperty Name="policy_type_id" ColumnName="policy_type_id" />
+                <ScalarProperty Name="policy_type_name" ColumnName="policy_type_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -12108,30 +12304,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <ScalarProperty Name="people_id" ColumnName="people_id" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ScienceAndInternationalAffairsModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ScienceAndInternationalAffairsModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
