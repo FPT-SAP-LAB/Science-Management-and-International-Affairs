@@ -89,14 +89,15 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="add_language" onchange="resetCategory()">
+                        <select class="form-control" id="add_language" onchange="resetCategory()"  style="width: 100% !important">
                             <option selected value="1">Tiếng Việt</option>
                             <option value="2">Tiếng Anh</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control config-select2" required id="add_category">
+                        <select class="form-control config-select2" required id="add_category" style="width: 100% !important">
+                            <option label="Label"></option>
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -104,11 +105,11 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <label class="col-form-label font-weight-bolder">Từ ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Từ ngày" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_add_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -119,11 +120,11 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <label class="col-form-label font-weight-bolder">Đến ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Đến ngày" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_add_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -164,14 +165,14 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="edit_language" onchange="reInit()">
+                        <select class="form-control" id="edit_language" onchange="reInit()"  style="width: 100% !important">
                             <option selected value="1">Tiếng Việt</option>
                             <option value="2">Tiếng Anh</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="edit_category">
+                        <select class="form-control" required id="edit_category" style="width: 100% !important">
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -179,11 +180,11 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <label class="col-form-label font-weight-bolder">Từ ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Từ ngày" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -194,11 +195,11 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <label class="col-form-label font-weight-bolder">Đến ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Đến ngày" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -249,7 +250,7 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="clone_category">
+                        <select class="form-control" required id="clone_category" style="width: 100% !important">
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -723,6 +724,7 @@
                     },
                     {
                         data: "academic_status_name",
+                        sorting: false,
                         render: function (data, type, full, meta) {
                             var status = {
                                 'Chưa hoạt động': {
@@ -743,6 +745,7 @@
                     },
                     {
                         data: "activity_id",
+                        sorting: false,
                         render: function (data, type, full, meta) {
                             return '<div class="dropdown">' +
                                 '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
@@ -874,6 +877,12 @@
         });
         $('#clone_category').select2({
             placeholder: 'Loại hoạt động',
+        });
+        $('#add_language').select2({
+            placeholder: 'Ngôn ngữ',
+        });
+        $('#edit_language').select2({
+            placeholder: 'Ngôn ngữ',
         });
         $(document).ready(function () {
             KTBootstrapDatetimepicker.init();
