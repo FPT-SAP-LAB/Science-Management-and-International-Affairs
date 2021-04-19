@@ -188,6 +188,8 @@
     <Compile Include="ModelDAL\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\TitleLanguageRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyAddRepo.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
