@@ -45,6 +45,8 @@ namespace GUEST.Controllers
 
             List<PaperCriteria> listCriteria = md.getPaperCriteria();
             ViewBag.listCriteria = listCriteria;
+
+
             return View();
         }
 

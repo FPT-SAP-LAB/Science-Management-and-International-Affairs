@@ -256,6 +256,13 @@ namespace BLL.ScienceManagement.Invention
                     rc.status_id = 2;
                 }
 
+                foreach (var item in wait)
+                {
+                    BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    br.finished_date = DateTime.Now;
+                    db.Entry(br).State = EntityState.Modified;
+                }
+
                 db.SaveChanges();
                 dbc.Commit();
                 return "ss";
