@@ -62,6 +62,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivity.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOABasicInfo\GetBasicInfoMOAUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOABasicInfo\ListAllExMOAUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOABasicInfo\EditMOABasicInfoUT.cs" />
@@ -133,7 +134,6 @@
   <ItemGroup>
     <Folder Include="Admin\" />
     <Folder Include="Authen\" />
-    <Folder Include="InternationalCollaboration\AcademicActivity\" />
     <Folder Include="InternationalCollaboration\AcademicCollaborationRepository\" />
     <Folder Include="InternationalCollaboration\MasterData\" />
     <Folder Include="ModelDAL\" />

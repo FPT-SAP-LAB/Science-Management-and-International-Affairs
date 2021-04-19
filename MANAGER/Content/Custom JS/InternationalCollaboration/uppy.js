@@ -133,25 +133,15 @@
         });
 
         uppy2.on('file-added', function (file) {
-            //var sizeLabel = "bytes";
-            //var filesize = file.size;
-            //if (filesize > 1024) {
-            //    filesize = filesize / 1024;
-            //    sizeLabel = "kb";
-
-            //    if (filesize > 1024) {
-            //        filesize = filesize / 1024;
-            //        sizeLabel = "MB";
-            //    }
-            //}
-            var uploadListHtml = uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-
+            file_action = 'edit';
+            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
             $uploadedList.append(uploadListHtml);
             $statusBar.addClass('uppy-status-hidden');
             $statusBar.removeClass('uppy-status-ongoing');
         });
 
         $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            file_action = 'remove';
             var itemId = $(this).attr('data-id');
             uppy2.removeFile(itemId);
             $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
@@ -364,25 +354,15 @@
         });
 
         uppy5.on('file-added', function (file) {
-            //var sizeLabel = "bytes";
-            //var filesize = file.size;
-            //if (filesize > 1024) {
-            //    filesize = filesize / 1024;
-            //    sizeLabel = "kb";
-
-            //    if (filesize > 1024) {
-            //        filesize = filesize / 1024;
-            //        sizeLabel = "MB";
-            //    }
-            //}
+            file_action = 'edit';
             var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
             $uploadedList.append(uploadListHtml);
-
             $statusBar.addClass('uppy-status-hidden');
             $statusBar.removeClass('uppy-status-ongoing');
         });
 
         $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+            file_action = 'remove';
             var itemId = $(this).attr('data-id');
             uppy5.removeFile(itemId);
             $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();

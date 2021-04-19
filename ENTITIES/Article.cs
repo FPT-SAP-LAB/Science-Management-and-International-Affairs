@@ -20,6 +20,7 @@ namespace ENTITIES
             this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.Procedures = new HashSet<Procedure>();
             this.Partners = new HashSet<Partner>();
+            this.Policies = new HashSet<Policy>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.Scholarships = new HashSet<Scholarship>();
             this.ArticleVersions = new HashSet<ArticleVersion>();
@@ -46,6 +47,8 @@ namespace ENTITIES
         public virtual ArticleCategory ArticleCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partner> Partners { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Policy> Policies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

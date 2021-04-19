@@ -6,7 +6,7 @@
 
     JObject output = Newtonsoft.Json.JsonConvert.DeserializeObject(ViewBag.output);
     ConferenceDetail ConferenceDetail = output["Conference"].ToObject<ConferenceDetail>();
-    List<ConferenceParticipantExtend> Participants = output["Participants"].ToObject<List<ConferenceParticipantExtend>>();
+    ConferenceParticipantExtend Participants = output["Participants"].ToObject<ConferenceParticipantExtend>();
     List<ENTITIES.Cost> Costs = output["Costs"].ToObject<List<ENTITIES.Cost>>();
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
@@ -186,7 +186,7 @@
                                     </div>
                                     <div class="card-body">
                                         <ul>
-                                            @foreach (ENTITIES.ConferenceCriteriaLanguage item in ViewBag.ConferenceCriteriaLanguages)
+                                            @foreach (ENTITIES.ConferenceConditionLanguage item in ViewBag.ConferenceCriteriaLanguages)
                                             {
                                                 <li>@item.name</li>
                                             }
@@ -214,20 +214,20 @@
                                         <tr role="row" class="odd">
                                             <td>
                                                 <select class="form-control select2 selectPeople" name="param">
-                                                    <option label="Label">@Participants[0].ID</option>
+                                                    <option label="Label">@Participants.ID</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants[0].FullName">
+                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Participants.FullName">
                                             </td>
                                             <td>
-                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Participants[0].Email">
+                                                <input type="email" class="form-control inputEmail" placeholder="Email" value="@Participants.Email">
                                             </td>
                                             <td>
                                                 <select class="form-control selectOffice">
                                                     @foreach (ENTITIES.Office item in ViewBag.Offices)
                                                     {
-                                                        <option @(item.office_id == Participants[0].OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
+                                                        <option @(item.office_id == Participants.OfficeID ? "selected" : "") value="@item.office_id">@item.office_name</option>
                                                     }
                                                 </select>
                                             </td>
@@ -235,7 +235,7 @@
                                                 <select class="form-control selectTitle">
                                                     @foreach (ENTITIES.TitleLanguage item in ViewBag.TitleLanguages)
                                                     {
-                                                        <option @(item.title_id == Participants[0].TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
+                                                        <option @(item.title_id == Participants.TitleID ? "selected" : "") value="@item.title_id">@item.name</option>
                                                     }
                                                 </select>
                                             </td>
