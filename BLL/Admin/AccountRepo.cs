@@ -136,7 +136,22 @@ namespace BLL.Admin
                     }
                 }
                 a.email = obj.email;
-                a.role_id = obj.role_id;
+                if(a.role_id != obj.role_id)
+                {
+                    List<AccountRight> rv = db.AccountRights.Where(x => x.account_id == obj.account_id).ToList();
+                    db.AccountRights.RemoveRange(rv);
+                    db.SaveChanges();
+                    List<int> rights = db.RightByRoles.Where(x => x.role_id == obj.role_id).Select(x => x.right_id).ToList();
+                    foreach (var item in rights)
+                    {
+                        db.AccountRights.Add(new AccountRight
+                        {
+                            account_id = a.account_id,
+                            right_id = item
+                        });
+                    }
+                    a.role_id = obj.role_id;
+                }
                 a.position_id = obj.position_id;
                 db.Entry(a).State = EntityState.Modified;
                 db.SaveChanges();
