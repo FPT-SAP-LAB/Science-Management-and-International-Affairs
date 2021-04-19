@@ -197,6 +197,7 @@ var collab_going_table = $('#collab_going_table').DataTable({
     ],
     initComplete: function () {
         $(this).parent().css('overflow-x', 'auto');
+        $(this).parent().css('width', '100%');
         $(this).parent().css('padding', '0');
     }
 });

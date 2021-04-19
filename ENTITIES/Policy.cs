@@ -19,6 +19,7 @@ namespace ENTITIES
         {
             this.Conditions = new HashSet<Condition>();
             this.RequestConferences = new HashSet<RequestConference>();
+            this.PaperCriterias = new HashSet<PaperCriteria>();
         }
     
         public int policy_id { get; set; }
@@ -36,6 +37,8 @@ namespace ENTITIES
         public virtual ICollection<Condition> Conditions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestConference> RequestConferences { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaperCriteria> PaperCriterias { get; set; }
         public virtual Policy_type Policy_type { get; set; }
     }
 }
