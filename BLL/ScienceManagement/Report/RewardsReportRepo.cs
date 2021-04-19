@@ -64,7 +64,7 @@ namespace BLL.ScienceManagement.Report
                                           join h in db.AuthorPapers on n.paper_id equals h.paper_id
                                           join j in db.Authors on h.people_id equals j.people_id
                                           where m.status_id == 2
-                                          && n.paper_type_id==1
+                                          && n.paper_type_id == 1
                                           && j.mssv_msnv == b.mssv_msnv
                                           select h.money_reward).Distinct().Sum().ToString(),
                             conferenceAward = (from m in db.RequestPapers
