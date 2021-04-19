@@ -25,7 +25,6 @@ namespace ENTITIES
             this.MOUs = new HashSet<MOU>();
             this.MOUBonus = new HashSet<MOUBonu>();
             this.Papers = new HashSet<Paper>();
-            this.PaperPolicies = new HashSet<PaperPolicy>();
             this.Policies = new HashSet<Policy>();
             this.Profiles = new HashSet<Profile>();
             this.Profiles1 = new HashSet<Profile>();
@@ -57,8 +56,6 @@ namespace ENTITIES
         public virtual ICollection<MOUBonu> MOUBonus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Paper> Papers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperPolicy> PaperPolicies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Policy> Policies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
