@@ -3632,10 +3632,15 @@
                     document.getElementById('detail_category').value = data.baseDetail.activity_type_id;
                 },
                 error: function (data) {
-                    console.log(data);
                 }
             });
         }
+        $('#detail_category').select2({
+            placeholder: 'Loại hoạt động',
+        }); 
+        $('#add_donvi_kinhphi').select2({
+            placeholder: 'Loại hoạt động',
+        });
         $(document).ready(function () {
             $('#add_control_title').hide();
             $('#add_control_btn').hide();
