@@ -240,7 +240,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         moa_bonus_end_date = end_date,
                         moa_id = moa_id,
                         account_id = user is null ? 1 : user.account.account_id,
-                        add_time = DateTime.Now
+                        add_time = DateTime.Now,
                         //,
                         //evidence = ""
                     });

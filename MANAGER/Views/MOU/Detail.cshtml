@@ -579,6 +579,8 @@
         "use strict";
 
         // Class definition
+        var initUppyMOUAdd;
+        var uppyMOUAdd;
         var KTUppy = function () {
             const Tus = Uppy.Tus;
             const ProgressBar = Uppy.ProgressBar;
@@ -595,7 +597,7 @@
 
             // Private functions
 
-            var initUppy5 = function (data) {
+            initUppyMOUAdd = function (data) {
                 // Uppy variables
                 // For more info refer: https://uppy.io/
                 var elemId = data;
@@ -604,58 +606,81 @@
                 var $uploadedList = $(id + ' .uppy-list');
                 var timeout;
 
-                var uppyMin = Uppy.Core({
+                uppyMOUAdd = Uppy.Core({
                     debug: true,
                     autoProceed: true,
                     showProgressDetails: true,
                     restrictions: {
-                        maxFileSize: 1000000, // 1mb
-                        maxNumberOfFiles: 5,
-                        minNumberOfFiles: 1
+                        maxFileSize: 5000000 //5mb
+                        //maxNumberOfFiles: 1,
+                        //minNumberOfFiles: 0
                     }
+                    //,
+                    //onBeforeUpload: () => {
+                    //    let id = $('#mou_detail_upload .uppy-list-item').attr('data-id');
+                    //    if (!id === undefined) {
+                    //        uppyMOUAdd.removeFile(itemId);
+                    //        $('#mou_detail_upload .uppy-list-item[data-id="' + itemId + '"').remove();
+                    //    }
+                    //}
                 });
 
-                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
-                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+                uppyMOUAdd.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMOUAdd.use(Informer, { target: id + ' .uppy-informer' });
 
                 // demo file upload server
-                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
-                uppyMin.use(StatusBar, {
+                uppyMOUAdd.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMOUAdd.use(StatusBar, {
                     target: id + ' .uppy-status',
                     hideUploadButton: true,
                     hideAfterFinish: false
                 });
 
                 $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Tải file</label>');
 
                 var $fileLabel = $(id + ' .uppy-input-label');
 
-                uppyMin.on('upload', function (data) {
-                    $fileLabel.text("Uploading...");
+                uppyMOUAdd.on('upload', function (data) {
+                    $fileLabel.text("Đang tải...");
                     $statusBar.addClass('uppy-status-ongoing');
                     $statusBar.removeClass('uppy-status-hidden');
                     clearTimeout(timeout);
                 });
 
-                uppyMin.on('complete', function (file) {
+                //uppyMOUAdd.on('file-added', function (file) {
+
+                //    var uploadListHtml = uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+
+                //    $uploadedList.append(uploadListHtml);
+                //    $statusBar.addClass('uppy-status-hidden');
+                //    $statusBar.removeClass('uppy-status-ongoing');
+                //});
+
+                uppyMOUAdd.on('complete', function (file) {
                     $.each(file.successful, function (index, value) {
                         var sizeLabel = "bytes";
                         var filesize = value.size;
-                        if (filesize > 1024) {
-                            filesize = filesize / 1024;
+                        if (filesize > 1024*5) {
+                            filesize = filesize / 1024*5;
                             sizeLabel = "kb";
 
-                            if (filesize > 1024) {
-                                filesize = filesize / 1024;
+                            if (filesize > 1024*5) {
+                                filesize = filesize / 1024*5;
                                 sizeLabel = "MB";
                             }
                         }
+                        //let id = $('#mou_detail_upload .uppy-list-item').attr('data-id');
+                        //if (!id === undefined) {
+                        //    uppyMOUAdd.removeFile(itemId);
+                        //    $('#mou_detail_upload .uppy-list-item[data-id="' + itemId + '"').remove();
+                        //    alert('test');
+                        //}
                         var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                         $uploadedList.append(uploadListHtml);
                     });
 
-                    $fileLabel.text("Add more files");
+                    $fileLabel.text("Tải thêm file");
 
                     $statusBar.addClass('uppy-status-hidden');
                     $statusBar.removeClass('uppy-status-ongoing');
@@ -663,7 +688,7 @@
 
                 $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                     var itemId = $(this).attr('data-id');
-                    uppyMin.removeFile(itemId);
+                    uppyMOUAdd.removeFile(itemId);
                     $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                 });
             }
@@ -672,7 +697,7 @@
             return {
                 // public functions
                 init: function (data) {
-                    initUppy5(data);
+                    initUppyMOUAdd(data);
                     setTimeout(function () {
 
                     }, 2000);
@@ -770,6 +795,11 @@
                     };
                     loadOffice(listOffice, OfficeData);
                     loadStatus(data.mou_status_id);
+
+                    //load file uploaded.
+                    var $uploadedList = $('#mou_detail_upload .uppy-list');
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_drive_id + '"><div class="uppy-list-label">' + data.file_name + '</div><span class="uppy-list-remove" data-id="' + data.file_drive_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
                 },
                 error: function () {
                     //alert("fail");
@@ -1565,7 +1595,6 @@
                 return;
             }
             else if (ExMOUCodeIsInvalid($('#ex_mou_id_edit').val().trim())) {
-                alert('test');
                 button_loader.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
@@ -1577,7 +1606,6 @@
                     return;
                 } else {
                     button_loader.stopLoading();
-                    alert('huhu');
                 }
             }
             else {

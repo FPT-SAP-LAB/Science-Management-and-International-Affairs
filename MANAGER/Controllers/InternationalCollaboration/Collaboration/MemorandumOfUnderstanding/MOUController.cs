@@ -112,6 +112,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 if (evidence != null)
                 {
                     f = mou.uploadEvidenceFile(evidence, obj.BasicInfo.mou_code, 1, false);
+
                 }
                 //update info in database
                 mou.addMOU(obj, user, f, evidence);

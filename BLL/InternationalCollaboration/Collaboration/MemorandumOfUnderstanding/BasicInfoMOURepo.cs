@@ -21,7 +21,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string sql_mouBasicInfo =
                     @"select 
                         t1.mou_id,t1.mou_code,t2.office_abbreviation,t1.mou_end_date,
-                        t5.mou_status_name,t4.reason,t1.evidence,t1.mou_note,
+                        t5.mou_status_name,t4.reason,t1.evidence,t6.name as file_name,t6.link as file_link,
+						t6.file_drive_id ,t1.mou_note,
                         t1.office_id,t5.mou_status_id
                         from IA_Collaboration.MOU t1
                         inner join General.Office t2 on t1.office_id = t2.office_id
@@ -35,6 +36,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         t4.datetime = t3.max_date and t4.mou_id = t4.mou_id and t4.mou_status_id = t3.mou_status_id
                         inner join IA_Collaboration.CollaborationStatus t5 on
                         t5.mou_status_id = t3.mou_status_id
+						left join General.[File] t6 on
+						t6.file_id = t1.evidence
                         where t1.mou_id = @mou_id ";
                 string sql_mouStartDateAndScopes =
                     @"select t2.*,t3.mou_start_date from
