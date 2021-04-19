@@ -23,7 +23,6 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         [TestCase]
         public void GetAcademicActivityUT_2()
         {
-
         }
     }
 }
