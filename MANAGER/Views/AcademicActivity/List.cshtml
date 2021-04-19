@@ -13,6 +13,9 @@
     .modal {
         overflow-y: auto;
     }
+    .config-select2{
+        width: 100% !important;
+    }
 </style>
 <div class="card card-custom gutter-b">
     <div class="card-body">
@@ -93,7 +96,7 @@
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="add_category">
+                        <select class="form-control config-select2" required id="add_category">
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -863,7 +866,15 @@
             uppy1.removeFile(itemId);
             $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
         });
-
+        $('#add_category').select2({
+            placeholder: 'Loại hoạt động',
+        });
+        $('#edit_category').select2({
+            placeholder: 'Loại hoạt động',
+        });
+        $('#clone_category').select2({
+            placeholder: 'Loại hoạt động',
+        });
         $(document).ready(function () {
             KTBootstrapDatetimepicker.init();
             KTBootstrapDateYeartimepicker.init();
