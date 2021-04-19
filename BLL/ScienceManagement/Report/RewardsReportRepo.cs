@@ -55,6 +55,7 @@ namespace BLL.ScienceManagement.Report
                         select new ReportByAuthorAward
                         {
                             name = b.name,
+                            msnv_mssv = b.mssv_msnv,
                             title = d.name,
                             office = e.office_name,
                             office_id = e.office_id,
@@ -63,11 +64,17 @@ namespace BLL.ScienceManagement.Report
                                           join h in db.AuthorPapers on n.paper_id equals h.paper_id
                                           join j in db.Authors on h.people_id equals j.people_id
                                           where m.status_id == 2
-                                          && m.type == 2
-                                          && j.name == b.name
-                                          && j.identification_number == b.identification_number
+                                          && n.paper_type_id==1
+                                          && j.mssv_msnv == b.mssv_msnv
                                           select h.money_reward).Distinct().Sum().ToString(),
-                            conferenceAward = "0",
+                            conferenceAward = (from m in db.RequestPapers
+                                               join n in db.Papers on m.paper_id equals n.paper_id
+                                               join h in db.AuthorPapers on n.paper_id equals h.paper_id
+                                               join j in db.Authors on h.people_id equals j.people_id
+                                               where m.status_id == 2
+                                               && n.paper_type_id == 2
+                                               && j.mssv_msnv == b.mssv_msnv
+                                               select h.money_reward).Distinct().Sum().ToString(),
                             CitationAward = "0",
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
