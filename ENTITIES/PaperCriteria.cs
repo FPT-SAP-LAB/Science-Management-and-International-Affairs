@@ -21,9 +21,10 @@ namespace ENTITIES
         }
     
         public int criteria_id { get; set; }
-        public string status { get; set; }
         public string name { get; set; }
+        public int policy_id { get; set; }
     
+        public virtual Policy Policy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperWithCriteria> PaperWithCriterias { get; set; }
     }
