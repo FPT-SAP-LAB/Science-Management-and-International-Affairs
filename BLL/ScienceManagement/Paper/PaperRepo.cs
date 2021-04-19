@@ -560,6 +560,13 @@ namespace BLL.ScienceManagement.Paper
                     rc.status_id = 6;
                 }
 
+                foreach (var item in list)
+                {
+                    BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    br.finished_date = DateTime.Now;
+                    db.Entry(br).State = EntityState.Modified;
+                }
+
                 db.SaveChanges();
                 dbc.Commit();
                 dbc.Dispose();
@@ -610,6 +617,13 @@ namespace BLL.ScienceManagement.Paper
                 {
                     RequestPaper rc = db.RequestPapers.Where(x => x.request_id == item.request_id).FirstOrDefault();
                     rc.status_id = 7;
+                }
+
+                foreach (var item in list)
+                {
+                    BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    br.finished_date = DateTime.Now;
+                    db.Entry(br).State = EntityState.Modified;
                 }
 
                 db.SaveChanges();

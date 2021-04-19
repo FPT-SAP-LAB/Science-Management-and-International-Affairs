@@ -35,7 +35,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         //save file if null, else just save activityPartner
                         if (f != null)
                         {
-                            file = academicCollaborationRepo.saveFile(f, evidence_file);
+                            file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
                         }
                         //update to PartnerScope
                         //PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
@@ -65,6 +65,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             }
                             catch (Exception e)
                             {
+                                Console.WriteLine(e.ToString());
                                 trans.Rollback();
                                 return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                             }
@@ -79,6 +80,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     dbContext.Rollback();
                     return new AlertModal<string>(null, false, "Lỗi", "Có lỗi xảy ra.");
                 }
@@ -86,7 +88,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         }
         public PartnerScope updatePartnerScope(int partner_id, int scope_id, AcademicCollaborationRepo academicCollaborationRepo)
         {
-            PartnerScope partnerScope;
+            PartnerScope partnerScope = null;
             try
             {
                 partnerScope = db.PartnerScopes.Where(x => x.partner_id == partner_id && x.scope_id == scope_id).FirstOrDefault();
@@ -101,7 +103,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
             }
             return partnerScope;
         }
@@ -184,13 +186,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             {
                                 //update file on Google Drive
                                 f = GoogleDriveService.UpdateFile(evidence_file.FileName, evidence_file.InputStream, evidence_file.ContentType, old_file.file_drive_id);
-                                new_file = academicCollaborationRepo.saveFile(f, evidence_file);
+                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
                             }
                             else
                             {
                                 //upload to Goolge Drive
                                 f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
-                                new_file = academicCollaborationRepo.saveFile(f, evidence_file);
+                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
                             }
                         }
                         else
@@ -220,6 +222,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             }
                             catch (Exception e)
                             {
+                                Console.WriteLine(e.ToString());
                                 trans.Rollback();
                                 return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                             }
@@ -344,6 +347,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
                         catch (Exception e)
                         {
+                            Console.WriteLine(e.ToString());
                             trans.Rollback();
                             return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                         }
@@ -404,7 +408,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.ToString());
+                return false;
             }
         }
     }

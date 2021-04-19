@@ -72,6 +72,7 @@ namespace BLL.ScienceManagement.Researcher
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     trans.Rollback();
                     return false;
                 }

@@ -30,15 +30,15 @@ namespace MANAGER.Controllers.ScienceManagement.ConferenceSponsor
         public ActionResult Add()
         {
             ViewBag.languages = LanguageRepo.GetLanguages();
-            IEnumerable<ConferenceCriteriaLanguage> result = criteriaLanguageRepo.GetAll();
+            IEnumerable<ConferenceConditionLanguage> result = criteriaLanguageRepo.GetAll();
             ViewBag.ConferenceCriteriaLanguages = result;
-            ViewBag.DistinctList = result.Select(x => x.criteria_id).Distinct().ToList();
+            ViewBag.DistinctList = result.Select(x => x.condition_id).Distinct().ToList();
             return View();
         }
         [HttpPost]
         public JsonResult Add(HttpPostedFileBase file, string policies)
         {
-            AlertModal<string> result = criteriaLanguageRepo.Add(file, policies);
+            AlertModal<string> result = criteriaLanguageRepo.Add(file, policies, CurrentAccount.AccountID(Session));
             return Json(result);
         }
     }
