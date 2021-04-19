@@ -60,6 +60,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivity.cs" />
@@ -122,6 +123,8 @@
     <Compile Include="InternationalCollaboration\Collaboration\MOU\ViewMOUDeletedUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOU\ViewMOUUnitTest.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\Partner\GetListAllUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\Partner\GetHistoryUT.cs" />
+    <Compile Include="InternationalCollaboration\Collaboration\Partner\AddPartnerUT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="Lib.cs" />
