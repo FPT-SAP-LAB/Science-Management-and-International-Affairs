@@ -37,7 +37,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.Partner
             Random ran = new Random();
             _ = partnerRepo.GetHistory(ran.Next(listTest) + 1);
             Assert.Pass();
-        }  
+        }
 
         [TestCase]
         public void GetHistoryUT_2()

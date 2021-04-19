@@ -106,10 +106,11 @@ namespace UnitTest.InternationalCollaboration.Collaboration.Partner
             int list_after = new ScienceAndInternationalAffairsEntities().Partners.Count();
             if (list_after - list_before == 0)
             {
-                if(!(bool)check.success)
+                if (!(bool)check.success)
                 {
                     Assert.Pass();
-                }else
+                }
+                else
                 {
                     Assert.Fail();
                 }
