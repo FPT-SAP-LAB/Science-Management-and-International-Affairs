@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
@@ -8,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.ScienceManagement.MasterData
 {
@@ -30,14 +32,13 @@ namespace BLL.ScienceManagement.MasterData
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).Where(x => x.status == "active").FirstOrDefault();
+                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).FirstOrDefault();
                 if (ck != null) return -1;
                 else
                 {
                     PaperCriteria pc = new PaperCriteria
                     {
                         name = name,
-                        status = "active"
                     };
                     db.PaperCriterias.Add(pc);
                     db.SaveChanges();
@@ -53,14 +54,65 @@ namespace BLL.ScienceManagement.MasterData
             }
         }
 
+        public bool addNewPolicy(HttpPostedFileBase file, List<PaperCriteria> list, Account acc)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadPolicyFile(file);
+                ENTITIES.File fl = new ENTITIES.File
+                {
+                    link = f.WebViewLink,
+                    file_drive_id = f.Id,
+                    name = f.Name
+                };
+                db.Files.Add(fl);
+                db.SaveChanges();
+
+                string sql_getLastPolicyPaper = @"select MAX(p.policy_id) as 'policy_id', p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id
+                                                from SM_Request.Policy p
+                                                where p.policy_type_id = 2 
+                                                group by p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id";
+                Policy p = db.Database.SqlQuery<Policy>(sql_getLastPolicyPaper).FirstOrDefault();
+                p.expired_date = DateTime.Now;
+                db.Entry(p).State = EntityState.Modified;
+                db.SaveChanges();
+
+                Policy newPolicy = new Policy()
+                {
+                    valid_date = DateTime.Now,
+                    file_id = fl.file_id,
+                    account_id = acc.account_id,
+                    policy_type_id = 2
+                };
+                db.Policies.Add(newPolicy);
+                db.SaveChanges();
+
+                foreach (var item in list)
+                {
+                    item.policy_id = newPolicy.policy_id;
+                    db.PaperCriterias.Add(item);
+                }
+                db.SaveChanges();
+
+                dbc.Commit();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return false;
+            }
+        }
+
         public string DeletePaperCriteria(string cri_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
                 int criteria_id = Int32.Parse(cri_id);
-                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
-                pc.status = "inactive";
+                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id && x.Policy.policy_type_id == 2 && x.Policy.expired_date == null).FirstOrDefault();
                 db.Entry(pc).State = EntityState.Modified;
                 db.SaveChanges();
                 dbc.Commit();
@@ -77,9 +129,10 @@ namespace BLL.ScienceManagement.MasterData
         public List<PaperCriteria> getPaperCriteria()
         {
             List<PaperCriteria> list = new List<PaperCriteria>();
-            string sql = @"select c.*
-                            from [SM_ScientificProduct].PaperCriteria c
-                            where c.status = 'active'";
+            string sql = @"select pc.*
+                            from SM_ScientificProduct.PaperCriteria pc join
+	                            (select MAX(policy_id) as 'policy_id'
+	                            from SM_ScientificProduct.PaperCriteria) as a on pc.policy_id = a.policy_id";
             list = db.Database.SqlQuery<PaperCriteria>(sql).ToList();
             return list;
         }
@@ -124,11 +177,8 @@ namespace BLL.ScienceManagement.MasterData
         public List<AddAuthor> getListPeopleFE()
         {
             List<AddAuthor> list = new List<AddAuthor>();
-            string sql = @"select pro.mssv_msnv, po.name, po.people_id
-                            from [General].People po 
-	                            join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [SM_MasterData].ContractType ct on pc.contract_id = ct.contract_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
+            string sql = @"select distinct po.mssv_msnv
+                            from SM_ScientificProduct.Author po 
 	                            join [General].Office ofi on po.office_id = ofi.office_id";
             list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
             return list;
@@ -137,11 +187,10 @@ namespace BLL.ScienceManagement.MasterData
         public AddAuthor getAuthor(string ms)
         {
             AddAuthor item = new AddAuthor();
-            string sql = @"select po.*, pc.contract_id, pro.title_id, o.office_abbreviation, pro.mssv_msnv, pro.bank_branch, pro.bank_number, pro.tax_code, pro.identification_number, pro.is_reseacher
-                            from [General].People po join [SM_Researcher].PeopleContract pc on po.people_id = pc.people_id
-	                            join [General].Profile pro on po.people_id = pro.people_id
-	                            join [General].Office o on po.office_id = o.office_id
-                            where pro.mssv_msnv = @ms";
+            string sql = @"select ah.*, o.office_abbreviation
+                            from SM_ScientificProduct.Author ah join General.Office o on ah.office_id = o.office_id
+                            where ah.mssv_msnv = @ms
+                            order by ah.people_id desc";
             item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;
         }

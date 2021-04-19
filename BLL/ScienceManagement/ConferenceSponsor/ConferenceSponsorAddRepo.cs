@@ -111,7 +111,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                         return JsonConvert.SerializeObject(new { success = false, message = "Thiếu website hội nghị" });
                     if (conference.organized_unit.Trim() == "")
                         return JsonConvert.SerializeObject(new { success = false, message = "Thiếu đơn vị tổ chức" });
-                    if (conference.co_organized_unit.Trim() == "")
+                    if (conference.keynote_speaker.Trim() == "")
                         return JsonConvert.SerializeObject(new { success = false, message = "Thiếu diễn giả/ thành viên BTC" });
                     if (!DateRangeOverlaps(attendance_start, attendance_end, conference.time_start, conference.time_end))
                         return JsonConvert.SerializeObject(new { success = false, message = "Hai khoảng thời gian không hợp lệ" });
@@ -150,7 +150,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     List<Google.Apis.Drive.v3.Data.File> UploadFiles = GoogleDriveService.UploadResearcherFile(InputFiles, conference_name, 1, "doanvanthang4271@gmail.com");
 
-                    RequestConferencePolicy policy = db.RequestConferencePolicies.Where(x => x.expired_date == null).FirstOrDefault();
+                    Policy policy = db.Policies.Where(x => x.expired_date == null).FirstOrDefault();
 
                     BaseRequest @base = new BaseRequest()
                     {
@@ -223,11 +223,11 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     ApprovalProcessRepo.Add(db, account_id, create_date, position_id, support.request_id, "Người đề nghị");
 
-                    foreach (var item in policy.Criteria)
+                    foreach (var item in policy.Conditions)
                     {
-                        db.EligibilityCriterias.Add(new EligibilityCriteria
+                        db.EligibilityConditions.Add(new EligibilityCondition
                         {
-                            criteria_id = item.criteria_id,
+                            condition_id = item.condition_id,
                             is_accepted = false,
                             request_id = @base.request_id
                         });

@@ -121,7 +121,7 @@
                                     <th class="text-center">STT</th>
                                     <th class="text-center">Tên đối tác</th>
                                     <th class="text-center">Quốc gia</th>
-                                    <th class="text-center text-nowrap">Website</th>
+                                    <th class="text-center">Website</th>
                                     <th class="text-center">Lĩnh vực</th>
                                     <th class="text-center">Thỏa thuận hợp tác</th>
                                     <th class="text-center">Địa chỉ</th>
@@ -226,6 +226,7 @@
             serverSide: true,
             searching: false,
             lengthChange: false,
+            pageLength: 5,
             ajax: {
                 url: "@Url.Action("List", "Partner")",
                 type: "POST",
@@ -245,7 +246,17 @@
             initComplete: function () {
                 $(this).parent().css('overflow-x', 'auto');
                 $(this).parent().css('padding', '0');
-                $('#partner_table th').css('padding', '5px 5px')
+                $(this).parent().css('width', '100%');
+                $('#partner_table th').css('padding-top', '5px')
+                $('#partner_table th').css('padding-bottom', '5px')
+                $('#partner_table > thead > tr > th:nth-child(1)').css('padding-right', '20px')
+                $('#partner_table > thead > tr > th:nth-child(2)').css('padding-right', '20px')
+                $('#partner_table > thead > tr > th:nth-child(3)').css('padding-right', '20px')
+                $('#partner_table > thead > tr > th:nth-child(4)').css('padding', '5px')
+                $('#partner_table > thead > tr > th:nth-child(5)').css('padding-right', '20px')
+                $('#partner_table > thead > tr > th:nth-child(6)').css('padding', '5px')
+                $('#partner_table > thead > tr > th:nth-child(7)').css('padding-right', '20px')
+                $('#partner_table > thead > tr > th:nth-child(8)').css('padding', '5px')
             },
             columns: [
                 {
@@ -330,7 +341,7 @@
                             '<a class="btn btn-sm btn-light-primary px-6 font-weight-bold" onclick="load_detail('+ data +')" style="margin-right: 10px;">Sửa</a><a onclick="confirm_delete('+ data +')" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>'
                     },
                     createdCell: function (td, cellData, rowData, row, col) {
-                        $(td).css('padding', '5px 0')
+                        $(td).css('padding', '5px')
                     },
                     className: 'text-center text-nowrap'
                 },
@@ -353,15 +364,11 @@
                         if (typeof status[data] === 'undefined') {
                             return data;
                         }
-                        return '<span class="label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
+                        return '<span class="text-nowrap label label-lg font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span> ';
                     },
                 },
             ]
         });
-        $("#partner_table > thead > tr > th:nth-child(4)").css({ 'min-width': '30px', 'max-width': '30px' });
-        $("#partner_table > thead > tr > th:nth-child(5)").css({ 'min-width': '0', 'max-width': '70px' });
-        $("#partner_table > thead > tr > th:nth-child(6)").css({ 'min-width': '80px', 'max-width': '80px' });
-        $("#partner_table > thead > tr > th:nth-child(7)").css({ 'min-width': '0', 'max-width': '100px' });
 
         $('#search_btn').click(function () {
             datatable.ajax.reload();

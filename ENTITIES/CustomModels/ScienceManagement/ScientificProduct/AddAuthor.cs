@@ -14,8 +14,8 @@ namespace ENTITIES.CustomModels.ScienceManagement.ScientificProduct
         public string office_abbreviation { get; set; }
         public string mssv_msnv { get; set; }
         public string bank_branch { get; set; }
-        public Int64 bank_number { get; set; }
-        public Int64 tax_code { get; set; }
+        public string bank_number { get; set; }
+        public string tax_code { get; set; }
         public string identification_number { get; set; }
         public string identification_file_link { get; set; }
         //public int office_id { get; set; }

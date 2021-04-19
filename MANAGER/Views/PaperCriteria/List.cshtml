@@ -32,7 +32,7 @@
                                             <td id="@item.criteria_id">@item.name</td>
                                             <td>
                                                 <a onclick="loadDataToEditModal(@item.criteria_id)" href="#edit_modal" class="btn btn-sm btn-light-primary px-6 font-weight-bold mr-2" data-toggle="modal">Sửa</a>
-                                                <a onclick="deleteInternalUnit(@item.criteria_id)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>
+                                                @*<a onclick="deleteInternalUnit(@item.criteria_id)" class="btn btn-sm btn-light-danger px-6 font-weight-bold" data-toggle="modal">Xóa</a>*@
                                             </td>
                                         </tr>
                                     }
@@ -68,15 +68,29 @@
 
 <!--ADD-->
 <div class="modal fade in" id="add_modal" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h3 class="modal-title font-weight-bolder">THÊM TIÊU CHÍ BÀI BÁO</h3>
+                <h3 class="modal-title font-weight-bolder">THAY ĐỔI CHÍNH SÁCH</h3>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <input autocomplete="off" id="add_modal_cri_name" type="text" class="form-control" placeholder="Tên tiêu chí" />
+                    <div class="mb-5 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                        <label>File chính sách</label>
+                        <div class="uppy" id="kt_uppy_1">
+                            <div class="uppy-wrapper"></div>
+                            <div class="uppy-list"></div>
+                            <div class="uppy-status"></div>
+                            <div class="uppy-informer uppy-informer-min"></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="block_tieuchi">
+                        <label>Thông tin tiêu chí</label>
+                        <input autocomplete="off" id="" type="text" class="form-control add_modal_cri_name mt-2" placeholder="Tên tiêu chí" />
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-5">
+                        <button id='add_row' type="button" class="btn btn-sm btn-light-success font-weight-bold px-6">Thêm tiêu chí</button>
+                        <button id='delete_row' type="button" class="btn btn-sm btn-light-danger font-weight-bold px-6">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -92,6 +106,7 @@
 @section scripts{
     <script>
         var temp_id;
+        var uppy1;
         var dataTable = $("#internal_unit_table").DataTable({
             oLanguage: {
                 oPaginate: {
@@ -109,6 +124,14 @@
                     targets: "_all"
                 }
             ]
+        });
+
+        $("#add_row").click(function () {
+            $("#block_tieuchi").append('<input autocomplete="off" id="" type="text" class="form-control add_modal_cri_name mt-2" placeholder="Tên tiêu chí" />');
+        });
+
+        $("#delete_row").click(function () {
+            $(".add_modal_cri_name").last().remove();
         });
 
         function loadDataToEditModal(cri_id) {
@@ -208,46 +231,49 @@
 
         $("#add_modal_confirm").click(function () {
             $("#loading").show();
-            var name = $("#add_modal_cri_name").val();
+            formData = new FormData();
+            if (uppy1.getFiles()[0] == undefined) {
+                toastr.error("Thiếu file quyết định");
+                $("#loading").hide();
+                return false;
+            } else {
+                formData.append('file', uppy1.getFiles()[0].data);
+            }
+
+            var arr = $(".add_modal_cri_name");
+            var arr_cri = [];
+            for (var i = 0; i < arr.length; i++) {
+                if ($(arr[i]).val() != "") {
+                    var criteria = {
+                        name: $(arr[i]).val()
+                    };
+                    arr_cri.push(criteria);
+                }
+            };
+            var criteria = JSON.stringify({ arr_cri });
+            formData.append('criteria', criteria);
+
             $.ajax({
-                url: "@Url.Action("addItem", "PaperCriteria")",
-                type: "POST",
-                data: JSON.stringify({'name': name}),
-                contentType: "application/json;charset=utf-8",
-                datatype: "json",
-                cache: false,
-                success: function (response) {
-                    if (response.mess == "ss") {
-                        if (response.id == "-1") {
-                            toastr.error("Tiếu chí đã tồn tại");
-                            return false;
-                        }
-                        $("#add_modal_cri_name").val("");
-                        //close modal
-                        $("#add_modal_close").click();
-
-                        //toastr.success("Thêm thành công");
-                        //$("#internal_unit_table tbody tr:first").after("<tr>" 
-                        //    +"<td id='" + response.id + "'>" + name + "</td>" 
-                        //    +"<td>" 
-                        //    +"<a onclick='loadDataToEditModal(" + response.id + ")' href='#edit_modal' class='btn btn-sm btn-light-primary px-6 font-weight-bold mr-2' data-toggle='modal'>Sửa</a>" 
-                        //    +"<a onclick='deleteInternalUnit(" + response.id + ")' class='btn btn-sm btn-light-danger px-6 font-weight-bold' data-toggle='modal'>Xóa</a>" 
-                        //    +"</td>" 
-                        //    + "</tr>");
-
-                        //dataTable.draw();
-                        //$("#loading").hide();
-                        location.reload();
-                    }
-                    else {
-                        toastr.error("Thêm thất bại");
+                url: "/PaperCriteria/addItem",
+                method: "post",
+                complete: function (data) {
+                    var mess = data.responseJSON.mess;
+                    if (mess) {
                         $("#loading").hide();
+                        location.reload();
+                        //alert(mess);
                     }
                 },
                 error: function () {
-                    //alert("fail");
-                }
+                    toastr.error("Có lỗi xảy ra");
+                    //save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false
             });
         });
     </script>
+    <script src="~/Content/Custom JS/Citation.js"></script>
 }

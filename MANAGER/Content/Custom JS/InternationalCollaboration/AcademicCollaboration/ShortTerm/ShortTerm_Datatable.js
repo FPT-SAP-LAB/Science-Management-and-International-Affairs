@@ -248,8 +248,8 @@ var program_going_table = $("#program_going_table").DataTable({
             data: "program_id",
             name: "program_id",
             render: function (data, type, row) {
-                return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
-                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
+                return '<a id="load_edit_program" data-id=' + data + ' data-collab=1 data-direction=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=1 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
             },
             createdCell: function (td) {
                 $(td).css('padding', '0 5px')
@@ -342,8 +342,8 @@ var program_coming_table = $("#program_coming_table").DataTable({
             data: "program_id",
             name: "program_id",
             render: function (data, type, row) {
-                return '<a id="load_edit_program" data-id=' + data + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
-                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=2 data-direction=1 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
+                return '<a id="load_edit_program" data-id=' + data + ' data-collab=1 data-direction=2 class="btn btn-sm btn-light-primary px-6" style="margin-right: 10px;">Sửa</a> ' +
+                    '<a id="delete_program" data-id=' + row.article_id + ' data-collab=1 data-direction=2 class="btn btn-sm btn-light-danger px-6">Xóa</a>'
             },
             createdCell: function (td) {
                 $(td).css('padding', '0 5px')

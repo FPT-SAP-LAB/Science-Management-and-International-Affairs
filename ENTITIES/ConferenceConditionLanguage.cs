@@ -12,14 +12,14 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class ConferenceCriteriaLanguage
+    public partial class ConferenceConditionLanguage
     {
-        public int conference_criteria_language_id { get; set; }
-        public int criteria_id { get; set; }
+        public int conference_condition_language_id { get; set; }
+        public int condition_id { get; set; }
         public int language_id { get; set; }
         public string name { get; set; }
     
-        public virtual Criterion Criterion { get; set; }
+        public virtual Condition Condition { get; set; }
         public virtual Language Language { get; set; }
     }
 }

@@ -95,13 +95,13 @@
                             <input type="hidden" name="profile_avatar_remove" />
                         </label>
 
-                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" id="cancel_avatar" data-toggle="tooltip" title="Cancel avatar">
                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                         </span>
 
-                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                        @*<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
                             <i class="ki ki-bold-close icon-xs text-muted"></i>
-                        </span>
+                        </span>*@
                     </div>
                 </div>
                 <div class="profile-bar">
@@ -206,4 +206,28 @@
         <!--end::Body-->
     </div>
     <!--end::Profile Card-->
+</div>
+<div class="modal fade" id="avatar_change" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh hồ sơ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mt-7 pb-2" style=" text-align: center;">
+                    <div class="image-input image-input-outline" id="kt_image_avatar">
+                        <div class="image-input-wrapper" id="avatar_preview"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" id="delete_avt" data-dismiss="modal">Huỷ</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="submit_edit_avt">Đồng ý</button>
+            </div>
+        </div>
+    </div>
 </div>

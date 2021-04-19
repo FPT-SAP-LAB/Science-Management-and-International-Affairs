@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "THAY ĐỔI CHÍNH SÁCH";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    IEnumerable<ENTITIES.ConferenceCriteriaLanguage> list = ViewBag.ConferenceCriteriaLanguages;
+    IEnumerable<ENTITIES.ConferenceConditionLanguage> list = ViewBag.ConferenceCriteriaLanguages;
 }
 
 <div class="card card-custom gutter-b">
@@ -37,14 +37,14 @@
                             @foreach (int item in ViewBag.DistinctList)
                             {
                                 <tr>
-                                    @foreach (ENTITIES.ConferenceCriteriaLanguage crit in list.Where(x => x.criteria_id == item))
+                                    @foreach (ENTITIES.ConferenceConditionLanguage crit in list.Where(x => x.condition_id == item))
                                     {
                                         <td>
                                             <input type="text" class="form-control" value="@crit.name" />
                                         </td>
                                     }
                                     <td class="text-center">
-                                        <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                        <a onclick="deleteCondition(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
                                     </td>
                                 </tr>
                             }
@@ -56,7 +56,7 @@
                                     </td>
                                 }
                                 <td class="text-center">
-                                    <a onclick="deleteCost(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
+                                    <a onclick="deleteCondition(this)" class="btn btn-sm btn-clean btn-icon" title="Delete"> <i class="la la-trash"></i> </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -244,6 +244,10 @@
                     });
                 }
             });
+        }
+
+        function deleteCondition(ele) {
+            $(ele).closest("tr").remove();
         }
     </script>
 }
