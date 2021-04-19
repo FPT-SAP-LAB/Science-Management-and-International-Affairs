@@ -266,15 +266,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     }
                     else
                     {
-                        //upload file
-                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
-                        if (evidence != null)
-                        {
-                            f = academicCollaborationRepo.uploadEvidenceFile(evidence, folder_name, 4, false);
-                        }
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, evidence, account_id);
+                            obj_person, obj_partner, obj_academic_collab, evidence, folder_name, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }
@@ -308,12 +302,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
 
         [Auther(RightID = "10,11")]
         [HttpPost]
-        public ActionResult updateAcademicCollaboration(string old_evidence_stringify, HttpPostedFileBase new_evidence, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
+        public ActionResult updateAcademicCollaboration(HttpPostedFileBase new_evidence, string file_action, string folder_name, int direction_id, int collab_type_id, string obj_person_stringify, string obj_partner_stringify, string obj_academic_collab_stringify)
         {
             try
             {
                 //parse to Object
-                File old_evidence = JsonConvert.DeserializeObject<File>(old_evidence_stringify);
                 SaveAcadCollab_Person obj_person = JsonConvert.DeserializeObject<SaveAcadCollab_Person>(obj_person_stringify);
                 SaveAcadCollab_Partner obj_partner = JsonConvert.DeserializeObject<SaveAcadCollab_Partner>(obj_partner_stringify);
                 SaveAcadCollab_AcademicCollaboration obj_academic_collab = JsonConvert.DeserializeObject<SaveAcadCollab_AcademicCollaboration>(obj_academic_collab_stringify);
@@ -329,14 +322,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     }
                     else
                     {
-                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
-                        if (new_evidence != null)
-                        {
-                            f = academicCollaborationRepo.updateEvidenceFile(old_evidence, new_evidence, folder_name, 4, false);
-                        }
                         //Save academic collab
                         AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
-                            obj_person, obj_partner, obj_academic_collab, f, new_evidence, account_id);
+                            obj_person, obj_partner, obj_academic_collab, new_evidence, file_action, folder_name, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
                 }

@@ -12,22 +12,22 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Criterion
+    public partial class Condition
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Criterion()
+        public Condition()
         {
-            this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
-            this.EligibilityCriterias = new HashSet<EligibilityCriteria>();
+            this.ConferenceConditionLanguages = new HashSet<ConferenceConditionLanguage>();
+            this.EligibilityConditions = new HashSet<EligibilityCondition>();
         }
     
-        public int criteria_id { get; set; }
+        public int condition_id { get; set; }
         public int policy_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
-        public virtual RequestConferencePolicy RequestConferencePolicy { get; set; }
+        public virtual ICollection<ConferenceConditionLanguage> ConferenceConditionLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EligibilityCriteria> EligibilityCriterias { get; set; }
+        public virtual ICollection<EligibilityCondition> EligibilityConditions { get; set; }
+        public virtual Policy Policy { get; set; }
     }
 }

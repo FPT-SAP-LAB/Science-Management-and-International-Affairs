@@ -22,13 +22,12 @@ namespace ENTITIES
             this.ArticleVersions = new HashSet<ArticleVersion>();
             this.AcademicDegreeLanguages = new HashSet<AcademicDegreeLanguage>();
             this.AcademicDegreeTypeLanguages = new HashSet<AcademicDegreeTypeLanguage>();
-            this.ConferenceCriteriaLanguages = new HashSet<ConferenceCriteriaLanguage>();
+            this.ConferenceConditionLanguages = new HashSet<ConferenceConditionLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.AcademicActivityTypeLanguages = new HashSet<AcademicActivityTypeLanguage>();
             this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.NotificationTypeLanguages = new HashSet<NotificationTypeLanguage>();
-            this.PaperPolicyCriteriaLanguages = new HashSet<PaperPolicyCriteriaLanguage>();
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
             this.PositionLanguages = new HashSet<PositionLanguage>();
             this.ResearchAreaLanguages = new HashSet<ResearchAreaLanguage>();
@@ -53,7 +52,7 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicDegreeTypeLanguage> AcademicDegreeTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceCriteriaLanguage> ConferenceCriteriaLanguages { get; set; }
+        public virtual ICollection<ConferenceConditionLanguage> ConferenceConditionLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormalityLanguage> FormalityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -64,8 +63,6 @@ namespace ENTITIES
         public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperPolicyCriteriaLanguage> PaperPolicyCriteriaLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperStatusLanguage> PaperStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

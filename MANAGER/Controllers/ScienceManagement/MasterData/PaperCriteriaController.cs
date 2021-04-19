@@ -1,5 +1,7 @@
-﻿using BLL.ScienceManagement.MasterData;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.MasterData;
 using ENTITIES;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,12 +36,30 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
         }
 
         [HttpPost]
-        public JsonResult addItem(string name)
+        public JsonResult addItem(string criteria, HttpPostedFileBase file)
         {
-            int id = md.AddPaperCriteria(name);
-            string mess = "ss";
-            if (id == 0) mess = "ff";
-            return Json(new { mess = mess, id = id }, JsonRequestBehavior.AllowGet);
+            JObject @object = JObject.Parse(criteria);
+            List<PaperCriteria> list = new List<PaperCriteria>();
+            foreach (var item in @object["arr_cri"])
+            {
+                PaperCriteria temp = new PaperCriteria()
+                {
+                    name = (string)item["name"]
+                };
+                list.Add(temp);
+            }
+
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+
+            bool mess = md.addNewPolicy(file, list, acc);
+
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
