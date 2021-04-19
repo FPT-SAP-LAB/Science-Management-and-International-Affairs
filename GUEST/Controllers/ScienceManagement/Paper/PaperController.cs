@@ -290,9 +290,9 @@ namespace GUEST.Controllers
                 };
                 if ((int)item["office_id"] != 0)
                 {
-                    temp.bank_number = Int64.Parse(item["bank_number"].ToString());
+                    temp.bank_number = (string)item["bank_number"].ToString();
                     temp.bank_branch = (string)item["bank_branch"];
-                    temp.tax_code = Int64.Parse(item["tax_code"].ToString());
+                    temp.tax_code = (string)item["tax_code"].ToString();
                     temp.identification_number = (string)item["identification_number"];
                     temp.mssv_msnv = (string)item["mssv_msnv"];
                     temp.office_id = (int)item["office_id"];
