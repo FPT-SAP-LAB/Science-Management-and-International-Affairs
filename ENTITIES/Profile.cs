@@ -36,9 +36,9 @@ namespace ENTITIES
         public Nullable<int> avatar_id { get; set; }
         public Nullable<int> current_academic_degree_id { get; set; }
         public Nullable<int> country_id { get; set; }
-        public Nullable<long> bank_number { get; set; }
+        public string bank_number { get; set; }
         public string bank_branch { get; set; }
-        public Nullable<long> tax_code { get; set; }
+        public string tax_code { get; set; }
         public string identification_number { get; set; }
         public Nullable<int> identification_file_id { get; set; }
         public string mssv_msnv { get; set; }
