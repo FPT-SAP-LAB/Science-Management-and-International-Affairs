@@ -12,26 +12,26 @@ namespace BLL.ModelDAL
     public class ConferenceCriteriaLanguageRepo
     {
         private ScienceAndInternationalAffairsEntities db;
-        public List<ConferenceCriteriaLanguage> GetCurrentList(int language_id)
+        public List<ConferenceConditionLanguage> GetCurrentList(int language_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
-            var temp = db.Criteria.Where(x => x.policy_id == 3).ToList();
+            var temp = db.Conditions.Where(x => x.policy_id == 3).ToList();
             db.Configuration.LazyLoadingEnabled = false;
-            var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
-                                               join b in db.Criteria on a.policy_id equals b.policy_id
-                                               join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
-                                               where a.expired_date == null && c.language_id == language_id
+            var ConferenceCriteriaLanguages = (from a in db.Policies
+                                               join b in db.Conditions on a.policy_id equals b.policy_id
+                                               join c in db.ConferenceConditionLanguages on b.condition_id equals c.condition_id
+                                               where a.expired_date == null && c.language_id == language_id && a.policy_type_id == 1
                                                select c).ToList();
             return ConferenceCriteriaLanguages;
         }
-        public List<ConferenceCriteriaLanguage> GetAll()
+        public List<ConferenceConditionLanguage> GetAll()
         {
             db = new ScienceAndInternationalAffairsEntities();
             db.Configuration.LazyLoadingEnabled = false;
-            var ConferenceCriteriaLanguages = (from a in db.RequestConferencePolicies
-                                               join b in db.Criteria on a.policy_id equals b.policy_id
-                                               join c in db.ConferenceCriteriaLanguages on b.criteria_id equals c.criteria_id
-                                               where a.expired_date == null
+            var ConferenceCriteriaLanguages = (from a in db.Policies
+                                               join b in db.Conditions on a.policy_id equals b.policy_id
+                                               join c in db.ConferenceConditionLanguages on b.condition_id equals c.condition_id
+                                               where a.expired_date == null && a.policy_type_id == 1
                                                select c).ToList();
             return ConferenceCriteriaLanguages;
         }
@@ -40,7 +40,7 @@ namespace BLL.ModelDAL
             if (string.IsNullOrWhiteSpace(name))
                 return new AlertModal<string>(false, "Không được bỏ trống");
             db = new ScienceAndInternationalAffairsEntities();
-            ConferenceCriteriaLanguage criteriaLanguage = db.ConferenceCriteriaLanguages.Find(id);
+            ConferenceConditionLanguage criteriaLanguage = db.ConferenceConditionLanguages.Find(id);
             if (criteriaLanguage == null)
             {
                 return new AlertModal<string>(false, "Không tìm thấy");
@@ -52,7 +52,7 @@ namespace BLL.ModelDAL
                 return new AlertModal<string>(name.Trim(), true);
             }
         }
-        public AlertModal<string> Add(HttpPostedFileBase file, string policies)
+        public AlertModal<string> Add(HttpPostedFileBase file, string policies, int account_id)
         {
             string content = "";
             db = new ScienceAndInternationalAffairsEntities();
@@ -63,13 +63,13 @@ namespace BLL.ModelDAL
                 {
                     RequestConferencePolicyRepo policyRepo = new RequestConferencePolicyRepo();
 
-                    RequestConferencePolicy oldPolicy = policyRepo.GetCurrentPolicy(db);
+                    Policy oldPolicy = policyRepo.GetCurrentPolicy(db);
                     oldPolicy.expired_date = DateTime.Now;
 
                     Google.Apis.Drive.v3.Data.File fileUploaded = GoogleDriveService.UploadPolicyFile(file);
                     file_drive_id = fileUploaded.Id;
 
-                    RequestConferencePolicy newPolicy = new RequestConferencePolicy
+                    Policy newPolicy = new Policy
                     {
                         File = new File
                         {
@@ -78,9 +78,11 @@ namespace BLL.ModelDAL
                             name = file.FileName
                         },
                         valid_date = DateTime.Now,
-                        expired_date = null
+                        expired_date = null,
+                        account_id = account_id,
+                        policy_type_id = 1
                     };
-                    db.RequestConferencePolicies.Add(newPolicy);
+                    db.Policies.Add(newPolicy);
                     db.SaveChanges();
 
                     List<Language> languages = LanguageRepo.GetLanguages(db);
@@ -91,7 +93,7 @@ namespace BLL.ModelDAL
                     bool Added = false;
                     foreach (JObject item in _Array)
                     {
-                        Criterion criterion = new Criterion
+                        Condition condition = new Condition
                         {
                             policy_id = newPolicy.policy_id
                         };
@@ -104,14 +106,14 @@ namespace BLL.ModelDAL
                                 content = "Chưa điền đầy đủ ngôn ngữ";
                                 throw new Exception();
                             }
-                            criterion.ConferenceCriteriaLanguages.Add(new ConferenceCriteriaLanguage
+                            condition.ConferenceConditionLanguages.Add(new ConferenceConditionLanguage
                             {
                                 language_id = key,
                                 name = name.ToString().Trim()
                             });
                             Added = true;
                         }
-                        db.Criteria.Add(criterion);
+                        db.Conditions.Add(condition);
                     }
                     if (!Added)
                     {

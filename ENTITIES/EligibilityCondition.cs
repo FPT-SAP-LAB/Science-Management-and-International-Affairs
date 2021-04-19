@@ -12,13 +12,13 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class EligibilityCriteria
+    public partial class EligibilityCondition
     {
-        public int criteria_id { get; set; }
+        public int condition_id { get; set; }
         public int request_id { get; set; }
         public bool is_accepted { get; set; }
     
-        public virtual Criterion Criterion { get; set; }
+        public virtual Condition Condition { get; set; }
         public virtual RequestConference RequestConference { get; set; }
     }
 }
