@@ -122,8 +122,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         WHERE (al.language_id = @language or av.language_id = @language) AND [aa].activity_id = @id and ai.main_article = 1";
                 baseAA detail = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("id", id),
                     new SqlParameter("language", language)).FirstOrDefault();
-                detail.from = changeFormatDate(detail.from);
-                detail.to = changeFormatDate(detail.to);
+                if (detail != null)
+                {
+                    detail.from = changeFormatDate(detail.from);
+                    detail.to = changeFormatDate(detail.to);
+                }
                 return detail;
             }
             catch (Exception e)
