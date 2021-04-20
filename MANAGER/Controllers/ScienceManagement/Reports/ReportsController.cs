@@ -89,8 +89,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 int? office_id;
                 int? hang;
                 int? type;
-                if (Request["coso"] == null || Request["coso"] == ""){office_id = null;}
-                else{office_id = Int32.Parse(Request["coso"]);}
+                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
+                else { office_id = Int32.Parse(Request["coso"]); }
                 /////////////////////////////////////////////////////////////////////////
                 if (Request["hang"] == null || Request["hang"] == "") { hang = null; }
                 else { hang = Int32.Parse(Request["hang"]); }
