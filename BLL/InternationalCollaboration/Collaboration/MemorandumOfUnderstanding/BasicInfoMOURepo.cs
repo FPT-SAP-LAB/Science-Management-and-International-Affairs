@@ -188,7 +188,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         }
                     }
 
-
                     DateTime mou_end_date = DateTime.ParseExact(newBasicInfo.mou_end_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //update basicInfo
                     MOU mou = db.MOUs.Find(mou_id);
