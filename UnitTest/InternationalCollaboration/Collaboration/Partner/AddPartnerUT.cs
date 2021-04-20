@@ -56,7 +56,6 @@ namespace UnitTest.InternationalCollaboration.Collaboration.Partner
             ENTITIES.ArticleVersion articleVersion = IsAdded_AV(partner.article_id);
             if (list_after - list_before == 1)
             {
-
                 if (partner.partner_name.Equals(partner_article.partner_name) &&
                    partner.address.Equals(address) &&
                    partner.country_id == country_id &&

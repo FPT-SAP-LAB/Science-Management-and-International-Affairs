@@ -740,7 +740,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             public int activity_id { get; set; }
             public int count_upload_main { get; set; }
-
         }
         public class SumDetail
         {
