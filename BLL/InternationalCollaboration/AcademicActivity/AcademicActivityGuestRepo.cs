@@ -64,8 +64,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
-                return new List<baseAA>();
+                throw e;
             }
         }
 
@@ -131,8 +130,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
-                return new baseAA();
+                throw e;
             }
         }
         public List<subContent> GetSubContent(int id, int language)

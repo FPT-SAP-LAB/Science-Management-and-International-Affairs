@@ -63,7 +63,11 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityDetailUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetFormUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetListTypeUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetSubContentUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOABasicInfo\GetBasicInfoMOAUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOABasicInfo\ListAllExMOAUT.cs" />
     <Compile Include="InternationalCollaboration\Collaboration\MOABasicInfo\EditMOABasicInfoUT.cs" />
