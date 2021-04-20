@@ -21,7 +21,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public String specialization { get; set; }
         public List<PaperCriteriaCustom> criterias { get; set; }
         public String co_author { get; set; }
-        
     }
     public class PaperCriteriaCustom
     {

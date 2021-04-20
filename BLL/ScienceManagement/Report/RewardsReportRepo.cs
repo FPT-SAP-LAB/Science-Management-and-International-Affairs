@@ -27,35 +27,37 @@ namespace BLL.ScienceManagement.Report
                         {
                             decision_number = a.decision_number,
                             authors = (from a1 in db.Authors
-                                           join b1 in db.AuthorPapers on a1.people_id equals b1.people_id
-                                           where b1.paper_id == e.paper_id
-                                           select a1.name).ToList(),
+                                       join b1 in db.AuthorPapers on a1.people_id equals b1.people_id
+                                       where b1.paper_id == e.paper_id
+                                       select a1.name).ToList(),
                             offices = (from a2 in db.Authors
-                                      join b2 in db.AuthorPapers on a2.people_id equals b2.people_id
-                                      join c2 in db.Offices on a2.office_id equals c2.office_id
-                                      where b2.paper_id == e.paper_id
-                                      select c2.office_name).Distinct().ToList(),
+                                       join b2 in db.AuthorPapers on a2.people_id equals b2.people_id
+                                       join c2 in db.Offices on a2.office_id equals c2.office_id
+                                       where b2.paper_id == e.paper_id
+                                       select c2.office_name).Distinct().ToList(),
                             titles = (from a3 in db.Authors
                                       join b3 in db.AuthorPapers on a3.people_id equals b3.people_id
                                       join c3 in db.Titles on a3.title_id equals c3.title_id
                                       join d3 in db.TitleLanguages on c3.title_id equals d3.title_id
-                                      where b3.paper_id == e.paper_id && d3.language_id==1
+                                      where b3.paper_id == e.paper_id && d3.language_id == 1
                                       select d3.name).Distinct().ToList(),
                             paper_name = e.name,
                             journal_name = e.journal_name,
                             specialization = (from a4 in db.RequestPapers
                                               join b4 in db.Specializations on a4.specialization_id equals b4.specialization_id
                                               join c4 in db.SpecializationLanguages on b4.specialization_id equals c4.specialization_id
-                                              where c4.language_id == 1 && a4.paper_id == e.paper_id select c4.name).FirstOrDefault(),
-                            criterias = (from a5 in db.Papers 
-                                        join b5 in db.PaperWithCriterias on a5.paper_id equals b5.paper_id
-                                        join c5 in db.PaperCriterias on b5.criteria_id equals c5.criteria_id
-                                        where a5.paper_id == e.paper_id 
-                                        && (c5.criteria_id==1 || c5.criteria_id == 2 || c5.criteria_id == 3 || c5.criteria_id == 4)
-                                        select  new PaperCriteriaCustom { 
-                                            id = c5.criteria_id,
-                                            name= c5.name 
-                                            }).ToList(),
+                                              where c4.language_id == 1 && a4.paper_id == e.paper_id
+                                              select c4.name).FirstOrDefault(),
+                            criterias = (from a5 in db.Papers
+                                         join b5 in db.PaperWithCriterias on a5.paper_id equals b5.paper_id
+                                         join c5 in db.PaperCriterias on b5.criteria_id equals c5.criteria_id
+                                         where a5.paper_id == e.paper_id
+                                         && (c5.criteria_id == 1 || c5.criteria_id == 2 || c5.criteria_id == 3 || c5.criteria_id == 4)
+                                         select new PaperCriteriaCustom
+                                         {
+                                             id = c5.criteria_id,
+                                             name = c5.name
+                                         }).ToList(),
                             co_author = (from a5 in db.Papers
                                          join b5 in db.PaperWithCriterias on a5.paper_id equals b5.paper_id
                                          join c5 in db.PaperCriterias on b5.criteria_id equals c5.criteria_id

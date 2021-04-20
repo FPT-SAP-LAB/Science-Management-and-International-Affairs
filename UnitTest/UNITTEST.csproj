@@ -63,6 +63,11 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternationalCollaboration\AcademicActivity\AddAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityTypeUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetListAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\UpdateAcademicActivityUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityDetailUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetFormUT.cs" />
