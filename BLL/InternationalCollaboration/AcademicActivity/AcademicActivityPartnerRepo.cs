@@ -24,53 +24,59 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     if (checkDuplicatePartnerScope(activityPartner))
                     {
                         AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
-                        //upload file if exist
-                        //upload file
-                        Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
-                        if (evidence_file != null)
+                        if (checkDateFromToWithAA(activityPartner))
                         {
-                            f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
-                        }
-                        File file = new File();
-                        //save file if null, else just save activityPartner
-                        if (f != null)
-                        {
-                            file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
-                        }
-                        //update to PartnerScope
-                        //PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
-                        PartnerScope partnerScope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == activityPartner.partner_id && x.scope_id == activityPartner.scope_id).FirstOrDefault();
-                        if (partnerScope != null)
-                        {
-                            saveActivityPartner(file, partnerScope, activityPartner, account_id);
-                            academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
+                            //upload file if exist
+                            //upload file
+                            Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                            if (evidence_file != null)
+                            {
+                                f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
+                            }
+                            File file = new File();
+                            //save file if null, else just save activityPartner
+                            if (f != null)
+                            {
+                                file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                            }
+                            //update to PartnerScope
+                            //PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
+                            PartnerScope partnerScope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == activityPartner.partner_id && x.scope_id == activityPartner.scope_id).FirstOrDefault();
+                            if (partnerScope != null)
+                            {
+                                saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                                academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
+                            }
+                            else
+                            {
+                                partnerScope = academicCollaborationRepo.savePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
+                                db.SaveChanges();
+                                saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                            }
+                            db.SaveChanges();
+                            dbContext.Commit();
+
+                            using (DbContextTransaction trans = db.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    List<int> list_partner_scope_id = new List<int>();
+                                    list_partner_scope_id.Add(partnerScope.partner_scope_id);
+                                    autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
+                                    trans.Commit();
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.ToString());
+                                    trans.Rollback();
+                                    return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                                }
+                            }
                         }
                         else
                         {
-                            partnerScope = academicCollaborationRepo.savePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
-                            db.SaveChanges();
-                            saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                            return new AlertModal<string>(null, false, "Lỗi", "Thời gian hợp tác cần giao với thời gian tổ chức hoạt động học thuật.");
                         }
-                        db.SaveChanges();
-                        dbContext.Commit();
-
-                        using (DbContextTransaction trans = db.Database.BeginTransaction())
-                        {
-                            try
-                            {
-                                List<int> list_partner_scope_id = new List<int>();
-                                list_partner_scope_id.Add(partnerScope.partner_scope_id);
-                                autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
-                                trans.Commit();
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.ToString());
-                                trans.Rollback();
-                                return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
-                            }
-                        }
-
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
                     else
@@ -165,7 +171,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner saveActivityPartner, int account_id)
+        public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string file_action, string folder_name, SaveActivityPartner saveActivityPartner, int account_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
@@ -176,59 +182,64 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     {
                         //update file
                         ActivityPartner activityPartner = db.ActivityPartners.Find(saveActivityPartner.activity_partner_id);
-                        AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
-                        Google.Apis.Drive.v3.Data.File f;
-                        File old_file = db.Files.Find(activityPartner.file_id);
-                        File new_file = new File();
-                        if (evidence_file != null)
+                        if (checkDateFromToWithAA(saveActivityPartner))
                         {
-                            if (old_file != null)
+                            AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
+                            Google.Apis.Drive.v3.Data.File f;
+                            File old_file = db.Files.Find(activityPartner.file_id);
+                            File new_file = new File();
+                            switch (file_action)
                             {
-                                //update file on Google Drive
-                                f = GoogleDriveService.UpdateFile(evidence_file.FileName, evidence_file.InputStream, evidence_file.ContentType, old_file.file_drive_id);
-                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                                case "edit":
+                                    if (old_file != null)
+                                    {
+                                        //update file on Google Drive
+                                        f = GoogleDriveService.UpdateFile(evidence_file.FileName, evidence_file.InputStream, evidence_file.ContentType, old_file.file_drive_id);
+                                    }
+                                    else
+                                    {
+                                        f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
+                                    }
+                                    new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                                    break;
+                                case "remove":
+                                    //delete corressponding in gg drive
+                                    GoogleDriveService.DeleteFile(old_file.file_drive_id);
+                                    //delete corressponding from File
+                                    new_file = removeFile(old_file);
+                                    break;
+                                case "none":
+                                    break;
+                                default:
+                                    break;
                             }
-                            else
+                            //update ActivityPartner
+                            activityPartner = updateActivityPartner(activityPartner, saveActivityPartner, new_file, file_action, account_id);
+                            dbContext.Commit();
+                            //change status MOU/MOA
+                            using (DbContextTransaction trans = db.Database.BeginTransaction())
                             {
-                                //upload to Goolge Drive
-                                f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
-                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                                try
+                                {
+                                    List<int> list_partner_scope_id = new List<int>();
+                                    list_partner_scope_id.Add(activityPartner.partner_scope_id);
+                                    autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
+                                    trans.Commit();
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.ToString());
+                                    trans.Rollback();
+                                    return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
+                                }
                             }
+
+                            return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
                         }
                         else
                         {
-                            if (old_file != null)
-                            {
-                                //delete corressponding in gg drive
-                                GoogleDriveService.DeleteFile(old_file.file_drive_id);
-                                //delete corressponding from File
-                                new_file = removeFile(old_file);
-                            }
+                            return new AlertModal<string>(null, false, "Lỗi", "Thời gian hợp tác cần giao với thời gian tổ chức hoạt động học thuật.");
                         }
-                        db.SaveChanges();
-                        //update file_id null in coress ActivityPartner
-                        activityPartner = updateActivityPartner(activityPartner, saveActivityPartner, new_file, account_id);
-                        dbContext.Commit();
-
-                        //change status MOU/MOA
-                        using (DbContextTransaction trans = db.Database.BeginTransaction())
-                        {
-                            try
-                            {
-                                List<int> list_partner_scope_id = new List<int>();
-                                list_partner_scope_id.Add(activityPartner.partner_scope_id);
-                                autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
-                                trans.Commit();
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.ToString());
-                                trans.Rollback();
-                                return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
-                            }
-                        }
-
-                        return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
                     }
                     else
                     {
@@ -242,11 +253,31 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
+        public bool checkDateFromToWithAA(SaveActivityPartner saveActivityPartner)
+        {
+            try
+            {
+                ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Find(saveActivityPartner.activity_id);
+                if ((saveActivityPartner.cooperation_date_start <= academicActivity.activity_date_start && academicActivity.activity_date_end <= saveActivityPartner.cooperation_date_end)
+                    || (saveActivityPartner.cooperation_date_start >= academicActivity.activity_date_start && academicActivity.activity_date_end >= saveActivityPartner.cooperation_date_end)
+                    || (saveActivityPartner.cooperation_date_start >= academicActivity.activity_date_start && academicActivity.activity_date_end >= saveActivityPartner.cooperation_date_start)
+                    || (saveActivityPartner.cooperation_date_end >= academicActivity.activity_date_start && academicActivity.activity_date_end >= saveActivityPartner.cooperation_date_end))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public File removeFile(File file)
         {
             try
             {
                 db.Files.Remove(file);
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -254,7 +285,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-        public ActivityPartner updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, int account_id)
+        public ActivityPartner updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, string file_action, int account_id)
         {
             ActivityPartner ap = new ActivityPartner();
             try
@@ -269,7 +300,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 if (saveActivityPartner.cooperation_date_start != null) ap.cooperation_date_start = saveActivityPartner.cooperation_date_start;
                 if (saveActivityPartner.cooperation_date_end != null) ap.cooperation_date_end = saveActivityPartner.cooperation_date_end;
                 ap.partner_scope_id = partnerScope.partner_scope_id;
-                if (file != null) ap.file_id = file.file_id;
+                if (file.file_id != 0) ap.file_id = file.file_id;
+
                 activityPartner.sponsor = ap.sponsor;
                 activityPartner.contact_point_name = ap.contact_point_name;
                 activityPartner.contact_point_email = ap.contact_point_email;
@@ -277,7 +309,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 activityPartner.cooperation_date_start = ap.cooperation_date_start;
                 activityPartner.cooperation_date_end = ap.cooperation_date_end;
                 activityPartner.partner_scope_id = ap.partner_scope_id;
-                activityPartner.file_id = ap.file_id;
+                switch (file_action)
+                {
+                    case "edit":
+                        activityPartner.file_id = ap.file_id;
+                        break;
+                    case "remove":
+                        activityPartner.file_id = ap.file_id;
+                        break;
+                    case "none":
+                        break;
+                }
                 ap.account_id = account_id;
                 ap.add_time = DateTime.Now;
                 db.SaveChanges();
