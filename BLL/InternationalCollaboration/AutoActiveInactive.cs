@@ -26,7 +26,7 @@ namespace BLL.InternationalCollaboration
                                 LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap ON mps.partner_scope_id = ap.partner_scope_id
                                 LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = mps.partner_scope_id
                                 LEFT JOIN SMIA_AcademicActivity.AcademicActivity aa ON ap.activity_id = aa.activity_id 
-                                WHERE ((ap.partner_scope_id IS NOT NULL AND aa.activity_date_start BETWEEN mp.mou_start_date 
+                                WHERE ((ap.partner_scope_id IS NOT NULL AND ap.cooperation_date_start BETWEEN mp.mou_start_date 
                                 AND mou.mou_end_date) 
                                 OR (ac.partner_scope_id IS NOT NULL AND ac.plan_study_start_date BETWEEN mp.mou_start_date 
                                 AND mou.mou_end_date))";
@@ -63,7 +63,7 @@ namespace BLL.InternationalCollaboration
                 var sql_check = @"SELECT InactiveMOU.mou_id, checker
                                 FROM
                                 (SELECT DISTINCT mou.mou_id,
-                                CASE WHEN ((ap.partner_scope_id IS NULL OR aa.activity_date_start NOT BETWEEN mp.mou_start_date 
+                                CASE WHEN ((ap.partner_scope_id IS NULL OR ap.cooperation_date_start NOT BETWEEN mp.mou_start_date 
                                 AND mou.mou_end_date) 
                                 AND (ac.partner_scope_id IS NULL OR ac.plan_study_start_date NOT  BETWEEN mp.mou_start_date 
                                 AND mou.mou_end_date)) THEN 1 ELSE 0 END 'checker'
@@ -149,7 +149,7 @@ namespace BLL.InternationalCollaboration
                                 LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap ON mps.partner_scope_id = ap.partner_scope_id
                                 LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = mps.partner_scope_id
                                 LEFT JOIN SMIA_AcademicActivity.AcademicActivity aa ON ap.activity_id = aa.activity_id 
-                                WHERE ((ap.partner_scope_id IS NOT NULL AND aa.activity_date_start BETWEEN mp.moa_start_date 
+                                WHERE ((ap.partner_scope_id IS NOT NULL AND ap.cooperation_date_start BETWEEN mp.moa_start_date 
                                 AND moa.moa_end_date) 
                                 OR (ac.partner_scope_id IS NOT NULL AND ac.plan_study_start_date BETWEEN mp.moa_start_date 
                                 AND moa.moa_end_date))";
@@ -186,7 +186,7 @@ namespace BLL.InternationalCollaboration
                 var sql_check = @"SELECT InactiveMOA.moa_id, checker
                                 FROM
                                 (SELECT DISTINCT moa.moa_id,
-                                CASE WHEN ((ap.partner_scope_id IS NULL OR aa.activity_date_start NOT BETWEEN mp.moa_start_date 
+                                CASE WHEN ((ap.partner_scope_id IS NULL OR ap.cooperation_date_start NOT BETWEEN mp.moa_start_date 
                                 AND moa.moa_end_date) 
                                 AND (ac.partner_scope_id IS NULL OR ac.plan_study_start_date NOT  BETWEEN mp.moa_start_date 
                                 AND moa.moa_end_date)) THEN 1 ELSE 0 END 'checker'
