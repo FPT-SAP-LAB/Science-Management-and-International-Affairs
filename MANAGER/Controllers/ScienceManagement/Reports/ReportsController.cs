@@ -24,10 +24,24 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         }
         public ActionResult InternationalPapersReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.getListYearPaper();
+            List<PaperCriteria> criterias = rewardsReportRepo.getListCriteria();
+            ViewBag.years = years;
+            ViewBag.criterias = criterias;
             return View();
         }
         public ActionResult InCountryPapersReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.getListYearPaper();
+            ViewBag.years = years;
             return View();
         }
         public ActionResult IntellectualPropertyReport()
@@ -68,18 +82,50 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
-        //public ActionResult getIncountryReward()
-        //{
-        //    rewardsReportRepo = new RewardsReportRepo();
-        //    BaseDatatable datatable = new BaseDatatable(Request);
-        //    BaseServerSideData<ArticlesInCountryReport> output = rewardsReportRepo.getAriticlesInCountryReport(datatable);
-        //    for (int i = 0; i < output.Data.Count; i++)
-        //    {
-        //        //output.Data[i].valid_date = DateTime.ParseExact(output.Data[i].valid_date, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString();
-        //        output.Data[i].rownum = datatable.Start + 1 + i;
-        //    }
-        //    return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult getAwardMoneyInoutCountry()
+        {
+            try
+            {
+                int? office_id;
+                int? hang;
+                int? type;
+                if (Request["coso"] == null || Request["coso"] == ""){office_id = null;}
+                else{office_id = Int32.Parse(Request["coso"]);}
+                /////////////////////////////////////////////////////////////////////////
+                if (Request["hang"] == null || Request["hang"] == "") { hang = null; }
+                else { hang = Int32.Parse(Request["hang"]); }
+                /////////////////////////////////////////////////////////////////////////
+                if (Request["type"] == null || Request["type"] == "") { type = null; }
+                else { type = Int32.Parse(Request["type"]); }
+                //////////////////////////////////////////////////////////////////////////
+                string name = Request["name"];
+                string year = Request["year"];
+                SearchFilter searchs = new SearchFilter()
+                {
+                    office_id = office_id,
+                    name = name,
+                    year = year,
+                    hang = hang
+                };
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.getAriticlesByAreaReports(datatable, searchs, type);
+                for (int i = 0; i < output.Item1.Data.Count; i++)
+                {
+                    output.Item1.Data[i].valid_date_string = output.Item1.Data[i].valid_date.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].rownum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
         public JsonResult getAwardByAuthors()
         {
             try
