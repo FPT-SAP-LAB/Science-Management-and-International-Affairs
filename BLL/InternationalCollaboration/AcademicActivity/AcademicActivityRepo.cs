@@ -117,7 +117,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', cast(aa.activity_date_end as nvarchar) as 'to',av.language_id
+                string sql = @"SELECT av.version_title as 'activity_name', [aa].activity_type_id, [al].[location], cast(aa.activity_date_start as nvarchar) as 'from', 
+						cast(aa.activity_date_end as nvarchar) as 'to', av.language_id, [aa].file_id, [f].name 'file_name', [f].file_drive_id, [f].link 'file_link'
                         FROM SMIA_AcademicActivity.AcademicActivity aa inner join SMIA_AcademicActivity.AcademicActivityLanguage al 
                         on aa.activity_id = al.activity_id inner join SMIA_AcademicActivity.ActivityInfo ai
                         on ai.activity_id = aa.activity_id and ai.main_article = 1 inner join IA_Article.Article ar
@@ -126,7 +127,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 						(select min(language_id) 'language_id', article_id from IA_Article.ArticleVersion group by article_id) as av1
 						inner join
 						IA_Article.ArticleVersion av2 on av1.article_id = av2.article_id and av1.language_id = av2.language_id) as av
-                        on av.article_id = ai.article_id and al.language_id = av.language_id
+                        on av.article_id = ai.article_id and al.language_id = av.language_id left join General.[File] f on f.file_id = aa.file_id
                         WHERE aa.activity_id = @activity_id";
                 baseAA obj = db.Database.SqlQuery<baseAA>(sql,
                             new SqlParameter("activity_id", id)).FirstOrDefault();
@@ -633,6 +634,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public string from { get; set; }
             public string to { get; set; }
             public int language_id { get; set; }
+            public int? file_id { get; set; }
+            public string file_name { get; set; }
+            public string file_drive_id { get; set; }
+            public string file_link { get; set; }
         }
         public class cloneBase : baseAA
         {
