@@ -72,7 +72,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     return new AlertModal<string>(null, false, "Có lỗi xảy ra khi tự động active/inactive MOU/MOA.");
                                 }
                             }
-                        }else
+                        }
+                        else
                         {
                             return new AlertModal<string>(null, false, "Lỗi", "Thời gian hợp tác cần giao với thời gian tổ chức hoạt động học thuật.");
                         }
