@@ -435,7 +435,7 @@ namespace BLL.ScienceManagement.Invention
                 int request_id = Int32.Parse(id);
                 RequestInvention ri = db.RequestInventions.Where(x => x.request_id == request_id).FirstOrDefault();
                 ri.reward_type = type;
-                ri.status_id = 3;
+                ri.status_id = 8;
                 //db.Entry(ri).State = EntityState.Modified;
                 db.SaveChanges();
                 return "ss";
@@ -506,7 +506,7 @@ namespace BLL.ScienceManagement.Invention
                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [SM_Request].BaseRequest br on ri.request_id = br.request_id
 	                            join [General].Account acc on acc.account_id = br.account_id
-                           where ri.status_id = 3 or ri.status_id = 5";
+                           where ri.status_id = 3 or ri.status_id = 5 or ri.status_id = 8";
             List<PendingInvention_Manager> list = db.Database.SqlQuery<PendingInvention_Manager>(sql).ToList();
             return list;
         }
