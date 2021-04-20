@@ -15,34 +15,75 @@ namespace BLL.ScienceManagement.Report
     public class RewardsReportRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        //public BaseServerSideData<ArticlesInCountryReport> getAriticlesInCountryReport(BaseDatatable baseDatatable, int account_id = 0, int language_id = 1)
-        //{
-        //    var data = (from a in db.Decisions
-        //                join b in db.RequestDecisions on a.decision_id equals b.decision_id
-        //                join c in db.BaseRequests on b.request_id equals c.request_id
-        //                join d in db.RequestPapers on c.request_id equals d.request_id
-        //                join e in db.Papers on d.paper_id equals e.paper_id
-        //                join f in db.AuthorPapers on e.paper_id equals f.paper_id
-        //                join g in db.People on f.people_id equals g.people_id
-        //                join h in db.Profiles on g.people_id equals h.people_id
-        //                join i in db.Specializations on d.specialization_id equals i.specialization_id
-        //                join k in db.SpecializationLanguages on i.specialization_id equals k.specialization_id
-        //                join l in db.Offices on h.office_id equals l.office_id
-        //                where k.language_id == 1 && d.type == "trongnuoc"
-        //                select new ArticlesInCountryReport
-        //                {
-        //                    decision_number = a.decision_number,
-        //                    author_name = g.name,
-        //                    paper_name = e.name,
-        //                    journal_name = e.journal_name,
-        //                    valid_date = a.valid_date.ToString(),
-        //                    total_reward = f.money_reward.ToString()
-        //                });
-        //    var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
-        //    .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-        //    int recordsTotal = data.Count();
-        //    return new BaseServerSideData<ArticlesInCountryReport>(res, recordsTotal);
-        //}
+        public Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> getAriticlesByAreaReports(BaseDatatable baseDatatable, SearchFilter search, int? paperType, int account_id = 0, int language_id = 1)
+        {
+            var data = (from a in db.Decisions
+                        join b in db.RequestDecisions on a.decision_id equals b.decision_id
+                        join c in db.BaseRequests on b.request_id equals c.request_id
+                        join d in db.RequestPapers on c.request_id equals d.request_id
+                        join e in db.Papers on d.paper_id equals e.paper_id
+                        where d.type == paperType //SAU THÊM ĐIỀU KIỆN CỦA TRƯỜNG is_verified VÀO ĐÂY
+                        select new ArticlesInoutCountryReports
+                        {
+                            decision_number = a.decision_number,
+                            authors = (from a1 in db.Authors
+                                           join b1 in db.AuthorPapers on a1.people_id equals b1.people_id
+                                           where b1.paper_id == e.paper_id
+                                           select a1.name).ToList(),
+                            offices = (from a2 in db.Authors
+                                      join b2 in db.AuthorPapers on a2.people_id equals b2.people_id
+                                      join c2 in db.Offices on a2.office_id equals c2.office_id
+                                      where b2.paper_id == e.paper_id
+                                      select c2.office_name).Distinct().ToList(),
+                            titles = (from a3 in db.Authors
+                                      join b3 in db.AuthorPapers on a3.people_id equals b3.people_id
+                                      join c3 in db.Titles on a3.title_id equals c3.title_id
+                                      join d3 in db.TitleLanguages on c3.title_id equals d3.title_id
+                                      where b3.paper_id == e.paper_id && d3.language_id==1
+                                      select d3.name).Distinct().ToList(),
+                            paper_name = e.name,
+                            journal_name = e.journal_name,
+                            specialization = (from a4 in db.RequestPapers
+                                              join b4 in db.Specializations on a4.specialization_id equals b4.specialization_id
+                                              join c4 in db.SpecializationLanguages on b4.specialization_id equals c4.specialization_id
+                                              where c4.language_id == 1 && a4.paper_id == e.paper_id select c4.name).FirstOrDefault(),
+                            criterias = (from a5 in db.Papers 
+                                        join b5 in db.PaperWithCriterias on a5.paper_id equals b5.paper_id
+                                        join c5 in db.PaperCriterias on b5.criteria_id equals c5.criteria_id
+                                        where a5.paper_id == e.paper_id 
+                                        && (c5.criteria_id==1 || c5.criteria_id == 2 || c5.criteria_id == 3 || c5.criteria_id == 4)
+                                        select  new PaperCriteriaCustom { 
+                                            id = c5.criteria_id,
+                                            name= c5.name 
+                                            }).ToList(),
+                            co_author = (from a5 in db.Papers
+                                         join b5 in db.PaperWithCriterias on a5.paper_id equals b5.paper_id
+                                         join c5 in db.PaperCriterias on b5.criteria_id equals c5.criteria_id
+                                         where a5.paper_id == e.paper_id
+                                         && (c5.criteria_id == 6)
+                                         select c5.name).FirstOrDefault(),
+                            valid_date = a.valid_date,
+                            valid_date_string = "",
+                            total_reward = d.total_reward
+                        });
+            if (search.name != null && search.name.Trim() != "")
+            {
+                data = data.Where(x => x.paper_name.Contains(search.name));
+            }
+            if (search.year != null && search.year.Trim() != "")
+            {
+                data = data.Where(x => x.valid_date.Year.ToString() == search.year);
+            }
+            if (search.hang != null)
+            {
+                data = data.Where(x => x.criterias.Select(a => a.id).ToList().Contains(search.hang.Value));
+            }
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            String totalAmount = data.Select(x => x.total_reward).Sum().ToString();
+            int recordsTotal = data.Count();
+            return new Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String>(new BaseServerSideData<ArticlesInoutCountryReports>(res, recordsTotal), totalAmount);
+        }
         public BaseServerSideData<ReportByAuthorAward> getAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         {
             var data = (from a in db.AuthorPapers
@@ -100,6 +141,13 @@ namespace BLL.ScienceManagement.Report
         public List<String> getListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
+            return data;
+        }
+
+        public List<PaperCriteria> getListCriteria()
+        {
+            List<int> criteria = new List<int>() { 1, 2, 3, 4, 5 };
+            var data = (from a in db.PaperCriterias where criteria.Contains(a.criteria_id) select a).ToList();
             return data;
         }
     }
