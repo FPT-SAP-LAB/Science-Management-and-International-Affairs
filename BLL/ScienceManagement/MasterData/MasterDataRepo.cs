@@ -64,7 +64,7 @@ namespace BLL.ScienceManagement.MasterData
                                     select Journal_title, ISSN, eISSN, 'SCIE' as type
                                     from SM_ScientificProduct.SCIE
                                     where Journal_title like @name
-                                    ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection+
+                                    ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                                     " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                     List<CustomISI> internalUnits = db.Database.SqlQuery<CustomISI>(sql, new SqlParameter("name", "%" + name_search + "%")).ToList();
 
