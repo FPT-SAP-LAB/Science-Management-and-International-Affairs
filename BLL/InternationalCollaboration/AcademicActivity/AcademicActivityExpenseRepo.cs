@@ -73,7 +73,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 ActivityOffice ao = db.ActivityOffices.Find(activity_office_id);
                 List<ActivityExpenseCategory> aec = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
-                foreach(ActivityExpenseCategory aec_item in aec)
+                foreach (ActivityExpenseCategory aec_item in aec)
                 {
                     List<ActivityExpenseDetail> aed = db.ActivityExpenseDetails.Where(x => x.expense_category_id == aec_item.expense_category_id).ToList();
                     foreach (ActivityExpenseDetail item in aed)
