@@ -13,10 +13,10 @@ namespace ENTITIES
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ScienceAndInternationalAffairsEntities1 : DbContext
+    public partial class ScienceAndInternationalAffairsEntities : DbContext
     {
-        public ScienceAndInternationalAffairsEntities1()
-            : base("name=ScienceAndInternationalAffairsEntities1")
+        public ScienceAndInternationalAffairsEntities()
+            : base("name=ScienceAndInternationalAffairsEntities")
         {
         }
     

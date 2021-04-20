@@ -9697,7 +9697,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <End Role="ContractType" Type="Self.ContractType" Multiplicity="*" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ScienceAndInternationalAffairsEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ScienceAndInternationalAffairsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CommentBases" EntityType="Self.CommentBase" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Accounts" EntityType="Self.Account" />
@@ -10726,7 +10726,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ScienceAndInternationalAffairsModelStoreContainer" CdmEntityContainer="ScienceAndInternationalAffairsEntities1">
+        <EntityContainerMapping StorageEntityContainer="ScienceAndInternationalAffairsModelStoreContainer" CdmEntityContainer="ScienceAndInternationalAffairsEntities">
           <EntitySetMapping Name="CommentBases">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.CommentBase">
               <MappingFragment StoreEntitySet="CommentBase">
