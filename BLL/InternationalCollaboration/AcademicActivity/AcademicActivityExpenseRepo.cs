@@ -72,6 +72,20 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             try
             {
                 ActivityOffice ao = db.ActivityOffices.Find(activity_office_id);
+                List<ActivityExpenseCategory> aec = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
+                foreach(ActivityExpenseCategory aec_item in aec)
+                {
+                    List<ActivityExpenseDetail> aed = db.ActivityExpenseDetails.Where(x => x.expense_category_id == aec_item.expense_category_id).ToList();
+                    foreach (ActivityExpenseDetail item in aed)
+                    {
+                        if (item.file_id != null)
+                        {
+                            File f = db.Files.Find(item.file_id);
+                            GoogleDriveService.DeleteFile(f.file_drive_id);
+                            db.Files.Remove(f);
+                        }
+                    }
+                }
                 db.ActivityOffices.Remove(ao);
                 db.SaveChanges();
                 return true;
@@ -267,7 +281,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     switch (file_action)
                     {
                         case "edit":
-                            //update
                             if (aed.file_id != null)
                             {
                                 Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
@@ -283,23 +296,22 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 file.link = f.WebViewLink;
                                 file.file_drive_id = f.Id;
                                 File ff = db.Files.Add(file);
-                                db.SaveChanges();
                                 aed.file_id = ff.file_id;
+                                db.Entry(aed).State = EntityState.Modified;
                             }
                             break;
                         case "remove":
-                            //remove on Google Drive
                             GoogleDriveService.DeleteFile(aed.File.file_drive_id);
-                            //remove file in File
                             File fff = db.Files.Find(aed.file_id);
+                            aed.file_id = null;
                             db.Files.Remove(fff);
+                            db.Entry(aed).State = EntityState.Modified;
                             break;
                         case "none":
                             break;
                         default:
                             break;
                     }
-                    db.Entry(aed).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -400,7 +412,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     switch (file_action)
                     {
                         case "edit":
-                            //update
                             if (aed.file_id != null)
                             {
                                 Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
@@ -420,21 +431,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 File ff = db.Files.Add(file);
                                 db.SaveChanges();
                                 aed.file_id = ff.file_id;
+                                db.Entry(aed).State = EntityState.Modified;
                             }
                             break;
                         case "remove":
-                            //remove on Google Drive
                             GoogleDriveService.DeleteFile(aed.File.file_drive_id);
-                            //remove file in File
                             File fff = db.Files.Find(aed.file_id);
+                            aed.file_id = null;
                             db.Files.Remove(fff);
+                            db.Entry(aed).State = EntityState.Modified;
                             break;
                         case "none":
                             break;
                         default:
                             break;
                     }
-                    db.Entry(aed).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -546,7 +557,6 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     switch (file_action)
                     {
                         case "edit":
-                            //update
                             if (aed.file_id != null)
                             {
                                 Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
@@ -564,21 +574,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 File ff = db.Files.Add(file);
                                 db.SaveChanges();
                                 aed.file_id = ff.file_id;
+                                db.Entry(aed).State = EntityState.Modified;
                             }
                             break;
                         case "remove":
-                            //remove on Google Drive
                             GoogleDriveService.DeleteFile(aed.File.file_drive_id);
-                            //remove file in File
                             File fff = db.Files.Find(aed.file_id);
+                            aed.file_id = null;
                             db.Files.Remove(fff);
+                            db.Entry(aed).State = EntityState.Modified;
                             break;
                         case "none":
                             break;
                         default:
                             break;
                     }
-                    db.Entry(aed).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
