@@ -321,7 +321,7 @@ namespace BLL.ScienceManagement.Citation
             string sql = @"select acc.email, br.created_date, br.request_id, rc.status_id
                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
 	                            join [General].Account acc on br.account_id = acc.account_id
-                           where rc.status_id = 3 or  rc.status_id = 5";
+                           where rc.status_id = 3 or  rc.status_id = 5 or rc.status_id = 8";
             List<PendingCitation_manager> list = db.Database.SqlQuery<PendingCitation_manager>(sql).ToList();
             return list;
         }
