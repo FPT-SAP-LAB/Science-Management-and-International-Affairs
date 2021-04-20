@@ -151,27 +151,28 @@ namespace BLL.ScienceManagement.Report
                             authors = (from a1 in db.Authors
                                        join b1 in db.AuthorInventions on a1.people_id equals b1.people_id
                                        where b1.invention_id == e.invention_id
-                                       select new CustomAuthor { 
-                                         id=a1.people_id,
-                                         name= a1.name,
-                                         msnv=a1.mssv_msnv,
-                                         title=(from m in db.Titles
-                                                join n in db.TitleLanguages on m.title_id equals n.title_id
-                                                where m.title_id == a1.title_id && n.language_id == 1
-                                                select n.name).FirstOrDefault(),
-                                         office=(from m in db.Offices
-                                                where m.office_id == a1.office_id
-                                                select m.office_name).FirstOrDefault(),
-                                         office_id= (from m in db.Offices
+                                       select new CustomAuthor
+                                       {
+                                           id = a1.people_id,
+                                           name = a1.name,
+                                           msnv = a1.mssv_msnv,
+                                           title = (from m in db.Titles
+                                                    join n in db.TitleLanguages on m.title_id equals n.title_id
+                                                    where m.title_id == a1.title_id && n.language_id == 1
+                                                    select n.name).FirstOrDefault(),
+                                           office = (from m in db.Offices
                                                      where m.office_id == a1.office_id
-                                                     select m.office_id).FirstOrDefault()
+                                                     select m.office_name).FirstOrDefault(),
+                                           office_id = (from m in db.Offices
+                                                        where m.office_id == a1.office_id
+                                                        select m.office_id).FirstOrDefault()
                                        }).ToList(),
                             invention_number = e.no,
-                            total_reward=d.total_reward,
-                            kind=(from m in db.InventionTypes
-                                  where e.type_id == m.invention_type_id
-                                  select m.name).FirstOrDefault(),
-                            date=e.date,
+                            total_reward = d.total_reward,
+                            kind = (from m in db.InventionTypes
+                                    where e.type_id == m.invention_type_id
+                                    select m.name).FirstOrDefault(),
+                            date = e.date,
                         });
             if (search.name != null && search.name.Trim() != "")
             {
@@ -189,7 +190,7 @@ namespace BLL.ScienceManagement.Report
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
             String totalAmount = "";
             Int64 total = 0;
-            foreach(var i in res)
+            foreach (var i in res)
             {
                 if (i.total_reward != null && i.total_reward.Trim() != "")
                 {
@@ -198,7 +199,7 @@ namespace BLL.ScienceManagement.Report
             }
             totalAmount = total.ToString();
             int recordsTotal = data.Count();
-            return new Tuple<BaseServerSideData<IntellectualPropertyReport>, 
+            return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
         public List<String> getListYearPaper()
@@ -209,8 +210,8 @@ namespace BLL.ScienceManagement.Report
         public List<String> getListYear(int gap)
         {
             int end = DateTime.Now.Year;
-            int start = end - gap; 
-            List<String> data = Enumerable.Range(start, gap+1).Select(x=>x.ToString()).OrderByDescending(x=>x).ToList();
+            int start = end - gap;
+            List<String> data = Enumerable.Range(start, gap + 1).Select(x => x.ToString()).OrderByDescending(x => x).ToList();
             return data;
         }
         public List<PaperCriteria> getListCriteria()
