@@ -906,7 +906,7 @@ namespace BLL.ScienceManagement.Paper
                 rp.specialization_id = item.specialization_id;
                 rp.type = item.type;
                 rp.reward_type = item.reward_type;
-                rp.status_id = 3;
+                rp.status_id = 8;
 
                 if (rp.reward_type == 1)
                 {
@@ -917,6 +917,7 @@ namespace BLL.ScienceManagement.Paper
                     rp.author_received_reward = author.people_id;
                 }
 
+                db.Entry(rp).State = EntityState.Modified;
                 db.SaveChanges();
                 dbc.Commit();
                 dbc.Dispose();
@@ -1016,7 +1017,7 @@ namespace BLL.ScienceManagement.Paper
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
 	                            join [General].Account a on br.account_id = a.account_id
-                            where rp.status_id = 3 or rp.status_id = 5";
+                            where rp.status_id = 3 or rp.status_id = 5 or rp.status_id = 8";
             list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
             return list;
         }
