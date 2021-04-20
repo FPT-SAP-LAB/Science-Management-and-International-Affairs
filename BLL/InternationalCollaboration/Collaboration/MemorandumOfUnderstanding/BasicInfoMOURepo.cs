@@ -158,10 +158,10 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             f = new MOURepo().uploadEvidenceFile(evidence, newBasicInfo.mou_code, 1, false);
                             evidence_file = new MOURepo().saveFile(f, evidence);
                         }
-                    }                      
+                    }
                     else if (old_file_number == 1)
                     {
-                        int file_id = (int) db.MOUs.Find(mou_id).evidence;
+                        int file_id = (int)db.MOUs.Find(mou_id).evidence;
                         string old_file_drive_id = db.Files.Find(file_id).file_drive_id;
 
                         if (new_file_number == 0)
@@ -199,7 +199,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     if (evidence_file.file_id == 0)
                     {
                         mou.evidence = null;
-                    } 
+                    }
                     else
                     {
                         mou.evidence = evidence_file.file_id;
@@ -315,7 +315,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         evidence_value = evidence_file.file_id;
                     }
 
-                    List <PartnerScope> totalRelatedPS = new List<PartnerScope>();
+                    List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime? end_date = null;
                     if (input.ExBasicInfo.ex_mou_end_date != null)
@@ -404,7 +404,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void editExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user, int old_file_number, int new_file_number, 
+        public void editExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user, int old_file_number, int new_file_number,
             HttpPostedFileBase evidence, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())

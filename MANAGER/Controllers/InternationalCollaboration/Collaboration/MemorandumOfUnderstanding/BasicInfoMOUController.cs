@@ -89,7 +89,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "6")]
-        public ActionResult editMOUBasicInfo(string input, int old_file_number, int new_file_number ,HttpPostedFileBase evidence)
+        public ActionResult editMOUBasicInfo(string input, int old_file_number, int new_file_number, HttpPostedFileBase evidence)
         {
             try
             {
