@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BLL.InternationalCollaboration.AcademicActivity;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using BLL.InternationalCollaboration.AcademicActivity;
 using static BLL.InternationalCollaboration.AcademicActivity.AcademicActivityGuestRepo;
 
 namespace UnitTest.InternationalCollaboration.AcademicActivity
@@ -18,7 +18,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             guestRepo = new AcademicActivityGuestRepo();
             bool checkForm = guestRepo.checkForm(1);
-            if(checkForm)
+            if (checkForm)
             {
                 fullForm form = guestRepo.getForm(1);
             }
@@ -29,7 +29,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             guestRepo = new AcademicActivityGuestRepo();
             bool checkForm = guestRepo.checkForm(1);
-            if(checkForm)
+            if (checkForm)
             {
                 fullForm form = guestRepo.getForm(1);
                 Assert.IsNotNull(form);
