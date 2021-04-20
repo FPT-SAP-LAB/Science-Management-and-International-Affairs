@@ -12,31 +12,25 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Policy
+    public partial class PolicyType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Policy()
+        public PolicyType()
         {
-            this.Conditions = new HashSet<Condition>();
-            this.RequestConferences = new HashSet<RequestConference>();
-            this.PaperCriterias = new HashSet<PaperCriteria>();
+            this.PolicyTypeLanguages = new HashSet<PolicyTypeLanguage>();
+            this.Policies = new HashSet<Policy>();
+            this.Articles = new HashSet<Article>();
         }
     
-        public int policy_id { get; set; }
-        public System.DateTime valid_date { get; set; }
-        public Nullable<System.DateTime> expired_date { get; set; }
-        public int file_id { get; set; }
-        public int account_id { get; set; }
         public int policy_type_id { get; set; }
+        public Nullable<int> account_id { get; set; }
     
         public virtual Account Account { get; set; }
-        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Condition> Conditions { get; set; }
+        public virtual ICollection<PolicyTypeLanguage> PolicyTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestConference> RequestConferences { get; set; }
+        public virtual ICollection<Policy> Policies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PaperCriteria> PaperCriterias { get; set; }
-        public virtual PolicyType PolicyType { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }

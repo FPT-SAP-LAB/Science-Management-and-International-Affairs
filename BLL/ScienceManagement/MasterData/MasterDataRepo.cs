@@ -1,11 +1,16 @@
-﻿using ENTITIES;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +30,177 @@ namespace BLL.ScienceManagement.MasterData
                             where l.language_name = @lang";
             list = db.Database.SqlQuery<SpecializationLanguage>(sql, new SqlParameter("lang", language)).ToList();
             return list;
+        }
+
+        public static BaseServerSideData<Scopu> getListAllScopus(BaseDatatable baseDatatable, string name_search)
+        {
+            try
+            {
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    if (name_search == null) name_search = "";
+                    db.Configuration.LazyLoadingEnabled = false;
+                    List<Scopu> internalUnits = db.Database.SqlQuery<Scopu>("select * from [SM_ScientificProduct].[Scopus] " +
+                                                                            "WHERE [Source_Title_Medline_sourced_journals_are_indicated_in_Green] like @name " +
+                                                                        "ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                                                                        " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY", new SqlParameter("name", "%" + name_search + "%")).ToList();
+                    int recordsTotal = db.Database.SqlQuery<int>("select count(*) from [SM_ScientificProduct].[Scopus] WHERE [Source_Title_Medline_sourced_journals_are_indicated_in_Green] like @name", new SqlParameter("name", "%" + name_search + "%")).FirstOrDefault();
+                    return new BaseServerSideData<Scopu>(internalUnits, recordsTotal);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public bool updateJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
+        {
+            DbContextTransaction dbc = db.Database.BeginTransaction();
+            try
+            {
+                if (file_scopus != null)
+                {
+                    db.Database.ExecuteSqlCommand("delete from SM_ScientificProduct.Scopus");
+
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    var package = new ExcelPackage(file_scopus.InputStream);
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.First();
+
+                    int rows = worksheet.Dimension.Rows;
+                    //int columns = worksheet.Dimension.Columns;
+
+                    for (int i = 2; i <= rows; i++)
+                    {
+                        Scopu temp = new Scopu();
+                        temp.Sourcerecord_ID = worksheet.Cells[i, 1].Value.ToString();
+                        temp.Source_Title_Medline_sourced_journals_are_indicated_in_Green = worksheet.Cells[i, 2].Value.ToString();
+                        if (worksheet.Cells[i, 3].Value != null) temp.Print_ISSN = worksheet.Cells[i, 3].Value.ToString();
+                        if (worksheet.Cells[i, 4].Value != null) temp.E_ISSN = worksheet.Cells[i, 4].Value.ToString();
+                        temp.Active_or_Inactive = worksheet.Cells[i, 5].Value.ToString();
+
+                        db.Scopus.Add(temp);
+                    }
+
+                    db.SaveChanges();
+                }
+
+                if (file_SCIE != null)
+                {
+                    db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SCIE");
+
+                    var reader = new StreamReader(file_SCIE.InputStream);
+                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                    config.Delimiter = ",";
+                    config.HasHeaderRecord = true;
+                    config.BadDataFound = null;
+
+                    using (var csv = new CsvReader(reader, config))
+                    {
+                        int count = 1;
+                        while (csv.Read())
+                        {
+                            if (csv.GetField(0) != "Journal title")
+                            {
+                                SCIE temp = new SCIE();
+                                temp.Journal_title = csv.GetField(0);
+                                if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
+                                if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
+                                temp.Publisher_name = csv.GetField(3);
+                                temp.Publisher_address = csv.GetField(4);
+                                if (csv.GetField(5) != "") temp.Languages = csv.GetField(5);
+                                if (csv.GetField(6) != "") temp.Web_of_Science_Categories = csv.GetField(6);
+                                temp.SCIE_id = count.ToString();
+                                count++;
+
+                                db.SCIEs.Add(temp);
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                }
+
+                if (file_SSCI != null)
+                {
+                    db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SSCI");
+
+                    var reader = new StreamReader(file_SSCI.InputStream);
+                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                    config.Delimiter = ",";
+                    config.HasHeaderRecord = true;
+                    config.BadDataFound = null;
+
+                    using (var csv = new CsvReader(reader, config))
+                    {
+                        int count = 1;
+                        while (csv.Read())
+                        {
+                            if (csv.GetField(0) != "Journal title")
+                            {
+                                SSCI temp = new SSCI();
+                                temp.Journal_title = csv.GetField(0);
+                                if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
+                                if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
+                                temp.Publisher_name = csv.GetField(3);
+                                temp.Publisher_address = csv.GetField(4);
+                                if (csv.GetField(5) != "") temp.Languages = csv.GetField(5);
+                                if (csv.GetField(6) != "") temp.Web_of_Science_Categories = csv.GetField(6);
+                                temp.SSCI_id = count.ToString();
+                                count++;
+
+                                db.SSCIs.Add(temp);
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                }
+
+                dbc.Commit();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                dbc.Rollback();
+                return false;
+            }
+        }
+
+        public static BaseServerSideData<CustomISI> getListAllISI(BaseDatatable baseDatatable, string name_search)
+        {
+            try
+            {
+                using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
+                {
+                    if (name_search == null) name_search = "";
+                    db.Configuration.LazyLoadingEnabled = false;
+                    string sql = @"select Journal_title, ISSN, eISSN, 'SSCI' as type
+                                    from SM_ScientificProduct.SSCI
+                                    where Journal_title like @name
+                                    union
+                                    select Journal_title, ISSN, eISSN, 'SCIE' as type
+                                    from SM_ScientificProduct.SCIE
+                                    where Journal_title like @name
+                                    ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
+                                    " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
+                    List<CustomISI> internalUnits = db.Database.SqlQuery<CustomISI>(sql, new SqlParameter("name", "%" + name_search + "%")).ToList();
+
+                    string count_sql = @"select count(*)
+                                    from (select Journal_title, ISSN, eISSN, 'SSCI' as type
+                                    from SM_ScientificProduct.SSCI
+                                    where Journal_title like @name
+                                    union
+                                    select Journal_title, ISSN, eISSN, 'SCIE' as type
+                                    from SM_ScientificProduct.SCIE
+                                    where Journal_title like @name) as a";
+                    int recordsTotal = db.Database.SqlQuery<int>(count_sql, new SqlParameter("name", "%" + name_search + "%")).FirstOrDefault();
+                    return new BaseServerSideData<CustomISI>(internalUnits, recordsTotal);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public int AddPaperCriteria(string name)
@@ -201,7 +377,7 @@ namespace BLL.ScienceManagement.MasterData
             return list;
         }
 
-        public File addFile(File file)
+        public ENTITIES.File addFile(ENTITIES.File file)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try

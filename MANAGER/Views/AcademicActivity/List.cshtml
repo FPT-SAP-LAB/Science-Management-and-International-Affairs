@@ -89,14 +89,15 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="add_language" onchange="resetCategory()">
+                        <select class="form-control" id="add_language" onchange="resetCategory()"  style="width: 100% !important">
                             <option selected value="1">Tiếng Việt</option>
                             <option value="2">Tiếng Anh</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control config-select2" required id="add_category">
+                        <select class="form-control config-select2" required id="add_category" style="width: 100% !important">
+                            <option label="Label"></option>
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -104,11 +105,11 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <label class="col-form-label font-weight-bolder">Từ ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Từ ngày" data-target="#kt_datetimepicker_add_from" autocomplete="off" id="add_from" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_add_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -119,11 +120,11 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <label class="col-form-label font-weight-bolder">Đến ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_add_to" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến từ" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Đến ngày" data-target="#kt_datetimepicker_add_to" autocomplete="off" id="add_to" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_add_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -164,14 +165,14 @@
                     </div>
                     <div class="col-sm-3 col-md-3 col-xl-3 col-lg-3">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="edit_language" onchange="reInit()">
+                        <select class="form-control" id="edit_language" onchange="reInit()"  style="width: 100% !important">
                             <option selected value="1">Tiếng Việt</option>
                             <option value="2">Tiếng Anh</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="edit_category">
+                        <select class="form-control" required id="edit_category" style="width: 100% !important">
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -179,11 +180,11 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">Thời hạn từ </label>
+                        <label class="col-form-label font-weight-bolder">Từ ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_from" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Thời hạn từ" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Từ ngày" data-target="#kt_datetimepicker_edit_from" autocomplete="off" id="edit_from" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_from" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -194,11 +195,11 @@
                         </div>
                     </div>
                     <div class="col-md-3 col-xl-3 col-lg-3">
-                        <label class="col-form-label font-weight-bolder">đến</label>
+                        <label class="col-form-label font-weight-bolder">Đến ngày</label>
                         <div class="form-group row">
                             <div class="col-lg-12 col-md-9 col-sm-12">
                                 <div class="input-group date kt_datetimepicker_3" id="kt_datetimepicker_edit_to" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="đến" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Đến ngày" data-target="#kt_datetimepicker_edit_to" autocomplete="off" id="edit_to" />
                                     <div class="input-group-append" data-target="#kt_datetimepicker_edit_to" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -220,7 +221,7 @@
                             <div class="uppy-status"></div>
                             <div class="uppy-informer uppy-informer-min"></div>
                         </div>
-                        <span class="form-text text-muted">Dung lượng tối đa cho ảnh là 15MB và tối đa 1 ảnh</span>
+                        <span class="form-text text-muted">Dung lượng tối đa cho ảnh là 5MB và tối đa 1 ảnh</span>
                     </div>
                 </div>
             </div>
@@ -249,7 +250,7 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Loại</label>
-                        <select class="form-control" required id="clone_category">
+                        <select class="form-control" required id="clone_category" style="width: 100% !important">
                             @foreach (var item in ViewBag.AAType)
                             {
                                 <option value="@item.activity_type_id">@item.activity_type_name</option>
@@ -404,6 +405,19 @@
                         $('#edit_category').append('<option value=' + x.activity_type_id + '>' + x.activity_type_name + '</option>');
                     });
                     document.getElementById('edit_category').value = data.baseAA.activity_type_id;
+                    //load available exist file
+                    let elemId = 'kt_uppy_1';
+                    let id = '#' + elemId;
+                    let $statusBar = $(id + ' .uppy-status');
+                    let $uploadedList = $(id + ' .uppy-list');
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.baseAA.file_id + '"><div class="uppy-list-label"><a target="_blank" href='+data.baseAA.file_link+'>' + data.baseAA.file_name + '</a></div><span class="uppy-list-remove" data-id="' + data.baseAA.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $(id + ' .uppy-list').html('');
+                    uppy1.removeFile(uppy1.getFiles().length == 0 ? '' : uppy1.getFiles()[0].id);
+                    if (data.baseAA.file_id != null) {
+                        $uploadedList.append(uploadListHtml);
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
+                    }
                     $('#editModal').modal('show');
                 },
                 error: function () {
@@ -479,10 +493,12 @@
             let language_id = document.getElementById('add_language').value;
             if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '' || language_id == '') {
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                save_loader.stopLoading();
                 return false;
             }
             if (convertDate(from).getTime() > convertDate(to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                save_loader.stopLoading();
                 return false;
             }
             let object = {
@@ -566,7 +582,7 @@
                         if (newfile.size > uppy1.getFiles()[0].size) {
                             img.append('img', uppy1.getFiles()[0].data);
                         } else {
-                            img.append('img', newfile);
+                            img.append('img', newfile, uppy1.getFiles()[0].data.name);
                         }
 
                         img.append('id', id_edit);
@@ -723,6 +739,7 @@
                     },
                     {
                         data: "academic_status_name",
+                        sorting: false,
                         render: function (data, type, full, meta) {
                             var status = {
                                 'Chưa hoạt động': {
@@ -743,6 +760,7 @@
                     },
                     {
                         data: "activity_id",
+                        sorting: false,
                         render: function (data, type, full, meta) {
                             return '<div class="dropdown">' +
                                 '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
@@ -788,7 +806,6 @@
             };
         }();
 
-
         const Tus = Uppy.Tus;
         const StatusBar = Uppy.StatusBar;
         const FileInput = Uppy.FileInput;
@@ -806,8 +823,6 @@
             showProgressDetails: true,
             restrictions: {
                 maxFileSize: 5242880, // 5mb
-                maxNumberOfFiles: 1,
-                minNumberOfFiles: 1,
                 allowedFileTypes: ['image/*', '.jpg', '.jpeg', '.png']
             }
         });
@@ -854,6 +869,10 @@
                     sizeLabel = "MB";
                 }
             }
+            if (uppy1.getFiles().length != 0) {
+                //trigger remove file
+                $(id + ' .uppy-list .uppy-list-remove').click();
+            }
             var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
             $uploadedList.append(uploadListHtml);
 
@@ -874,6 +893,12 @@
         });
         $('#clone_category').select2({
             placeholder: 'Loại hoạt động',
+        });
+        $('#add_language').select2({
+            placeholder: 'Ngôn ngữ',
+        });
+        $('#edit_language').select2({
+            placeholder: 'Ngôn ngữ',
         });
         $(document).ready(function () {
             KTBootstrapDatetimepicker.init();

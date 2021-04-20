@@ -72,6 +72,20 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             try
             {
                 ActivityOffice ao = db.ActivityOffices.Find(activity_office_id);
+                List<ActivityExpenseCategory> aec = db.ActivityExpenseCategories.Where(x => x.activity_office_id == ao.activity_office_id).ToList();
+                foreach (ActivityExpenseCategory aec_item in aec)
+                {
+                    List<ActivityExpenseDetail> aed = db.ActivityExpenseDetails.Where(x => x.expense_category_id == aec_item.expense_category_id).ToList();
+                    foreach (ActivityExpenseDetail item in aed)
+                    {
+                        if (item.file_id != null)
+                        {
+                            File f = db.Files.Find(item.file_id);
+                            GoogleDriveService.DeleteFile(f.file_drive_id);
+                            db.Files.Remove(f);
+                        }
+                    }
+                }
                 db.ActivityOffices.Remove(ao);
                 db.SaveChanges();
                 return true;
@@ -228,7 +242,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select aec.expense_category_id,aec.expense_category_name,aed.expense_price,aed.expense_quantity,(aed.expense_price * aed.expense_quantity) as 'total',aed.note,f.link,f.[name]
+                string sql = @"select aec.expense_category_id,aec.expense_category_name,aed.expense_price,aed.expense_quantity,(aed.expense_price * aed.expense_quantity) as 'total',aed.note,
+                            f.file_id, f.file_drive_id, f.link 'file_link',f.[name] 'file_name'
                             from SMIA_AcademicActivity.ActivityExpenseCategory aec
                             left join SMIA_AcademicActivity.ActivityExpenseDetail aed 
 							on aed.expense_category_id = aec.expense_category_id and aed.expense_type_id = @type
@@ -245,7 +260,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new infoExpenseEstimate();
             }
         }
-        public bool editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public bool editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -259,32 +274,44 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     aed.expense_price = (double)expense.expense_price;
                     aed.expense_quantity = (int)expense.expense_quantity;
                     aed.note = expense.note;
-                    if (img != null)
-                    {
-                        string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
+                    string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
                                     inner join SMIA_AcademicActivity.ActivityOffice ao on aa.activity_id = ao.activity_id
                                     where ao.activity_office_id = @activity_office_id";
-                        int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
-                        if (aed.file_id != null)
-                        {
-                            Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
-                            File f = db.Files.Find(aed.file_id);
-                            f.name = img.FileName;
-                            db.Entry(f).State = EntityState.Modified;
-                        }
-                        else
-                        {
-                            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trù - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                            File file = new File();
-                            file.name = img.FileName;
-                            file.link = f.WebViewLink;
-                            file.file_drive_id = f.Id;
-                            File ff = db.Files.Add(file);
-                            db.SaveChanges();
-                            aed.file_id = ff.file_id;
-                        }
+                    int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
+                    switch (file_action)
+                    {
+                        case "edit":
+                            if (aed.file_id != null)
+                            {
+                                Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
+                                File f = db.Files.Find(aed.file_id);
+                                f.name = img.FileName;
+                                db.Entry(f).State = EntityState.Modified;
+                            }
+                            else
+                            {
+                                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trù - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
+                                File file = new File();
+                                file.name = img.FileName;
+                                file.link = f.WebViewLink;
+                                file.file_drive_id = f.Id;
+                                File ff = db.Files.Add(file);
+                                aed.file_id = ff.file_id;
+                                db.Entry(aed).State = EntityState.Modified;
+                            }
+                            break;
+                        case "remove":
+                            GoogleDriveService.DeleteFile(aed.File.file_drive_id);
+                            File fff = db.Files.Find(aed.file_id);
+                            aed.file_id = null;
+                            db.Files.Remove(fff);
+                            db.Entry(aed).State = EntityState.Modified;
+                            break;
+                        case "none":
+                            break;
+                        default:
+                            break;
                     }
-                    db.Entry(aed).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -348,7 +375,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<excelModified>();
             }
         }
-        public bool editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public bool editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -378,34 +405,47 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         });
                     }
                     db.SaveChanges();
-                    if (img != null)
-                    {
-                        string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
+                    string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
                                     inner join SMIA_AcademicActivity.ActivityOffice ao on aa.activity_id = ao.activity_id
                                     where ao.activity_office_id = @activity_office_id";
-                        int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
-                        if (aed.file_id != null)
-                        {
-                            Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
-                            File f = db.Files.Find(aed.file_id);
-                            f.name = img.FileName;
-                            db.Entry(f).State = EntityState.Modified;
-                        }
-                        else
-                        {
-                            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí điều chỉnh - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                            File file = new File
+                    int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
+                    switch (file_action)
+                    {
+                        case "edit":
+                            if (aed.file_id != null)
                             {
-                                name = img.FileName,
-                                link = f.WebViewLink,
-                                file_drive_id = f.Id
-                            };
-                            File ff = db.Files.Add(file);
-                            db.SaveChanges();
-                            aed.file_id = ff.file_id;
-                        }
+                                Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
+                                File f = db.Files.Find(aed.file_id);
+                                f.name = img.FileName;
+                                db.Entry(f).State = EntityState.Modified;
+                            }
+                            else
+                            {
+                                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí điều chỉnh - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
+                                File file = new File
+                                {
+                                    name = img.FileName,
+                                    link = f.WebViewLink,
+                                    file_drive_id = f.Id
+                                };
+                                File ff = db.Files.Add(file);
+                                db.SaveChanges();
+                                aed.file_id = ff.file_id;
+                                db.Entry(aed).State = EntityState.Modified;
+                            }
+                            break;
+                        case "remove":
+                            GoogleDriveService.DeleteFile(aed.File.file_drive_id);
+                            File fff = db.Files.Find(aed.file_id);
+                            aed.file_id = null;
+                            db.Files.Remove(fff);
+                            db.Entry(aed).State = EntityState.Modified;
+                            break;
+                        case "none":
+                            break;
+                        default:
+                            break;
                     }
-                    db.Entry(aed).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -480,7 +520,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<excelModified>();
             }
         }
-        public bool editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public bool editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -510,32 +550,45 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         });
                     }
                     db.SaveChanges();
-                    if (img != null)
-                    {
-                        string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
+                    string sql = @"select YEAR(aa.activity_date_start) as 'year' from SMIA_AcademicActivity.AcademicActivity aa
                                     inner join SMIA_AcademicActivity.ActivityOffice ao on aa.activity_id = ao.activity_id
                                     where ao.activity_office_id = @activity_office_id";
-                        int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
-                        if (aed.file_id != null)
-                        {
-                            Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
-                            File f = db.Files.Find(aed.file_id);
-                            f.name = img.FileName;
-                            db.Entry(f).State = EntityState.Modified;
-                        }
-                        else
-                        {
-                            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí thực tế - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                            File file = new File();
-                            file.name = img.FileName;
-                            file.link = f.WebViewLink;
-                            file.file_drive_id = f.Id;
-                            File ff = db.Files.Add(file);
-                            db.SaveChanges();
-                            aed.file_id = ff.file_id;
-                        }
+                    int year = db.Database.SqlQuery<int>(sql, new SqlParameter("activity_office_id", activity_office_id)).FirstOrDefault();
+                    switch (file_action)
+                    {
+                        case "edit":
+                            if (aed.file_id != null)
+                            {
+                                Google.Apis.Drive.v3.Data.File fr = GoogleDriveService.UpdateFile(img.FileName, img.InputStream, img.ContentType, aed.File.file_drive_id);
+                                File f = db.Files.Find(aed.file_id);
+                                f.name = img.FileName;
+                                db.Entry(f).State = EntityState.Modified;
+                            }
+                            else
+                            {
+                                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí thực tế - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
+                                File file = new File();
+                                file.name = img.FileName;
+                                file.link = f.WebViewLink;
+                                file.file_drive_id = f.Id;
+                                File ff = db.Files.Add(file);
+                                db.SaveChanges();
+                                aed.file_id = ff.file_id;
+                                db.Entry(aed).State = EntityState.Modified;
+                            }
+                            break;
+                        case "remove":
+                            GoogleDriveService.DeleteFile(aed.File.file_drive_id);
+                            File fff = db.Files.Find(aed.file_id);
+                            aed.file_id = null;
+                            db.Files.Remove(fff);
+                            db.Entry(aed).State = EntityState.Modified;
+                            break;
+                        case "none":
+                            break;
+                        default:
+                            break;
                     }
-                    db.Entry(aed).State = EntityState.Modified;
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -650,8 +703,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int? expense_quantity { get; set; }
             public double? total { get; set; }
             public string note { get; set; }
-            public string link { get; set; }
-            public string name { get; set; }
+            public int? file_id { get; set; }
+            public string file_drive_id { get; set; }
+            public string file_link { get; set; }
+            public string file_name { get; set; }
         }
         public class excelEstimate : infoExpenseEstimate
         {

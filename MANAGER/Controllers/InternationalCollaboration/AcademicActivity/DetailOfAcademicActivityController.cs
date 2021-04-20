@@ -60,14 +60,34 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [Auther(RightID = "3")]
-        [HttpPost]
-        public JsonResult updateDetail(DetailOfAcademicActivityRepo.InfoSumDetail obj)
+        [HttpPost, ValidateInput(false)]
+        public JsonResult updateDetail(string obj)
         {
             try
             {
+                DetailOfAcademicActivityRepo.InfoSumDetail infoSumDetail =
+                    JsonConvert.DeserializeObject<DetailOfAcademicActivityRepo.InfoSumDetail>(obj);
                 repo = new DetailOfAcademicActivityRepo();
                 BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
-                bool res = repo.updateDetail(obj, u);
+                List<HttpPostedFileBase> list_image_main = new List<HttpPostedFileBase>();
+                for (int i = 0; i < infoSumDetail.infoDetail.count_upload_main; i++)
+                {
+                    string label = "image_" + i;
+                    list_image_main.Add(Request.Files[label]);
+                }
+                List<List<HttpPostedFileBase>> list_image_sub = new List<List<HttpPostedFileBase>>();
+                foreach (var item in infoSumDetail.subContent)
+                {
+                    List<HttpPostedFileBase> list_image = new List<HttpPostedFileBase>();
+                    for (int i = 0; i < item.number_of_image; i++)
+                    {
+                        string label = "image_" + item.sub_id + "_" + i;
+                        list_image.Add(Request.Files[label]);
+                    }
+                    list_image_sub.Add(list_image);
+                }
+
+                bool res = repo.updateDetail(infoSumDetail, u, list_image_main, list_image_sub);
                 if (res)
                 {
                     return Json("Cập nhật thành công");
@@ -355,10 +375,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         [Auther(RightID = "3")]
         [HttpPost]
-        public JsonResult editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public JsonResult editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseDuTru(activity_office_id, activity_name, data, img);
+            bool res = expenseRepo.editExpenseDuTru(activity_office_id, activity_name, data, img, file_action);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -372,10 +392,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         [Auther(RightID = "3")]
         [HttpPost]
-        public JsonResult editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public JsonResult editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseDieuChinh(activity_office_id, activity_name, data, img);
+            bool res = expenseRepo.editExpenseDieuChinh(activity_office_id, activity_name, data, img, file_action);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -389,10 +409,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         [Auther(RightID = "3")]
         [HttpPost]
-        public JsonResult editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public JsonResult editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseThucTe(activity_office_id, activity_name, data, img);
+            bool res = expenseRepo.editExpenseThucTe(activity_office_id, activity_name, data, img, file_action);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -450,14 +470,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         }
         [Auther(RightID = "3")]
         [HttpPost]
-        public JsonResult updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, string obj_activity_partner_stringify)
+        public JsonResult updateActivityPartner(HttpPostedFileBase evidence_file, string file_action, string folder_name, string obj_activity_partner_stringify)
         {
             try
             {
                 partnerRepo = new AcademicActivityPartnerRepo();
                 int account_id = CurrentAccount.AccountID(Session);
                 SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, folder_name, saveActivityPartner, account_id);
+                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, file_action, folder_name, saveActivityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
