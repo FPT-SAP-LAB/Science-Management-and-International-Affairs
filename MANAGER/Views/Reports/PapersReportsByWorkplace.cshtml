@@ -139,11 +139,13 @@
             </thead>
 
             <tbody>
-
             </tbody>
 
         </table>
         <!--end: Datatable-->
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
     </div>
 </div>
 @section scripts{

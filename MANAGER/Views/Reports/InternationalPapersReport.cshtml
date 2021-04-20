@@ -3,6 +3,7 @@
     ViewBag.Title = "THỐNG KÊ KHEN THƯỞNG BÀI BÁO QUỐC TẾ ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using ENTITIES;
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <!--begin: Search Form-->
@@ -16,10 +17,23 @@
                             <div class="input-icon">
                                 <input type="text" class="form-control"
                                        placeholder="Tên..."
-                                       id="kt_datatable_search_query" />
+                                       id="search_name" />
                                 <span>
                                     <i class="flaticon2-search-1 text-muted"></i>
                                 </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 my-2 my-md-0">
+                            <div class="d-flex align-items-center">
+                                <label class="mr-3 mb-0 d-none d-md-block">Hạng:</label>
+                                <select class="form-control"
+                                        id="search_hang">
+                                    <option label="Label"></option>
+                                    @foreach (PaperCriteria cr in ViewBag.criterias)
+                                    {
+                                        <option value="@cr.criteria_id">@cr.name</option>
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-3 my-2 my-md-0">
@@ -28,30 +42,16 @@
                                 <select class="form-control"
                                         id="search_nam">
                                     <option label="Label"></option>
-                                    <option value="">2021</option>
-                                    <option value="1">2020</option>
-                                    <option value="2">2019</option>
-                                    <option value="3">2018</option>
-                                    <option value="4">2017</option>
-                                    <option value="5">2016</option>
-                                    <option value="6">2015</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3 my-2 my-md-0">
-                            <div class="d-flex align-items-center">
-                                <label class="mr-3 mb-0 d-none d-md-block">CS:</label>
-                                <select class="form-control"
-                                        id="search_coso">
-                                    <option label="Label"></option>
-                                    <option value="">FPTU HN</option>
-                                    <option value="1">FPTU Cần Thơ</option>
+                                    @foreach (var year in ViewBag.years)
+                                    {
+                                        <option value="@year">@year</option>
+                                    }
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
                             <a href="#"
-                               class="btn btn-light-primary px-6 font-weight-bold">
+                               class="btn btn-light-primary px-6 font-weight-bold" id="search_btn">
                                 Tìm kiếm
                             </a>
                         </div>
@@ -141,9 +141,8 @@
             <div class="row align-items-center" style="margin-bottom:-2rem">
                 <div class="col-md-3 my-2 my-md-0">
                     <div class="d-flex align-items-center" style="margin-top: 3rem">
-                        <label class="mr-3 mb-0 d-none d-md-block">Tổng:</label>
-                        <input disabled type="text" class="form-control"
-                               value="1.000.000.000 đ" />
+                        <label class="mr-3 mb-0 d-none d-md-block text-muted">Tổng thưởng: </label>
+                        <span class="label label-xl label-danger label-pill label-inline mr-2 text font-weight-bolder" id="total_money"></span>
                     </div>
                 </div>
             </div>
@@ -156,9 +155,7 @@
                     <th>STT</th>
                     <th>Ngày Hiệu lực</th>
                     <th>Số Quyết Định</th>
-                    <th>Tên Tác Giả</th>
-                    <th>Chức Danh</th>
-                    <th>Đơn vị</th>
+                    <th>Tác giả</th>
                     <th>Tên Bài Báo</th>
                     <th>Tên Tạp Chí</th>
                     <th>Xếp loại</th>
@@ -167,211 +164,93 @@
                     <th>Tiền thưởng</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>43839</td>
-                    <td>39/QĐ-ĐHFPT</td>
-                    <td>Bùi Xuân Chung</td>
-                    <td>GV</td>
-                    <td>FPTU</td>
-                    <td>Edges of interpolating tetrahedron based encryption algorithm for 3D printing model</td>
-                    <td>Mobile networks and applications </td>
-                    <td>Q1</td>
-                    <td>IT</td>
-                    <td>QS500</td>
-                    <td>10.000.000</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td> </td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>10.000.000</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>43839</td>
-                    <td>39/QĐ-ĐHFPT</td>
-                    <td>Bùi Xuân Chung</td>
-                    <td>GV</td>
-                    <td>FPTU</td>
-                    <td>Edges of interpolating tetrahedron based encryption algorithm for 3D printing model</td>
-                    <td>Mobile networks and applications </td>
-                    <td>Q1</td>
-                    <td>IT</td>
-                    <td>QS500</td>
-                    <td>10.000.000</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>3</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>10.000.000</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>4</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>10.000.000</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>5</td>
-                    <td>...</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td></td>
-                    <td>10.000.000</td>
-                </tr>
-            </tbody>
         </table>
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
         <!--end: Datatable-->
         @section scripts{
             <script>
-                var KTDatatablesBasicBasic = function () {
-
-                    var initTable1 = function () {
-                        var table = $('#kt_datatable');
-
-                        // begin first table
-                        table.DataTable({
-                            responsive: true,
-
-                            // DOM Layout settings
-                            dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                            lengthMenu: [5, 10, 25, 50],
-
-                            pageLength: 10,
-
-                            language: {
-                                'lengthMenu': 'Display _MENU_',
-                            },
-
-                            // Order settings
-                            order: [[1, 'desc']],
-
-                            columnDefs: [
-
-                            ],
-                        });
-
-                        table.on('change', '.group-checkable', function () {
-                            var set = $(this).closest('table').find('td:first-child .checkable');
-                            var checked = $(this).is(':checked');
-
-                            $(set).each(function () {
-                                if (checked) {
-                                    $(this).prop('checked', true);
-                                    $(this).closest('tr').addClass('active');
-                                }
-                                else {
-                                    $(this).prop('checked', false);
-                                    $(this).closest('tr').removeClass('active');
-                                }
-                            });
-                        });
-
-                        table.on('change', 'tbody tr .checkbox', function () {
-                            $(this).parents('tr').toggleClass('active');
-                        });
-                    };
-
-                    var initTable2 = function () {
-                        var table = $('#kt_datatable_2');
-
-                        // begin first table
-                        table.DataTable({
-                            responsive: true,
-
-                            // DOM Layout settings
-                            dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                            lengthMenu: [5, 10, 25, 50],
-
-                            pageLength: 10,
-
-                            language: {
-                                'lengthMenu': 'Display _MENU_',
-                            },
-
-                            // Order settings
-                            // order: [[0, 'desc']],
-
-                            columnDefs: [
-
-                            ],
-                        });
-
-                        table.on('change', '.group-checkable', function () {
-                            var set = $(this).closest('table').find('td:first-child .checkable');
-                            var checked = $(this).is(':checked');
-
-                            $(set).each(function () {
-                                if (checked) {
-                                    $(this).prop('checked', true);
-                                    $(this).closest('tr').addClass('active');
-                                }
-                                else {
-                                    $(this).prop('checked', false);
-                                    $(this).closest('tr').removeClass('active');
-                                }
-                            });
-                        });
-
-                        table.on('change', 'tbody tr .checkbox', function () {
-                            $(this).parents('tr').toggleClass('active');
-                        });
-                    };
-
-                    return {
-
-                        //main function to initiate the module
-                        init: function () {
-                            initTable1();
-                            initTable2();
+                var table = $('#kt_datatable').DataTable({
+                    responsive: true,
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                                                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                    lengthMenu: [5, 10, 25, 50],
+                    bInfo: false,
+                    pageLength: 10,
+                    serverSide: true,
+                    columnDefs: [
+                        { width: "5%", targets: 0 },
+                        { width: "10%", targets: 1 },
+                        { width: "10%", targets: 3 },
+                        { width: "20%", targets: 4 },
+                        { width: "10%", targets: 5 },
+                        { width: "10%", targets: 6 },
+                        { width: "10%", targets: 7 },
+                        { width: "5%", targets: 8 },
+                        { width: "10%", targets: 9 }
+                    ],
+                    ajax: {
+                        type: "POST",
+                        url: "/Reports/getAwardMoneyInoutCountry",
+                        datatype: "json",
+                        data: function (d) {
+                            d.name = $("#search_name").val();
+                            d.year = $("#search_nam").val()
+                            d.hang = $("#search_hang").val()
+                            d.type = 2
+                        },
+                        cache: false,
+                        dataSrc: function (json) {
+                            $("#total_money").text(AddComma(json.total) + " VND")
+                            return json.data;
                         }
-                    };
-                }();
+                    },
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
 
-                jQuery(document).ready(function () {
-                    KTDatatablesBasicBasic.init();
+                    // Order settings
+                    order: [[1, 'desc']],
+
+                    columns: [
+                        { data: "rownum", name: "rownum", orderable: false },
+                        { data: "valid_date_string", name: "valid_date_string", orderable: false },
+                        { data: "decision_number", name: "decision_number", orderable: false },
+                        { data: "authors", name: "authors", orderable: false },
+                        { data: "paper_name", name: "paper_name", orderable: false },
+                        { data: "journal_name", name: "journal_name", orderable: false },
+                        {
+                            data: "criterias", name: "criterias", render: function (data) {
+                                n = ""
+                                for (var i in data) {
+                                    if (i != data.length - 1) {
+                                        n += (data[i].name + ", ")
+                                    } else {
+                                        n += data[i].name
+                                    }
+                                }
+                                return n
+                            }
+                        },
+                        { data: "specialization", name: "specialization", orderable: false },
+                        { data: "co_author", name: "co_author", orderable: false },
+                        {
+                            data: "total_reward", name: "total_reward", render: function (data) {
+                                return AddComma(data)
+                            }
+                        },
+                    ],
+                    initComplete: function (settings, json) {
+                        $("#loader_panel").hide()
+                    }
                 });
                 //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
                 list_select = {
                     "search_nam": "Chọn năm",
-                    "search_coso": "Chọn cơ sở"
+                    "search_coso": "Chọn cơ sở",
+                    "search_hang": "Hạng"
                 }
                 for (let i in list_select) {
                     $('#' + i).select2({
@@ -379,9 +258,14 @@
                         allowClear: true
                     });
                 }
-                            //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+                //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+                $("#search_btn").click(function () {
+                    table.ajax.reload()
+                })
             </script>
+
         }
 
-    </div></div>
+    </div>
+</div>
 
