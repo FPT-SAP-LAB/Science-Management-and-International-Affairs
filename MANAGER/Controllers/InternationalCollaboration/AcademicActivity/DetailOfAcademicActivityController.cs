@@ -70,7 +70,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 repo = new DetailOfAcademicActivityRepo();
                 BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
                 List<HttpPostedFileBase> list_image_main = new List<HttpPostedFileBase>();
-                for(int i = 0; i< infoSumDetail.infoDetail.count_upload_main; i++)
+                for (int i = 0; i < infoSumDetail.infoDetail.count_upload_main; i++)
                 {
                     string label = "image_" + i;
                     list_image_main.Add(Request.Files[label]);
@@ -86,7 +86,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                     }
                     list_image_sub.Add(list_image);
                 }
-                
+
                 bool res = repo.updateDetail(infoSumDetail, u, list_image_main, list_image_sub);
                 if (res)
                 {
