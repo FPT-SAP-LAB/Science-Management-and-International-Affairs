@@ -2532,6 +2532,7 @@
     <Content Include="Views\ConferenceSponsor\History.cshtml" />
     <Content Include="Views\ArticlePolicy\Index.cshtml" />
     <Content Include="Views\UpdateJournal\List.cshtml" />
+    <Content Include="Views\ArticlePolicy\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
