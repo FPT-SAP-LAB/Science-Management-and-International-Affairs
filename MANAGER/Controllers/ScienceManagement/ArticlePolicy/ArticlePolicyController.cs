@@ -18,7 +18,7 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
         {
             int.TryParse(Request["language"], out int language_id);
             language_id = language_id == 0 ? 1 : language_id;
-            ViewBag.items = IndexRepo.List(language_id);
+            ViewBag.items = IndexRepo.ListManager(language_id);
             return View();
         }
         public ActionResult Add()
