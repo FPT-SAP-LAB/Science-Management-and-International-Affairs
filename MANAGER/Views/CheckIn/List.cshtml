@@ -142,7 +142,7 @@
                     </div>
                     <div class="col-md-6 col-xl-6 col-lg-6">
                         <label class="col-form-label font-weight-bolder">Đơn vị <span style="color:red">*</span></label>
-                        <select class="form-control" required id="add_don_vi" onchange="getAreaByUnit()">
+                        <select class="form-control" required id="add_don_vi" onchange="getAreaByUnit()" style="width: 100% !important">
                             @{
                                 foreach (var unit in ViewBag.internalunit)
                                 {
@@ -394,6 +394,9 @@
                 });
             });
         }
+        $('#add_don_vi').select2({
+            placeholder: 'Đơn vị',
+        });
         $(document).ready(function () {
             initDatatable();
         });
