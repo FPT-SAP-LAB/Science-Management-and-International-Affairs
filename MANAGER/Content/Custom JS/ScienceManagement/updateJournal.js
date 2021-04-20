@@ -18,7 +18,7 @@
             autoProceed: false,
             showProgressDetails: true,
             restrictions: {
-                maxFileSize: 52428800, // 50mb
+                maxFileSize: 15728640, // 15mb
                 maxNumberOfFiles: 1,
                 minNumberOfFiles: 1,
                 allowedFileTypes: ['.xlsx', '.csv']
@@ -95,7 +95,7 @@
             autoProceed: false,
             showProgressDetails: true,
             restrictions: {
-                maxFileSize: 52428800, // 50mb
+                maxFileSize: 15728640, // 15mb
                 maxNumberOfFiles: 1,
                 minNumberOfFiles: 1,
                 allowedFileTypes: ['.xlsx', '.csv']
@@ -172,7 +172,7 @@
             autoProceed: false,
             showProgressDetails: true,
             restrictions: {
-                maxFileSize: 52428800, // 50mb
+                maxFileSize: 15728640, // 15mb
                 maxNumberOfFiles: 1,
                 minNumberOfFiles: 1,
                 allowedFileTypes: ['.xlsx', '.csv']

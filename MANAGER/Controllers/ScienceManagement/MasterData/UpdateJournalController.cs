@@ -67,7 +67,9 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
         [HttpPost]
         public ActionResult uploadJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
         {
-            return Json(new { mess = true }, JsonRequestBehavior.AllowGet);
+            MasterDataRepo md = new MasterDataRepo();
+            bool mess = md.updateJournal(file_scopus, file_SCIE, file_SSCI);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

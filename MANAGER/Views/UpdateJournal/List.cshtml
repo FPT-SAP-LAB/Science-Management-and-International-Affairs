@@ -228,19 +228,23 @@
             $("#loading").show();
             formData = new FormData()
 
-            formData.append('file_scopus', uppy1.getFiles()[0].data);
-            formData.append('file_SCIE', uppy2.getFiles()[0].data);
-            formData.append('file_SSCI', uppy3.getFiles()[0].data);
+            if (uppy1.getFiles()[0] != undefined) formData.append('file_scopus', uppy1.getFiles()[0].data);
+            if (uppy2.getFiles()[0] != undefined) formData.append('file_SCIE', uppy2.getFiles()[0].data);
+            if (uppy3.getFiles()[0] != undefined) formData.append('file_SSCI', uppy3.getFiles()[0].data);
 
             $.ajax({
                 url: "/UpdateJournal/uploadJournal",
                 method: "post",
                 complete: function (data) {
                     var mess = data.responseJSON.mess;
-                    if (mess == "ss") {
+                    if (mess) {
                         $("#loading").hide();
-                        //location.reload();
+                        toastr.success("Cập nhật thành công");
+                        location.reload();
                         //alert(mess);
+                    } else {
+                        toastr.error("Có lỗi xảy ra");
+                        $("#loading").hide();
                     }
                 },
                 error: function () {
