@@ -35,6 +35,5 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 Assert.IsNotNull(form);
             }
         }
-
     }
 }
