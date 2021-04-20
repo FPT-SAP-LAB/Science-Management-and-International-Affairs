@@ -319,7 +319,7 @@
     <Compile Include="CustomModels\ScienceManagement\MasterData\CustomISI.cs" />
     <Compile Include="CustomModels\ScienceManagement\MasterData\Title2Name.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaiDecisionHaveReseacher.cs" />
-    <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInCountryReport.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInoutCountryReports.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\PaperByWorkUnit.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ReportByAuthorAward.cs" />
     <Compile Include="CustomModels\ScienceManagement\Researcher\ResearcherCandidate.cs" />
