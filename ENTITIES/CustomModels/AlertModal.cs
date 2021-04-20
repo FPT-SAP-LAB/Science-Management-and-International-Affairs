@@ -41,7 +41,7 @@
         {
             this.success = success;
             title = success ? "Thành công" : "Lỗi";
-            content = "Có lỗi xảy ra";
+            if (!success) content = "Có lỗi xảy ra";
         }
     }
 }

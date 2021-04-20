@@ -20,11 +20,11 @@ namespace ENTITIES
             this.AcademicPrograms = new HashSet<AcademicProgram>();
             this.Procedures = new HashSet<Procedure>();
             this.Partners = new HashSet<Partner>();
-            this.Policies = new HashSet<Policy>();
             this.ResearchCollaborations = new HashSet<ResearchCollaboration>();
             this.Scholarships = new HashSet<Scholarship>();
             this.ArticleVersions = new HashSet<ArticleVersion>();
             this.Tags = new HashSet<Tag>();
+            this.PolicyTypes = new HashSet<PolicyType>();
         }
     
         public int article_id { get; set; }
@@ -35,7 +35,7 @@ namespace ENTITIES
         public Nullable<int> pin_order { get; set; }
         public Nullable<int> category_id { get; set; }
         public int article_status_id { get; set; }
-        public int account_id { get; set; }
+        public Nullable<int> account_id { get; set; }
     
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -48,8 +48,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partner> Partners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Policy> Policies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResearchCollaboration> ResearchCollaborations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Scholarship> Scholarships { get; set; }
@@ -57,5 +55,7 @@ namespace ENTITIES
         public virtual ICollection<ArticleVersion> ArticleVersions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PolicyType> PolicyTypes { get; set; }
     }
 }
