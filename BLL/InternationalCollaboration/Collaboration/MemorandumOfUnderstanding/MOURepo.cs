@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using static Google.Apis.Drive.v3.FilesResource;
 using File = ENTITIES.File;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
@@ -63,7 +64,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
-                        inner join General.[File] tb12 on
+                        left join General.[File] tb12 on
                         tb12.file_id = tb1.evidence
                         where tb1.is_deleted = 0 ";
                 string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
@@ -124,7 +125,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 string sql_mouList =
                     @"select tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
-                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb12.link as evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, 
                         tb4.scope_abbreviation,
                         STRING_AGG(tb7.specialization_name, ',') 'specialization_name', tb9.mou_status_id,tb1.mou_id
@@ -155,6 +156,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
+                        left join General.[File] tb12 on
+                        tb12.file_id = tb1.evidence
                         where tb1.is_deleted = 1";
                 string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
                         IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
@@ -971,6 +974,41 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     GoogleDriveService.DeleteFile(file_id);
                 }
+                throw e;
+            }
+        }
+
+        public Google.Apis.Drive.v3.Data.File updateEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        {
+            string file_id = "";
+            try
+            {
+                Google.Apis.Drive.v3.Data.File f = UploadMOUFile(InputFile, FolderName, TypeFolder, isFolder);
+                file_id = InputFile.FileName;
+                return f;
+            }
+            catch (Exception e)
+            {
+                if (file_id != "")
+                {
+                    GoogleDriveService.DeleteFile(file_id);
+                }
+                throw e;
+            }
+        }
+
+        public static void DeleteEvidenceFile(string FileID)
+        {
+            try
+            {
+                DeleteRequest request = new DeleteRequest(GoogleDriveService.driveService, FileID)
+                {
+                    SupportsAllDrives = true
+                };
+                request.Execute();
+            }
+            catch (Exception e)
+            {
                 throw e;
             }
         }

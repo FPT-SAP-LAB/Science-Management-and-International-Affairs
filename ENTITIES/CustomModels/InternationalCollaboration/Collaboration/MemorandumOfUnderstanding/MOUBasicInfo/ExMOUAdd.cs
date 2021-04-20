@@ -10,6 +10,8 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
     {
         public ExMOUAdd() { }
         public int mou_bonus_id { get; set; }
+        public string file_drive_id { get; set; }
+        public string file_name { get; set; }
         public ExBasicInfo ExBasicInfo { get; set; }
         public List<PartnerScopeInfo> PartnerScopeInfo { get; set; }
     }
