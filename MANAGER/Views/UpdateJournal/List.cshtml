@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewBag.Title = "Cập nhật tạp chí";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card card-custom collapse_tab_1 mb-5" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-4">
+                <label>File cập nhật cho Scopus</label>
+                <div class="uppy" id="kt_uppy_1">
+                    <div class="uppy-wrapper"></div>
+                    <div class="uppy-list"></div>
+                    <div class="uppy-status"></div>
+                    <div class="uppy-informer uppy-informer-min"></div>
+                </div>
+            </div>
+            <div class="col-xl-4" >
+                <label>File cập nhật cho SCIE</label>
+                <div class="uppy" id="kt_uppy_2">
+                    <div class="uppy-wrapper"></div>
+                    <div class="uppy-list"></div>
+                    <div class="uppy-status"></div>
+                    <div class="uppy-informer uppy-informer-min"></div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <label>File cập nhật cho SSCI</label>
+                <div class="uppy" id="kt_uppy_3">
+                    <div class="uppy-wrapper"></div>
+                    <div class="uppy-list"></div>
+                    <div class="uppy-status"></div>
+                    <div class="uppy-informer uppy-informer-min"></div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <button id="btn-update" class="btn btn-light-success px-6 font-weight-bold float-right">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card card-custom collapse_tab_1" id="main-card">
+    <div class="card-body p-0 ">
+        <div class="row justify-content-center px-8 my-lg-5 px-lg-10">
+            <div class="col-xl-12 col-xxl-12">
+
+                <div class="card-toolbar">
+                    <ul class="nav nav-tabs nav-bold">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#scopus">
+                                <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+                                <span class="nav-text">Scopus</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#isi">
+                                <span class="nav-icon"><i class="flaticon2-drop"></i></span>
+                                <span class="nav-text">ISI</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="scopus" role="tabpanel" aria-labelledby="kt_tab_pane_1_4">
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <input type="text" class="form-control" id="search_scopus" placeholder="Tên tạp chí" />
+                            </div>
+                            <div class="col-xl-3">
+                                <button id="search-btn"
+                                        class="btn btn-light-primary px-6 font-weight-bold">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" id="scopus_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tên tạp chí
+                                    </th>
+                                    <th>
+                                        ISSN
+                                    </th>
+                                    <th>
+                                        eISSN
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="isi" role="tabpanel" aria-labelledby="kt_tab_pane_2_4">
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <input type="text" class="form-control" id="search_isi" placeholder="Tên tạp chí" />
+                            </div>
+                            <div class="col-xl-3">
+                                <button id="search-btn-2"
+                                        class="btn btn-light-primary px-6 font-weight-bold">
+                                    Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" id="isi_table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Tên tạp chí
+                                    </th>
+                                    <th>
+                                        ISSN
+                                    </th>
+                                    <th>
+                                        eISSN
+                                    </th>
+                                    <th>
+                                        Loại
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var uppy1, uppy2, uppy3;
+        $(document).ready(function () {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            });
+        });
+
+        var dataTable = $("#scopus_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("ListAll", "UpdateJournal")",
+                type: "GET",
+                data: {
+                    "name_search": function () { return $('#search_scopus').val() },
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "Source_Title_Medline_sourced_journals_are_indicated_in_Green", name: "Source_Title_Medline_sourced_journals_are_indicated_in_Green" },
+                { data: "Print_ISSN", name: "Print_ISSN" },
+                { data: "E_ISSN", name: "E_ISSN" },
+                { data: "Active_or_Inactive", name: "Active_or_Inactive" }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+
+        var dataTable2 = $("#isi_table").DataTable({
+            oLanguage: {
+                oPaginate: {
+                    sPrevious: "Trang trước",
+                    sNext: "Trang sau"
+                },
+                sEmptyTable: "Không có dữ liệu",
+                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi"
+            },
+            searching: false,
+            lengthChange: false,
+            serverSide: true,
+            ajax: {
+                url: "@Url.Action("ListAll2", "UpdateJournal")",
+                type: "GET",
+                data: {
+                    "name_search": function () { return $('#search_isi').val() },
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                cache: "false"
+            },
+            columns: [
+                { data: "Journal_title", name: "Journal_title" },
+                { data: "ISSN", name: "ISSN" },
+                { data: "eISSN", name: "eISSN" },
+                { data: "type", name: "type" }
+            ],
+            columnDefs: [
+                {
+                    className: "text-center",
+                    targets: "_all"
+                }
+            ]
+        });
+
+        $("#search-btn").click(function () {
+            dataTable.ajax.reload();
+        })
+        $("#search-btn-2").click(function () {
+            dataTable2.ajax.reload();
+        })
+
+        $("#btn-update").click(function () {
+            $("#loading").show();
+            formData = new FormData()
+
+            if (uppy1.getFiles()[0] != undefined) formData.append('file_scopus', uppy1.getFiles()[0].data);
+            if (uppy2.getFiles()[0] != undefined) formData.append('file_SCIE', uppy2.getFiles()[0].data);
+            if (uppy3.getFiles()[0] != undefined) formData.append('file_SSCI', uppy3.getFiles()[0].data);
+
+            $.ajax({
+                url: "/UpdateJournal/uploadJournal",
+                method: "post",
+                complete: function (data) {
+                    var mess = data.responseJSON.mess;
+                    if (mess) {
+                        $("#loading").hide();
+                        toastr.success("Cập nhật thành công");
+                        location.reload();
+                        //alert(mess);
+                    } else {
+                        toastr.error("Có lỗi xảy ra");
+                        $("#loading").hide();
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
+                    //save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false
+            });
+        });
+    </script>
+
+    <script src="~/Content/Custom JS/ScienceManagement/updateJournal.js"></script>
+}
+
+
+
+
