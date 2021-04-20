@@ -60,14 +60,34 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             return Json(data);
         }
         [Auther(RightID = "3")]
-        [HttpPost]
-        public JsonResult updateDetail(DetailOfAcademicActivityRepo.InfoSumDetail obj)
+        [HttpPost, ValidateInput(false)]
+        public JsonResult updateDetail(string obj)
         {
             try
             {
+                DetailOfAcademicActivityRepo.InfoSumDetail infoSumDetail =
+                    JsonConvert.DeserializeObject<DetailOfAcademicActivityRepo.InfoSumDetail>(obj);
                 repo = new DetailOfAcademicActivityRepo();
                 BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
-                bool res = repo.updateDetail(obj, u);
+                List<HttpPostedFileBase> list_image_main = new List<HttpPostedFileBase>();
+                for(int i = 0; i< infoSumDetail.infoDetail.count_upload_main; i++)
+                {
+                    string label = "image_" + i;
+                    list_image_main.Add(Request.Files[label]);
+                }
+                List<List<HttpPostedFileBase>> list_image_sub = new List<List<HttpPostedFileBase>>();
+                foreach (var item in infoSumDetail.subContent)
+                {
+                    List<HttpPostedFileBase> list_image = new List<HttpPostedFileBase>();
+                    for (int i = 0; i < item.number_of_image; i++)
+                    {
+                        string label = "image_" + item.sub_id + "_" + i;
+                        list_image.Add(Request.Files[label]);
+                    }
+                    list_image_sub.Add(list_image);
+                }
+                
+                bool res = repo.updateDetail(infoSumDetail, u, list_image_main, list_image_sub);
                 if (res)
                 {
                     return Json("Cập nhật thành công");

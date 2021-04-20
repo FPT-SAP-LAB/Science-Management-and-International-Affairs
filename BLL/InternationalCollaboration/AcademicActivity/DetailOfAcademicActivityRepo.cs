@@ -160,12 +160,56 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<AcademicActivityTypeLanguage>();
             }
         }
-        public bool updateDetail(InfoSumDetail data, Authen.LoginRepo.User u)
+        public bool updateDetail(InfoSumDetail data, Authen.LoginRepo.User u, List<HttpPostedFileBase> list_image_main,
+            List<List<HttpPostedFileBase>> list_image_sub)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    //========================= UPLOAD =================================
+                    if (list_image_main.Count != 0)
+                    {
+                        List<string> image_drive_id = new List<string>();
+                        List<string> image_drive_data_link = new List<string>();
+                        List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+
+                        files_upload = GoogleDriveService.UploadIAFile(list_image_main,
+                            data.infoDetail.activity_name + "_" + DateTime.Now.Year, 5, false);
+                        for (int i = 0; i < data.infoDetail.count_upload_main; i++)
+                        {
+                            image_drive_id.Add(files_upload[i].Id);
+                            image_drive_data_link.Add(files_upload[i].WebViewLink);
+                        }
+                        for (int i = 0; i < data.infoDetail.count_upload_main; i++)
+                        {
+                            data.infoDetail.article_content = data.infoDetail
+                            .article_content.Replace("image_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                        }
+                    }
+                    for (int item = 0; item < list_image_sub.Count; item++)
+                    {
+                        if (list_image_sub[item].Count != 0)
+                        {
+                            List<string> image_drive_id = new List<string>();
+                            List<string> image_drive_data_link = new List<string>();
+                            List<Google.Apis.Drive.v3.Data.File> files_upload = new List<Google.Apis.Drive.v3.Data.File>();
+
+                            files_upload = GoogleDriveService.UploadIAFile(list_image_sub[item],
+                                data.infoDetail.activity_name + "_" + DateTime.Now.Year, 5, false);
+                            for (int i = 0; i < list_image_sub[item].Count; i++)
+                            {
+                                image_drive_id.Add(files_upload[i].Id);
+                                image_drive_data_link.Add(files_upload[i].WebViewLink);
+                            }
+                            for (int i = 0; i < list_image_sub[item].Count; i++)
+                            {
+                                data.subContent[item].article_content = data.subContent[item].
+                                    article_content.Replace("image_" + data.subContent[item].sub_id + "_" + i, "https://drive.google.com/uc?id=" + image_drive_id[i]);
+                            }
+                        }
+                    }
+                    //========================= UPLOAD =================================
                     AcademicActivityRepo aaRepo = new AcademicActivityRepo();
                     infoDetail detail = data.infoDetail;
                     string sql = @"select ai.* from SMIA_AcademicActivity.ActivityInfo ai
@@ -688,11 +732,15 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             public int article_id { get; set; }
             public string version_title { get; set; }
             public string article_content { get; set; }
+            public string sub_id { get; set; }
             public int language_id { get; set; }
+            public int number_of_image { get; set; }
         }
         public class infoDetail : baseDetail
         {
             public int activity_id { get; set; }
+            public int count_upload_main { get; set; }
+
         }
         public class SumDetail
         {
