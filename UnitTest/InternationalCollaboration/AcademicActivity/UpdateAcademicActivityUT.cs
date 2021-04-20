@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using BLL.InternationalCollaboration.AcademicActivity;
+using ENTITIES;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ENTITIES;
-using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace UnitTest.InternationalCollaboration.AcademicActivity
 {
@@ -42,7 +42,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
-            if(res)
+            if (res)
                 Assert.Pass();
         }
         [TestCase]

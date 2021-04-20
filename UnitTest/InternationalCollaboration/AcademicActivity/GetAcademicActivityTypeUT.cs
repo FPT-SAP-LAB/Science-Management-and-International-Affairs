@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using BLL.InternationalCollaboration.AcademicActivity;
+using ENTITIES;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ENTITIES;
-using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace UnitTest.InternationalCollaboration.AcademicActivity
 {
@@ -18,7 +18,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = 1;
             List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
-            if(data.Count > 0)
+            if (data.Count > 0)
                 Assert.Pass();
         }
         [TestCase]
@@ -27,7 +27,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = 2;
             List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
-            if(data.Count > 0)
+            if (data.Count > 0)
                 Assert.Pass();
         }
         [TestCase]
@@ -36,7 +36,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = 0;
             List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
-            if(data.Count == 0)
+            if (data.Count == 0)
                 Assert.Pass();
         }
         [TestCase]

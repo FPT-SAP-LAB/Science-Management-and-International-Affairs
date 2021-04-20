@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using BLL.InternationalCollaboration.AcademicActivity;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using BLL.InternationalCollaboration.AcademicActivity;
 
 namespace UnitTest.InternationalCollaboration.AcademicActivity
 {
@@ -174,7 +174,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_name = ""
             };
             bool res = activityRepo.AddAA(baseAA, 1, user);
-            if(!res) Assert.Pass();
+            if (!res) Assert.Pass();
         }
         [TestCase]
         public void TestAddAcademicActivity_7()
