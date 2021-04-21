@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InternationalCollaboration\AcademicActivity\AddAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\DeleteAcademicActivityUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityTypeUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetListAcademicActivityUT.cs" />
