@@ -3,6 +3,7 @@
     ViewBag.Title = "THỐNG KÊ KHEN THƯỞNG SỞ HỮU TRÍ TUỆ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using ENTITIES;
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <!--begin: Search Form-->
@@ -11,50 +12,45 @@
             <div class="row align-items-center">
                 <div class="col-lg-10 col-xl-8">
                     <div class="row align-items-center">
-
+                        <div class="col-md-3 my-2 my-md-0">
+                            <div class="input-icon">
+                                <input type="text" class="form-control"
+                                       placeholder="Tên..."
+                                       id="search_name" />
+                                <span>
+                                    <i class="flaticon2-search-1 text-muted"></i>
+                                </span>
+                            </div>
+                        </div>
                         <div class="col-md-3 my-2 my-md-0">
                             <div class="d-flex align-items-center">
                                 <label class="mr-3 mb-0 d-none d-md-block">Năm:</label>
                                 <select class="form-control"
                                         id="search_nam">
                                     <option label="Label"></option>
-                                    <option value="">2021</option>
-                                    <option value="1">2020</option>
-                                    <option value="2">2019</option>
-                                    <option value="3">2018</option>
-                                    <option value="4">2017</option>
-                                    <option value="5">2016</option>
-                                    <option value="6">2015</option>
+                                    @foreach (var year in ViewBag.years)
+                                    {
+                                        <option value="@year">@year</option>
+                                    }
                                 </select>
                             </div>
                         </div>
-
-                        <div class="col-md-3 my-2 my-md-0">
-                            <div class="d-flex align-items-center">
-                                <label class="mr-3 mb-0 d-none d-md-block">Loại:</label>
-                                <select class="form-control"
-                                        id="search_loai">
-                                    <option label="Label"></option>
-                                    <option value="">Sáng chế</option>
-                                    <option value="1">...</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 my-2 my-md-0">
+                        <div class="col-md-4 my-2 my-md-0">
                             <div class="d-flex align-items-center">
                                 <label class="mr-3 mb-0 d-none d-md-block">CS:</label>
                                 <select class="form-control"
                                         id="search_coso">
                                     <option label="Label"></option>
-                                    <option value="">FPTU HN</option>
-                                    <option value="1">FPTU Cần Thơ</option>
+                                    @foreach (Office o in ViewBag.listOffices)
+                                    {
+                                        <option value="@o.office_id">@o.office_name</option>
+                                    }
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
+                        <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0">
                             <a href="#"
-                               class="btn btn-light-primary px-6 font-weight-bold">
+                               class="btn btn-light-primary px-6 font-weight-bold" id="search_btn">
                                 Tìm kiếm
                             </a>
                         </div>
@@ -62,8 +58,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-2 col-xl-4 mt-5 mt-lg-0"
-                     style="text-align: right;">
+                <div class="col-lg-2 col-xl-4 mt-5 mt-lg-0" style="text-align: right;">
                     <div class="dropdown dropdown-inline mr-2">
                         <button type="button"
                                 class="btn btn-light-primary font-weight-bolder dropdown-toggle"
@@ -144,9 +139,8 @@
             <div class="row align-items-center" style="margin-bottom:-2rem">
                 <div class="col-md-3 my-2 my-md-0">
                     <div class="d-flex align-items-center" style="margin-top: 3rem">
-                        <label class="mr-3 mb-0 d-none d-md-block">Tổng:</label>
-                        <input disabled type="text" class="form-control"
-                               value="1.000.000.000 đ" />
+                        <label class="mr-3 mb-0 d-none d-md-block text-muted">Tổng thưởng: </label>
+                        <span class="label label-xl label-danger label-pill label-inline mr-2 text font-weight-bolder" id="total_money"></span>
                     </div>
                 </div>
             </div>
@@ -157,211 +151,101 @@
             <thead>
                 <tr>
                     <th>STT</th>
+                    <th>Ngày cấp</th>
                     <th>Tên tác giả</th>
-                    <th>MSNV</th>
-                    <th>Đơn vị công tác</th>
                     <th>Phân loại</th>
                     <th>Số</th>
                     <th>Tên sáng chế/GPHI</th>
                     <th>Tiền Thưởng</th>
                 </tr>
             </thead>
-
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Vũ Thanh Hải</td>
-                    <td>58831</td>
-                    <td>FTRI</td>
-                    <td>Sáng chế</td>
-                    <td>26409</td>
-                    <td>Quy trình xác định biển số xe</td>
-                    <td>4,000,000</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td> </td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Trần Thế Trung</td>
-                    <td>11792</td>
-                    <td>FTRI</td>
-                    <td>GPHI</td>
-                    <td>2389</td>
-                    <td>
-                        Bàn phím cho máy tính hoặc thiết bị di động kết hợp cả phím
-                        vật lý và phím ảo
-                    </td>
-                    <td>4000000</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>...</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>...</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td></td>
-                </tr>
-            </tbody>
-
         </table>
         <!--end: Datatable-->
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
+    </div>
+</div>
+@section scripts{
+    <script>
+        var table = $('#kt_datatable').DataTable({
+            responsive: true,
 
-    </div></div>
-    @section scripts{
-        <script>
-            var KTDatatablesBasicBasic = function () {
+            // DOM Layout settings
+            dom: `<'row'<'col-sm-12'tr>>
+                                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
-                var initTable1 = function () {
-                    var table = $('#kt_datatable');
+            lengthMenu: [5, 10, 25, 50],
+            bInfo: false,
+            pageLength: 10,
+            serverSide: true,
+            columnDefs: [
+                { width: "5%", targets: 0 },
+                { width: "15%", targets: 1 },
+                { width: "20%", targets: 2 },
+                { width: "15%", targets: 3 },
+                { width: "10%", targets: 4 },
+                { width: "20%", targets: 5 },
+            ],
+            ajax: {
+                url: "/Reports/getIntellectualPropertyReport",
+                datatype: "json",
+                type: "POST",
+                data: function (d) {
+                    d.name = $("#search_name").val();
+                    d.year = $("#search_nam").val()
+                    d.coso = $("#search_coso").val()
+                    d.type = 1
+                },
+                cache: false,
+                dataSrc: function (json) {
+                    $("#total_money").text(AddComma(json.total) + " VND")
+                    return json.data;
+                }
+            },
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
 
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
+            // Order settings
+            order: [[1, 'desc']],
 
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        order: [[1, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                var initTable2 = function () {
-                    var table = $('#kt_datatable_2');
-
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
-
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        // order: [[0, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                return {
-
-                    //main function to initiate the module
-                    init: function () {
-                        initTable1();
-                        initTable2();
+            columns: [
+                { data: "rownum", name: "rownum", orderable: false },
+                {
+                    data: "date", name: "date", orderable: true, render: function (data, type, row, meta) {
+                        return row.date_string
                     }
-                };
-            }();
-
-            jQuery(document).ready(function () {
-                KTDatatablesBasicBasic.init();
+                },
+                { data: "authors", name: "authors", orderable: false },
+                { data: "kind", name: "kind", orderable: false },
+                { data: "invention_number", name: "invention_number", orderable: false },
+                { data: "invention_name", name: "invention_name", orderable: false },
+                {
+                    data: "total_reward", name: "total_reward", render: function (data) {
+                        return AddComma(data)
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+                $("#loader_panel").hide()
+            }
+        });
+        //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
+        list_select = {
+            "search_nam": "Chọn năm",
+            "search_coso": "Chọn cơ sở",
+            "search_loai": "Chọn loại SHTT"
+        }
+        for (let i in list_select) {
+            $('#' + i).select2({
+                placeholder: list_select[i],
+                allowClear: true
             });
-            //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
-            list_select = {
-                "search_nam": "Chọn năm",
-                "search_coso": "Chọn cơ sở",
-                "search_loai": "Chọn loại SHTT"
-            }
-            for (let i in list_select) {
-                $('#' + i).select2({
-                    placeholder: list_select[i],
-                    allowClear: true
-                });
-            }
+        }
                 //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-        </script>
-    }
+        $("#search_btn").click(function () {
+            table.ajax.reload()
+        })
+    </script>
+}

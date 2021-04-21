@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUBasicInfo;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -21,7 +23,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string sql_mouBasicInfo =
                     @"select 
                         t1.mou_id,t1.mou_code,t2.office_abbreviation,t1.mou_end_date,
-                        t5.mou_status_name,t4.reason,t1.evidence,t1.mou_note,
+                        t5.mou_status_name,t4.reason,t1.evidence,t6.name as file_name,t6.link as file_link,
+						t6.file_drive_id ,t1.mou_note,
                         t1.office_id,t5.mou_status_id
                         from IA_Collaboration.MOU t1
                         inner join General.Office t2 on t1.office_id = t2.office_id
@@ -35,6 +38,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         t4.datetime = t3.max_date and t4.mou_id = t4.mou_id and t4.mou_status_id = t3.mou_status_id
                         inner join IA_Collaboration.CollaborationStatus t5 on
                         t5.mou_status_id = t3.mou_status_id
+						left join General.[File] t6 on
+						t6.file_id = t1.evidence
                         where t1.mou_id = @mou_id ";
                 string sql_mouStartDateAndScopes =
                     @"select t2.*,t3.mou_start_date from
@@ -80,7 +85,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 string sql_mouExList =
                     @"select t1.mou_bonus_code, t1.mou_bonus_decision_date, isnull(t1.mou_bonus_end_date,'') as mou_bonus_end_date,
-                        t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id
+                        t4.partner_name,t5.scope_abbreviation,t6.link as evidence,t1.mou_id,t1.mou_bonus_id
                         from IA_Collaboration.MOUBonus t1 left join 
                         IA_Collaboration.MOUPartnerScope t2 on 
                         t1.mou_bonus_id = t2.mou_bonus_id left join 
@@ -89,6 +94,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         left join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
                         left join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
+						left join General.[File] t6 on
+						t6.file_id = t1.evidence
                         where t1.mou_id = @mou_id
                         order by mou_bonus_id, partner_name";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
@@ -133,20 +140,69 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public void editMOUBasicInfo(int mou_id, MOUBasicInfo newBasicInfo)
+        public void editMOUBasicInfo(int mou_id, MOUBasicInfo newBasicInfo, HttpPostedFileBase evidence,
+            int old_file_number, int new_file_number)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    //handling with files.
+                    Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                    File evidence_file = new File();
+                    if (old_file_number == 0)
+                    {
+                        if (new_file_number == 1)
+                        {
+                            //Add new file
+                            f = new MOURepo().uploadEvidenceFile(evidence, newBasicInfo.mou_code, 1, false);
+                            evidence_file = new MOURepo().saveFile(f, evidence);
+                        }
+                    }
+                    else if (old_file_number == 1)
+                    {
+                        int file_id = (int)db.MOUs.Find(mou_id).evidence;
+                        string old_file_drive_id = db.Files.Find(file_id).file_drive_id;
+
+                        if (new_file_number == 0)
+                        {
+                            //Delete old file
+                            MOURepo.DeleteEvidenceFile(old_file_drive_id);
+                            db.Files.Remove(db.Files.Find(file_id));
+                            db.SaveChanges();
+                        }
+                        else if (new_file_number == 1)
+                        {
+                            if (evidence != null)
+                            {
+                                //Update new file
+                                f = GoogleDriveService.UpdateFile(evidence.FileName, evidence.InputStream, evidence.ContentType, old_file_drive_id);
+                                db.Files.Remove(db.Files.Find(file_id));
+                                evidence_file = new MOURepo().saveFile(f, evidence);
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                evidence_file.file_id = file_id;
+                            }
+                        }
+                    }
+
                     DateTime mou_end_date = DateTime.ParseExact(newBasicInfo.mou_end_date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     //update basicInfo
                     MOU mou = db.MOUs.Find(mou_id);
                     mou.mou_code = newBasicInfo.mou_code;
                     mou.mou_end_date = mou_end_date;
                     mou.mou_note = newBasicInfo.mou_note;
-                    //mou.evidence = newBasicInfo.evidence;
                     mou.office_id = newBasicInfo.office_id;
+                    if (evidence_file.file_id == 0)
+                    {
+                        mou.evidence = null;
+                    }
+                    else
+                    {
+                        mou.evidence = evidence_file.file_id;
+                    }
                     db.Entry(mou).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -174,7 +230,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 string sql_mouEx =
                     @"select t1.mou_bonus_code, t1.mou_bonus_decision_date,isnull(t1.mou_bonus_end_date,'') as mou_bonus_end_date,
-                        t4.partner_name,t5.scope_abbreviation,t1.evidence,t1.mou_id,t1.mou_bonus_id,
+                        t4.partner_name,t5.scope_abbreviation,t6.file_drive_id,t6.name as file_name,t1.mou_id,t1.mou_bonus_id,
                         ISNULL(t5.scope_id, 0) as scope_id, ISNULL(t4.partner_id, 0) as partner_id
                         from IA_Collaboration.MOUBonus t1 left join 
                         IA_Collaboration.MOUPartnerScope t2 on 
@@ -184,6 +240,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         left join 
                         IA_Collaboration.Partner t4 on t4.partner_id = t3.partner_id
                         left join IA_Collaboration.CollaborationScope t5 on t5.scope_id = t3.scope_id
+						left join General.[File] t6 on
+						t6.file_id = t1.evidence
                         where t1.mou_id = @mou_id and t1.mou_bonus_id = @mou_bonus_id order by partner_id";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouEx
                     , new SqlParameter("mou_id", mou_id)
@@ -199,6 +257,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
         private ExMOUAdd handlingExMOUDetailData(List<ExtraMOU> mouExList)
         {
             ExMOUAdd newObj = new ExMOUAdd();
+            newObj.file_drive_id = mouExList[0].file_drive_id;
+            newObj.file_name = mouExList[0].file_name;
             newObj.ExBasicInfo = new ExBasicInfo();
             newObj.PartnerScopeInfo = new List<PartnerScopeInfo>();
             //Partner
@@ -231,12 +291,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return newObj;
         }
-        public void addExtraMOU(ExMOUAdd input, int mou_id, BLL.Authen.LoginRepo.User user)
+        public void addExtraMOU(ExMOUAdd input, int mou_id, BLL.Authen.LoginRepo.User user, HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    //File handling.
+                    Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                    if (evidence != null)
+                    {
+                        f = new MOURepo().uploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 2, false);
+                    }
+                    File evidence_file = new MOURepo().saveFile(f, evidence);
+                    int? evidence_value;
+                    if (evidence_file.file_id == 0)
+                    {
+                        evidence_value = null;
+                    }
+                    else
+                    {
+                        evidence_value = evidence_file.file_id;
+                    }
+
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime? end_date = null;
@@ -253,9 +330,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_bonus_end_date = end_date,
                         mou_id = mou_id,
                         account_id = user is null ? 1 : user.account.account_id,
-                        add_time = DateTime.Now
-                        //,
-                        //evidence = ""
+                        add_time = DateTime.Now,
+                        evidence = evidence_value
                     });
                     //checkpoint 1
                     db.SaveChanges();
@@ -327,12 +403,54 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void editExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user)
+        public void editExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user, int old_file_number, int new_file_number,
+            HttpPostedFileBase evidence, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
+                    //File handling.
+                    Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                    File evidence_file = new File();
+                    if (old_file_number == 0)
+                    {
+                        if (new_file_number == 1)
+                        {
+                            //Add new file
+                            f = new MOURepo().uploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 2, false);
+                            evidence_file = new MOURepo().saveFile(f, evidence);
+                        }
+                    }
+                    else if (old_file_number == 1)
+                    {
+                        int file_id = (int)db.MOUs.Find(mou_id).evidence;
+                        string old_file_drive_id = db.Files.Find(file_id).file_drive_id;
+
+                        if (new_file_number == 0)
+                        {
+                            //Delete old file
+                            MOURepo.DeleteEvidenceFile(old_file_drive_id);
+                            db.Files.Remove(db.Files.Find(file_id));
+                            db.SaveChanges();
+                        }
+                        else if (new_file_number == 1)
+                        {
+                            if (evidence != null)
+                            {
+                                //Update new file
+                                f = GoogleDriveService.UpdateFile(evidence.FileName, evidence.InputStream, evidence.ContentType, old_file_drive_id);
+                                db.Files.Remove(db.Files.Find(file_id));
+                                evidence_file = new MOURepo().saveFile(f, evidence);
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                evidence_file.file_id = file_id;
+                            }
+                        }
+                    }
+
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime? end_date = null;
@@ -343,6 +461,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
                     //edit MOUBonus
                     MOUBonu mb = db.MOUBonus.Find(input.mou_bonus_id);
+                    if (evidence_file.file_id == 0)
+                    {
+                        mb.evidence = null;
+                    }
+                    else
+                    {
+                        mb.evidence = evidence_file.file_id;
+                    }
                     mb.mou_bonus_code = input.ExBasicInfo.ex_mou_code;
                     mb.mou_bonus_decision_date = sign_date;
                     mb.mou_bonus_end_date = end_date;

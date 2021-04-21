@@ -3,6 +3,7 @@ using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using MANAGER.Support;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,7 +117,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
             }
         }
         [Auther(RightID = "7")]
-        public ActionResult Add_Moa(MOAAdd input)
+        public ActionResult Add_Moa(string input, HttpPostedFileBase evidence)
         {
             try
             {
@@ -126,9 +127,13 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 }
                 else
                 {
+                    //MOAAdd input
+                    JObject inputObj = JObject.Parse(input);
+                    MOAAdd obj = inputObj.ToObject<MOAAdd>();
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string mou_id = Session["mou_detail_id"].ToString();
-                    moa.addMOA(input, int.Parse(mou_id), user);
+
+                    moa.addMOA(obj, int.Parse(mou_id), user, evidence);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }

@@ -1,4 +1,5 @@
-﻿using ENTITIES;
+﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using System;
@@ -9,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 {
@@ -20,7 +22,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             try
             {
                 string sql_mouList =
-                    @"select t1.moa_id,t1.moa_code,t3.partner_name,t1.evidence,t2.moa_start_date,
+                    @"select t1.moa_id,t1.moa_code,t3.partner_name,t8.link as evidence,t2.moa_start_date,
                         t1.moa_end_date,t5.office_name,t6.scope_abbreviation,t7.mou_status_id,t2.moa_partner_id
                         from IA_Collaboration.MOA t1
                         left join IA_Collaboration.MOAPartner t2 
@@ -46,6 +48,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         group by moa_id) b on
                         a.datetime = b.max_date and a.moa_id = b.moa_id) t7
                         on t7.moa_id = t1.moa_id
+						left join General.[File] t8 on
+						t8.file_id = t1.evidence
                         where t1.mou_id = @mou_id
                         and t3.partner_name like @partner_name
                         and t1.moa_code like @moa_code
@@ -148,7 +152,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public void addMOA(MOAAdd input, int mou_id, BLL.Authen.LoginRepo.User user)
+        public void addMOA(MOAAdd input, int mou_id, BLL.Authen.LoginRepo.User user, HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -158,6 +162,24 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     //add MOAPartner => 
                     //add MOAPartnerScope
                     //add MOAStatusHistory
+
+                    //File handling.
+                    Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
+                    if (evidence != null)
+                    {
+                        f = new MOURepo().uploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 3, false);
+                    }
+                    File evidence_file = new MOURepo().saveFile(f, evidence);
+                    int? evidence_value;
+                    if (evidence_file.file_id == 0)
+                    {
+                        evidence_value = null;
+                    }
+                    else
+                    {
+                        evidence_value = evidence_file.file_id;
+                    }
+
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime moa_end_date = DateTime.ParseExact(input.MOABasicInfo.moa_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOA m = db.MOAs.Add(new MOA
@@ -168,7 +190,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         mou_id = mou_id,
                         account_id = user is null ? 1 : user.account.account_id,
                         add_time = DateTime.Now,
-                        is_deleted = false
+                        is_deleted = false,
+                        evidence = evidence_value
                     });
                     //checkpoint 1
                     db.SaveChanges();

@@ -24,14 +24,34 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         }
         public ActionResult InternationalPapersReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.getListYearPaper();
+            List<PaperCriteria> criterias = rewardsReportRepo.getListCriteria();
+            ViewBag.years = years;
+            ViewBag.criterias = criterias;
             return View();
         }
         public ActionResult InCountryPapersReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.getListYearPaper();
+            ViewBag.years = years;
             return View();
         }
         public ActionResult IntellectualPropertyReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.getListYear(50);
+            ViewBag.years = years;
             return View();
         }
         public ActionResult CitationReport()
@@ -68,18 +88,50 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
-        //public ActionResult getIncountryReward()
-        //{
-        //    rewardsReportRepo = new RewardsReportRepo();
-        //    BaseDatatable datatable = new BaseDatatable(Request);
-        //    BaseServerSideData<ArticlesInCountryReport> output = rewardsReportRepo.getAriticlesInCountryReport(datatable);
-        //    for (int i = 0; i < output.Data.Count; i++)
-        //    {
-        //        //output.Data[i].valid_date = DateTime.ParseExact(output.Data[i].valid_date, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString();
-        //        output.Data[i].rownum = datatable.Start + 1 + i;
-        //    }
-        //    return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult getAwardMoneyInoutCountry()
+        {
+            try
+            {
+                int? office_id;
+                int? hang;
+                int? type;
+                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
+                else { office_id = Int32.Parse(Request["coso"]); }
+                /////////////////////////////////////////////////////////////////////////
+                if (Request["hang"] == null || Request["hang"] == "") { hang = null; }
+                else { hang = Int32.Parse(Request["hang"]); }
+                /////////////////////////////////////////////////////////////////////////
+                if (Request["type"] == null || Request["type"] == "") { type = null; }
+                else { type = Int32.Parse(Request["type"]); }
+                //////////////////////////////////////////////////////////////////////////
+                string name = Request["name"];
+                string year = Request["year"];
+                SearchFilter searchs = new SearchFilter()
+                {
+                    office_id = office_id,
+                    name = name,
+                    year = year,
+                    hang = hang
+                };
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.getAriticlesByAreaReports(datatable, searchs, type);
+                for (int i = 0; i < output.Item1.Data.Count; i++)
+                {
+                    output.Item1.Data[i].valid_date_string = output.Item1.Data[i].valid_date.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].rownum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
         public JsonResult getAwardByAuthors()
         {
             try
@@ -110,6 +162,42 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                     data.Data[i].CitationAward = data.Data[i].CitationAward == "" ? "0" : data.Data[i].CitationAward;
                 }
                 return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
+        public JsonResult getIntellectualPropertyReport()
+        {
+            try
+            {
+                int? office_id;
+                int? hang;
+                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
+                else { office_id = Int32.Parse(Request["coso"]); }
+                //////////////////////////////////////////////////////////////////////////
+                string name = Request["name"];
+                string year = Request["year"];
+                SearchFilter searchs = new SearchFilter()
+                {
+                    office_id = office_id,
+                    name = name,
+                    year = year,
+                };
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.getIntellectualPropertyReport(datatable, searchs);
+                for (int i = 0; i < output.Item1.Data.Count; i++)
+                {
+                    output.Item1.Data[i].date_string = output.Item1.Data[i].date.Value.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].rownum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
             }
             catch (Exception e)
             {
