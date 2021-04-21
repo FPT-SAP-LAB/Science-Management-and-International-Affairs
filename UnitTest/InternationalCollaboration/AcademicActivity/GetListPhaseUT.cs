@@ -10,37 +10,40 @@ using System.Threading.Tasks;
 namespace UnitTest.InternationalCollaboration.AcademicActivity
 {
     [TestFixture]
-    public class DeleteAcademicActivityUT
+    public class GetListPhaseUT
     {
         ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         [TestCase]
-        public void DeleteAcademicActivityUT_1()
+        public void GetListPhaseUT_1()
         {
-            AcademicActivityRepo activityRepo = new AcademicActivityRepo();
+            AcademicActivityPhaseRepo phaseRepo = new AcademicActivityPhaseRepo();
+            int language_id = 1;
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            bool res = activityRepo.deleteAA(academicActivity.activity_id);
-            if (res)
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id,academicActivity.activity_id);
+            if (data.Count >= 0)
                 Assert.Pass();
         }
         [TestCase]
-        public void DeleteAcademicActivityUT_2()
+        public void GetListPhaseUT_2()
         {
-            AcademicActivityRepo activityRepo = new AcademicActivityRepo();
+            AcademicActivityPhaseRepo phaseRepo = new AcademicActivityPhaseRepo();
+            int language_id = 2;
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            bool res = activityRepo.deleteAA(academicActivity.activity_id);
-            if (res)
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, academicActivity.activity_id);
+            if (data.Count >= 0)
                 Assert.Pass();
         }
         [TestCase]
-        public void TestAddAcademicActivity_6()
+        public void GetListPhaseUT_3()
         {
-            AcademicActivityRepo activityRepo = new AcademicActivityRepo();
+            AcademicActivityPhaseRepo phaseRepo = new AcademicActivityPhaseRepo();
+            int language_id = 0;
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            bool res = activityRepo.deleteAA(academicActivity.activity_id);
-            if (!res)
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, academicActivity.activity_id);
+            if (data.Count == 0)
                 Assert.Pass();
         }
     }
