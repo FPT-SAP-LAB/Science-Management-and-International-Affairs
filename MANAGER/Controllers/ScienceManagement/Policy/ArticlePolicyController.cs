@@ -50,13 +50,7 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
         {
             PolicyTypeLanguageRepo policyTypeLanguageRepo = new PolicyTypeLanguageRepo();
             List<Language> languages = LanguageRepo.GetLanguages();
-            var types = policyTypeLanguageRepo.PolicyTypeLanguages(languages[0].language_id)
-                .Select(x => new
-                {
-                    x.policy_type_language_id,
-                    x.policy_type_name,
-                    value = x.policy_type_name
-                }).ToList();
+            var types = policyTypeLanguageRepo.PolicyTypeLanguages(languages[0].language_id);
             ViewBag.types = JsonConvert.SerializeObject(types);
             ViewBag.languages = languages;
             ViewBag.detail = EditRepo.Detail(id);
@@ -65,9 +59,9 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult Edit(List<ArticleVersion> versions, List<int> types)
+        public JsonResult Edit(List<ArticleVersion> versions, List<int> types, int id)
         {
-            return Json(AddRepo.Add(versions, types, CurrentAccount.AccountID(Session)));
+            return Json(EditRepo.Edit(versions, types, id));
         }
     }
 }

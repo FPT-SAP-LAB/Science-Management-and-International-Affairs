@@ -3,7 +3,7 @@
     ViewBag.Title = "CHỈNH SỬA THÔNG TIN CHÍNH SÁCH";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<ENTITIES.Language> languages = ViewBag.languages;
-    List<ENTITIES.ArticleVersion> details = ViewBag.detail;
+    ArticlePolicyEdit details = ViewBag.detail;
 }
 
 <div class="card card-custom gutter-b example example-compact">
@@ -27,7 +27,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <label>Tiêu đề <span style='color:red'>*</span>:</label>
-                                        <input type="text" class="form-control version_title" placeholder="Tiêu đề bài đăng" value="@details[i].version_title" />
+                                        <input type="text" class="form-control version_title" placeholder="Tiêu đề bài đăng" value="@details.Versions[i].version_title" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -44,8 +44,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <label>Loại chính sách <span style='color:red'>*</span>:</label>
-                    <input id="multiple-dropdown" class="form-control tagify" name='tags3' placeholder="Chọn các loại chính sách" 
-                           value='@ViewBag.types' />
+                    <input id="multiple-dropdown" class="form-control tagify" name='tags3' placeholder="Chọn các loại chính sách" />
                 </div>
             </div>
         </div>
@@ -62,9 +61,22 @@
 
 @section Scripts {
     <script>
-        var whitelist, tagifyTo;
+        var whitelist, tagifyTo, currentTypes;
 
         whitelist = @Html.Raw(ViewBag.types);
+        if (whitelist)
+            for (var i = 0; i < whitelist.length; i++) {
+                whitelist[i].value = whitelist[i].policy_type_name;
+            }
+
+        currentTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(details.TypeLanguages));
+        if (currentTypes) {
+            currentTypes.map(x => x.value = x.policy_type_name);
+            $("#multiple-dropdown").val(JSON.stringify(currentTypes));
+        }
+            //for (var i = 0; i < currentTypes.length; i++) {
+            //    currentTypes[i].value = currentTypes[i].policy_type_name;
+            //}
 
         $('.summernote').summernote({
             height: 400,
@@ -73,7 +85,7 @@
 
         @for (int i = 0; i < languages.Count; i++)
         {
-            @:setValue($("#kt_tab_pane_" + @languages[i].language_id + " .summernote"), "@HttpUtility.JavaScriptStringEncode(details[i].article_content)")
+            @:setValue($("#kt_tab_pane_" + @languages[i].language_id + " .summernote"), "@HttpUtility.JavaScriptStringEncode(details.Versions[i].article_content)")
         }
 
         function setValue(ele, val) {
@@ -148,7 +160,7 @@
 
             $("#loading").show();
             $.ajax({
-                url: "/ArticlePolicy/Add",
+                url: "/ArticlePolicy/Edit",
                 method: "post",
                 success: function (data) {
                     if (data.success) {
@@ -167,6 +179,7 @@
                 data: {
                     versions: temp,
                     types: types,
+                    id: "@Request["id"]"
                 }
             });
         }
