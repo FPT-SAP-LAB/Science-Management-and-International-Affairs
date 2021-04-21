@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết chính sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ENTITIES.CustomModels.ScienceManagement.ArticlePolicy.ArticlePolicyIndex article = ViewBag.detail;
+}
+
+<div class="card card-custom">
+    <div class="card-header d-flex flex-column" style="padding: 2rem 2.25rem;">
+        <!--begin::Info-->
+        <div class="d-flex align-items-center">
+            <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
+                @article.Version.publish_time.ToString("dd/MM/yyyy")
+            </span>
+        </div>
+        <!--end::Info-->
+        <!--begin::Link-->
+        <p class="text-dark font-weight-bolder font-size-h4">
+            @article.Version.version_title
+        </p>
+        <!--end::Link-->
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.Raw(article.Version.article_content)
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        @foreach (var tag in article.Types)
+        {
+            <a href="#" class="label label-primary label-pill" style="width: auto;padding: 0 10px;">@tag</a>
+        }
+    </div>
+</div>
+
+@section Scripts {
+}

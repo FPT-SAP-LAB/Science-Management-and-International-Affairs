@@ -202,7 +202,11 @@
 
             columns: [
                 { data: "rownum", name: "rownum", orderable: false },
-                { data: "valid_date_string", name: "valid_date_string", orderable: false },
+                {
+                    data: "valid_date", name: "valid_date", orderable: true, render: function (data, type, row, meta) {
+                        return row.valid_date_string
+                    }
+                },
                 { data: "decision_number", name: "decision_number", orderable: false },
                 { data: "authors", name: "authors", orderable: false },
                 { data: "paper_name", name: "paper_name", orderable: false },

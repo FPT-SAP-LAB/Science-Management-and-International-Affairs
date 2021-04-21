@@ -132,7 +132,7 @@
                         <button type="button" class="btn btn-light-primary btn-sm px-6" onclick="bonusRowContent(0)">Thêm</button>
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
-                        <button type="button" class="btn btn-light-success btn-sm px-6 float-right" id="btn_detail">Lưu</button>
+                        <button type="button" class="btn btn-light-success btn-sm float-right" id="btn_detail">Lưu</button>
                     </div>
                 </div>
             </div>
@@ -3496,6 +3496,7 @@
             return file;
         }
 
+        var save_loader = new LoaderBtn($("#btn_detail"))
         $('#btn_detail').click(function () {
             let fd = new FormData();
             var listSub = [];
@@ -3574,6 +3575,8 @@
                 subContent: listSub
             };
             fd.append("obj", JSON.stringify(object));
+
+            save_loader.startLoading();
             $.ajax({
                 url: "@Url.Action("updateDetail", "DetailOfAcademicActivity")",
                 data: fd,
@@ -3582,12 +3585,15 @@
                 success: function (data) {
                     if (data != '') {
                         toastr.success(data);
+                        save_loader.stopLoading()
                     } else {
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                        save_loader.stopLoading()
                     }
                 },
                 error: function (data) {
                     toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                    save_loader.stopLoading()
                 },
                 dataType: "json",
                 processData: false,

@@ -7,13 +7,13 @@ $('.program_partner').select2({
         delay: 250,
         cache: true,
         dataType: 'json',
-        data: function(params) {
+        data: function (params) {
             return {
                 partner_name: params.term
             };
         },
-        processResults: function(data) {
-            data.obj.map(function(obj) {
+        processResults: function (data) {
+            data.obj.map(function (obj) {
                 obj.id = obj.partner_name + '/' + obj.partner_id;
                 obj.text = obj.partner_name;
                 return data.obj;
@@ -48,20 +48,20 @@ $('#add_program_language_coming').select2({
 
 var direction = 0
 var collab_type = 0
-    //show going modal
-$('.add-program-going').click(function() {
-        $('#add_program_going').modal('show')
-        direction = $(this).data('direction')
-        collab_type = $(this).data('collab')
-    })
-    //show coming modal
-$('.add-program-coming').click(function() {
+//show going modal
+$('.add-program-going').click(function () {
+    $('#add_program_going').modal('show')
+    direction = $(this).data('direction')
+    collab_type = $(this).data('collab')
+})
+//show coming modal
+$('.add-program-coming').click(function () {
     $('#add_program_coming').modal('show')
     direction = $(this).data('direction')
     collab_type = $(this).data('collab')
 })
 
-$('.add_program_btn').click(function() {
+$('.add_program_btn').click(function () {
     var add_program_title
     var add_program_language
     var add_program_partner
@@ -69,6 +69,7 @@ $('.add_program_btn').click(function() {
     var add_program_end_date
     var note
     var content
+    var list_image
 
     if (direction == 1) {
         add_program_title = $('#add_program_title_going').val()
@@ -79,6 +80,7 @@ $('.add_program_btn').click(function() {
         add_program_range_date = $('#add_program_range_date_going').val()
         note = $('#add_note_going').val()
         content = $('#add_summernote_going').summernote('code') + "";
+        list_image = $('#add_program_going > div > div > div.modal-body > div > div:nth-child(6) > div.note-editor.note-frame.card').find('img')
     }
     if (direction == 2) {
         add_program_title = $('#add_program_title_coming').val()
@@ -88,6 +90,7 @@ $('.add_program_btn').click(function() {
         add_program_end_date = $('#add_program_end_date_coming').val()
         note = $('#add_note_coming').val()
         content = $('#add_summernote_coming').summernote('code') + "";
+        list_image = $('#add_program_coming > div > div > div.modal-body > div > div:nth-child(5) > div.note-editor.note-frame.card').find('img')
     }
     if (add_program_title == "") {
         toastr.warning("Vui lòng nhập tiêu đề")
@@ -104,7 +107,6 @@ $('.add_program_btn').click(function() {
     var save_loader = new LoaderBtn($(".load-btn"))
     var form_data = new FormData();
 
-    var list_image = $('.modal-add-program .note-editor').find('img')
     if (list_image.length != 0) {
         for (i = 0; i < list_image.length; i++) {
             var temp = list_image[i];
@@ -134,7 +136,7 @@ $('.add_program_btn').click(function() {
         data: form_data,
         processData: false,
         contentType: false,
-        success: function(data) {
+        success: function (data) {
             toastr.options = {
                 "closeButton": true,
                 "debug": false,
@@ -155,25 +157,44 @@ $('.add_program_btn').click(function() {
                 toastr.clear()
                 toastr.success('Thêm thành công');
 
-                $('.modal-add-program input').val('');
-                $('.modal-add-program textarea').val('');
-                $('.modal-add-program select').val('').trigger('change');
-                $('.modal-add-program .program_language').val('1').trigger('change');
-                $('#add_summernote_going').summernote('reset');
-                $('#add_summernote_coming').summernote('reset');
                 $('.modal-add-program').modal('hide')
-
                 save_loader.stopLoading()
                 if (direction == 1 && collab_type == 1) {
+                    $('#add_program_title_going').val('');
+                    $('#add_summernote_going').summernote('reset');
+                    $('#add_program_partner').val('').trigger('change');
+                    $('#add_program_language_going').val('1').trigger('change');
+                    $('#add_program_start_date_going').datepicker('setDate', '')
+                    $('#add_program_end_date_going').datepicker('setDate', '')
+                    $('#add_note_going').val('');
                     $('#program_going_table').DataTable().ajax.reload()
                 }
                 if (direction == 1 && collab_type == 2) {
+                    $('#add_program_title_going').val('');
+                    $('#add_summernote_going').summernote('reset');
+                    $('#add_program_partner').val('').trigger('change');
+                    $('#add_program_language_going').val('1').trigger('change');
+                    $('#add_program_start_date_going').datepicker('setDate', '')
+                    $('#add_program_end_date_going').datepicker('setDate', '')
+                    $('#add_note_going').val('');
                     $('#collab_program_going_table').DataTable().ajax.reload()
                 }
                 if (direction == 2 && collab_type == 1) {
+                    $('#add_program_title_coming').val('');
+                    $('#add_summernote_coming').summernote('reset');
+                    $('#add_program_language_coming').val('1').trigger('change');
+                    $('#add_program_start_date_coming').datepicker('setDate', '')
+                    $('#add_program_end_date_coming').datepicker('setDate', '')
+                    $('#add_note_coming').val('');
                     $('#program_coming_table').DataTable().ajax.reload()
                 }
                 if (direction == 2 && collab_type == 2) {
+                    $('#add_program_title_coming').val('');
+                    $('#add_summernote_coming').summernote('reset');
+                    $('#add_program_language_coming').val('1').trigger('change');
+                    $('#add_program_start_date_coming').datepicker('setDate', '')
+                    $('#add_program_end_date_coming').datepicker('setDate', '')
+                    $('#add_note_coming').val('');
                     $('#collab_program_coming_table').DataTable().ajax.reload()
                 }
             } else {
@@ -182,7 +203,7 @@ $('.add_program_btn').click(function() {
                 save_loader.stopLoading()
             }
         },
-        error: function(data) {
+        error: function (data) {
             toastr.clear();
             toastr.error(data.content);
             save_loader.stopLoading()

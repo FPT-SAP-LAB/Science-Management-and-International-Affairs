@@ -281,9 +281,9 @@
                     autoProceed: true,
                     showProgressDetails: true,
                     restrictions: {
-                        maxFileSize: 1000000, // 1mb
-                        maxNumberOfFiles: 5,
-                        minNumberOfFiles: 1
+                        maxFileSize: 5000000, // 1mb
+                        maxNumberOfFiles: 1,
+                        minNumberOfFiles: 0
                     }
                 });
 
@@ -299,12 +299,12 @@
                 });
 
                 $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Tải files</label>');
 
                 var $fileLabel = $(id + ' .uppy-input-label');
 
                 uppy_mou.on('upload', function (data) {
-                    $fileLabel.text("Uploading...");
+                    $fileLabel.text("Đang tải...");
                     $statusBar.addClass('uppy-status-ongoing');
                     $statusBar.removeClass('uppy-status-hidden');
                     clearTimeout(timeout);
@@ -327,7 +327,7 @@
                         $uploadedList.append(uploadListHtml);
                     });
 
-                    $fileLabel.text("Add more files");
+                    $fileLabel.text("Tải files");
 
                     $statusBar.addClass('uppy-status-hidden');
                     $statusBar.removeClass('uppy-status-ongoing');

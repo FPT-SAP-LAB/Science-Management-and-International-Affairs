@@ -11,7 +11,10 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public MOUBasicInfo() { }
         public int mou_id { get; set; }
         public string mou_code { get; set; }
-        public string evidence { get; set; }
+        public int? evidence { get; set; }
+        public string file_name { get; set; }
+        public string file_drive_id { get; set; }
+        public string file_link { get; set; }
         public string scopes { get; set; }
         public string reason { get; set; }
         public DateTime mou_end_date { get; set; }

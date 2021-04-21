@@ -30,8 +30,7 @@ $('#save_procedure').click(function() {
         return;
     }
     var content = $('#add_summernote').summernote('code') + "";
-
-    var list_image = $('.note-editor').find('img')
+    var list_image = $('#add_procedure > div > div > div.modal-body > div > div.col-lg-12.col-md-12.col-sm-12 > div.note-editor.note-frame.card').find('img')
     if (list_image.length != 0) {
         for (i = 0; i < list_image.length; i++) {
             var temp = list_image[i];
@@ -40,19 +39,12 @@ $('#save_procedure').click(function() {
             form_data.append('image_' + i, dataURItoBlob(temp_src))
         }
     }
-    console.log(content)
     form_data.append("direction", direction)
     form_data.append("numberOfImage", list_image.length)
     form_data.append('procedure_title', proceduce_title)
     form_data.append('partner_language_type', partner_language_type)
     form_data.append('content', content)
 
-    for (var p of form_data) {
-        let name = p[0];
-        let value = p[1];
-
-        console.log(name, value)
-    }
     save_loader.startLoading();
     $.ajax({
         url: "/AcademicCollaboration/AddProcedure",

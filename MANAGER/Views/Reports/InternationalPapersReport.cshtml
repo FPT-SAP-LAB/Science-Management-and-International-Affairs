@@ -165,6 +165,9 @@
                 </tr>
             </thead>
         </table>
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
         <!--end: Datatable-->
         @section scripts{
             <script>
@@ -172,7 +175,7 @@
                     responsive: true,
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     lengthMenu: [5, 10, 25, 50],
                     bInfo: false,
                     pageLength: 10,
@@ -220,12 +223,12 @@
                         { data: "journal_name", name: "journal_name", orderable: false },
                         {
                             data: "criterias", name: "criterias", render: function (data) {
-                                n=""
+                                n = ""
                                 for (var i in data) {
                                     if (i != data.length - 1) {
                                         n += (data[i].name + ", ")
                                     } else {
-                                        n += data[i].name 
+                                        n += data[i].name
                                     }
                                 }
                                 return n

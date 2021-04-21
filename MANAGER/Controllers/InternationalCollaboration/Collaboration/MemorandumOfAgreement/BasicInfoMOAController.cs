@@ -3,6 +3,7 @@ using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOABasicInfo;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using MANAGER.Support;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "7")]
-        public ActionResult editMOABasicInfo(MOABasicInfo input)
+        public ActionResult editMOABasicInfo(string input, int old_file_number, int new_file_number, HttpPostedFileBase evidence)
         {
             try
             {
@@ -87,8 +88,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    //MOABasicInfo input
                     string id = Session["moa_detail_id"].ToString();
-                    moa.editMOABasicInfo(int.Parse(id), input);
+                    JObject inputObj = JObject.Parse(input);
+                    MOABasicInfo obj = inputObj.ToObject<MOABasicInfo>();
+                    moa.editMOABasicInfo(int.Parse(id), obj, evidence, old_file_number, new_file_number);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -135,7 +139,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "7")]
-        public ActionResult Add_Ex_Moa(ExMOAAdd input)
+        public ActionResult Add_Ex_Moa(string input, HttpPostedFileBase evidence)
         {
             try
             {
@@ -145,9 +149,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    JObject inputObj = JObject.Parse(input);
+                    ExMOAAdd obj = inputObj.ToObject<ExMOAAdd>();
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["moa_detail_id"].ToString();
-                    moa.addExtraMOA(input, int.Parse(id), user);
+                    moa.addExtraMOA(obj, int.Parse(id), user, evidence);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -158,13 +164,23 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "7")]
-        public ActionResult Edit_Ex_Moa(ExMOAAdd input)
+        public ActionResult Edit_Ex_Moa(string input, int old_file_number_ex_moa, int new_file_number_ex_moa, HttpPostedFileBase evidence)
         {
             try
             {
-                BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-                moa.editExtraMOA(input, user);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    JObject inputObj = JObject.Parse(input);
+                    ExMOAAdd obj = inputObj.ToObject<ExMOAAdd>();
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                    string id = Session["mou_detail_id"].ToString();
+                    moa.editExtraMOA(obj, user, old_file_number_ex_moa, new_file_number_ex_moa, evidence, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {

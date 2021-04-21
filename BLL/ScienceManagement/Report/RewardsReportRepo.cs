@@ -139,13 +139,81 @@ namespace BLL.ScienceManagement.Report
             int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
-
+        public Tuple<BaseServerSideData<IntellectualPropertyReport>, String> getIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        {
+            var data = (from a in db.Decisions
+                        join b in db.RequestDecisions on a.decision_id equals b.decision_id
+                        join c in db.BaseRequests on b.request_id equals c.request_id
+                        join d in db.RequestInventions on c.request_id equals d.request_id
+                        join e in db.Inventions on d.invention_id equals e.invention_id //SAU THÊM ĐIỀU KIỆN CỦA TRƯỜNG is_verified VÀO ĐÂY
+                        select new IntellectualPropertyReport
+                        {
+                            authors = (from a1 in db.Authors
+                                       join b1 in db.AuthorInventions on a1.people_id equals b1.people_id
+                                       where b1.invention_id == e.invention_id
+                                       select new CustomAuthor
+                                       {
+                                           id = a1.people_id,
+                                           name = a1.name,
+                                           msnv = a1.mssv_msnv,
+                                           title = (from m in db.Titles
+                                                    join n in db.TitleLanguages on m.title_id equals n.title_id
+                                                    where m.title_id == a1.title_id && n.language_id == 1
+                                                    select n.name).FirstOrDefault(),
+                                           office = (from m in db.Offices
+                                                     where m.office_id == a1.office_id
+                                                     select m.office_name).FirstOrDefault(),
+                                           office_id = (from m in db.Offices
+                                                        where m.office_id == a1.office_id
+                                                        select m.office_id).FirstOrDefault()
+                                       }).ToList(),
+                            invention_number = e.no,
+                            total_reward = d.total_reward,
+                            kind = (from m in db.InventionTypes
+                                    where e.type_id == m.invention_type_id
+                                    select m.name).FirstOrDefault(),
+                            date = e.date,
+                        });
+            if (search.name != null && search.name.Trim() != "")
+            {
+                data = data.Where(x => x.invention_name.Contains(search.name));
+            }
+            if (search.year != null && search.year.Trim() != "")
+            {
+                data = data.Where(x => x.date.Value.Year.ToString() == search.year);
+            }
+            if (search.office_id != null)
+            {
+                data = data.Where(x => x.authors.Select(a => a.office_id).ToList().Contains(search.office_id.Value));
+            }
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            String totalAmount = "";
+            Int64 total = 0;
+            foreach (var i in res)
+            {
+                if (i.total_reward != null && i.total_reward.Trim() != "")
+                {
+                    total += Int64.Parse(i.total_reward);
+                }
+            }
+            totalAmount = total.ToString();
+            int recordsTotal = data.Count();
+            return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
+                String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
+        }
         public List<String> getListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
             return data;
         }
-
+        public List<String> getListYear(int gap)
+        {
+            int end = DateTime.Now.Year;
+            int start = end - gap;
+            List<String> data = Enumerable.Range(start, gap + 1).Select(x => x.ToString()).OrderByDescending(x => x).ToList();
+            return data;
+        }
         public List<PaperCriteria> getListCriteria()
         {
             List<int> criteria = new List<int>() { 1, 2, 3, 4, 5 };
