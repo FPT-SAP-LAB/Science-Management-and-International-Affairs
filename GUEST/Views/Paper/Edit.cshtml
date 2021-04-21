@@ -593,11 +593,16 @@
                         } else if ($("#kieuthuong").val() == "2") {
                             $(".edit-author").prop('disabled', true);
                         }
-                    }else if (ck != "5") {
+                    } else if (ck == "9") {
+                        $(".edit").prop("disabled", true);
+                        $(".edit-author").prop("disabled", false);
+                        $("#edit_submit_reward").show();
+                    } else if (ck != "5") {
                         $(".edit").prop("disabled", true);
                         $(".edit-author").prop("disabled", true);
                         $("#edit_submit_reward").hide();
-                    } else {
+                    }
+                    else {
                         $(".edit").prop("disabled", false);
                         $(".edit-author").prop("disabled", false);
                         $("#edit_submit_reward").hide();
