@@ -1235,7 +1235,7 @@ namespace BLL.ScienceManagement.Paper
                             note = (from m in db.AuthorPapers
                                     where m.paper_id == d.paper_id
                                     select m.people_id).Count()
-                        }).ToList();
+                        }).Distinct().ToList();
             //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return data;
         }
@@ -1243,7 +1243,7 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            //string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
             //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
             //                     join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
             //                     join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -1279,7 +1279,7 @@ namespace BLL.ScienceManagement.Paper
                             note = (from m in db.AuthorPapers
                                     where m.paper_id == d.paper_id
                                     select m.people_id).Count()
-                        }).ToList();
+                        }).Distinct().ToList();
             //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return data;
         }
