@@ -52,8 +52,8 @@ namespace GUEST.Models
         public static string shortText(string text, int gap)
         {
             //lấy index của dấu cách gần chỗ cắt nhất đề tránh cắt dính từ
-            var index = text.Select((b, i) => b.Equals(' ') ? i : -1).Where(i => i != -1 && i >= gap).FirstOrDefault(); 
+            var index = text.Select((b, i) => b.Equals(' ') ? i : -1).Where(i => i != -1 && i >= gap).FirstOrDefault();
             return text.Substring(0, index);
-        } 
+        }
     }
 }
