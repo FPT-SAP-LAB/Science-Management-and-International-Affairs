@@ -310,6 +310,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\Year.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\Notification.cs" />
+    <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyEdit.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_1.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_2.cs" />
