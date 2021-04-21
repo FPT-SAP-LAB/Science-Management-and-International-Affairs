@@ -321,6 +321,7 @@
     <Compile Include="CustomModels\ScienceManagement\MasterData\Title2Name.cs" />
     <Compile Include="CustomModels\ScienceManagement\Paper\WaiDecisionHaveReseacher.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ArticlesInoutCountryReports.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Report\CitationByAuthorReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\IntellectualPropertyReport.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\PaperByWorkUnit.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\ReportByAuthorAward.cs" />

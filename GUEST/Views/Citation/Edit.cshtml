@@ -67,6 +67,7 @@
     <input name="editable" id="ckEdit" />
 </form>
 <input class="form-control" value="@ViewBag.author.name" id="name_temp" style="display:none"/>
+<input class="form-control" value="@Html.Raw(ViewBag.author.bank_branch)" id="bank_branch_temp" style="display:none"/>
 @section scripts{
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
@@ -105,7 +106,7 @@
             $("#add_author_cmnd").val("@ViewBag.author.identification_number");
             $("#add_author_cmnd_link").val("@ViewBag.author.identification_file_link");
             $("#add_author_tax").val("@ViewBag.author.tax_code");
-            $("#add_author_bank").val("@ViewBag.author.bank_branch");
+            $("#add_author_bank").val($("#bank_branch_temp").val());
             $("#add_author_accno").val("@ViewBag.author.bank_number");
             $("#add_author_isReseacher").prop("checked", is_r);
 

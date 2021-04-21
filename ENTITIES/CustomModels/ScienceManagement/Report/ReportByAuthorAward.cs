@@ -15,7 +15,8 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public string title { get; set; }
         public string office { get; set; }
         public string paperAward { get; set; }
-        public string conferenceAward { get; set; }
+        public List<String> inventionAwards { get; set; }
+        public string inventionAmount { get; set; }
         public string CitationAward { get; set; }
         public string PublicYear { get; set; }
     }

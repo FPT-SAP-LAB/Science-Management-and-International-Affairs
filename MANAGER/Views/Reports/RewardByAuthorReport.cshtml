@@ -206,18 +206,18 @@
                         }
                     },
                     {
-                        data: "conferenceAward", name: "conferenceAward", render: function (data) {
-                            return AddComma(data)
-                        }
-                    },
-                    {
                         data: "CitationAward", name: "CitationAward", render: function (data) {
                             return AddComma(data)
                         }
                     },
                     {
+                        data: "inventionAmount", name: "inventionAmount", render: function (data) {
+                            return AddComma(data)
+                        }
+                    },
+                    {
                         data: "paperAward", name: "paperAward", render: function (data, type, row, meta) {
-                            a = eval(row.paperAward + "+" + row.conferenceAward + "+" + row.CitationAward)
+                            a = eval(row.paperAward + "+" + row.inventionAmount + "+" + row.CitationAward)
                             return AddComma(a)
                         }
                     },
