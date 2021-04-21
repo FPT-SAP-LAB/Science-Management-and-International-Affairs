@@ -15,17 +15,13 @@ namespace BLL.ScienceManagement.ArticlePolicy
                         where c.article_status_id == 2 && c.PolicyTypes.Count > 0
                         select new ArticlePolicyIndex
                         {
-                            VersionID = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().article_version_id,
-                            Title = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().version_title,
+                            Version = c.ArticleVersions.Where(x => x.language_id == language_id)
+                            .OrderByDescending(x => x.publish_time).FirstOrDefault(),
                             CreatedBy = c.Account.full_name,
                             Types = (from b in db.PolicyTypeLanguages
                                      join d in c.PolicyTypes on b.policy_type_id equals d.policy_type_id
                                      where b.language_id == language_id
-                                     select b.policy_type_name).ToList(),
-                            LastEdited = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().publish_time
+                                     select b.policy_type_name).ToList()
                         }).ToList();
             temp.ForEach(x => x.TypeName = string.Join(", ", x.Types));
             return temp;
@@ -37,19 +33,13 @@ namespace BLL.ScienceManagement.ArticlePolicy
                         where c.article_status_id == 2 && c.PolicyTypes.Count > 0
                         select new ArticlePolicyIndex
                         {
-                            VersionID = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().article_version_id,
-                            Title = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().version_title,
-                            Content = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().article_content,
+                            Version = c.ArticleVersions.Where(x => x.language_id == language_id)
+                            .OrderByDescending(x => x.publish_time).FirstOrDefault(),
                             CreatedBy = c.Account.full_name,
                             Types = (from b in db.PolicyTypeLanguages
                                      join d in c.PolicyTypes on b.policy_type_id equals d.policy_type_id
                                      where b.language_id == language_id
                                      select b.policy_type_name).ToList(),
-                            LastEdited = c.ArticleVersions.Where(x => x.language_id == language_id)
-                            .OrderByDescending(x => x.publish_time).FirstOrDefault().publish_time
                         }).ToList();
             temp.ForEach(x => x.TypeName = string.Join(", ", x.Types));
             return temp;

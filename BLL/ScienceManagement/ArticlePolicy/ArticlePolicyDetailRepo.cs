@@ -17,15 +17,11 @@ namespace BLL.ScienceManagement.ArticlePolicy
                         orderby a.publish_time descending
                         select new ArticlePolicyIndex
                         {
-                            VersionID = a.article_version_id,
-                            Title = a.version_title,
-                            Content = a.article_content,
-                            CreatedBy = c.Account.full_name,
+                            Version = a,
                             Types = (from b in db.PolicyTypeLanguages
                                      join d in c.PolicyTypes on b.policy_type_id equals d.policy_type_id
                                      where b.language_id == language_id
                                      select b.policy_type_name).ToList(),
-                            LastEdited = a.publish_time
                         }).FirstOrDefault();
             return temp;
         }

@@ -11,8 +11,7 @@ $('#save_edit_procedure').click(function () {
         return;
     }
     var content = $('#edit_summernote').summernote('code') + "";
-
-    var list_image = $('.note-editor').find('img')
+    var list_image = $('#edit_procedure > div > div > div.modal-body > div > div.col-lg-12.col-md-12.col-sm-12 > div.note-editor.note-frame.card').find('img')
     var count_upload = 0;
     if (list_image.length != 0) {
         for (i = 0; i < list_image.length; i++) {
