@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace UnitTest.InternationalCollaboration.AcademicActivity
 {
+    [TestFixture]
     public class GetListAcademicActivityUT
     {
         [TestCase]
