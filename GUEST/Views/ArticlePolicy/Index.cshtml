@@ -21,7 +21,7 @@
                     </div>
                     <!--end::Info-->
                     <!--begin::Link-->
-                    <a href="/ArticlePolicy/Detail?id=@item.Version.article_version_id" data-toggle="tooltip" data-theme="dark" title="@item.Version.version_title" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
+                    <a href="/ArticlePolicy/Detail?id=@item.ArticleID" data-toggle="tooltip" data-theme="dark" title="@item.Version.version_title" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
                         @if (item.Version.version_title.Length > 80)
                         {
                             <span>
@@ -45,7 +45,7 @@
                             @{ 
                                 string text = HTMLHelp.HTMLToText(Html.Raw(item.Version.article_content).ToHtmlString());
                                 <span>@HTMLHelp.shortText(text, 200)...</span>
-                            <a href="/ArticlePolicy/Detail?id=@item.Version.article_version_id" class="">Xem thêm</a>
+                            <a href="/ArticlePolicy/Detail?id=@item.ArticleID" class="">Xem thêm</a>
                             }
                             <!--end::Desc-->
                         </div>
