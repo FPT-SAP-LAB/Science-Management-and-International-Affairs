@@ -112,14 +112,14 @@ namespace BLL.ScienceManagement.Report
                                           && j.mssv_msnv == b.mssv_msnv
                                           select h.money_reward).ToList().Sum().ToString(),
                             inventionAwards = (from a1 in db.Decisions
-                                              join b1 in db.RequestDecisions on a1.decision_id equals b1.decision_id
-                                              join c1 in db.BaseRequests on b1.request_id equals c1.request_id
-                                              join d1 in db.RequestInventions on c1.request_id equals d1.request_id
-                                              join e1 in db.Inventions on d1.invention_id equals e1.invention_id
-                                              join f1 in db.Authors on b.mssv_msnv equals f1.mssv_msnv
-                                              join h1 in db.AuthorInventions on f1.people_id equals h1.people_id
-                                              where f1.people_id == b.people_id 
-                                              select d1.total_reward).ToList(),
+                                               join b1 in db.RequestDecisions on a1.decision_id equals b1.decision_id
+                                               join c1 in db.BaseRequests on b1.request_id equals c1.request_id
+                                               join d1 in db.RequestInventions on c1.request_id equals d1.request_id
+                                               join e1 in db.Inventions on d1.invention_id equals e1.invention_id
+                                               join f1 in db.Authors on b.mssv_msnv equals f1.mssv_msnv
+                                               join h1 in db.AuthorInventions on f1.people_id equals h1.people_id
+                                               where f1.people_id == b.people_id
+                                               select d1.total_reward).ToList(),
                             CitationAward = "0",
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
@@ -127,7 +127,7 @@ namespace BLL.ScienceManagement.Report
             {
                 data = data.Where(x => x.office_id == search.office_id);
             }
-            if (search.name != null && search.name.Trim()!="")
+            if (search.name != null && search.name.Trim() != "")
             {
                 data = data.Where(x => x.name.Contains(search.name));
             }
@@ -141,7 +141,7 @@ namespace BLL.ScienceManagement.Report
             {
                 result[i].inventionAmount = result[i].inventionAwards.Select(x => Convert.ToInt64(x)).ToList().Sum().ToString();
             }
-                int recordsTotal = data.Count();
+            int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
         public Tuple<BaseServerSideData<IntellectualPropertyReport>, String> getIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
