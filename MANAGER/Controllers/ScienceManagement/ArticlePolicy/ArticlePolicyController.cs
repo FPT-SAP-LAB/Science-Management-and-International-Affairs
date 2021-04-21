@@ -14,6 +14,7 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
     {
         private readonly ArticlePolicyIndexRepo IndexRepo = new ArticlePolicyIndexRepo();
         private readonly ArticlePolicyAddRepo AddRepo = new ArticlePolicyAddRepo();
+        private readonly ArticlePolicyDetailRepo DetailRepo = new ArticlePolicyDetailRepo();
         public ActionResult Index()
         {
             int.TryParse(Request["language"], out int language_id);
@@ -35,6 +36,12 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
         public JsonResult Add(List<ArticleVersion> versions, List<int> types)
         {
             return Json(AddRepo.Add(versions, types, CurrentAccount.AccountID(Session)));
+        }
+
+        public ActionResult Detail(int id)
+        {
+            ViewBag.detail = DetailRepo.Detail(id, 1);
+            return View();
         }
     }
 }

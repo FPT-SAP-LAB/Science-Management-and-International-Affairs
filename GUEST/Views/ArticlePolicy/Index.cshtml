@@ -16,13 +16,13 @@
                     <!--begin::Info-->
                     <div class="d-flex align-items-center">
                         <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
-                            @item.LastEdited.ToString(rm.GetString("DateFormat"))
+                            @item.Version.publish_time.ToString(rm.GetString("DateFormat"))
                         </span>
                     </div>
                     <!--end::Info-->
                     <!--begin::Link-->
-                    <a href="/ArticlePolicy/Detail?id=@item.VersionID" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
-                        @item.Title
+                    <a href="/ArticlePolicy/Detail?id=@item.Version.article_version_id" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
+                        @item.Version.version_title
                     </a>
                     <!--end::Link-->
                 </div>
@@ -31,7 +31,7 @@
                     <div class="scroll scroll-pull" data-scroll="true" data-wheel-propagation="true" style="height: 200px">
                         <div class="flex-grow-1 pb-5">
                             <!--begin::Desc-->
-                            @Html.Raw(item.Content)
+                            @Html.Raw(item.Version.article_content)
                             <!--end::Desc-->
                         </div>
                     </div>
