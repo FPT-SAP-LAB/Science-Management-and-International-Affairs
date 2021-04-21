@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Bài báo chờ xác nhận";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom">
+    <div class="card-body">
+        <table id="pending" class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên bài báo, ẩn phẩm, báo cáo khoa học</th>
+                    <th>Người request</th>
+                    <th>Ngày request</th>
+                    <th>Trạng thái</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody id="pending-body">
+                @{
+                    int count = 1;
+                    foreach (var item in ViewBag.list)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.name</td>
+                            <td>@item.email</td>
+                            <td>@item.created_date.ToString("dd/MM/yyyy")</td>
+                            <td>@item.status_id</td>
+                            <td><button id="@item.paper_id" class="btn btn-sm btn-clean btn-icon btn_submit" title="View"> <i class="fas fa-eye"></i> </button></td>
+                        </tr>
+                        count++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/datetime-moment.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script>
+        $(".btn_submit").click(function () {
+            var id = this.id;
+            var form = document.createElement("form");
+            var element1 = document.createElement("input");
+
+            form.method = "GET";
+            form.action = "/Paper/Detail";
+
+            element1.value = id;
+            element1.name = "id";
+            form.appendChild(element1);
+
+            document.body.appendChild(form);
+
+            form.submit();
+        });
+        $(document).ready(function () {
+            $.fn.dataTable.moment('D/MM/YYYY');
+            $("#pending").DataTable({
+                "columns": [
+                    { width: "5%" },
+                    { width: "30%" },
+                    { width: "25%" },
+                    { width: "10%" },
+                    { width: "15%" },
+                    { width: "15%" },
+                ],
+                responsive: true,
+
+                // DOM Layout settings
+                dom: `<'row'<'col-sm-12'tr>>
+                                              <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                order: [[3, "desc"]],
+
+                pageLength: 10,
+
+                columnDefs: [
+                    {
+                        targets: 4,
+                        render: function (data, type, full, meta) {
+                            var status = {
+                                1: {
+                                    'title': 'Đã hủy',
+                                    'class': 'label label-danger label-pill label-inline mr-2'
+                                },
+                                2: {
+                                    'title': 'Đã xong',
+                                    'class': 'label label-success label-pill label-inline mr-2'
+                                },
+                                3: {
+                                    'title': 'Đang phê duyệt',
+                                    'class': 'label label-primary label-pill label-inline mr-2'
+                                },
+                                4: {
+                                    'title': 'Đang chờ quyết định',
+                                    'class': 'label label-primary label-pill label-inline mr-2'
+                                },
+                                5: {
+                                    'title': 'Cần chỉnh sửa',
+                                    'class': 'label label-warning label-pill label-inline mr-2'
+                                },
+                                6: {
+                                    'title': 'Đã xong',
+                                    'class': 'label label-success label-pill label-inline mr-2'
+                                },
+                                10: {
+                                    'title': 'Chờ xác nhận thưởng',
+                                    'class': 'label label-warning label-pill label-inline mr-2'
+                                }
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
+                        },
+                    },
+                ],
+
+                language: {
+                    'lengthMenu': 'Display _MENU_',
+                }
+            });
+        });
+    </script>
+}

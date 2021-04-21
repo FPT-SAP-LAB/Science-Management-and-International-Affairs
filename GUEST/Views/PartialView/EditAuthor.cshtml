@@ -86,7 +86,7 @@
     </div>
     <div class="col-xl-6 form-group citationE">
         <label class="required-field">@rm.GetString("Reward")</label>
-        <input autocomplete="off" class="form-control editfe edit inputAuthor" id="add_author_reward_edit" type="text" />
+        <input autocomplete="off" oninput="numberWithCommas(this)" class="form-control editfe edit inputAuthor" id="add_author_reward_edit" type="text" />
     </div>
     @*<div class="col-xl-6 form-group">
             <label  class="required-field">@rm.GetString("Note")</label>
@@ -101,6 +101,13 @@
 @*<script src="assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script>
+    function numberWithCommas(ele) {
+        var x = $(ele).val().toString().replaceAll(",", "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        $(ele).val(x);
+    }
+    $("#add_author_reward_edit").inputFilter(function (value) {
+        return /^[0-9,.]*$/.test(value);
+    });
     $(document).ready(function () {
         $('#add_author_msnv_edit').select2({
             allowClear: true,
