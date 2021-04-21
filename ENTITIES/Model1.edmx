@@ -654,9 +654,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
         </EntityType>
         <EntityType Name="PolicyTypeLanguage">
           <Key>
-            <PropertyRef Name="policy_type_id" />
-            <PropertyRef Name="language_id" />
+            <PropertyRef Name="policy_type_language_id" />
           </Key>
+          <Property Name="policy_type_language_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="policy_type_id" Type="int" Nullable="false" />
           <Property Name="policy_type_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="language_id" Type="int" Nullable="false" />
@@ -925,7 +925,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="policy_type_id" />
           </Key>
           <Property Name="policy_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="account_id" Type="int" />
+          <Property Name="account_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PolicyTypeArticle">
           <Key>
@@ -3116,7 +3116,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PolicyTyp__accou__322C6448">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="PolicyType" Type="Self.PolicyType" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
@@ -3139,6 +3139,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PolicyTyp__langu__5C229E14">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="PolicyTypeLanguage" Type="Self.PolicyTypeLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="language_id" />
+            </Principal>
+            <Dependent Role="PolicyTypeLanguage">
+              <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PolicyTyp__polic__39CD8610">
           <End Role="PolicyType" Type="Self.PolicyType" Multiplicity="1" />
           <End Role="PolicyTypeArticle" Type="Self.PolicyTypeArticle" Multiplicity="*" />
@@ -3147,6 +3159,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               <PropertyRef Name="policy_type_id" />
             </Principal>
             <Dependent Role="PolicyTypeArticle">
+              <PropertyRef Name="policy_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PolicyTyp__polic__5B2E79DB">
+          <End Role="PolicyType" Type="Self.PolicyType" Multiplicity="1" />
+          <End Role="PolicyTypeLanguage" Type="Self.PolicyTypeLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PolicyType">
+              <PropertyRef Name="policy_type_id" />
+            </Principal>
+            <Dependent Role="PolicyTypeLanguage">
               <PropertyRef Name="policy_type_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -4045,18 +4069,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PolicyTypeLanguage_PolicyType">
-          <End Role="PolicyType" Type="Self.PolicyType" Multiplicity="1" />
-          <End Role="PolicyTypeLanguage" Type="Self.PolicyTypeLanguage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PolicyType">
-              <PropertyRef Name="policy_type_id" />
-            </Principal>
-            <Dependent Role="PolicyTypeLanguage">
-              <PropertyRef Name="policy_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Procedure_Direction">
           <End Role="Direction" Type="Self.Direction" Multiplicity="1" />
           <End Role="Procedure" Type="Self.Procedure" Multiplicity="*" />
@@ -4922,9 +4934,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Article" EntitySet="Article" />
             <End Role="PolicyTypeArticle" EntitySet="PolicyTypeArticle" />
           </AssociationSet>
+          <AssociationSet Name="FK__PolicyTyp__langu__5C229E14" Association="Self.FK__PolicyTyp__langu__5C229E14">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="PolicyTypeLanguage" EntitySet="PolicyTypeLanguage" />
+          </AssociationSet>
           <AssociationSet Name="FK__PolicyTyp__polic__39CD8610" Association="Self.FK__PolicyTyp__polic__39CD8610">
             <End Role="PolicyType" EntitySet="PolicyType" />
             <End Role="PolicyTypeArticle" EntitySet="PolicyTypeArticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PolicyTyp__polic__5B2E79DB" Association="Self.FK__PolicyTyp__polic__5B2E79DB">
+            <End Role="PolicyType" EntitySet="PolicyType" />
+            <End Role="PolicyTypeLanguage" EntitySet="PolicyTypeLanguage" />
           </AssociationSet>
           <AssociationSet Name="FK__PositionL__langu__0C1BC9F9" Association="Self.FK__PositionL__langu__0C1BC9F9">
             <End Role="Language" EntitySet="Language" />
@@ -5217,10 +5237,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <AssociationSet Name="FK_Policy_PolicyType" Association="Self.FK_Policy_PolicyType">
             <End Role="PolicyType" EntitySet="PolicyType" />
             <End Role="Policy" EntitySet="Policy" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PolicyTypeLanguage_PolicyType" Association="Self.FK_PolicyTypeLanguage_PolicyType">
-            <End Role="PolicyType" EntitySet="PolicyType" />
-            <End Role="PolicyTypeLanguage" EntitySet="PolicyTypeLanguage" />
           </AssociationSet>
           <AssociationSet Name="FK_Procedure_Direction" Association="Self.FK_Procedure_Direction">
             <End Role="Direction" EntitySet="Direction" />
@@ -6070,6 +6086,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="ConferenceStatusLanguages" Relationship="Self.FK__Conferenc__langu__047AA831" FromRole="Language" ToRole="ConferenceStatusLanguage" />
           <NavigationProperty Name="NotificationTypeLanguages" Relationship="Self.FK__Notificat__langu__4242D080" FromRole="Language" ToRole="NotificationTypeLanguage" />
           <NavigationProperty Name="PaperStatusLanguages" Relationship="Self.FK__PaperStat__langu__0A338187" FromRole="Language" ToRole="PaperStatusLanguage" />
+          <NavigationProperty Name="PolicyTypeLanguages" Relationship="Self.FK__PolicyTyp__langu__5C229E14" FromRole="Language" ToRole="PolicyTypeLanguage" />
           <NavigationProperty Name="PositionLanguages" Relationship="Self.FK__PositionL__langu__0C1BC9F9" FromRole="Language" ToRole="PositionLanguage" />
           <NavigationProperty Name="ResearchAreaLanguages" Relationship="Self.FK__ResearchA__langu__0E04126B" FromRole="Language" ToRole="ResearchAreaLanguage" />
           <NavigationProperty Name="SpecializationLanguages" Relationship="Self.FK__Specializ__langu__0FEC5ADD" FromRole="Language" ToRole="SpecializationLanguage" />
@@ -6113,13 +6130,14 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
         </EntityType>
         <EntityType Name="PolicyTypeLanguage">
           <Key>
-            <PropertyRef Name="policy_type_id" />
-            <PropertyRef Name="language_id" />
+            <PropertyRef Name="policy_type_language_id" />
           </Key>
+          <Property Name="policy_type_language_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="policy_type_id" Type="Int32" Nullable="false" />
           <Property Name="policy_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="language_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PolicyType" Relationship="Self.FK_PolicyTypeLanguage_PolicyType" FromRole="PolicyTypeLanguage" ToRole="PolicyType" />
+          <NavigationProperty Name="Language" Relationship="Self.FK__PolicyTyp__langu__5C229E14" FromRole="PolicyTypeLanguage" ToRole="Language" />
+          <NavigationProperty Name="PolicyType" Relationship="Self.FK__PolicyTyp__polic__5B2E79DB" FromRole="PolicyTypeLanguage" ToRole="PolicyType" />
         </EntityType>
         <EntityType Name="PositionLanguage">
           <Key>
@@ -6442,9 +6460,9 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <PropertyRef Name="policy_type_id" />
           </Key>
           <Property Name="policy_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="account_id" Type="Int32" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__PolicyTyp__accou__322C6448" FromRole="PolicyType" ToRole="Account" />
-          <NavigationProperty Name="PolicyTypeLanguages" Relationship="Self.FK_PolicyTypeLanguage_PolicyType" FromRole="PolicyType" ToRole="PolicyTypeLanguage" />
+          <NavigationProperty Name="PolicyTypeLanguages" Relationship="Self.FK__PolicyTyp__polic__5B2E79DB" FromRole="PolicyType" ToRole="PolicyTypeLanguage" />
           <NavigationProperty Name="Policies" Relationship="Self.FK_Policy_PolicyType" FromRole="PolicyType" ToRole="Policy" />
           <NavigationProperty Name="Articles" Relationship="Self.PolicyTypeArticle" FromRole="PolicyType" ToRole="Article" />
         </EntityType>
@@ -7230,7 +7248,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PolicyTyp__accou__322C6448">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="PolicyType" Type="Self.PolicyType" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
@@ -8665,6 +8683,18 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PolicyTyp__langu__5C229E14">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="PolicyTypeLanguage" Type="Self.PolicyTypeLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="language_id" />
+            </Principal>
+            <Dependent Role="PolicyTypeLanguage">
+              <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PositionL__langu__0C1BC9F9">
           <End Role="Language" Type="Self.Language" Multiplicity="1" />
           <End Role="PositionLanguage" Type="Self.PositionLanguage" Multiplicity="*" />
@@ -8785,7 +8815,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PolicyTypeLanguage_PolicyType">
+        <Association Name="FK__PolicyTyp__polic__5B2E79DB">
           <End Role="PolicyType" Type="Self.PolicyType" Multiplicity="1" />
           <End Role="PolicyTypeLanguage" Type="Self.PolicyTypeLanguage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -10368,6 +10398,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="Language" EntitySet="Languages" />
             <End Role="PaperStatusLanguage" EntitySet="PaperStatusLanguages" />
           </AssociationSet>
+          <AssociationSet Name="FK__PolicyTyp__langu__5C229E14" Association="Self.FK__PolicyTyp__langu__5C229E14">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="PolicyTypeLanguage" EntitySet="PolicyTypeLanguages" />
+          </AssociationSet>
           <AssociationSet Name="FK__PositionL__langu__0C1BC9F9" Association="Self.FK__PositionL__langu__0C1BC9F9">
             <End Role="Language" EntitySet="Languages" />
             <End Role="PositionLanguage" EntitySet="PositionLanguages" />
@@ -10408,7 +10442,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
             <End Role="PaperTypeByArea" EntitySet="PaperTypeByAreas" />
             <End Role="PaperTypeByAreaLanguage" EntitySet="PaperTypeByAreaLanguages" />
           </AssociationSet>
-          <AssociationSet Name="FK_PolicyTypeLanguage_PolicyType" Association="Self.FK_PolicyTypeLanguage_PolicyType">
+          <AssociationSet Name="FK__PolicyTyp__polic__5B2E79DB" Association="Self.FK__PolicyTyp__polic__5B2E79DB">
             <End Role="PolicyType" EntitySet="PolicyTypes" />
             <End Role="PolicyTypeLanguage" EntitySet="PolicyTypeLanguages" />
           </AssociationSet>
@@ -11378,6 +11412,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySetMapping Name="PolicyTypeLanguages">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.PolicyTypeLanguage">
               <MappingFragment StoreEntitySet="PolicyTypeLanguage">
+                <ScalarProperty Name="policy_type_language_id" ColumnName="policy_type_language_id" />
                 <ScalarProperty Name="policy_type_id" ColumnName="policy_type_id" />
                 <ScalarProperty Name="policy_type_name" ColumnName="policy_type_name" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
