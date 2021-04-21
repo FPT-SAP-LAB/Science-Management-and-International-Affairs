@@ -35,7 +35,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 to = "01/01/2021"
             };
             bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
-            if(res)
+            if (res)
                 Assert.Pass();
         }
         [TestCase]

@@ -41,7 +41,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "",
                 file_name = ""
             };
-            bool res = activityRepo.clone(data,user.account.account_id);
+            bool res = activityRepo.clone(data, user.account.account_id);
             if (res)
                 Assert.Pass();
         }

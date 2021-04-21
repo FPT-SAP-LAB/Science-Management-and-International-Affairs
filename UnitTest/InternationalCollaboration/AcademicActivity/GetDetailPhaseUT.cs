@@ -19,7 +19,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityPhaseRepo phaseRepo = new AcademicActivityPhaseRepo();
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
-            ENTITIES.AcademicActivityPhase activityPhase  = db.AcademicActivityPhases.Last();
+            ENTITIES.AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
             int language_id = 1;
             AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, activityPhase.phase_id);
             if (data != null)
