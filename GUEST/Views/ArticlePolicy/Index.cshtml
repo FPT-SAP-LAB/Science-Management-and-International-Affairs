@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
-
+@using GUEST.Models
 <!--begin::Row-->
 <div class="row">
     @foreach (ArticlePolicyIndex item in ViewBag.items)
@@ -21,17 +21,32 @@
                     </div>
                     <!--end::Info-->
                     <!--begin::Link-->
-                    <a href="/ArticlePolicy/Detail?id=@item.Version.article_version_id" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
-                        @item.Version.version_title
+                    <a href="/ArticlePolicy/Detail?id=@item.Version.article_version_id" data-toggle="tooltip" data-theme="dark" title="@item.Version.version_title" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
+                        @if (item.Version.version_title.Length > 80)
+                        {
+                            <span>
+                                <i class="flaticon-add-label-button icon-md text-success"></i> @HTMLHelp.shortText(item.Version.version_title,80)
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                <i class="flaticon-add-label-button icon-md text-success"></i> @item.Version.version_title
+                            </span>
+                        }
                     </a>
                     <!--end::Link-->
                 </div>
                 <!--begin::Body-->
                 <div class="card-body d-flex flex-column">
-                    <div class="scroll scroll-pull" data-scroll="true" data-wheel-propagation="true" style="height: 200px">
-                        <div class="flex-grow-1 pb-5">
+                    <div class="scroll scroll-pull" data-scroll="true" data-wheel-propagation="true">
+                        <div class="flex-grow-1 text-muted">
                             <!--begin::Desc-->
-                            @Html.Raw(item.Version.article_content)
+                            @{ 
+                                string text = HTMLHelp.HTMLToText(Html.Raw(item.Version.article_content).ToHtmlString());
+                                <span>@HTMLHelp.shortText(text, 200)...</span>
+                            <a href="/ArticlePolicy/Detail?id=@item.Version.article_version_id" class="">Xem thêm</a>
+                            }
                             <!--end::Desc-->
                         </div>
                     </div>
@@ -39,7 +54,7 @@
                 <div class="card-footer">
                     @foreach (var tag in item.Types)
                     {
-                        <a href="#" class="label label-primary label-pill" style="width: auto;padding: 0 10px;">@tag</a>
+                        <a href="#" class="text-muted label label-lg label-rounded label-pill label-inline" style="width: auto;padding: 0 10px;">#@tag</a>
                     }
                 </div>
                 <!--end::Body-->

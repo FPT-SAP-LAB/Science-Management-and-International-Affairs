@@ -23,7 +23,7 @@ namespace ENTITIES
         }
     
         public int policy_type_id { get; set; }
-        public Nullable<int> account_id { get; set; }
+        public int account_id { get; set; }
     
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
