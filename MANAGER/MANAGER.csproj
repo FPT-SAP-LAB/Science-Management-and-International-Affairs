@@ -2533,6 +2533,7 @@
     <Content Include="Views\ArticlePolicy\Index.cshtml" />
     <Content Include="Views\UpdateJournal\List.cshtml" />
     <Content Include="Views\ArticlePolicy\Add.cshtml" />
+    <Content Include="Views\Paper\waitVerify.cshtml" />
     <Content Include="Views\ArticlePolicy\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
