@@ -66,10 +66,10 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Chờ quyết định khen thưởng (giảng viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision2("2", 0);
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("2", 0);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision2("1", 0);
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("1", 0);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -80,10 +80,10 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Chờ quyết định khen thưởng (nghiên cứu viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("2", 1);
+            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision2("2", 1);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("1", 1);
+            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision2("1", 1);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -283,6 +283,27 @@ namespace MANAGER.Controllers
         public JsonResult deleteRequest(int id)
         {
             string mess = pr.deleteRequest(id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult waitVerify()
+        {
+            List<PendingPaper_Manager> list = pr.listWaitVerify();
+            ViewBag.list = list;
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult confirmReqward(int request_id)
+        {
+            bool mess = pr.confirmReward(request_id);
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editAuthorReqward(int request_id)
+        {
+            bool mess = pr.editAuthorReward(request_id);
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }

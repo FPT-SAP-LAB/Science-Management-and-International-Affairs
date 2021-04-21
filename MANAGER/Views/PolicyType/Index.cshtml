@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "QUẢN LÝ LOẠI CHÍNH SÁCH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <div class="mb-7">
+            <div class="row align-items-center">
+                <div class="col-sm-12">
+                    <select style="max-width: 100px" id="select-language" class="form-control">
+                        @foreach (ENTITIES.Language item in ViewBag.languages)
+                        {
+                            <option @(ViewBag.language_id == item.language_id ? "selected" : "") value="@item.language_id">@item.language_name</option>
+                        }
+                    </select>
+                    <!-- Button trigger modal-->
+                    <button type="button" style="min-width: 140px" class="btn btn-light-primary float-right" data-toggle="modal" data-target="#exampleModalLong">
+                        Thêm loại chính sách
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="mytable" style="min-width: 500px" class="table table-bordered table-checkable">
+                <thead>
+                    <tr>
+                        <th width="80%" class="text-center">Loại chính sách</th>
+                        <th width="20%" class="text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ENTITIES.PolicyTypeLanguage item in ViewBag.PolicyTypeLanguages)
+                    {
+                        <tr data-id="@item.policy_type_language_id">
+                            <td>
+                                <input disabled type="text" class="form-control" value="@item.policy_type_name" />
+                            </td>
+                            <td style="text-align: center">
+                                <button style="width: 90px" type="button" onclick="ChangeName(this)" class="btn btn-light-primary change-condition">
+                                    Chỉnh sửa
+                                </button>
+                                <button style="width: 90px" type="button" hidden onclick="SaveName(this)" class="btn btn-light-success save-condition">
+                                    Lưu
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!--end: Datatable-->
+    </div>
+</div>
+
+<!-- Modal-->
+<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thêm loại chính sách</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                @foreach (ENTITIES.Language item in ViewBag.languages)
+                {
+                    <div data-language="@item.language_id" class="form-group">
+                        <label>@item.language_name <span style='color:red'>*</span>:</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" onclick="AddType()" class="btn btn-primary font-weight-bold">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#select-language").select2({
+            minimumResultsForSearch: -1
+        });
+
+        $("#select-language").on('select2:select', function (e) {
+            var data = e.params.data;
+            $("#loading").show();
+            window.location = "/PolicyType?language=" + data.id
+        });
+
+        function ChangeName(ele) {
+            let parent = $(ele).closest("tr");
+            $(parent).find("input").prop("disabled", false);
+            $(parent).find(".save-condition").prop("hidden", false);
+            $(ele).prop("hidden", true);
+        }
+
+        function SaveName(ele) {
+            let save_loader = new LoaderBtn(ele);
+            save_loader.startLoading();
+            let parent = $(ele).closest("tr");
+            $.ajax({
+                url: "/PolicyType/Edit",
+                method: "post",
+                success: function (data) {
+                    if (data.success) {
+                        $(parent).find("input").val(data.obj);
+                        $(parent).find("input").prop("disabled", true);
+                        $(parent).find(".change-condition").prop("hidden", false);
+                        $(ele).prop("hidden", true);
+                        toastr.success("Chỉnh sửa thành công");
+                    }
+                    else {
+                        toastr.error(data.content);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: {
+                    id: $(parent).data("id"),
+                    name: $(parent).find("input").val()
+                }
+            });
+        }
+
+        var groups = $("#exampleModalLong .modal-body .form-group");
+
+        function AddType() {
+            let temp = []
+            for (var i = 0; i < groups.length; i++) {
+                if ($(groups[i]).find("input").val().trim() == "") {
+                    toastr.error("Dữ liệu ngôn ngữ chưa đầy đủ");
+                    return false;
+                }
+                temp.push({
+                    language_id: $(groups[i]).data("language"),
+                    policy_type_name: $(groups[i]).find("input").val()
+                })
+            }
+            $("#loading").show();
+            $.ajax({
+                url: "/PolicyType/Add",
+                method: "post",
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    }
+                    else {
+                        toastr.error(data.content);
+                        $("#loading").hide();
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
+                },
+                dataType: "json",
+                data: {
+                    types: temp
+                }
+            });
+        }
+    </script>
+}

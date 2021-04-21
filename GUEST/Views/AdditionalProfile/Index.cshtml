@@ -220,7 +220,7 @@
             orientation: "bottom left",
             todayHighlight: true,
             templates: arrows,
-            format: 'dd/mm/yyyy'
+            format: '@rm.GetString("DatepickerFormat")'
         });
 
         if ($("#kt_uppy_1").length != 0) {
@@ -511,6 +511,8 @@
                 toastr.error("Trường mã số là bắt buộc");
                 return false;
             }
+            //  Nếu không dùng Z thì sẽ bị lệch múi giờ khi truyền về backend
+            let birth_date = moment($("#kt_datepicker_4_3").val().split(" - ")[0] + " +0000", "@rm.GetString("DateRangePickerFormat") Z");
             let person = {
                 name: $("#nameInput").val(),
                 phone_number: $("#phoneInput").val(),
@@ -519,7 +521,7 @@
             fd.append("person", JSON.stringify(person));
             let profile = {
                 title_id: $("#title-select").val(),
-                birth_date: $("#kt_datepicker_4_3").val(),
+                birth_date: birth_date,
                 country_id: $("#country-select").val(),
                 is_reseacher: $('input[name=example_2]:checked').val(),
                 bank_number: $("#bank_numberInput").val(),
