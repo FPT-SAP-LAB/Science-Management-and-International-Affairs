@@ -57,14 +57,12 @@ namespace BLL.ScienceManagement.ArticlePolicy
                         article.ArticleVersions.Add(item);
                     }
 
-                    //db.PolicyTypes.RemoveRange(article.PolicyTypes);
                     article.PolicyTypes = new List<PolicyType>();
                     policyTypes.ForEach(x => article.PolicyTypes.Add(x));
 
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(true);
-
                 }
                 catch (Exception e)
                 {
