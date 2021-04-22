@@ -81,16 +81,14 @@
             ajax: {
                 url: "/ConferenceSponsor/List",
                 datatype: "json",
-                cache: true,
                 data: {
-                    search_paper: function () {
-                        return $("#search_paper").val();
-                    },
-                    search_conference: function () {
-                        return $("#search_conference").val();
-                    },
-                    is_history: true
-                }
+                    search: {
+                        SearchPaper: () => { return $("#search_paper").val() },
+                        SearchConference: () => { return $("#search_conference").val() },
+                        SearchStatus: () => { return $("#search_status").val() }
+                    }
+                },
+                method: "post"
             },
             columns: [
                 { data: "RowNumber", name: "RowNumber", orderable: false },
