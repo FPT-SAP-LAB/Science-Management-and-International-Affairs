@@ -579,6 +579,15 @@
         "use strict";
 
         // Class definition
+        var uppyMOAAdd;
+        var uppyMOUAdd;
+        var uppyExMOUAdd;
+        var uppyExMOUEdit;
+        var old_file_number;
+        var old_file_number_ex_mou;
+        var new_file_number;
+        var new_file_number_ex_mou;
+
         var KTUppy = function () {
             const Tus = Uppy.Tus;
             const ProgressBar = Uppy.ProgressBar;
@@ -594,8 +603,19 @@
             const Webcam = Uppy.Webcam;
 
             // Private functions
-
-            var initUppy5 = function (data) {
+            //mou
+            uppyMOUAdd = Uppy.Core({
+                debug: true,
+                autoProceed: false,
+                showProgressDetails: true,
+                restrictions: {
+                    maxFileSize: 5000000, //5mb
+                    allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
+                    //maxNumberOfFiles: 1,
+                    //minNumberOfFiles: 0
+                }
+            });
+            var initUppyMOUAdd = function (data) {
                 // Uppy variables
                 // For more info refer: https://uppy.io/
                 var elemId = data;
@@ -604,93 +624,274 @@
                 var $uploadedList = $(id + ' .uppy-list');
                 var timeout;
 
-                var uppyMin = Uppy.Core({
-                    debug: true,
-                    autoProceed: true,
-                    showProgressDetails: true,
-                    restrictions: {
-                        maxFileSize: 1000000, // 1mb
-                        maxNumberOfFiles: 5,
-                        minNumberOfFiles: 1
-                    }
-                });
-
-                uppyMin.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
-                uppyMin.use(Informer, { target: id + ' .uppy-informer' });
+                uppyMOUAdd.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMOUAdd.use(Informer, { target: id + ' .uppy-informer' });
 
                 // demo file upload server
-                uppyMin.use(Tus, { endpoint: 'https://master.tus.io/files/' });
-                uppyMin.use(StatusBar, {
+                uppyMOUAdd.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMOUAdd.use(StatusBar, {
                     target: id + ' .uppy-status',
                     hideUploadButton: true,
                     hideAfterFinish: false
                 });
 
                 $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
-                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Tải file</label>');
 
                 var $fileLabel = $(id + ' .uppy-input-label');
 
-                uppyMin.on('upload', function (data) {
-                    $fileLabel.text("Uploading...");
+                //uploading toggle
+                uppyMOUAdd.on('upload', function () {
+                    $fileLabel.text("Đang tải...");
                     $statusBar.addClass('uppy-status-ongoing');
                     $statusBar.removeClass('uppy-status-hidden');
                     clearTimeout(timeout);
                 });
 
-                uppyMin.on('complete', function (file) {
-                    $.each(file.successful, function (index, value) {
-                        var sizeLabel = "bytes";
-                        var filesize = value.size;
-                        if (filesize > 1024) {
-                            filesize = filesize / 1024;
-                            sizeLabel = "kb";
-
-                            if (filesize > 1024) {
-                                filesize = filesize / 1024;
-                                sizeLabel = "MB";
-                            }
-                        }
-                        var uploadListHtml = '<div class="uppy-list-item" data-id="' + value.id + '"><div class="uppy-list-label">' + value.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + value.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
-                        $uploadedList.append(uploadListHtml);
-                    });
-
-                    $fileLabel.text("Add more files");
-
+                //update file
+                uppyMOUAdd.on('file-added', function (file) {
+                    if (uppyMOUAdd.getFiles().length != 0) {
+                        $(id + ' .uppy-list .uppy-list-remove').click();
+                    }
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
                     $statusBar.addClass('uppy-status-hidden');
                     $statusBar.removeClass('uppy-status-ongoing');
+
+                    $fileLabel.text("Tải file");
+                    new_file_number = 1;
                 });
 
+                //remove current file
                 $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
                     var itemId = $(this).attr('data-id');
-                    uppyMin.removeFile(itemId);
+                    uppyMOUAdd.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    new_file_number = 0;
+                });
+            }
+
+            //ex-mou
+            uppyExMOUAdd = Uppy.Core({
+                debug: true,
+                autoProceed: false,
+                showProgressDetails: true,
+                restrictions: {
+                    maxFileSize: 5000000, //5mb
+                    allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
+                    //maxNumberOfFiles: 1,
+                    //minNumberOfFiles: 0
+                }
+            });
+            var initUppyExMOUAdd = function (data) {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = data;
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                uppyExMOUAdd.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyExMOUAdd.use(Informer, { target: id + ' .uppy-informer' });
+
+                // demo file upload server
+                uppyExMOUAdd.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyExMOUAdd.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Tải file</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                //uploading toggle
+                uppyExMOUAdd.on('upload', function () {
+                    $fileLabel.text("Đang tải...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                //update file
+                uppyExMOUAdd.on('file-added', function (file) {
+                    if (uppyExMOUAdd.getFiles().length != 0) {
+                        $(id + ' .uppy-list .uppy-list-remove').click();
+                    }
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+
+                    $fileLabel.text("Tải file");
+                    new_file_number = 1;
+                });
+
+                //remove current file
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyExMOUAdd.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    new_file_number = 0;
+                });
+            }
+
+            //ex-mou-edit
+            uppyExMOUEdit = Uppy.Core({
+                debug: true,
+                autoProceed: false,
+                showProgressDetails: true,
+                restrictions: {
+                    maxFileSize: 5000000, //5mb
+                    allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
+                    //maxNumberOfFiles: 1,
+                    //minNumberOfFiles: 0
+                }
+            });
+            var initUppyExMOUEdit = function (data) {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = data;
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                uppyExMOUEdit.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyExMOUEdit.use(Informer, { target: id + ' .uppy-informer' });
+
+                // demo file upload server
+                uppyExMOUEdit.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyExMOUEdit.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Tải file</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                //uploading toggle
+                uppyExMOUEdit.on('upload', function () {
+                    $fileLabel.text("Đang tải...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                //update file
+                uppyExMOUEdit.on('file-added', function (file) {
+                    if (uppyExMOUEdit.getFiles().length != 0) {
+                        $(id + ' .uppy-list .uppy-list-remove').click();
+                    }
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+
+                    $fileLabel.text("Tải file");
+                    new_file_number_ex_mou = 1;
+                });
+
+                //remove current file
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyExMOUEdit.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                    new_file_number_ex_mou = 0;
+                });
+            }
+
+            //moa
+            uppyMOAAdd = Uppy.Core({
+                debug: true,
+                autoProceed: false,
+                showProgressDetails: true,
+                restrictions: {
+                    maxFileSize: 5000000, //5mb
+                    allowedFileTypes: ['.pdf', '.jfif', '.jpg', '.jpeg', '.png']
+                    //maxNumberOfFiles: 1,
+                    //minNumberOfFiles: 0
+                }
+            });
+            var initUppyMOAAdd = function (data) {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = data;
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                uppyMOAAdd.use(FileInput, { target: id + ' .uppy-wrapper', pretty: false });
+                uppyMOAAdd.use(Informer, { target: id + ' .uppy-informer' });
+
+                // demo file upload server
+                uppyMOAAdd.use(Tus, { endpoint: 'https://master.tus.io/files/' });
+                uppyMOAAdd.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Tải file</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                //uploading toggle
+                uppyMOAAdd.on('upload', function () {
+                    $fileLabel.text("Đang tải...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                //update file
+                uppyMOAAdd.on('file-added', function (file) {
+                    if (uppyMOAAdd.getFiles().length != 0) {
+                        $(id + ' .uppy-list .uppy-list-remove').click();
+                    }
+                    var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + '</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    $uploadedList.append(uploadListHtml);
+                    $statusBar.addClass('uppy-status-hidden');
+                    $statusBar.removeClass('uppy-status-ongoing');
+
+                    $fileLabel.text("Tải file");
+                });
+
+                //remove current file
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppyMOAAdd.removeFile(itemId);
                     $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
                 });
             }
 
-
             return {
                 // public functions
-                init: function (data) {
-                    initUppy5(data);
-                    setTimeout(function () {
-
-                    }, 2000);
+                init: function () {
+                    initUppyMOUAdd('mou_detail_upload');
+                    initUppyExMOUAdd('addition_mou_upload');
+                    initUppyExMOUEdit('edit_addition_mou_upload');
+                    initUppyMOAAdd('moa_upload');
                 }
             };
         }();
 
         KTUtil.ready(function () {
-            KTUppy.init('mou_detail_upload');
-            KTUppy.init('addition_mou_upload');
-            KTUppy.init('edit_mou_upload');
-            KTUppy.init('moa_upload');
+            KTUppy.init();
         });
 
     </script>
 
     @*mou_basic_info*@
-    <script>
+<script>
         var listStatus = [
             {
                 status_id: 2,
@@ -770,6 +971,23 @@
                     };
                     loadOffice(listOffice, OfficeData);
                     loadStatus(data.mou_status_id);
+
+                    //load available exist file
+                    if (data.file_drive_id != null) {
+                        let elemId = 'mou_detail_upload';
+                        let id = '#' + elemId;
+                        let $statusBar = $(id + ' .uppy-status');
+                        let $uploadedList = $(id + ' .uppy-list');
+                        let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_drive_id + '"><div class="uppy-list-label">' + data.file_name + '</div><span class="uppy-list-remove" data-id="' + data.file_drive_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                        $uploadedList.append(uploadListHtml);
+                        $statusBar.addClass('uppy-status-hidden');
+                        $statusBar.removeClass('uppy-status-ongoing');
+                        old_file_number = 1;
+                    }
+                    else {
+                        old_file_number = 0;
+                    }
+                    new_file_number = old_file_number;
                 },
                 error: function () {
                     //alert("fail");
@@ -935,7 +1153,6 @@
         }
 
         function clearInputAddExMOUPartner() {
-            //$('#partner_name_ex_mou_add').val('');
             $('#coop_scope_ex_mou_add').empty();
             var HTMLScopedata = '';
             for (j = 0; j < listScopes.length; j++) {
@@ -945,7 +1162,6 @@
         }
 
         function clearInputAddExMOUPartnerForEdit() {
-            //$('#partner_name_ex_mou_add_for_edit').val('');
             $('#coop_scope_ex_mou_add_for_edit').empty();
             var HTMLScopedata = '';
             for (j = 0; j < listScopes.length; j++) {
@@ -1257,8 +1473,12 @@
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             } else {
+                //start loading
                 var basic_info_loader = new LoaderBtn($('.save-basic-info'));
                 basic_info_loader.startLoading();
+
+                //collect basicInfo data
+                evidence = uppyMOUAdd.getFiles();
                 var BasicInfo = {
                     mou_code: $('#mou_code').val(),
                     mou_end_date_string: $('#end_date_mou').val(),
@@ -1267,11 +1487,22 @@
                     mou_note: $('#mou_note').val(),
                     mou_status_id: $('#status').val()
                 };
+                //init FormData
+
+                let formData = new FormData();
+                formData.append("input", JSON.stringify(BasicInfo));
+                formData.append("old_file_number", old_file_number);
+                formData.append("new_file_number", new_file_number);
+                formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+
                 $.ajax({
                     url: "@Url.Action("editMOUBasicInfo", "BasicInfoMOU")",
                     type: "POST",
-                    data: JSON.stringify(BasicInfo),
-                    contentType: "application/json;charset=utf-8",
+                    //data: JSON.stringify(BasicInfo),
+                    data: formData,
+                    //contentType: "application/json;charset=utf-8",
+                    contentType: false,
+                    processData: false,
                     datatype: "json",
                     cache: false,
                     success: function (data) {
@@ -1290,12 +1521,23 @@
             }
         }
 
-        function finishExMOUAdd() {
-            var button_loader = new LoaderBtn($('#add_ex_mou_modal'));
+        var button_loader;
+        function finishExMOUAdd(){
+            button_loader = new LoaderBtn($('#add_ex_mou_modal'));
             button_loader.startLoading();
             if ($('#ex_mou_id_add').val().trim() == "") {
                 button_loader.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
+                return;
+            }
+            else if (ExMOUCodeIsInvalid($('#ex_mou_id_add').val().trim())) {
+                button_loader.stopLoading();
+                toastr.error('Số hiệu không hợp lệ');
+                return;
+            }
+            else if (compareDate($('#sign_date_mou').val(), $('#mou_addition_sign_time').val())) { //compare = true <=> sign_date > end_date
+                button_loader.stopLoading();
+                toastr.error('Ngày ký kết của biên bản bổ sung phải sau ngày ký kết của biên bản gốc');
                 return;
             }
             else if ($('#mou_addition_end_time').val().trim() != "") {
@@ -1309,19 +1551,17 @@
                     toastr.error('Ngày hết hạn của biên bản bổ sung phải sau ngày hết hạn của biên bản gốc');
                     return;
                 }
-            }
-            else if (ExMOUCodeIsInvalid($('#ex_mou_id_add').val().trim())) {
-                button_loader.stopLoading();
-                toastr.error('Số hiệu không hợp lệ');
-                return;
-            }
-            else if (compareDate($('#sign_date_mou').val(), $('#mou_addition_sign_time').val())) { //compare = true <=> sign_date > end_date
-                button_loader.stopLoading();
-                toastr.error('Ngày ký kết của biên bản bổ sung phải sau ngày ký kết của biên bản gốc');
-                return;
+                else {
+                    addExMOUAction();
+                }
             }
             else {
-                var ExBasicInfo = {
+                addExMOUAction();
+            }
+        }
+
+        function addExMOUAction() {
+            var ExBasicInfo = {
                     ex_mou_code: $('#ex_mou_id_add').val() ,
                     ex_mou_sign_date: $('#mou_addition_sign_time').val(),
                     ex_mou_end_date: $('#mou_addition_end_time').val()
@@ -1330,13 +1570,21 @@
                     ExBasicInfo: ExBasicInfo,
                     PartnerScopeInfo: listTempExMOUPartnerScope,
                 };
+                evidence = uppyExMOUAdd.getFiles();
+                let formData = new FormData();
+                formData.append("input", JSON.stringify(ExMOUAdd));
+                formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+
                 $.ajax({
                     url: "@Url.Action("Add_Ex_Mou", "BasicInfoMOU")",
                     type: "POST",
-                    data: JSON.stringify(ExMOUAdd),
-                    contentType: "application/json;charset=utf-8",
+                    //data: JSON.stringify(ExMOUAdd),
+                    data: formData,
+                    //contentType: "application/json;charset=utf-8",
+                    contentType: false,
                     datatype: "json",
                     cache: false,
+                    processData: false,
                     success: function (data) {
                         listTempExMOUPartnerScope = [];
                         $('#add_additional_mou').modal('hide');
@@ -1352,7 +1600,6 @@
                         //alert("fail");
                     }
                 });
-            }
         }
 
         function editExMOU(mou_bonus_id) {
@@ -1368,6 +1615,24 @@
                     } else {
                         $('#mou_addition_end_time_edit').val(data.ExBasicInfo.ex_mou_end_date);
                     }
+                    //load available exist file
+                    if (data.file_drive_id != null) {
+                        if ($('#edit_addition_mou_upload .uppy-list').text() == "") {
+                            let elemId = 'edit_addition_mou_upload';
+                            let id = '#' + elemId;
+                            let $statusBar = $(id + ' .uppy-status');
+                            let $uploadedList = $(id + ' .uppy-list');
+                            let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_drive_id + '"><div class="uppy-list-label">' + data.file_name + '</div><span class="uppy-list-remove" data-id="' + data.file_drive_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                            $uploadedList.append(uploadListHtml);
+                            $statusBar.addClass('uppy-status-hidden');
+                            $statusBar.removeClass('uppy-status-ongoing');
+                        }
+                        old_file_number_ex_mou = 1;
+                    }
+                    else {
+                        old_file_number_ex_mou = 0;
+                    }
+                    new_file_number_ex_mou = old_file_number_ex_mou;
                     addToPartnerScopeListEdit(data);
                 },
                 error: function (data) {
@@ -1556,32 +1821,36 @@
             }
         }
 
+        var button_loader_ex_mou_edit;
         function finishExMOUEdit(element) {
-            var button_loader = new LoaderBtn(element);
-            button_loader.startLoading();
+            button_loader_ex_mou_edit = new LoaderBtn(element);
+            button_loader_ex_mou_edit.startLoading();
             if ($('#ex_mou_id_edit').val().trim() == "") {
-                button_loader.stopLoading();
+                button_loader_ex_mou_edit.stopLoading();
                 toastr.error('Số hiệu không được bỏ trống');
                 return;
             }
             else if (ExMOUCodeIsInvalid($('#ex_mou_id_edit').val().trim())) {
-                alert('test');
-                button_loader.stopLoading();
+                button_loader_ex_mou_edit.stopLoading();
                 toastr.error('Số hiệu không hợp lệ');
                 return;
             }
             else if ($('#mou_addition_end_time_edit').val().trim() != "") {
                 if (compareDate($('#mou_addition_sign_time_edit').val(), $('#mou_addition_end_time_edit').val())) { //compare = true <=> sign_date > end_date
-                    button_loader.stopLoading();
+                    button_loader_ex_mou_edit.stopLoading();
                     toastr.error('Ngày ký kết phải sớm hơn ngày hết hạn');
                     return;
                 } else {
-                    button_loader.stopLoading();
-                    alert('huhu');
+                    editExMOUAction();
                 }
             }
             else {
-                var ExBasicInfo = {
+                editExMOUAction();
+            }
+        }
+
+    function editExMOUAction() {
+        var ExBasicInfo = {
                     ex_mou_code: $('#ex_mou_id_edit').val() ,
                     ex_mou_sign_date: $('#mou_addition_sign_time_edit').val(),
                     ex_mou_end_date: $('#mou_addition_end_time_edit').val()
@@ -1592,18 +1861,29 @@
                     PartnerScopeInfo: listTempExMOUPartnerScopeEdit,
                     mou_bonus_id: $('#mou_bonus_id').val()
                 };
+                //collect basicInfo data
+                evidence = uppyExMOUEdit.getFiles();
+                let formData = new FormData();
+                formData.append("input", JSON.stringify(ExMOUAdd));
+                formData.append("old_file_number_ex_mou", old_file_number_ex_mou);
+                formData.append("new_file_number_ex_mou", new_file_number_ex_mou);
+                formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+
 
                 $.ajax({
                     url: "@Url.Action("Edit_Ex_Mou", "BasicInfoMOU")",
                     type: "POST",
-                    data: JSON.stringify(ExMOUAdd),
-                    contentType: "application/json;charset=utf-8",
+                    //data: JSON.stringify(ExMOUAdd),
+                    //contentType: "application/json;charset=utf-8",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     datatype: "json",
                     cache: false,
                     success: function (data) {
                         listTempExMOUPartnerScopeEdit = [];
                         $('#edit_additional_mou').modal('hide');
-                        button_loader.stopLoading();
+                        button_loader_ex_mou_edit.stopLoading();
                         Swal.fire("Thành công!",
                             "Đã sửa biên bản ghi nhớ bổ sung thành công.", "success").then(function (result) {
                                 if (result.value) {
@@ -1616,7 +1896,6 @@
                         //alert("fail");
                     }
                 });
-            }
     }
 
 
@@ -2465,11 +2744,20 @@
             MOABasicInfo: BasicInfo,
             MOAPartnerInfo: listTempPartnerMOAAdd,
         };
+        evidence = uppyMOAAdd.getFiles();
+        let formData = new FormData();
+        formData.append("input", JSON.stringify(MOAAdd));
+        formData.append("evidence", evidence.length == 0 ? null : evidence[0].data);
+
         $.ajax({
             url: "@Url.Action("Add_Moa", "MOA")",
             type: "POST",
-            data: JSON.stringify(MOAAdd),
-            contentType: "application/json;charset=utf-8",
+            //data: JSON.stringify(MOAAdd),
+            //contentType: "application/json;charset=utf-8",
+            data: formData,
+            //contentType: "application/json;charset=utf-8",
+            contentType: false,
+            processData: false,
             datatype: "json",
             cache: false,
             success: function (data) {
@@ -3038,5 +3326,5 @@
                 }
             })
     }
-    </script>
+</script>
 }

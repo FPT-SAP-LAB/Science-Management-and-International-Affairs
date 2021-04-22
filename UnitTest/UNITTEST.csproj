@@ -63,6 +63,17 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternationalCollaboration\AcademicActivity\AddAcademicActivityPhaseUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\AddAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetDetailPhaseUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetListPhaseUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\getParticipantByPhaseUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\CloneAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\DeleteAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityTypeUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\GetListAcademicActivityUT.cs" />
+    <Compile Include="InternationalCollaboration\AcademicActivity\UpdateAcademicActivityUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityDetailUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetAcademicActivityUT.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\GetFormUT.cs" />

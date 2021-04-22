@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.ArticlePolicy
 {
-    public class ArticlePolicyItem
+    public class ArticlePolicyIndex
     {
         public int ArticleID { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string CreatedBy { get; set; }
         public string TypeName { get; set; }
+        public List<string> Types { get; set; }
+        public ArticleVersion Version { get; set; }
     }
 }

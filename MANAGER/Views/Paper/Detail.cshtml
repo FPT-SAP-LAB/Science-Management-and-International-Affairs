@@ -299,11 +299,16 @@
         <hr />
         <div class="row justify-content-center">
             @{
-                if (ViewBag.paper.status_id == 3)
+                if (ViewBag.paper.status_id == 3 || ViewBag.paper.status_id == 8)
                 {
                     <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
                     <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
                     <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
+                }
+                else if (ViewBag.paper.status_id == 10)
+                {
+                    <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn_rewardauthor">Xác nhận thưởng tác giả</button>
+                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_rewardauthor">Yêu cầu chỉnh sửa thưởng tác giả</button>
                 }
                 else
                 {
@@ -370,21 +375,21 @@
             $("#paper_type").val("@ViewBag.paper.paper_type_id");
 
             var status = "@ViewBag.paper.status_id";
-            if (status == "3") {
-                $("#editconfirm").show();
-                $("#editconfirm_manager").hide();
-            } else if (status == "4") {
-                $("#editconfirm").hide();
-                $("#editconfirm_manager").show();
-                $("#confirmbtn").hide();
-                $("#totalreward").prop("disabled", true);
-                $(".edit-author-reward").prop('disabled', true);
-            } else {
-                $("#editconfirm").hide();
-                $("#editconfirm_manager").hide();
-                $("#confirmbtn").hide();
-                $("#totalreward").prop("disabled", true);
-            }
+            //if (status == "3") {
+            //    $("#editconfirm").show();
+            //    $("#editconfirm_manager").hide();
+            //} else if (status == "4") {
+            //    $("#editconfirm").hide();
+            //    $("#editconfirm_manager").show();
+            //    $("#confirmbtn").hide();
+            //    $("#totalreward").prop("disabled", true);
+            //    $(".edit-author-reward").prop('disabled', true);
+            //} else {
+            //    $("#editconfirm").hide();
+            //    $("#editconfirm_manager").hide();
+            //    $("#confirmbtn").hide();
+            //    $("#totalreward").prop("disabled", true);
+            //}
 
             if ($("#loaithuong").val() == "1") {
                 $(".thuongtn").show();
@@ -414,6 +419,57 @@
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
         });
+
+        $("#confirmbtn_rewardauthor").click(function () {
+            $("#loading").show();
+            var request_id = "@ViewBag.paper.request_id";
+            $.ajax({
+                url: "@Url.Action("confirmReqward", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'request_id': request_id }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess) {
+                        $("#loading").hide();
+                        $("#editconfirm_rewardauthor").prop("disabled", true);
+                        $("#confirmbtn_rewardauthor").prop("disabled", true);
+                        //hub.server.send(response.mess);
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
+        $("#editconfirm_rewardauthor").click(function () {
+            $("#loading").show();
+            var request_id = "@ViewBag.paper.request_id";
+            $.ajax({
+                url: "@Url.Action("editAuthorReqward", "Paper")",
+                type: "POST",
+                data: JSON.stringify({ 'request_id': request_id }),
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (response) {
+                    if (response.mess) {
+                        $("#loading").hide();
+                        $("#editconfirm_rewardauthor").prop("disabled", true);
+                        $("#confirmbtn_rewardauthor").prop("disabled", true);
+                        //hub.server.send(response.mess);
+                    }
+                    else alert('loi');
+                },
+                error: function () {
+                    //alert("fail");
+                }
+            });
+        });
+
         $("#editconfirm").click(function () {
             $("#loading").show();
             var paper_id = "@ViewBag.paper.paper_id";
@@ -430,12 +486,13 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    if (response.mess == "ss") {
+                    if (response.mess != "ff") {
                         $("#loading").hide();
                         $("#editconfirm").prop("disabled", true);
                         $("#confirmbtn").prop("disabled", true);
                         $("#totalreward").prop("disabled", true);
                         $("#deleteconfirm").prop("disabled", true);
+                        hub.server.send(response.mess);
                         //editRequest();
                         //alert(response.mess);
                         //window.location.href = "/Paper/Pending";

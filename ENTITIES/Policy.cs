@@ -26,19 +26,17 @@ namespace ENTITIES
         public System.DateTime valid_date { get; set; }
         public Nullable<System.DateTime> expired_date { get; set; }
         public int file_id { get; set; }
-        public Nullable<int> article_id { get; set; }
         public int account_id { get; set; }
         public int policy_type_id { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual File File { get; set; }
-        public virtual Article Article { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Condition> Conditions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestConference> RequestConferences { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperCriteria> PaperCriterias { get; set; }
-        public virtual Policy_type Policy_type { get; set; }
+        public virtual PolicyType PolicyType { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace ENTITIES
             this.NotificationBases = new HashSet<NotificationBase>();
             this.NotificationSubscribes = new HashSet<NotificationSubscribe>();
             this.Policies = new HashSet<Policy>();
+            this.PolicyTypes = new HashSet<PolicyType>();
             this.Profiles = new HashSet<Profile>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
             this.MOABonus = new HashSet<MOABonu>();
@@ -70,6 +71,8 @@ namespace ENTITIES
         public virtual ICollection<NotificationSubscribe> NotificationSubscribes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Policy> Policies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PolicyType> PolicyTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -10,10 +10,16 @@
 namespace ENTITIES
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class PolicyTypeLanguage
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int policy_type_language_id { get; set; }
+        public int policy_type_id { get; set; }
+        public string policy_type_name { get; set; }
+        public int language_id { get; set; }
+    
+        public virtual Language Language { get; set; }
+        public virtual PolicyType PolicyType { get; set; }
     }
 }

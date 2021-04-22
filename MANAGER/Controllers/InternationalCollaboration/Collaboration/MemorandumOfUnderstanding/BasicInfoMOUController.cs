@@ -2,6 +2,7 @@
 using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUBasicInfo;
 using MANAGER.Support;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,7 +89,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "6")]
-        public ActionResult editMOUBasicInfo(MOUBasicInfo input)
+        public ActionResult editMOUBasicInfo(string input, int old_file_number, int new_file_number, HttpPostedFileBase evidence)
         {
             try
             {
@@ -98,8 +99,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    //MOUBasicInfo input;
+                    JObject inputObj = JObject.Parse(input);
+                    MOUBasicInfo obj = inputObj.ToObject<MOUBasicInfo>();
                     string id = Session["mou_detail_id"].ToString();
-                    mou.editMOUBasicInfo(int.Parse(id), input);
+                    mou.editMOUBasicInfo(int.Parse(id), obj, evidence, old_file_number, new_file_number);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -166,7 +170,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "6")]
-        public ActionResult Add_Ex_Mou(ExMOUAdd input)
+        public ActionResult Add_Ex_Mou(string input, HttpPostedFileBase evidence)
         {
             try
             {
@@ -176,9 +180,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 }
                 else
                 {
+                    JObject inputObj = JObject.Parse(input);
+                    ExMOUAdd obj = inputObj.ToObject<ExMOUAdd>();
+                    //ExMOUAdd input
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.addExtraMOU(input, int.Parse(id), user);
+                    mou.addExtraMOU(obj, int.Parse(id), user, evidence);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -189,13 +196,23 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "6")]
-        public ActionResult Edit_Ex_Mou(ExMOUAdd input)
+        public ActionResult Edit_Ex_Mou(string input, int old_file_number_ex_mou, int new_file_number_ex_mou, HttpPostedFileBase evidence)
         {
             try
             {
-                BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-                mou.editExtraMOU(input, user);
-                return Json("", JsonRequestBehavior.AllowGet);
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    JObject inputObj = JObject.Parse(input);
+                    ExMOUAdd obj = inputObj.ToObject<ExMOUAdd>();
+                    BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
+                    string id = Session["mou_detail_id"].ToString();
+                    mou.editExtraMOU(obj, user, old_file_number_ex_mou, new_file_number_ex_mou, evidence, int.Parse(id));
+                    return Json("", JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception ex)
             {

@@ -104,7 +104,7 @@
                 <hr />
                 <div class="row justify-content-center">
                     @{
-                        if (ViewBag.status == 3)
+                        if (ViewBag.status == 3 || ViewBag.status_id == 8)
                         {
                             <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
                             <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
@@ -148,20 +148,20 @@
         });
 
         var status = "@ViewBag.status";
-        if (status == "3") {
-            $("#editconfirm").show();
-            $("#editconfirm_manager").hide();
-        } else if (status == "4") {
-            $("#editconfirm").hide();
-            $("#editconfirm_manager").show();
-            $("#confirmbtn").hide();
-            $("#totalreward").prop("disabled", true);
-        } else {
-            $("#editconfirm").hide();
-            $("#editconfirm_manager").hide();
-            $("#confirmbtn").hide();
-            $("#totalreward").prop("disabled", true);
-        }
+        //if (status == "3") {
+        //    $("#editconfirm").show();
+        //    $("#editconfirm_manager").hide();
+        //} else if (status == "4") {
+        //    $("#editconfirm").hide();
+        //    $("#editconfirm_manager").show();
+        //    $("#confirmbtn").hide();
+        //    $("#totalreward").prop("disabled", true);
+        //} else {
+        //    $("#editconfirm").hide();
+        //    $("#editconfirm_manager").hide();
+        //    $("#confirmbtn").hide();
+        //    $("#totalreward").prop("disabled", true);
+        //}
 
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
@@ -177,12 +177,13 @@
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    if (response.mess == "ss") {
+                    if (response.mess != "ff") {
                         $("#loading").hide();
                         $("#editconfirm").prop("disabled", true);
                         $("#confirmbtn").prop("disabled", true);
                         $("#totalreward").prop("disabled", true);
                         $("#deleteconfirm").prop("disabled", true);
+                        hub.server.send(response.mess);
                         //window.location.href = "/Citation/Pending";
                         //editRequest();
                         //alert(response.mess);

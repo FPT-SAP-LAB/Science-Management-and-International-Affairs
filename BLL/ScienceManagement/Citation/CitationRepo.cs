@@ -1,4 +1,5 @@
-﻿using BLL.ScienceManagement.Paper;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
@@ -103,9 +104,15 @@ namespace BLL.ScienceManagement.Citation
                 int id = Int32.Parse(request_id);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
                 rc.status_id = 5;
+
+                //var Request = db.RequestCitations.Find(id);
+                Account account = rc.BaseRequest.Account;
+                NotificationRepo nr = new NotificationRepo(db);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Citation/Edit?id=" + id);
+
                 db.SaveChanges();
                 dbc.Commit();
-                return "ss";
+                return notification_id.ToString();
             }
             catch (Exception e)
             {
@@ -321,7 +328,7 @@ namespace BLL.ScienceManagement.Citation
             string sql = @"select acc.email, br.created_date, br.request_id, rc.status_id
                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
 	                            join [General].Account acc on br.account_id = acc.account_id
-                           where rc.status_id = 3 or  rc.status_id = 5";
+                           where rc.status_id = 3 or  rc.status_id = 5 or rc.status_id = 8";
             List<PendingCitation_manager> list = db.Database.SqlQuery<PendingCitation_manager>(sql).ToList();
             return list;
         }

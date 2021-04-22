@@ -110,7 +110,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!--end::Search Form-->
         <!--begin: Datatable-->
@@ -256,7 +255,9 @@
             </tbody>
         </table>
         <!--end: Datatable-->
-
+        @{
+            Html.RenderPartial("_LoaderPanel");
+        }
     </div></div>
     @section scripts{
         <script>

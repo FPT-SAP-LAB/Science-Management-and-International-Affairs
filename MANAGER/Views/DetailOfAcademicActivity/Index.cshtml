@@ -118,7 +118,7 @@
                     </div>
                     <div class="col-md-2 col-xl-2 col-lg-2">
                         <label class="col-form-label font-weight-bolder">Ngôn ngữ</label>
-                        <select class="form-control" id="detail_language_content" onchange="reInit()"  style="width: 100% !important">
+                        <select class="form-control" id="detail_language_content" onchange="reInit()" style="width: 100% !important">
                             <option selected value="1">Tiếng Việt</option>
                             <option value="2">Tiếng Anh</option>
                         </select>
@@ -132,7 +132,7 @@
                         <button type="button" class="btn btn-light-primary btn-sm px-6" onclick="bonusRowContent(0)">Thêm</button>
                     </div>
                     <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 mt-5">
-                        <button type="button" class="btn btn-light-success btn-sm px-6 float-right" id="btn_detail">Lưu</button>
+                        <button type="button" class="btn btn-light-success btn-sm float-right" id="btn_detail">Lưu</button>
                     </div>
                 </div>
             </div>
@@ -808,7 +808,7 @@
                 <div class="row form-group">
                     <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                         <label class="col-form-label font-weight-bolder">Đơn vị</label>
-                        <select class="form-control" id="add_donvi_kinhphi"  style="width: 100% !important">
+                        <select class="form-control" id="add_donvi_kinhphi" style="width: 100% !important">
                             @{
                                 foreach (var item in ViewBag.office)
                                 {
@@ -920,9 +920,9 @@
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                     @*<div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
-                        <label class="col-form-label font-weight-bolder">File đính kèm</label>
-                        <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDuTru"></a>
-                    </div>*@
+                            <label class="col-form-label font-weight-bolder">File đính kèm</label>
+                            <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDuTru"></a>
+                        </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -1019,9 +1019,9 @@
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                     @*<div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
-                        <label class="col-form-label font-weight-bolder">File đính kèm</label>
-                        <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDieuChinh"></a>
-                    </div>*@
+                            <label class="col-form-label font-weight-bolder">File đính kèm</label>
+                            <a href="javascript:;" class="form-control" id="edit_dinhkem_kpDieuChinh"></a>
+                        </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -1118,9 +1118,9 @@
                         <span class="form-text text-muted">Dung lượng tối đa là 3MB và tối đa 1 tập tin</span>
                     </div>
                     @*<div class="col-sm-7 col-md-7 col-xl-7 col-lg-7">
-                        <label class="col-form-label font-weight-bolder">File đính kèm</label>
-                        <a href="javascript:;" class="form-control" id="edit_dinhkem_kpThucTe"></a>
-                    </div>*@
+                            <label class="col-form-label font-weight-bolder">File đính kèm</label>
+                            <a href="javascript:;" class="form-control" id="edit_dinhkem_kpThucTe"></a>
+                        </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -1160,7 +1160,6 @@
         </div>
     </div>
 </div>
-
 <input type="hidden" id="activity_id" value="@ViewBag.activity_id" />
 @section scripts{
     <script>
@@ -2602,7 +2601,7 @@
                 contentType: false
             });
         });
-        //aa
+        //aaaaa
         $('#btn_edit_kpDuTru').click(function () {
             save_loader.startLoading();
             var object = {
@@ -3485,9 +3484,38 @@
                 }
             });
         }
+
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
+        }
+
+        var save_loader = new LoaderBtn($("#btn_detail"))
         $('#btn_detail').click(function () {
+            let fd = new FormData();
             var listSub = [];
             var language_id = document.getElementById('detail_language_content').value;
+
+            let content_main = $('#editor-main-content').summernote('code') + "";
+            var list_image = $('#kt_tab_pane_1 > div > div:nth-child(9) > div.note-editor.note-frame.card').find('img')
+            var count_upload_main = 0;
+            if (list_image.length != 0) {
+                for (i = 0; i < list_image.length; i++) {
+                    let temp = list_image[i];
+                    let temp_src = $(temp).attr('src') + "";
+                    if (temp_src.includes('data:')) {
+                        count_upload_main++
+                        content_main = content_main.replace(temp_src, 'image_' + i)
+                        fd.append('image_' + i, dataURItoBlob(temp_src))
+                    }
+                }
+            }
             var item = {
                 activity_id: document.getElementById('activity_id').value,
                 activity_name: document.getElementById('detail_name').value,
@@ -3496,7 +3524,8 @@
                 from: document.getElementById('detail_from').value,
                 to: document.getElementById('detail_to').value,
                 language_id: language_id,
-                article_content: $('#editor-main-content').summernote('code'),
+                article_content: content_main,
+                count_upload_main: count_upload_main,
                 article_status_id: 1,
             };
             if (item.activity_name == '' || item.location == '' || item.article_content == '') {
@@ -3505,11 +3534,28 @@
             }
             let check = false;
             arrIndexContent.forEach(function (x) {
+                let sub_id = x
+                let content = $('#editor-subcontent-' + x).summernote('code') + "";
+                var list_image = $('#row-ckeditor-'+ x +' > div.col-sm-9.col-md-9.col-xl-9.col-lg-9.mt-5 > div.note-editor.note-frame.card').find('img')
+                var count_upload = 0;
+                if (list_image.length != 0) {
+                    for (i = 0; i < list_image.length; i++) {
+                        var temp = list_image[i];
+                        var temp_src = $(temp).attr('src') + "";
+                        if (temp_src.includes('data:')) {
+                            count_upload++
+                            content = content.replace(temp_src, 'image_'+ x + '_' + i)
+                            fd.append('image_' + x + '_' + i ,dataURItoBlob(temp_src))
+                        }
+                    }
+                }
                 var obj = {
                     article_id: x,
                     version_title: document.getElementById('content-' + x).value,
-                    article_content: $('#editor-subcontent-' + x).summernote('code'),
-                    language_id: language_id
+                    article_content: content,
+                    language_id: language_id,
+                    number_of_image: count_upload,
+                    sub_id: sub_id,
                 }
                 if (obj.version_title == '' || obj.article_content == '') {
                     check = true;
@@ -3528,21 +3574,30 @@
                 infoDetail: item,
                 subContent: listSub
             };
+            fd.append("obj", JSON.stringify(object));
+
+            save_loader.startLoading();
             $.ajax({
                 url: "@Url.Action("updateDetail", "DetailOfAcademicActivity")",
-                data: JSON.stringify(object),
+                data: fd,
                 type: "POST",
-                contentType: "application/json;charset=utf-8",
+                //contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     if (data != '') {
                         toastr.success(data);
+                        save_loader.stopLoading()
                     } else {
                         toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
+                        save_loader.stopLoading()
                     }
                 },
                 error: function (data) {
                     toastr.error('Có lỗi xảy ra. Vui lòng thử lại');
-                }
+                    save_loader.stopLoading()
+                },
+                dataType: "json",
+                processData: false,
+                contentType: false
             });
         });
         function reInit() {

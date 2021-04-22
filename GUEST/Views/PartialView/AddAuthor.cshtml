@@ -134,7 +134,11 @@
                         $("#add_author_contractType").trigger('change');
                         $("#add_author_cmnd").val(author.identification_number);
                         $("#add_author_tax").val(author.tax_code);
-                        $("#add_author_bank").val(author.bank_branch);
+
+                        var theString = author.bank_branch;
+                        var varTitle = $('#add_author_bank').html(theString).text();
+                        $("#add_author_bank").val(varTitle);
+
                         $("#add_author_accno").val(author.bank_number);
                         $("#add_author_mail").val(author.email);
                         $("#add_author_cmnd_link").val(author.identification_file_link);
