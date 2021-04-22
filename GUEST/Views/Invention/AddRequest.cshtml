@@ -72,7 +72,7 @@
                                 <ul>
                                 </ul>
                                 <br />
-                                <a href="" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                             </div>
                         </div>
                     </div>
@@ -124,6 +124,24 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title font-weight-bolder">Chỉnh sửa thông tin tác giả</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i aria-hidden="true" class="ki ki-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            Html.RenderAction("EditAuthor", "PartialView");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-light-primary px-6 font-weight-bold hidden" style="display: none" id="edit_author_btn" data-toggle="modal" data-target="#editModal"></button>
     </div>
 </div>
 <form style="visibility: hidden" method="get" action="/Invention/Edit" id="InvenForm">

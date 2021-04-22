@@ -2537,6 +2537,7 @@
     <Content Include="Views\Paper\waitVerify.cshtml" />
     <Content Include="Views\ArticlePolicy\Detail.cshtml" />
     <Content Include="Views\PolicyType\Index.cshtml" />
+    <Content Include="Views\ArticlePolicy\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
