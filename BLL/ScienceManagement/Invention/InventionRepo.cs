@@ -1,4 +1,5 @@
-﻿using BLL.ScienceManagement.Paper;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
@@ -103,9 +104,15 @@ namespace BLL.ScienceManagement.Invention
             {
                 RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
                 ri.status_id = 5;
+
+                //var Request = db.RequestInventions.Find(inven.invention_id);
+                Account account = ri.BaseRequest.Account;
+                NotificationRepo nr = new NotificationRepo(db);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Invention/Edit?id=" + inven.invention_id);
+
                 db.SaveChanges();
                 dbc.Commit();
-                return "ss";
+                return notification_id.ToString();
             }
             catch (Exception e)
             {

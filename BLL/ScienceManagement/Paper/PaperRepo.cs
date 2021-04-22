@@ -43,6 +43,17 @@ namespace BLL.ScienceManagement.Paper
             return item;
         }
 
+        public string getLinkPolicy()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select f.link
+                        from SM_Request.Policy p join SM_Request.PolicyType pt on p.policy_type_id = pt.policy_type_id
+	                        join General.[File] f on p.file_id = f.file_id
+                        where pt.policy_type_id = 2 and expired_date is null";
+            string link = db.Database.SqlQuery<string>(sql).FirstOrDefault();
+            return link;
+        }
+
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
@@ -552,8 +563,8 @@ namespace BLL.ScienceManagement.Paper
                 RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
                 rp.status_id = 5;
 
-                var Request = db.RequestPapers.Find(paper.request_id);
-                Account account = Request.BaseRequest.Account;
+                //var Request = db.RequestPapers.Find(paper.request_id);
+                Account account = rp.BaseRequest.Account;
                 NotificationRepo nr = new NotificationRepo(db);
                 int notification_id = nr.AddByAccountID(account.account_id, 4, "/Paper/Edit?id=" + paper.paper_id);
 
