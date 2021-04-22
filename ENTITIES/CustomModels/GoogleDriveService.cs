@@ -2,10 +2,12 @@
 using Google.Apis.Drive.v3;
 using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
+using Google.Apis.Upload;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 using static Google.Apis.Drive.v3.FilesResource;
 
@@ -48,6 +50,17 @@ namespace ENTITIES.CustomModels
             }
         }
 
+        public class MyClass
+        {
+            public Task UploadTask { get; set; }
+            public CreateMediaUpload UploadRequest { get; set; }
+            public MyClass(Task uploadTask, CreateMediaUpload uploadRequest)
+            {
+                UploadTask = uploadTask;
+                UploadRequest = uploadRequest;
+            }
+        }
+
         //Quyết định
         //|_____QD_abc
         //|
@@ -58,20 +71,23 @@ namespace ENTITIES.CustomModels
 
             var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, folder.Id);
 
+            file.UploadTask.Wait();
+            string fileId = file.UploadRequest.ResponseBody.Id;
+
             try
             {
                 if (Emails != null)
                     foreach (var item in Emails)
                     {
-                        ShareWithEmail(item, file.Id);
+                        ShareWithEmail(item, fileId);
                     }
             }
             catch (Exception e)
             {
                 if (e.Message.Contains("exceeded your sharing quota"))
-                    ShareWithAnyone(file.Id);
+                    ShareWithAnyone(fileId);
             }
-            return file;
+            return file.UploadRequest.ResponseBody;
         }
 
         //Chính sách
@@ -85,9 +101,10 @@ namespace ENTITIES.CustomModels
 
             var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, folder.Id);
 
-            ShareWithAnyone(file.Id);
+            file.UploadTask.Wait();
+            ShareWithAnyone(file.UploadRequest.ResponseBody.Id);
 
-            return file;
+            return file.UploadRequest.ResponseBody;
         }
 
         //Danh sách tài khoản
@@ -114,8 +131,9 @@ namespace ENTITIES.CustomModels
             var SubFolder = FindFirstFolder("ProfileMedia", ResearcherFolder.Id) ?? CreateFolder("ProfileMedia", ResearcherFolder.Id);
             var file = UploadFile(InputFile.FileName, InputFile.InputStream, InputFile.ContentType, SubFolder.Id);
 
-            ShareWithAnyone(file.Id);
-            return file;
+            file.UploadTask.Wait();
+            ShareWithAnyone(file.UploadRequest.ResponseBody.Id);
+            return file.UploadRequest.ResponseBody;
         }
         public static List<Google.Apis.Drive.v3.Data.File> UploadResearcherFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, string Email)
         {
@@ -145,13 +163,21 @@ namespace ENTITIES.CustomModels
             var folder = FindFirstFolder(FolderName, SubFolder.Id) ?? CreateFolder(FolderName, SubFolder.Id);
 
             List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
+            List<Task> tasks = new List<Task>();
+            List<CreateMediaUpload> uploadRequests = new List<CreateMediaUpload>();
 
             foreach (HttpPostedFileBase item in InputFiles)
             {
-                var file = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+                var taskRequests = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+                tasks.Add(taskRequests.UploadTask);
+                uploadRequests.Add(taskRequests.UploadRequest);
+            }
 
+            Task.WaitAll(tasks.ToArray());
+            foreach (var item in uploadRequests)
+            {
+                var file = item.ResponseBody;
                 UploadedFiles.Add(file);
-
                 if (Email != null)
                 {
                     ShareWithEmail(Email, file.Id);
@@ -203,7 +229,7 @@ namespace ENTITIES.CustomModels
             RequestGet.SupportsAllDrives = true;
             return RequestGet.Execute();
         }
-        public static Google.Apis.Drive.v3.Data.File UploadFile(string FileName, Stream InputStream, string ContentType, string ParentID)
+        public static MyClass UploadFile(string FileName, Stream InputStream, string ContentType, string ParentID)
         {
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
@@ -217,9 +243,9 @@ namespace ENTITIES.CustomModels
             CreateMediaUpload request = driveService.Files.Create(fileMetadata, InputStream, ContentType);
             request.Fields = "id,webViewLink";
             request.SupportsAllDrives = true;
-            request.Upload();
+            Task UploadTask = request.UploadAsync();
 
-            return request.ResponseBody;
+            return new MyClass(UploadTask, request);
         }
 
         public static Google.Apis.Drive.v3.Data.File UpdateFile(string FileName, Stream InputStream, string ContentType, string FileID)
@@ -329,13 +355,21 @@ namespace ENTITIES.CustomModels
             var folder = FindFirstFolder(FolderName, IAFolder.Id) ?? CreateFolder(FolderName, IAFolder.Id);
 
             List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
+            List<Task> tasks = new List<Task>();
+            List<CreateMediaUpload> uploadRequests = new List<CreateMediaUpload>();
 
             foreach (HttpPostedFileBase item in InputFiles)
             {
-                var file = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+                var taskRequests = UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+                tasks.Add(taskRequests.UploadTask);
+                uploadRequests.Add(taskRequests.UploadRequest);
+            }
 
+            Task.WaitAll(tasks.ToArray());
+            foreach (var item in uploadRequests)
+            {
+                var file = item.ResponseBody;
                 UploadedFiles.Add(file);
-
                 ShareWithAnyone(file.Id);
             }
 

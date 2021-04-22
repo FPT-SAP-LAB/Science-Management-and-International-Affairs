@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using static Google.Apis.Drive.v3.FilesResource;
@@ -936,13 +937,21 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             var Filefolder = GoogleDriveService.FindFirstFolder(ThirdSubFolderName, SecondFolder.Id) ?? GoogleDriveService.CreateFolder(ThirdSubFolderName, SecondFolder.Id);
 
             List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
+            List<Task> tasks = new List<Task>();
+            List<CreateMediaUpload> uploadRequests = new List<CreateMediaUpload>();
 
             foreach (HttpPostedFileBase item in InputFiles)
             {
-                var file = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, Filefolder.Id);
+                var taskRequests = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, Filefolder.Id);
+                tasks.Add(taskRequests.UploadTask);
+                uploadRequests.Add(taskRequests.UploadRequest);
+            }
 
+            Task.WaitAll(tasks.ToArray());
+            foreach (var item in uploadRequests)
+            {
+                var file = item.ResponseBody;
                 UploadedFiles.Add(file);
-
                 GoogleDriveService.ShareWithAnyone(file.Id);
             }
 

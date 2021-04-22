@@ -352,11 +352,12 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     {
                         parentID = request.File1.file_drive_id;
                     }
-                    foreach (var item in files)
-                    {
-                        Google.Apis.Drive.v3.Data.File temp = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, parentID);
-                        ids.Add(temp.Id);
-                    }
+                    GoogleDriveService.UploadResearcherFile(files, request.Conference.conference_name, 1, request.BaseRequest.Account.email);
+                    //foreach (var item in files)
+                    //{
+                    //    Google.Apis.Drive.v3.Data.File temp = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, parentID);
+                    //    ids.Add(temp.Id);
+                    //}
                     trans.Commit();
                     return new AlertModal<string>(true);
                 }
