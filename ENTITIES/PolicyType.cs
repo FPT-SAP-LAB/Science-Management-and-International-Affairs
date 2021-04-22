@@ -12,18 +12,25 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Policy_type
+    public partial class PolicyType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Policy_type()
+        public PolicyType()
         {
+            this.PolicyTypeLanguages = new HashSet<PolicyTypeLanguage>();
             this.Policies = new HashSet<Policy>();
+            this.Articles = new HashSet<Article>();
         }
     
         public int policy_type_id { get; set; }
-        public string policy_type_name { get; set; }
+        public int account_id { get; set; }
     
+        public virtual Account Account { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PolicyTypeLanguage> PolicyTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Policy> Policies { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Article> Articles { get; set; }
     }
 }

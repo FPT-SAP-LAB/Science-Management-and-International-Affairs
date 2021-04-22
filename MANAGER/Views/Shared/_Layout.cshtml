@@ -278,6 +278,12 @@
                                                 <span class="menu-text">LỊCH SỬ QUYẾT ĐỊNH</span>
                                             </a>
                                         </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/Paper/waitVerify" class="menu-link">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">XÁC NHẬN THƯỞNG TÁC GIẢ</span>
+                                            </a>
+                                        </li>
 
                                     </ul>
                                 </div>
@@ -329,6 +335,38 @@
                                 </div>
                             </li>
                             <!---------------------------------------------------------------------------------->
+                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" class="menu-link menu-toggle">
+                                    <span class="svg-icon menu-icon">
+                                        <i class="la la-clipboard-check icon-lg"></i>
+                                    </span>
+                                    <span class="menu-text">QUẢN LÝ CHÍNH SÁCH</span><i class="menu-arrow"></i>
+                                </a>
+                                <div class="menu-submenu ">
+                                    <i class="menu-arrow"></i>
+                                    <ul class="menu-subnav">
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/ArticlePolicy" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">THÔNG TIN CHÍNH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/PolicyType" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">LOẠI CHÍNH SÁCH</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/ConditionManagement" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">QUẢN LÝ ĐIỀU KIỆN HỖ TRỢ HỘI NGHỊ</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!---------------------------------------------------------------------------------->
                             <li class="menu-section ">
                                 <h4 class="menu-text">HỢP TÁC QUỐC TẾ</h4>
                                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
@@ -340,17 +378,6 @@
                                     </span>
                                     <span class="menu-text">QUẢN LÝ TIN TỨC, SỰ KIỆN</span>
                                 </a>
-                                @*<div class="menu-submenu ">
-                                        <i class="menu-arrow"></i>
-                                        <ul class="menu-subnav">
-                                            <li class="menu-item " aria-haspopup="true">
-                                                <a href="#" class="menu-link ">
-                                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                    <span class="menu-text">.......................</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>*@
                             </li>
                             <!---------------------------------------------------------------------------------->
 
@@ -472,33 +499,27 @@
                                             </a>
                                         </li>
                                         <li class="menu-item " aria-haspopup="true">
-                                            <a href="/QsUniversity" id="updateJournal" class="menu-link ">
+                                            <a href="/QsUniversity" class="menu-link ">
                                                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                                 <span class="menu-text">CẬP NHẬT TOP QS UNIVERSITY</span>
                                             </a>
                                         </li>
                                         <li class="menu-item " aria-haspopup="true">
-                                            <a href="/PaperCriteria/List" id="updateJournal" class="menu-link ">
+                                            <a href="/PaperCriteria/List" class="menu-link ">
                                                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                                 <span class="menu-text">CẬP NHẬT FILE CHÍNH SÁCH CHO SPKH</span>
                                             </a>
                                         </li>
                                         <li class="menu-item " aria-haspopup="true">
-                                            <a href="/ConditionManagement?language=1" id="updateJournal" class="menu-link ">
-                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                <span class="menu-text">QUẢN LÝ ĐIỀU KIỆN HỖ TRỢ HỘI NGHỊ</span>
-                                            </a>
-                                        </li>
-                                        @*<li class="menu-item " aria-haspopup="true">
-                                            <a href="/PaperCriteria/List" class="menu-link ">
-                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                <span class="menu-text">TIÊU CHÍ BÀI BÁO QUỐC TẾ</span>
-                                            </a>
-                                        </li>*@
-                                        <li class="menu-item " aria-haspopup="true">
                                             <a href="/Title/List" class="menu-link ">
                                                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                                 <span class="menu-text">QUẢN LÝ CHỨC DANH</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/UpdateJournal/List" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">CẬP NHẬT FILE SCOPUS/ISI</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -757,8 +778,6 @@
     <script src="~/Content/assets/js/bundle.js"></script>
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
-    <!-- <script src="~/Content/assets/js/pages/crud/datatables/basic/scrollable.js"></script> -->
-    <script src="~/Scripts/updateJournal.js"></script>
     <script>
         async function onLoad() {
             new Promise((resolve, reject) => {

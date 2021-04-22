@@ -11,6 +11,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
+using static Google.Apis.Drive.v3.FilesResource;
+using File = ENTITIES.File;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -31,7 +33,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 string sql_mouList =
                     @"select tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
-                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb12.link as evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, 
                         tb4.scope_abbreviation,
                         STRING_AGG(tb7.specialization_name, ',') 'specialization_name', tb9.mou_status_id,tb1.mou_id
@@ -62,6 +64,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
+                        left join General.[File] tb12 on
+                        tb12.file_id = tb1.evidence
                         where tb1.is_deleted = 0 ";
                 string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
                         IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
@@ -84,7 +88,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 string sql_BonusQuery = @"
                         GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
-                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb12.link,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
                         tb4.scope_abbreviation
                         order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
@@ -121,7 +125,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
                 string sql_mouList =
                     @"select tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
-                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb12.link as evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, 
                         tb4.scope_abbreviation,
                         STRING_AGG(tb7.specialization_name, ',') 'specialization_name', tb9.mou_status_id,tb1.mou_id
@@ -152,6 +156,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
+                        left join General.[File] tb12 on
+                        tb12.file_id = tb1.evidence
                         where tb1.is_deleted = 1";
                 string sql_recordsTotal = @"select count(*) from IA_Collaboration.MOUPartner t1 inner join 
                         IA_Collaboration.MOU t2 on t2.mou_id = t1.mou_id
@@ -247,6 +253,29 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
+
+        public File saveFile(Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence)
+        {
+            File evidence_file = new File();
+            try
+            {
+                if (evidence != null)
+                {
+                    //add infor to File
+                    if (evidence.FileName != null) evidence_file.name = evidence.FileName;
+                    if (f.WebViewLink != null) evidence_file.link = f.WebViewLink;
+                    if (f.Id != null) evidence_file.file_drive_id = f.Id;
+                    db.Files.Add(evidence_file);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return evidence_file;
+        }
+
         public void addMOU(MOUAdd input, BLL.Authen.LoginRepo.User user,
             Google.Apis.Drive.v3.Data.File file, HttpPostedFileBase evidence)
         {
@@ -254,6 +283,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 try
                 {
+                    //add File to DB.
+                    //get File.
                     //add MOU
                     //Check Partner
                     //add MOUPartner => 
@@ -261,6 +292,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerScope
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
+                    File evidence_file = saveFile(file, evidence);
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
@@ -268,8 +300,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         mou_code = input.BasicInfo.mou_code,
                         mou_end_date = mou_end_date,
                         mou_note = input.BasicInfo.mou_note,
-                        //evidence = input.BasicInfo.evidence is null ? "" : input.BasicInfo.evidence,
-                        //add ??
+                        evidence = evidence_file.file_id,
                         office_id = input.BasicInfo.office_id,
                         account_id = user is null ? 1 : user.account.account_id,
                         add_time = DateTime.Now,
@@ -294,7 +325,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     {
                         int partner_id_item = 0;
                         //new partner
-                        if (item.partner_id == 0)
+                        if (item.partner_id is null)
                         {
                             //add Article.
                             //add ArticleVersion.
@@ -838,6 +869,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 partner_id_para += (item.partner_id + ",");
             }
             partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
+            partner_id_para = partner_id_para == "" ? "0" : partner_id_para;
             string query = @"select count(*) as num_check,max(mou_start_date) as mou_start_date
                 , mou_end_date, t2.mou_id, t2.mou_code, t2.office_id
                  from IA_Collaboration.MOUPartner t1
@@ -876,39 +908,38 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 
         public static List<Google.Apis.Drive.v3.Data.File> UploadMOUFile(List<HttpPostedFileBase> InputFiles, string FolderName, int TypeFolder, bool isFolder)
         {
-            string SubFolderName, SecondSubFolderName;
+            string SubFolderName, ThirdSubFolderName;
             switch (TypeFolder)
             {
                 case 1:
                     SubFolderName = "MOU";
-                    SecondSubFolderName = "BaseFile";
+                    ThirdSubFolderName = "BaseFile";
                     break;
                 case 2:
                     SubFolderName = "MOU";
-                    SecondSubFolderName = "AdditionalFile";
+                    ThirdSubFolderName = "AdditionalFile";
                     break;
                 case 3:
                     SubFolderName = "MOA";
-                    SecondSubFolderName = "BaseFile";
+                    ThirdSubFolderName = "BaseFile";
                     break;
                 case 4:
                     SubFolderName = "MOA";
-                    SecondSubFolderName = "AdditionalFile";
+                    ThirdSubFolderName = "AdditionalFile";
                     break;
                 default:
                     throw new ArgumentException("Loại folder không tồn tại");
             }
 
-            var MOUFolder = GoogleDriveService.FindFirstFolder(SubFolderName, GoogleDriveService.IADrive) ?? GoogleDriveService.CreateFolder(SubFolderName, GoogleDriveService.IADrive);
-            var TypeMOUFolder = GoogleDriveService.FindFirstFolder(SecondSubFolderName, MOUFolder.Id) ?? GoogleDriveService.CreateFolder(SecondSubFolderName, MOUFolder.Id);
-
-            var folder = GoogleDriveService.FindFirstFolder(FolderName, TypeMOUFolder.Id) ?? GoogleDriveService.CreateFolder(FolderName, TypeMOUFolder.Id);
+            var FirstFolder = GoogleDriveService.FindFirstFolder(SubFolderName, GoogleDriveService.IADrive) ?? GoogleDriveService.CreateFolder(SubFolderName, GoogleDriveService.IADrive);
+            var SecondFolder = GoogleDriveService.FindFirstFolder(FolderName, FirstFolder.Id) ?? GoogleDriveService.CreateFolder(FolderName, FirstFolder.Id);
+            var Filefolder = GoogleDriveService.FindFirstFolder(ThirdSubFolderName, SecondFolder.Id) ?? GoogleDriveService.CreateFolder(ThirdSubFolderName, SecondFolder.Id);
 
             List<Google.Apis.Drive.v3.Data.File> UploadedFiles = new List<Google.Apis.Drive.v3.Data.File>();
 
             foreach (HttpPostedFileBase item in InputFiles)
             {
-                var file = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, folder.Id);
+                var file = GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, Filefolder.Id);
 
                 UploadedFiles.Add(file);
 
@@ -919,7 +950,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             {
                 return new List<Google.Apis.Drive.v3.Data.File>
                 {
-                    folder //return parent files
+                    Filefolder //return parent files
                 };
             }
             else
@@ -943,6 +974,41 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     GoogleDriveService.DeleteFile(file_id);
                 }
+                throw e;
+            }
+        }
+
+        public Google.Apis.Drive.v3.Data.File updateEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        {
+            string file_id = "";
+            try
+            {
+                Google.Apis.Drive.v3.Data.File f = UploadMOUFile(InputFile, FolderName, TypeFolder, isFolder);
+                file_id = InputFile.FileName;
+                return f;
+            }
+            catch (Exception e)
+            {
+                if (file_id != "")
+                {
+                    GoogleDriveService.DeleteFile(file_id);
+                }
+                throw e;
+            }
+        }
+
+        public static void DeleteEvidenceFile(string FileID)
+        {
+            try
+            {
+                DeleteRequest request = new DeleteRequest(GoogleDriveService.driveService, FileID)
+                {
+                    SupportsAllDrives = true
+                };
+                request.Execute();
+            }
+            catch (Exception e)
+            {
                 throw e;
             }
         }

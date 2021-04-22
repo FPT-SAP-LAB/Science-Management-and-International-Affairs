@@ -493,10 +493,12 @@
             let language_id = document.getElementById('add_language').value;
             if (activity_name == '' || activity_type_id == '' || from == '' || to == '' || location == '' || language_id == '') {
                 toastr.warning("Bạn chưa điền hết các thông tin cho hoạt động học thuật");
+                save_loader.stopLoading();
                 return false;
             }
             if (convertDate(from).getTime() > convertDate(to).getTime()) {
                 toastr.warning("Thời hạn bắt đầu không thể sau thời hạn kết thúc");
+                save_loader.stopLoading();
                 return false;
             }
             let object = {

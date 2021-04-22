@@ -244,6 +244,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ScienceManagement\ArticlePolicy\ArticlePolicyController.cs" />
+    <Compile Include="Models\HTMLHelper.cs" />
     <Compile Include="NotiHub.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
@@ -260,7 +262,6 @@
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
     <Compile Include="Controllers\ScienceManagement\PartialViewController.cs" />
-    <Compile Include="Controllers\ScienceManagement\Policy\PolicyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\BiographyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Controllers\ScienceManagement\ScientificProducts\ScientificProductsController.cs" />
@@ -2521,7 +2522,6 @@
     <Content Include="Views\Partner\Detail.cshtml" />
     <Content Include="Views\Researchers\List.cshtml" />
     <Content Include="Views\Researchers\ViewInfo.cshtml" />
-    <Content Include="Views\Policy\Index.cshtml" />
     <Content Include="Views\AcademicActivity\Index.cshtml" />
     <Content Include="Views\Researchers\EditInfo.cshtml" />
     <Content Include="Views\AcademicActivity\Detail.cshtml" />
@@ -2544,6 +2544,8 @@
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AdditionalProfile\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\ArticlePolicy\Index.cshtml" />
+    <Content Include="Views\ArticlePolicy\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2553,6 +2555,7 @@
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
     <Folder Include="Views\Biography\" />
+    <Folder Include="Views\HTMLHelper\" />
     <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />
