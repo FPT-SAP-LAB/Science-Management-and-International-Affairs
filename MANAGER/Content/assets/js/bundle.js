@@ -55,7 +55,7 @@ $(function () {
 function validateNonEmptyField(field) {
     isValid = true;
     for (var i in field) {
-        if ($(field[i]).val() === null || $(field[i]).val().trim() == "") {
+        if (!checkNotNull($(field[i]).val())) {
             $(field[i]).addClass("is-invalid");
             isValid = false;
         }
@@ -63,5 +63,13 @@ function validateNonEmptyField(field) {
     return isValid;
 }
 $("body").on("focusout", ".is-invalid", function () {
-    $(this).removeClass("is-invalid")
+    if (!checkNotNull($(this).val())) {
+        $(this).removeClass("is-invalid")
+    }
 })
+function checkNotNull(str) {
+    if (str === null || (str != null && str.trim() == "")) {
+        return false
+    }
+    return true
+}
