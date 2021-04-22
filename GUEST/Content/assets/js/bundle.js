@@ -33,13 +33,27 @@ $(".datetimepicker-input").keydown(function (e) {
 function validateNonEmptyField(field) {
     isValid = true;
     for (var i in field) {
-        if ($(field[i]).val() === null || $(field[i]).val().trim() == "") {
+        if (!checkNotNull($(field[i]).val())) {
             $(field[i]).addClass("is-invalid");
             isValid = false;
+            if ($(field[i]).hasClass("select2-hidden-accessible")) {
+                $(field[i]).next().find(".select2-selection--single").css("border-color", "#F64E60")
+            } 
         }
     }
     return isValid;
 }
 $("body").on("focusout", ".is-invalid", function () {
-    $(this).removeClass("is-invalid")
+    if (checkNotNull($(this).val())) {
+        $(this).removeClass("is-invalid")
+    }
 })
+$("body").on("focusout", ".select2-selection--single", function () {
+    $(this).css("border-color", "#E4E6EF")
+})
+function checkNotNull(str) {
+    if (str === null || (str != null && str.trim() == "")){
+        return false
+    }
+    return true
+}
