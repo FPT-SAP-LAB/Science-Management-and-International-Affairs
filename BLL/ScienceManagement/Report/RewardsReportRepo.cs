@@ -207,48 +207,49 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
-        //public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
-        //{
-        //    var data = (from a in db.BaseRequests
-        //                join b in db.RequestCitations on a.request_id equals b.request_id
-        //                from c in db.Citations
-        //                where b.Citations.Contains(c) //SAU THÊM ĐIỀU KIỆN CỦA TRƯỜNG is_verified VÀO ĐÂY
-        //                select new CitationByAuthorReport
-        //                {
-        //                    author_name = (from a1 in db.Authors
-        //                                   join b1 in db.RequestCitations on a1.people_id equals b1.people_id
-        //                                   where b1.request_id==b.request_id
-        //                                   select a1.name).FirstOrDefault(),
-        //                    decision_number = b.
-        //                });
-        //    if (search.name != null && search.name.Trim() != "")
-        //    {
-        //        data = data.Where(x => x.invention_name.Contains(search.name));
-        //    }
-        //    if (search.year != null && search.year.Trim() != "")
-        //    {
-        //        data = data.Where(x => x.date.Value.Year.ToString() == search.year);
-        //    }
-        //    if (search.office_id != null)
-        //    {
-        //        data = data.Where(x => x.authors.Select(a => a.office_id).ToList().Contains(search.office_id.Value));
-        //    }
-        //    var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
-        //    .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-        //    String totalAmount = "";
-        //    Int64 total = 0;
-        //    foreach (var i in res)
-        //    {
-        //        if (i.total_reward != null && i.total_reward.Trim() != "")
-        //        {
-        //            total += Int64.Parse(i.total_reward);
-        //        }
-        //    }
-        //    totalAmount = total.ToString();
-        //    int recordsTotal = data.Count();
-        //    return new Tuple<BaseServerSideData<CitationByAuthorReport>,
-        //        String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
-        //}
+
+        public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        {
+            var data = (from a in db.BaseRequests
+                        join b in db.RequestCitations on a.request_id equals b.request_id
+                        from c in db.Citations
+                        where b.Citations.Contains(c) //SAU THÊM ĐIỀU KIỆN CỦA TRƯỜNG is_verified VÀO ĐÂY
+                        select new CitationByAuthorReport
+                        {
+                            author_name = (from a1 in db.Authors
+                                           join b1 in db.RequestCitations on a1.people_id equals b1.people_id
+                                           where b1.request_id == b.request_id
+                                           select a1.name).FirstOrDefault(),
+                            decision_number = b.
+                        });
+            if (search.name != null && search.name.Trim() != "")
+            {
+                data = data.Where(x => x.invention_name.Contains(search.name));
+            }
+            if (search.year != null && search.year.Trim() != "")
+            {
+                data = data.Where(x => x.date.Value.Year.ToString() == search.year);
+            }
+            if (search.office_id != null)
+            {
+                data = data.Where(x => x.authors.Select(a => a.office_id).ToList().Contains(search.office_id.Value));
+            }
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            String totalAmount = "";
+            Int64 total = 0;
+            foreach (var i in res)
+            {
+                if (i.total_reward != null && i.total_reward.Trim() != "")
+                {
+                    total += Int64.Parse(i.total_reward);
+                }
+            }
+            totalAmount = total.ToString();
+            int recordsTotal = data.Count();
+            return new Tuple<BaseServerSideData<CitationByAuthorReport>,
+                String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
+        }
         public List<String> getListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
