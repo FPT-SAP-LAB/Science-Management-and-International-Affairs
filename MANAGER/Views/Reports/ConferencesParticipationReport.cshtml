@@ -106,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="#" onclick="saveFile()" class="navi-link">
                                         <span class="navi-icon">
                                             <i class="la la-file-excel-o"></i>
                                         </span>
@@ -424,137 +424,141 @@
                     <td><a href="#" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                 </tr>
 
-         
+
             </tbody>
 
         </table>
         <!--end: Datatable-->
 
-    </div></div>
-    @section scripts{
-        <script>
-            var KTDatatablesBasicBasic = function () {
+    </div>
+</div>
+@section scripts{
+    <script>
+        var KTDatatablesBasicBasic = function () {
 
-                var initTable1 = function () {
-                    var table = $('#kt_datatable');
+            var initTable1 = function () {
+                var table = $('#kt_datatable');
 
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
+                // begin first table
+                table.DataTable({
+                    responsive: true,
 
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
-                        lengthMenu: [5, 10, 25, 50],
+                    lengthMenu: [5, 10, 25, 50],
 
-                        pageLength: 10,
+                    pageLength: 10,
 
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
 
-                        // Order settings
-                        order: [[1, 'desc']],
+                    // Order settings
+                    order: [[1, 'desc']],
 
-                        columnDefs: [
+                    columnDefs: [
 
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                var initTable2 = function () {
-                    var table = $('#kt_datatable_2');
-
-                    // begin first table
-                    table.DataTable({
-                        responsive: true,
-
-                        // DOM Layout settings
-                        dom: `<'row'<'col-sm-12'tr>>
-                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-
-                        lengthMenu: [5, 10, 25, 50],
-
-                        pageLength: 10,
-
-                        language: {
-                            'lengthMenu': 'Display _MENU_',
-                        },
-
-                        // Order settings
-                        // order: [[0, 'desc']],
-
-                        columnDefs: [
-
-                        ],
-                    });
-
-                    table.on('change', '.group-checkable', function () {
-                        var set = $(this).closest('table').find('td:first-child .checkable');
-                        var checked = $(this).is(':checked');
-
-                        $(set).each(function () {
-                            if (checked) {
-                                $(this).prop('checked', true);
-                                $(this).closest('tr').addClass('active');
-                            }
-                            else {
-                                $(this).prop('checked', false);
-                                $(this).closest('tr').removeClass('active');
-                            }
-                        });
-                    });
-
-                    table.on('change', 'tbody tr .checkbox', function () {
-                        $(this).parents('tr').toggleClass('active');
-                    });
-                };
-
-                return {
-
-                    //main function to initiate the module
-                    init: function () {
-                        initTable1();
-                        initTable2();
-                    }
-                };
-            }();
-
-            jQuery(document).ready(function () {
-                KTDatatablesBasicBasic.init();
-            });
-            //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
-            list_select = {
-                "search_nam": "Chọn năm",
-                "search_coso": "Chọn cơ sở"
-            }
-            for (let i in list_select) {
-                $('#' + i).select2({
-                    placeholder: list_select[i],
-                    allowClear: true
+                    ],
                 });
-            }
-                //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
-        </script>
-    }
+
+                table.on('change', '.group-checkable', function () {
+                    var set = $(this).closest('table').find('td:first-child .checkable');
+                    var checked = $(this).is(':checked');
+
+                    $(set).each(function () {
+                        if (checked) {
+                            $(this).prop('checked', true);
+                            $(this).closest('tr').addClass('active');
+                        }
+                        else {
+                            $(this).prop('checked', false);
+                            $(this).closest('tr').removeClass('active');
+                        }
+                    });
+                });
+
+                table.on('change', 'tbody tr .checkbox', function () {
+                    $(this).parents('tr').toggleClass('active');
+                });
+            };
+
+            var initTable2 = function () {
+                var table = $('#kt_datatable_2');
+
+                // begin first table
+                table.DataTable({
+                    responsive: true,
+
+                    // DOM Layout settings
+                    dom: `<'row'<'col-sm-12'tr>>
+                                            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+
+                    lengthMenu: [5, 10, 25, 50],
+
+                    pageLength: 10,
+
+                    language: {
+                        'lengthMenu': 'Display _MENU_',
+                    },
+
+                    // Order settings
+                    // order: [[0, 'desc']],
+
+                    columnDefs: [
+
+                    ],
+                });
+
+                table.on('change', '.group-checkable', function () {
+                    var set = $(this).closest('table').find('td:first-child .checkable');
+                    var checked = $(this).is(':checked');
+
+                    $(set).each(function () {
+                        if (checked) {
+                            $(this).prop('checked', true);
+                            $(this).closest('tr').addClass('active');
+                        }
+                        else {
+                            $(this).prop('checked', false);
+                            $(this).closest('tr').removeClass('active');
+                        }
+                    });
+                });
+
+                table.on('change', 'tbody tr .checkbox', function () {
+                    $(this).parents('tr').toggleClass('active');
+                });
+            };
+
+            return {
+
+                //main function to initiate the module
+                init: function () {
+                    initTable1();
+                    initTable2();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTDatatablesBasicBasic.init();
+        });
+        //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
+        list_select = {
+            "search_nam": "Chọn năm",
+            "search_coso": "Chọn cơ sở"
+        }
+        for (let i in list_select) {
+            $('#' + i).select2({
+                placeholder: list_select[i],
+                allowClear: true
+            });
+        }
+                    //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+    </script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
+}
