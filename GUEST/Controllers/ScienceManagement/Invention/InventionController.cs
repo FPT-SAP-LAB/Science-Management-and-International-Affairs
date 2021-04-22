@@ -43,6 +43,10 @@ namespace GUEST.Controllers
             List<InventionType> listType = ir.getType();
             ViewBag.type = listType;
 
+            PaperRepo pr = new PaperRepo();
+            string link = pr.getLinkPolicy();
+            ViewBag.link = link;
+
             return View();
         }
 
