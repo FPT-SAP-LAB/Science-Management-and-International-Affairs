@@ -147,7 +147,7 @@ class AuthorInfoView {
     }
 }
 //////////////////////////////////////////////////////////////////
-$("#add_author_save").click(function (e) {
+$("#add_author_save").click(function () {
     if (!validateNonEmptyField(["#ckfe", "#add_author_msnv", "#add_author_name",
         "#add_author_title", "#add_author_contractType", "#add_author_cmnd",
         "#add_author_cmnd_link", "#add_author_tax", "#add_author_bank", "#add_author_accno",
