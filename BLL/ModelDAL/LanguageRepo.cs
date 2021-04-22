@@ -16,7 +16,7 @@ namespace BLL.ModelDAL
         }
         public static List<Language> GetLanguages(ScienceAndInternationalAffairsEntities db)
         {
-            return db.Languages.ToList();
+            return db.Languages.OrderBy(x => x.language_id).ToList();
         }
     }
 }
