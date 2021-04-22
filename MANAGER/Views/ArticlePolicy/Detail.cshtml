@@ -3,7 +3,6 @@
     ViewBag.Title = "Chi tiết chính sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ENTITIES.CustomModels.ScienceManagement.ArticlePolicy.ArticlePolicyIndex article = ViewBag.detail;
-    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
 <div class="card card-custom">
@@ -11,7 +10,7 @@
         <!--begin::Info-->
         <div class="d-flex align-items-center">
             <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
-                @article.Version.publish_time.ToString(rm.GetString("DateFormat"))
+                @article.Version.publish_time.ToString("dd/MM/yyyy")
             </span>
         </div>
         <!--end::Info-->
@@ -31,7 +30,7 @@
     <div class="card-footer">
         @foreach (var tag in article.Types)
         {
-            <a href="#" class="text-muted label label-lg label-rounded label-pill label-inline" style="width: auto;padding: 0 10px;">#@tag</a>
+            <a href="#" class="label label-primary label-pill" style="width: auto;padding: 0 10px;">@tag</a>
         }
     </div>
 </div>

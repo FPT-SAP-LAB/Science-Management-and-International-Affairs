@@ -12,6 +12,8 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public int moa_id { get; set; }
         public string moa_code { get; set; }
         public string evidence { get; set; }
+        public string file_name { get; set; }
+        public string file_drive_id { get; set; }
         public string scope_abbreviation { get; set; }
         public string reason { get; set; }
         public DateTime moa_end_date { get; set; }
