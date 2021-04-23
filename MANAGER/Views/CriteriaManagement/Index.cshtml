@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "QUẢN LÝ TIÊU CHÍ KHEN THƯỞNG BÀI BÁO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <div class="mb-7">
+            <div class="row align-items-center">
+                <div class="col-sm-12">
+                    <a href="/CriteriaManagement/Add" style="min-width: 130px" type="button" class="btn btn-light-primary float-right">
+                        Thay đổi chính sách
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table id="mytable" style="min-width: 500px" class="table table-bordered table-checkable">
+                <thead>
+                    <tr>
+                        <th width="80%" class="text-center">Tiêu chí khen thưởng bài báo</th>
+                        <th width="20%" class="text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ENTITIES.PaperCriteria item in ViewBag.paperCriterias)
+                    {
+                        <tr data-id="@item.criteria_id">
+                            <td>
+                                <input disabled type="text" class="form-control" value="@item.name" />
+                            </td>
+                            <td style="text-align: center">
+                                <button style="width: 90px" type="button" onclick="ChangeName(this)" class="btn btn-light-primary change-condition">
+                                    Chỉnh sửa
+                                </button>
+                                <button style="width: 90px" type="button" hidden onclick="SaveName(this)" class="btn btn-light-success save-condition">
+                                    Lưu
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!--end: Datatable-->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function ChangeName(ele) {
+            let parent = $(ele).closest("tr");
+            $(parent).find("input").prop("disabled", false);
+            $(parent).find(".save-condition").prop("hidden", false);
+            $(ele).prop("hidden", true);
+        }
+
+        function SaveName(ele) {
+            let save_loader = new LoaderBtn(ele);
+            save_loader.startLoading();
+            let parent = $(ele).closest("tr");
+            $.ajax({
+                url: "/CriteriaManagement/Edit",
+                method: "post",
+                complete: function (data) {
+                    if (data.responseJSON.success) {
+                        $(parent).find("input").val(data.responseJSON.obj);
+                        $(parent).find("input").prop("disabled", true);
+                        $(parent).find(".change-condition").prop("hidden", false);
+                        $(ele).prop("hidden", true);
+                        toastr.success("Chỉnh sửa thành công");
+                    }
+                    else {
+                        toastr.error(data.responseJSON.content);
+                    }
+                    save_loader.stopLoading();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    save_loader.stopLoading();
+                },
+                dataType: "json",
+                data: {
+                    id: $(parent).data("id"),
+                    name: $(parent).find("input").val()
+                }
+            });
+        }
+    </script>
+}

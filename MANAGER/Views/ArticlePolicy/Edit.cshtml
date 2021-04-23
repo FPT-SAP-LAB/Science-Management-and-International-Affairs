@@ -27,7 +27,7 @@
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <label>Tiêu đề <span style='color:red'>*</span>:</label>
-                                        <input type="text" class="form-control version_title" placeholder="Tiêu đề bài đăng" value="@details.Versions[i].version_title" />
+                                        <input type="text" class="form-control version_title" placeholder="Tiêu đề bài đăng" value="@(details.Versions[i]?.version_title)" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -85,7 +85,7 @@
 
         @for (int i = 0; i < languages.Count; i++)
         {
-            @:setValue($("#kt_tab_pane_" + @languages[i].language_id + " .summernote"), "@HttpUtility.JavaScriptStringEncode(details.Versions[i].article_content)")
+            @:setValue($("#kt_tab_pane_" + @languages[i].language_id + " .summernote"), "@HttpUtility.JavaScriptStringEncode(details.Versions[i]?.article_content)")
         }
 
         function setValue(ele, val) {
@@ -136,50 +136,67 @@
 
             let temp = [], types = [];
 
-            $("#myTabContent>div").map((idx, ele) => {
+            for (var i = 0; i < $("#myTabContent>div").length; i++) {
+                let ele = $("#myTabContent>div")[i];
                 let version_title = $(ele).find(".version_title").val();
                 let article_content = $(ele).find(".summernote").summernote('code');
                 if (version_title.trim() == "") {
-                    toastr.error("Tiêu đề ngôn ngữ chưa đầy đủ");
-                    return false;
+                    toastr.warning("Tiêu đề ngôn ngữ chưa đầy đủ");
+                    continue;
                 }
                 if ($(ele).find(".summernote").summernote('isEmpty')) {
-                    toastr.error("Nội dung ngôn ngữ chưa đầy đủ");
-                    return false;
+                    toastr.warning("Nội dung ngôn ngữ chưa đầy đủ");
+                    continue;
                 }
                 temp.push({
                     version_title: version_title,
                     article_content: article_content,
                     language_id: $(ele).data("language"),
                 });
-            });
+            }
 
             tagifyTo.value.map((val) => {
                 types.push(val.policy_type_id);
             });
 
-            $("#loading").show();
-            $.ajax({
-                url: "/ArticlePolicy/Edit",
-                method: "post",
-                success: function (data) {
-                    if (data.success) {
-                        location.href = "/ArticlePolicy";
-                    }
-                    else {
-                        toastr.error(data.content);
-                    }
-                    $("#loading").hide();
-                },
-                error: function () {
-                    toastr.error("Có lỗi xảy ra");
-                    $("#loading").hide();
-                },
-                dataType: "json",
-                data: {
-                    versions: temp,
-                    types: types,
-                    id: "@Request["id"]"
+            if (temp.length == 0) {
+                toastr.error("Bài đăng chưa có nội dung ngôn ngữ");
+                return false;
+            }
+
+            Swal.fire({
+                title: "Xác nhận chỉnh sửa?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Quay lại",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $("#loading").show();
+                    $.ajax({
+                        url: "/ArticlePolicy/Edit",
+                        method: "post",
+                        success: function (data) {
+                            if (data.success) {
+                                location.href = "/ArticlePolicy";
+                            }
+                            else {
+                                toastr.error(data.content);
+                            }
+                            $("#loading").hide();
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra");
+                            $("#loading").hide();
+                        },
+                        dataType: "json",
+                        data: {
+                            versions: temp,
+                            types: types,
+                            id: "@Request["id"]"
+                        }
+                    });
                 }
             });
         }
