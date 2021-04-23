@@ -15,7 +15,6 @@ namespace BLL.ModelDAL
         public List<ConferenceConditionLanguage> GetCurrentList(int language_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
-            var temp = db.Conditions.Where(x => x.policy_id == 3).ToList();
             db.Configuration.LazyLoadingEnabled = false;
             var ConferenceCriteriaLanguages = (from a in db.Policies
                                                join b in db.Conditions on a.policy_id equals b.policy_id
@@ -35,6 +34,7 @@ namespace BLL.ModelDAL
                                                select c).ToList();
             return ConferenceCriteriaLanguages;
         }
+
         public AlertModal<string> Edit(int id, string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -52,6 +52,7 @@ namespace BLL.ModelDAL
                 return new AlertModal<string>(name.Trim(), true);
             }
         }
+
         public AlertModal<string> Add(HttpPostedFileBase file, string policies, int account_id)
         {
             string content = "";
@@ -61,10 +62,11 @@ namespace BLL.ModelDAL
                 string file_drive_id = null;
                 try
                 {
-                    RequestConferencePolicyRepo policyRepo = new RequestConferencePolicyRepo();
+                    PolicyRepo policyRepo = new PolicyRepo();
 
-                    Policy oldPolicy = policyRepo.GetCurrentPolicy(db);
-                    oldPolicy.expired_date = DateTime.Now;
+                    Policy oldPolicy = policyRepo.GetCurrentPolicy(1, db);
+                    if (oldPolicy != null)
+                        oldPolicy.expired_date = DateTime.Now;
 
                     Google.Apis.Drive.v3.Data.File fileUploaded = GoogleDriveService.UploadPolicyFile(file);
                     file_drive_id = fileUploaded.Id;
