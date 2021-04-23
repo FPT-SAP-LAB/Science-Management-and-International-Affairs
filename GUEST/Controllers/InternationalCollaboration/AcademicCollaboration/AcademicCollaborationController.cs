@@ -16,7 +16,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
         private AcademicCollaborationGuestRepo guestRepo;
         private System.Resources.ResourceManager rm = Models.LanguageResource.GetResourceManager();
         // GET: AcademicCollaboration
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult Long_Term()
         {
             guestRepo = new AcademicCollaborationGuestRepo();
@@ -34,7 +34,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             return View();
         }
         [HttpPost]
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult Load_More_List_Long_Term(int count, string countrystr, string partner, string yearstr)
         {
             guestRepo = new AcademicCollaborationGuestRepo();
@@ -53,7 +53,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             return Json(data);
         }
         [HttpPost]
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult Partner_Program(int collabtype, string partner, string yearstr, string countrystr)
         {
             guestRepo = new AcademicCollaborationGuestRepo();
@@ -80,7 +80,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult FPT_Program(int collabtype, string yearstr)
         {
             guestRepo = new AcademicCollaborationGuestRepo();
@@ -101,7 +101,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
                 recordsFiltered = baseServerSideData.RecordsTotal
             }, JsonRequestBehavior.AllowGet);
         }
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult Short_Term()
         {
             guestRepo = new AcademicCollaborationGuestRepo();
@@ -118,7 +118,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             ViewBag.pagesTree = pagesTree;
             return View();
         }
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult Load_More_List_Short_Term(int count, string countrystr, string partner, string yearstr)
         {
             guestRepo = new AcademicCollaborationGuestRepo();
@@ -137,7 +137,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicCollaboration
             return Json(data);
         }
         [HttpPost]
-        [Auther(RightID = "14")]
+        //[Auther(RightID = "14")]
         public ActionResult Procedure_List(int direction, string title)
         {
             guestRepo = new AcademicCollaborationGuestRepo();
