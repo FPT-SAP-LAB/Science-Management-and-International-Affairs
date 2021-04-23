@@ -1,12 +1,10 @@
-﻿using ENTITIES.CustomModels;
-using ENTITIES;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using ADMIN.Support;
 using BLL.Admin;
-using ADMIN.Support;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using System;
+using System.Web.Mvc;
 
 namespace ADMIN.Controllers
 {

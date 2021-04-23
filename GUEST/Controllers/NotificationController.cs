@@ -1,5 +1,6 @@
 ﻿using BLL.ModelDAL;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using GUEST.Models;
 using System;
 using System.Collections.Generic;

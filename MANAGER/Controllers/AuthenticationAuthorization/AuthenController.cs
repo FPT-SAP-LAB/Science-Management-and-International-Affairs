@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using BLL.Authen;
-using Google.Apis.Auth;
+﻿using BLL.Authen;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Mvc;
 namespace MANAGER.Controllers.AuthenticationAuthorization
 {
     public class AuthenController : Controller
