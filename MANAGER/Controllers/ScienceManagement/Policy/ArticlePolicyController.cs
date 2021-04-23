@@ -39,7 +39,9 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
 
         public ActionResult Detail(int id)
         {
-            ViewBag.detail = DetailRepo.Detail(id, 1);
+            int.TryParse(Request["language_id"], out int language_id);
+            language_id = language_id == 0 ? 1 : language_id;
+            ViewBag.detail = DetailRepo.Detail(id, language_id);
             return View();
         }
 
