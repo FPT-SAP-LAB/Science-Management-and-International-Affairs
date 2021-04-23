@@ -1,18 +1,15 @@
-﻿using System;
+﻿using BLL.ScienceManagement.Researcher;
+using BLL.ScienceManagement.ResearcherListRepo;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using GUEST.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using User.Models;
-using ENTITIES;
-using BLL.ScienceManagement.ConferenceSponsor;
-using GUEST.Models;
-using System.Collections;
-using BLL.ScienceManagement.Researcher;
-using BLL.ScienceManagement.ResearcherListRepo;
-using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.ScienceManagement.Researcher;
-using Newtonsoft.Json.Linq;
 
 namespace GUEST.Controllers.ScienceManagement.Researchers
 {

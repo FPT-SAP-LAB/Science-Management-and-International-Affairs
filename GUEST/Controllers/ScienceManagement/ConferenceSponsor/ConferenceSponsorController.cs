@@ -2,6 +2,7 @@
 using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using GUEST.Models;

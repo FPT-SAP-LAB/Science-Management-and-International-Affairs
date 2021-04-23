@@ -1,11 +1,10 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.InternationalCollaboration.Dashboard
 {

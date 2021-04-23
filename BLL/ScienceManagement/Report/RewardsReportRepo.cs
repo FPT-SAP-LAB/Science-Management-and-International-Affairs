@@ -1,15 +1,12 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
-using System.Data.Entity.SqlServer;
 
 namespace BLL.ScienceManagement.Report
 {

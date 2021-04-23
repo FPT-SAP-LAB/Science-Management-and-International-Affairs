@@ -1,6 +1,6 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using OfficeOpenXml;
 using System;
@@ -9,8 +9,6 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 

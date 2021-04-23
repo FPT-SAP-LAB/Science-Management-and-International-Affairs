@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 
-namespace ENTITIES.CustomModels
+namespace ENTITIES.CustomModels.Datatable
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public class ResultDatatable<T>

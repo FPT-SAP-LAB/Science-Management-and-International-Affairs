@@ -1,12 +1,9 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 namespace UnitTest.InternationalCollaboration.Collaboration.Partner
 {
     [TestFixture]
