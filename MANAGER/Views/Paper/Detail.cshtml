@@ -310,7 +310,7 @@
                     <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn_rewardauthor">Xác nhận thưởng tác giả</button>
                     <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_rewardauthor">Yêu cầu chỉnh sửa thưởng tác giả</button>
                 }
-                else
+                else if (ViewBag.paper.status_id == 4)
                 {
                     <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
                 }
@@ -375,7 +375,7 @@
             $("#paper_type").val("@ViewBag.paper.paper_type_id");
 
             var status = "@ViewBag.paper.status_id";
-            if (status == "4") {
+            if (status == "5") {
                 $("#totalreward").prop("disabled", true);
                 $(".edit-author-reward").prop('disabled', true);
             }
