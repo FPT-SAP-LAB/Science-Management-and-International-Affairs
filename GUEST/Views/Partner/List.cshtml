@@ -14,6 +14,9 @@
     #partner_table_wrapper {
         overflow-x: auto;
     }
+    .pointer {
+        cursor: pointer;
+    }
 </style>
 <div class="card card-custom">
     <div class="card-body p-0">
@@ -71,7 +74,7 @@
                         </table>
                     </div>
                     <div class="row justify-content-center">
-                        <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold px-6" style="display:none">@rm.GetString("LoadMore")</a>
+                        <a id="btn-example-load-more" class="btn btn-sm btn-light-primary font-weight-bold" style="display:none">@rm.GetString("LoadMore")</a>
                     </div>
                 </div>
             </div>
@@ -105,7 +108,18 @@
                 $(this).find('td').eq(4).html('<a href="#' + data + '">' + data + '</a>')
             })
         }
+
         $(document).ready(function () {
+            var pre = new LoaderBtn($("#btn-example-load-more"));
+
+            $('#btn-example-load-more').on('click', function () {
+                // Load more data
+                pre.startLoading();
+                datatable.page.loadMore();
+                pre.stopLoading()
+
+            });
+
             var datatable = $('#partner_table').DataTable({
                 searching: false,
                 dom: 'frt',
@@ -169,7 +183,7 @@
                             if (data == null || data.trim() == "") {
                                 return "";
                             } else {
-                                return '<a onclick="open_link(`'+data+'`)"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
+                                return '<a class="pointer" onclick="open_link(`'+data+'`)"><span class="svg-icon svg-icon-dark svg-icon-md"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-02-01-052524/theme/html/demo1/dist/../src/media/svg/icons/Design/Edit.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M13.544 10.456a4.368 4.368 0 0 0-6.176 0l-3.089 3.088a4.367 4.367 0 1 0 6.177 6.177L12 18.177m-1.544-4.633a4.368 4.368 0 0 0 6.177 0l3.088-3.088a4.368 4.368 0 0 0-6.177-6.177L12 5.823" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg><!--end::Svg Icon--></span></a>';
                             }
                         }
                     },
@@ -194,10 +208,6 @@
             });
 
             //Handle click on "Load more" button
-            $('#btn-example-load-more').on('click', function () {
-                // Load more data
-                datatable.page.loadMore();
-            });
 
             $('#search_btn').click(function () {
                 datatable.ajax.reload();
