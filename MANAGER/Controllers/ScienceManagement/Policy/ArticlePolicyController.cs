@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
+namespace MANAGER.Controllers.ScienceManagement.Policy
 {
     public class ArticlePolicyController : Controller
     {

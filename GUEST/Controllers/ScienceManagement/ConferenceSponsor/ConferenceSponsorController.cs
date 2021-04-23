@@ -26,7 +26,7 @@ namespace GUEST.Controllers
         readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
         readonly FormalityLanguageRepo formalityLanguageRepo = new FormalityLanguageRepo();
         readonly ConferenceCriteriaLanguageRepo criteriaLanguageRepo = new ConferenceCriteriaLanguageRepo();
-        readonly RequestConferencePolicyRepo policyRepo = new RequestConferencePolicyRepo();
+        readonly PolicyRepo policyRepo = new PolicyRepo();
         readonly OfficeRepo officeRepo = new OfficeRepo();
         readonly TitleLanguageRepo titleRepo = new TitleLanguageRepo();
 
@@ -68,7 +68,7 @@ namespace GUEST.Controllers
             ViewBag.SpecializationLanguages = specializationLanguageRepo.GetList(language_id);
             ViewBag.FormalityLanguages = formalityLanguageRepo.GetList(language_id);
             ViewBag.ConferenceCriteriaLanguages = criteriaLanguageRepo.GetCurrentList(language_id);
-            ViewBag.Link = policyRepo.GetCurrentLink();
+            ViewBag.Link = policyRepo.GetCurrentLink(1);
             ViewBag.Offices = officeRepo.GetList();
             ViewBag.TitleLanguages = titleRepo.GetList(language_id);
             return View();
@@ -93,7 +93,7 @@ namespace GUEST.Controllers
             ViewBag.SpecializationLanguages = specializationLanguageRepo.GetList(language_id);
             ViewBag.FormalityLanguages = formalityLanguageRepo.GetList(language_id);
             ViewBag.ConferenceCriteriaLanguages = criteriaLanguageRepo.GetCurrentList(language_id);
-            ViewBag.Link = policyRepo.GetCurrentLink();
+            ViewBag.Link = policyRepo.GetCurrentLink(1);
             ViewBag.Offices = officeRepo.GetList();
             ViewBag.TitleLanguages = titleRepo.GetList(language_id);
             return View();
