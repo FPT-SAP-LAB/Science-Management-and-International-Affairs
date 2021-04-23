@@ -245,6 +245,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ScienceManagement\ArticlePolicy\ArticlePolicyController.cs" />
+    <Compile Include="Models\HTMLHelper.cs" />
     <Compile Include="NotiHub.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
@@ -2416,7 +2417,7 @@
     <Content Include="Content\demo_partner_detail_guest.jpg" />
     <Content Include="Content\Picture1.jpg" />
     <Content Include="Content\Picture2.jpg" />
-    <Content Include="Content\Picture3.jpg" />
+    <Content Include="Content\assets\plugins\Picture3.jpg" />
     <Content Include="Content\Picture4.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -2554,6 +2555,7 @@
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
     <Folder Include="Controllers\InternationalCollaboration\Scholarship\" />
     <Folder Include="Views\Biography\" />
+    <Folder Include="Views\HTMLHelper\" />
     <Folder Include="Views\InternationalCollaboration\AcademicActivity\" />
     <Folder Include="Views\InternationalCollaboration\AcademicCollaboration\" />
     <Folder Include="Views\InternationalCollaboration\Collaboration\Partner\" />

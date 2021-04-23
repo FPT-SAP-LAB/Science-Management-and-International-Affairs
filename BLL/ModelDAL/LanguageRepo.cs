@@ -1,5 +1,4 @@
 ﻿using ENTITIES;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,7 @@ namespace BLL.ModelDAL
         }
         public static List<Language> GetLanguages(ScienceAndInternationalAffairsEntities db)
         {
-            return db.Languages.ToList();
+            return db.Languages.OrderBy(x => x.language_id).ToList();
         }
     }
 }

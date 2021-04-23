@@ -27,9 +27,11 @@
     }
 
     .item-picture {
-        height: 200px;
         width: 100%;
+        height: 100%;
+        max-height: 230px;
         border-radius: 5%;
+        border: 1px solid;
     }
 
     .nav-link-custom {
@@ -205,11 +207,12 @@
                                 temp2 = `<img src="../Content/assets/media/custom-image/logo_partner.png" class="item-picture" />`;
                             }
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" data-toggle="tooltip" data-theme="dark" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
                                             `+ temp2 + `
-                                            <label>
+                                           <span>
+                        <i class="flaticon-add-label-button icon-md text-success"></i>
                                                 `+ item.program_name + `
-                                            </label>
+                                            </span>
                                         </a>
                                     </div>`;
                         });
@@ -251,11 +254,12 @@
                                 temp2 = `<img src="../Content/assets/media/custom-image/logo_partner.png" class="item-picture" />`;
                             }
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" class="link-load-detail">
+                                        <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" data-toggle="tooltip" data-theme="dark" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
                                             `+ temp2 + `
-                                            <label>
+                                           <span>
+                        <i class="flaticon-add-label-button icon-md text-success"></i>
                                                 `+ item.program_name + `
-                                            </label>
+                                            </span>
                                         </a>
                                     </div>`;
                         });
@@ -293,6 +297,7 @@
                 serverSide: true,
                 searching: false,
                 lengthChange: false,
+                pageLength: 5,
                 ajax: ({
                     url: '/AcademicCollaboration/Procedure_List',
                     type: "POST",
@@ -351,6 +356,7 @@
                 serverSide: true,
                 searching: false,
                 lengthChange: false,
+                pageLength: 5,
                 ajax: ({
                     url: '/AcademicCollaboration/Procedure_List',
                     type: "POST",
@@ -408,6 +414,7 @@
                 serverSide: true,
                 searching: false,
                 lengthChange: false,
+                pageLength: 5,
                 ajax: ({
                     url: '/AcademicCollaboration/Partner_Program',
                     type: "POST",
@@ -480,6 +487,7 @@
                 serverSide: true,
                 searching: false,
                 lengthChange: false,
+                pageLength: 5,
                 ajax: ({
                     url: '/AcademicCollaboration/FPT_Program',
                     type: "POST",

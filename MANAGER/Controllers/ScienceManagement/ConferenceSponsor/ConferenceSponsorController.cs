@@ -1,10 +1,10 @@
 ﻿using BLL.ModelDAL;
 using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using MANAGER.Models;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
@@ -25,21 +25,21 @@ namespace MANAGER.Controllers
             ViewBag.title = "LỊCH SỬ ĐỀ NGHỊ";
             return View();
         }
-        public JsonResult List()
+
+        [AjaxOnly, HttpPost]
+        public JsonResult List(ConferenceSearch search)
         {
             IndexRepos = new ConferenceSponsorIndexRepo();
             BaseDatatable datatable = new BaseDatatable(Request);
-            string search_paper = Request["search_paper"];
-            string search_conference = Request["search_conference"];
-            int.TryParse(Request["search_status"], out int search_status);
             bool.TryParse(Request["is_history"], out bool is_history);
             BaseServerSideData<ConferenceIndex> output;
             if (is_history)
-                output = IndexRepos.GetHistoryPage(datatable, search_paper, search_conference);
+                output = IndexRepos.GetHistoryPage(datatable, search.SearchPaper, search.SearchConference);
             else
-                output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status);
-            return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+                output = IndexRepos.GetIndexPage(datatable, search);
+            return Json(new ResultDatatable<ConferenceIndex>(output, Request));
         }
+
         public ActionResult Detail(int id)
         {
             QsUniversityRepo qsUniversityRepo = new QsUniversityRepo();

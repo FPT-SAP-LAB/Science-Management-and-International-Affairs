@@ -1,16 +1,13 @@
-﻿using MANAGER.Support;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Report;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ENTITIES;
-using BLL.ScienceManagement.Report;
-using ENTITIES.CustomModels.ScienceManagement.Report;
-using ENTITIES.CustomModels;
-using System.Globalization;
-using BLL.ModelDAL;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 
 namespace MANAGER.Controllers.ScienceManagement.Reports
 {
@@ -158,7 +155,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 {
                     data.Data[i].rowNum = datatable.Start + 1 + i;
                     data.Data[i].paperAward = data.Data[i].paperAward == "" ? "0" : data.Data[i].paperAward;
-                    data.Data[i].conferenceAward = data.Data[i].conferenceAward == "" ? "0" : data.Data[i].conferenceAward;
+                    data.Data[i].inventionAmount = data.Data[i].inventionAmount == "" ? "0" : data.Data[i].inventionAmount;
                     data.Data[i].CitationAward = data.Data[i].CitationAward == "" ? "0" : data.Data[i].CitationAward;
                 }
                 return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);

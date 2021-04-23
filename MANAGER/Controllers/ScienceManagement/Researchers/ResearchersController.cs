@@ -1,16 +1,15 @@
-﻿using BLL.ScienceManagement.Researcher;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Researcher;
 using BLL.ScienceManagement.ResearcherListRepo;
 using ENTITIES;
 using ENTITIES.CustomModels;
-using BLL.ModelDAL;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using MANAGER.Models;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace MANAGER.Controllers.ScienceManagement.Researchers
 {

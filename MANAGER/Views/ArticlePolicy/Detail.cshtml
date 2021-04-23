@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết chính sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ENTITIES.CustomModels.ScienceManagement.ArticlePolicy.ArticlePolicyIndex article = ViewBag.detail;
+}
+
+<div class="card card-custom">
+    @if (article.Version != null)
+    {
+        <div class="card-header d-flex flex-column" style="padding: 2rem 2.25rem;">
+            <!--begin::Info-->
+            <div class="d-flex align-items-center">
+                <span class="text-muted font-weight-bold font-size-lg flex-grow-1">
+                    @article.Version.publish_time.ToString("dd/MM/yyyy");
+                </span>
+            </div>
+            <!--end::Info-->
+            <!--begin::Link-->
+            <p class="text-dark font-weight-bolder font-size-h4">
+                @article.Version.version_title
+            </p>
+            <!--end::Link-->
+        </div>
+    }
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.Raw(article.Version == null ? "Chưa có nội dung cho ngôn ngữ này" : article.Version.article_content)
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        @foreach (var tag in article.Types)
+        {
+            <a href="#" class="text-muted label label-lg label-rounded label-pill label-inline" style="width: auto;padding: 0 10px;">#@tag</a>
+        }
+    </div>
+</div>
+
+<!--begin::Sticky Toolbar-->
+<ul class="sticky-toolbar nav flex-column pl-2 pr-2 pt-3 pb-3 mt-4">
+    <!--begin::Item-->
+    <li class="nav-item mb-2" data-toggle="tooltip" title="Tiếng việt" data-placement="right">
+        <a onclick="changeLanguage(1)" class="btn btn-sm btn-icon">
+            <img src="~/Content/assets/media/svg/flags/220-vietnam.svg" />
+        </a>
+    </li>
+    <!--end::Item-->
+    <!--begin::Item-->
+    <li class="nav-item mb-2" data-toggle="tooltip" title="Tiếng anh" data-placement="left">
+        <a onclick="changeLanguage(2)" class="btn btn-sm btn-icon">
+            <img src="~/Content/assets/media/svg/flags/226-united-states.svg" />
+        </a>
+    </li>
+    <!--end::Item-->
+</ul>
+<!--end::Sticky Toolbar-->
+
+@section Scripts {
+    <script>
+        var article_id = "@(Request["id"])"
+        function changeLanguage(language_id) {
+            location.href = "/ArticlePolicy/Detail?id=" + article_id + "&language_id=" + language_id
+        }
+    </script>
+}

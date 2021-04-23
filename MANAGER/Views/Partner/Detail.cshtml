@@ -196,7 +196,7 @@
             var id = @ViewBag.partnerArticle.partner_id;
             var form_data = new FormData();
 
-            var partner_name = $('#partner_name').val()
+            var partner_name = $('#partner_name').val().trim()
             var partner_language_type = $('#partner_language_type').val()
             var country_id = $('#partner_nation').val()
             var website = $('#partner_website').val()
@@ -272,7 +272,7 @@
                             window.location.href = '@Url.Action("List", "Partner")';
                         }
                         toastr.clear()
-                        toastr.success('Thêm thành công<br />Ấn để quay lại danh sách<br />');
+                        toastr.success('Cập nhật thành công<br />Ấn để quay lại danh sách<br />');
                         save_loader.stopLoading()
                     } else {
                         toastr.clear()

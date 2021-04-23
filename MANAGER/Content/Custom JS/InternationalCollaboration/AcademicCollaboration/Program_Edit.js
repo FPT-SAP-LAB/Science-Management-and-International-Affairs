@@ -103,21 +103,23 @@ $('.edit_program_btn').click(function () {
                 $('.modal-edit-program input').val('');
                 $('.modal-edit-program select').val('').trigger('change');
                 $('.modal-edit-program .program_language').val('1').trigger('change');
-                $('#edit_summernote_going').summernote('reset');
-                $('#edit_summernote_coming').summernote('reset');
                 $('.modal-edit-program').modal('hide')
 
                 save_loader.stopLoading()
                 if (direction == 1 && collab_type == 1) {
+                    $('#edit_summernote_going').summernote('reset');
                     $('#program_going_table').DataTable().ajax.reload()
                 }
                 if (direction == 1 && collab_type == 2) {
+                    $('#edit_summernote_going').summernote('reset');
                     $('#collab_program_going_table').DataTable().ajax.reload()
                 }
                 if (direction == 2 && collab_type == 1) {
+                    $('#edit_summernote_coming').summernote('reset');
                     $('#program_coming_table').DataTable().ajax.reload()
                 }
                 if (direction == 2 && collab_type == 2) {
+                    $('#edit_summernote_coming').summernote('reset');
                     $('#collab_program_coming_table').DataTable().ajax.reload()
                 }
             }

@@ -1,9 +1,6 @@
 ﻿using BLL.ScienceManagement.ArticlePolicy;
 using GUEST.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using User.Models;
 
@@ -21,7 +18,7 @@ namespace GUEST.Controllers.ScienceManagement.ArticlePolicy
         public ActionResult Index()
         {
             ViewBag.pagesTree = pagesTree;
-            ViewBag.items = IndexRepo.ListGuest(LanguageResource.GetCurrentLanguageID());
+            ViewBag.items = IndexRepo.List(LanguageResource.GetCurrentLanguageID());
             return View();
         }
 

@@ -148,60 +148,74 @@ class AuthorInfoView {
 }
 //////////////////////////////////////////////////////////////////
 $("#add_author_save").click(function () {
-    for (var i = 0; i < people.length; i++) {
-        if (people[i].email == $("#add_author_mail").val()) {
-            toastr.error("Đã có tác giả này");
-            return false;
+    if (!validateNonEmptyField(["#ckfe", "#add_author_msnv", "#add_author_name",
+        "#add_author_title", "#add_author_contractType", "#add_author_cmnd",
+        "#add_author_cmnd_link", "#add_author_tax", "#add_author_bank", "#add_author_accno",
+        "#add_author_reward", "#add_author_note", "#add_author_mail","#add_author_mail"])) {
+        return false
+    } else {
+        for (var i = 0; i < people.length; i++) {
+            if (people[i].email == $("#add_author_mail").val()) {
+                toastr.error("Đã có tác giả này");
+                return false;
+            }
         }
+        ckfe = $("#ckfe").val()
+        add_author_workplace = $("#ckfe").val()
+        add_author_msnv = $("#add_author_msnv").val()
+        add_author_name = $("#add_author_name").val()
+        add_author_title = $("#add_author_title option:selected").text()
+        add_author_contractType = $("#add_author_contractType option:selected").text()
+        add_author_cmnd = $("#add_author_cmnd").val()
+        add_author_cmnd_link = $("#add_author_cmnd_link").val()
+        add_author_tax = $("#add_author_tax").val()
+        add_author_bank = $("#add_author_bank").val()
+        add_author_accno = $("#add_author_accno").val()
+        add_author_reward = $("#add_author_reward").val()
+        add_author_note = $("#add_author_note").val()
+        add_author_email = $("#add_author_mail").val()
+        add_author_isReseacher = $('#add_author_isReseacher').is(':checked')
+        id = new Date().getTime()
+        au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
+            add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
+            add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id, add_author_cmnd_link)
+        $("#authors-info-container").append(au.getHTML());
+        var AddAuthor = {
+            name: add_author_name,
+            email: add_author_email,
+            bank_number: add_author_accno,
+            tax_code: add_author_tax,
+            bank_branch: add_author_bank,
+            identification_number: add_author_cmnd,
+            mssv_msnv: add_author_msnv,
+            office_id: $("#ckfe option:selected").attr("name"),
+            contract_id: $("#add_author_contractType").val(),
+            title_id: $("#add_author_title").val(),
+            people_id: $("#add_author_msnv").attr("name"),
+            temp_id: id,
+            office_abbreviation: $("#ckfe option:selected").val(),
+            is_reseacher: add_author_isReseacher,
+            identification_file_link: $("#add_author_cmnd_link").val(),
+        }
+        people.push(AddAuthor);
+        addOption();
+        var inputs = $(".inputAuthor");
+        for (var i = 0; i < inputs.length; i++) {
+            $(inputs[i]).val("");
+        }
+        $('#add_author_title').val(null).trigger('change');
+        $('#add_author_contractType').val(null).trigger('change');
+        $('#add_author_msnv').val(null).trigger('change');
+        $("#add_author_isReseacher").prop("checked", false);
+        $(".modal").modal('hide')
     }
-    ckfe = $("#ckfe").val()
-    add_author_workplace = $("#ckfe").val()
-    add_author_msnv = $("#add_author_msnv").val()
-    add_author_name = $("#add_author_name").val()
-    add_author_title = $("#add_author_title option:selected").text()
-    add_author_contractType = $("#add_author_contractType option:selected").text()
-    add_author_cmnd = $("#add_author_cmnd").val()
-    add_author_cmnd_link = $("#add_author_cmnd_link").val()
-    add_author_tax = $("#add_author_tax").val()
-    add_author_bank = $("#add_author_bank").val()
-    add_author_accno = $("#add_author_accno").val()
-    add_author_reward = $("#add_author_reward").val()
-    add_author_note = $("#add_author_note").val()
-    add_author_email = $("#add_author_mail").val()
-    add_author_isReseacher = $('#add_author_isReseacher').is(':checked')
-    id = new Date().getTime()
-    au = new AuthorInfoView(add_author_workplace, add_author_msnv, add_author_name,
-        add_author_title, add_author_contractType, add_author_cmnd, add_author_tax,
-        add_author_bank, add_author_accno, add_author_reward, add_author_note, add_author_email, add_author_isReseacher, id, add_author_cmnd_link)
-    $("#authors-info-container").append(au.getHTML());
-    var AddAuthor = {
-        name: add_author_name,
-        email: add_author_email,
-        bank_number: add_author_accno,
-        tax_code: add_author_tax,
-        bank_branch: add_author_bank,
-        identification_number: add_author_cmnd,
-        mssv_msnv: add_author_msnv,
-        office_id: $("#ckfe option:selected").attr("name"),
-        contract_id: $("#add_author_contractType").val(),
-        title_id: $("#add_author_title").val(),
-        people_id: $("#add_author_msnv").attr("name"),
-        temp_id: id,
-        office_abbreviation: $("#ckfe option:selected").val(),
-        is_reseacher: add_author_isReseacher,
-        identification_file_link: $("#add_author_cmnd_link").val(),
-    }
-    people.push(AddAuthor);
-    addOption();
-    var inputs = $(".inputAuthor");
-    for (var i = 0; i < inputs.length; i++) {
-        $(inputs[i]).val("");
-    }
-    $('#add_author_title').val(null).trigger('change');
-    $('#add_author_contractType').val(null).trigger('change');
-    $('#add_author_msnv').val(null).trigger('change');
-    $("#add_author_isReseacher").prop("checked", false);
 });
+
+$('.modal').on('hidden.bs.modal', function () {
+    $(".modal").find(".is-invalid").removeClass("is-invalid")
+    $(".modal").find(".select2-selection--single").css("border-color", "#E4E6EF")
+});
+
 $("#add_author_save_edit").click(function () {
     people[temp_index_edit].office_abbreviation = $("#ckfe_edit").val();
     people[temp_index_edit].office_id = $("#ckfe_edit option:selected").attr("name");

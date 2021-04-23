@@ -1,0 +1,204 @@
+﻿@using ENTITIES.CustomModels.ScienceManagement.ArticlePolicy;
+@{
+    ViewBag.Title = "CHỈNH SỬA THÔNG TIN CHÍNH SÁCH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ENTITIES.Language> languages = ViewBag.languages;
+    ArticlePolicyEdit details = ViewBag.detail;
+}
+
+<div class="card card-custom gutter-b example example-compact">
+    <form class="form">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <ul class="nav nav-tabs ">
+                        @for (int i = 0; i < languages.Count; i++)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(i == 0 ? "active" : "")" data-toggle="tab"
+                                   href="#kt_tab_pane_@(languages[i].language_id)">@(languages[i].language_name)</a>
+                            </li>
+                        }
+                    </ul>
+                    <div class="tab-content mt-5" id="myTabContent">
+                        @for (int i = 0; i < languages.Count; i++)
+                        {
+                            <div class="tab-pane fade @(i == 0 ? "show active" : "")" id="kt_tab_pane_@(languages[i].language_id)" data-language="@(languages[i].language_id)" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>Tiêu đề <span style='color:red'>*</span>:</label>
+                                        <input type="text" class="form-control version_title" placeholder="Tiêu đề bài đăng" value="@(details.Versions[i]?.version_title)" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <label>Nội dung <span style='color:red'>*</span>:</label>
+                                        <div class="summernote"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label>Loại chính sách <span style='color:red'>*</span>:</label>
+                    <input id="multiple-dropdown" class="form-control tagify" name='tags3' placeholder="Chọn các loại chính sách" />
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-6">
+                    <button onclick="submitForm()" type="button" class="btn btn-primary mr-2">Save</button>
+                    <a href="/ArticlePolicy" class="btn btn-secondary">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        var whitelist, tagifyTo, currentTypes;
+
+        whitelist = @Html.Raw(ViewBag.types);
+        if (whitelist)
+            for (var i = 0; i < whitelist.length; i++) {
+                whitelist[i].value = whitelist[i].policy_type_name;
+            }
+
+        currentTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(details.TypeLanguages));
+        if (currentTypes) {
+            currentTypes.map(x => x.value = x.policy_type_name);
+            $("#multiple-dropdown").val(JSON.stringify(currentTypes));
+        }
+            //for (var i = 0; i < currentTypes.length; i++) {
+            //    currentTypes[i].value = currentTypes[i].policy_type_name;
+            //}
+
+        $('.summernote').summernote({
+            height: 400,
+            tabsize: 2
+        });
+
+        @for (int i = 0; i < languages.Count; i++)
+        {
+            @:setValue($("#kt_tab_pane_" + @languages[i].language_id + " .summernote"), "@HttpUtility.JavaScriptStringEncode(details.Versions[i]?.article_content)")
+        }
+
+        function setValue(ele, val) {
+            $(ele).summernote("code", val);
+        }
+
+        // Init autocompletes
+        var toEl = document.getElementById('multiple-dropdown');
+        tagifyTo = new Tagify(toEl, {
+            delimiters: ", ", // add new tags when a comma or a space character is entered
+            maxTags: 10,
+            keepInvalidTags: false, // do not remove invalid tags (but keep them marked as invalid)
+            whitelist: whitelist,
+            templates: {
+                dropdownItem: function (tagData) {
+                    try {
+                        var html = '';
+                        html += '<div class="tagify__dropdown__item">';
+                        html += '   <div class="d-flex align-items-center">';
+                        html += '       <div class="d-flex flex-column">';
+                        html += '           <a href="#" class="text-dark-75 text-hover-primary font-weight-bold">' + (tagData.value ? tagData.value : '') + '</a>';
+                        html += '       </div>';
+                        html += '   </div>';
+                        html += '</div>';
+                        return html;
+                    } catch (err) { }
+                }
+            },
+            transformTag: function (tagData) {
+                tagData.class = 'tagify__tag tagify__tag--primary';
+            },
+            dropdown: {
+                classname: "color-blue",
+                enabled: 0,
+                closeOnSelect: true,
+            }
+        });
+
+        $(".tagify__input").keydown(function (e) {
+            e.preventDefault()
+        })
+
+        function submitForm() {
+            if (tagifyTo.value.length == 0) {
+                toastr.error("Chưa chọn loại chính sách");
+                return false;
+            }
+
+            let temp = [], types = [];
+
+            for (var i = 0; i < $("#myTabContent>div").length; i++) {
+                let ele = $("#myTabContent>div")[i];
+                let version_title = $(ele).find(".version_title").val();
+                let article_content = $(ele).find(".summernote").summernote('code');
+                if (version_title.trim() == "") {
+                    toastr.warning("Tiêu đề ngôn ngữ chưa đầy đủ");
+                    continue;
+                }
+                if ($(ele).find(".summernote").summernote('isEmpty')) {
+                    toastr.warning("Nội dung ngôn ngữ chưa đầy đủ");
+                    continue;
+                }
+                temp.push({
+                    version_title: version_title,
+                    article_content: article_content,
+                    language_id: $(ele).data("language"),
+                });
+            }
+
+            tagifyTo.value.map((val) => {
+                types.push(val.policy_type_id);
+            });
+
+            if (temp.length == 0) {
+                toastr.error("Bài đăng chưa có nội dung ngôn ngữ");
+                return false;
+            }
+
+            Swal.fire({
+                title: "Xác nhận chỉnh sửa?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Quay lại",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $("#loading").show();
+                    $.ajax({
+                        url: "/ArticlePolicy/Edit",
+                        method: "post",
+                        success: function (data) {
+                            if (data.success) {
+                                location.href = "/ArticlePolicy";
+                            }
+                            else {
+                                toastr.error(data.content);
+                            }
+                            $("#loading").hide();
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra");
+                            $("#loading").hide();
+                        },
+                        dataType: "json",
+                        data: {
+                            versions: temp,
+                            types: types,
+                            id: "@Request["id"]"
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,13 +1,11 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using BLL.ModelDAL;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using GUEST.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using User.Models;
 

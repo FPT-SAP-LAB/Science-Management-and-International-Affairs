@@ -299,7 +299,7 @@
     <Compile Include="Controllers\InternationalCollaboration\MasterData\SpecializationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Report\Report_ICController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
-    <Compile Include="Controllers\ScienceManagement\ArticlePolicy\ArticlePolicyController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Policy\ArticlePolicyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConditionManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
@@ -319,6 +319,7 @@
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\UpdateJournalController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Policy\PolicyTypeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\BiographyController.cs" />
@@ -504,6 +505,7 @@
     <Content Include="Content\assets\js\pages\features\miscellaneous\sweetalert2.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\toastr.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\treeview.js" />
+    <Content Include="Content\Custom JS\ScienceManagement\Reports\excelDownload.js" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-bio.js" />
     <Content Include="Content\assets\js\pages\my-script.js" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-change-avt.js" />
@@ -2533,6 +2535,10 @@
     <Content Include="Views\ArticlePolicy\Index.cshtml" />
     <Content Include="Views\UpdateJournal\List.cshtml" />
     <Content Include="Views\ArticlePolicy\Add.cshtml" />
+    <Content Include="Views\Paper\waitVerify.cshtml" />
+    <Content Include="Views\ArticlePolicy\Detail.cshtml" />
+    <Content Include="Views\PolicyType\Index.cshtml" />
+    <Content Include="Views\ArticlePolicy\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
