@@ -1,19 +1,18 @@
-﻿using System;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.ConferenceSponsor;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement.Conference;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using GUEST.Models;
+using GUEST.Support;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using User.Models;
-using BLL.ScienceManagement.ConferenceSponsor;
-using GUEST.Models;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.ScienceManagement.Conference;
-using ENTITIES.CustomModels.ScienceManagement.Researcher;
-using BLL.ModelDAL;
-using GUEST.Support;
 
 namespace GUEST.Controllers
 {
@@ -42,21 +41,17 @@ namespace GUEST.Controllers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
-        [AjaxOnly]
-        public JsonResult List()
+
+        [AjaxOnly, HttpPost]
+        public JsonResult List(ConferenceSearch search)
         {
             BaseDatatable datatable = new BaseDatatable(Request);
-            string search_paper = Request["search_paper"];
-            string search_conference = Request["search_conference"];
-            int.TryParse(Request["search_status"], out int search_status);
-            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search_paper, search_conference, search_status, CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
-            for (int i = 0; i < output.Data.Count; i++)
-            {
-                output.Data[i].RowNumber = datatable.Start + 1 + i;
-                output.Data[i].CreatedDate = output.Data[i].Date.ToString("dd/MM/yyyy");
-            }
-            return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search,
+                CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
+
+            return Json(new ResultDatatable<ConferenceIndex>(output, Request));
         }
+
         [HttpGet]
         public ActionResult Add()
         {

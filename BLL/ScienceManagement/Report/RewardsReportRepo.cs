@@ -1,15 +1,12 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
-using System.Data.Entity.SqlServer;
 
 namespace BLL.ScienceManagement.Report
 {
@@ -207,6 +204,7 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
+
         //public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         //{
         //    var data = (from a in db.BaseRequests
@@ -217,7 +215,7 @@ namespace BLL.ScienceManagement.Report
         //                {
         //                    author_name = (from a1 in db.Authors
         //                                   join b1 in db.RequestCitations on a1.people_id equals b1.people_id
-        //                                   where b1.request_id==b.request_id
+        //                                   where b1.request_id == b.request_id
         //                                   select a1.name).FirstOrDefault(),
         //                    decision_number = b.
         //                });

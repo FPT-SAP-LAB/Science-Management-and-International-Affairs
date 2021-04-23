@@ -234,8 +234,8 @@
     </Compile>
     <Compile Include="CustomModels\AlertModal.cs" />
     <Compile Include="CustomModels\Authen\Gmail.cs" />
-    <Compile Include="CustomModels\BaseDatatable.cs" />
-    <Compile Include="CustomModels\BaseServerSideData.cs" />
+    <Compile Include="CustomModels\Datatable\BaseDatatable.cs" />
+    <Compile Include="CustomModels\Datatable\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GoogleDriveService.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicActivity\ActivityPartner_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicActivity\SaveActivityPartner.cs" />
@@ -310,10 +310,12 @@
     <Compile Include="CustomModels\InternationalCollaboration\Year.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\Notification.cs" />
+    <Compile Include="CustomModels\Datatable\ResultDatatable.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyEdit.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_1.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_2.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceSearch.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\CustomCountry.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_1.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_2.cs" />

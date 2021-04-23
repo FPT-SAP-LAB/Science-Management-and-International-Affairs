@@ -1,13 +1,10 @@
 ﻿using BLL.ModelDAL;
 using BLL.ScienceManagement.ArticlePolicy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using ENTITIES;
 using MANAGER.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
 {
@@ -42,7 +39,9 @@ namespace MANAGER.Controllers.ScienceManagement.ArticlePolicy
 
         public ActionResult Detail(int id)
         {
-            ViewBag.detail = DetailRepo.Detail(id, 1);
+            int.TryParse(Request["language_id"], out int language_id);
+            language_id = language_id == 0 ? 1 : language_id;
+            ViewBag.detail = DetailRepo.Detail(id, language_id);
             return View();
         }
 

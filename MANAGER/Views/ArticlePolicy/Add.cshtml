@@ -143,49 +143,66 @@
 
             let temp = [], types = [];
 
-            $("#myTabContent>div").map((idx, ele) => {
+            for (var i = 0; i < $("#myTabContent>div").length; i++) {
+                let ele = $("#myTabContent>div")[i];
                 let version_title = $(ele).find(".version_title").val();
                 let article_content = $(ele).find(".summernote").summernote('code');
                 if (version_title.trim() == "") {
-                    toastr.error("Tiêu đề ngôn ngữ chưa đầy đủ");
-                    return false;
+                    toastr.warning("Tiêu đề ngôn ngữ chưa đầy đủ");
+                    continue;
                 }
                 if ($(ele).find(".summernote").summernote('isEmpty')) {
-                    toastr.error("Nội dung ngôn ngữ chưa đầy đủ");
-                    return false;
+                    toastr.warning("Nội dung ngôn ngữ chưa đầy đủ");
+                    continue;
                 }
                 temp.push({
                     version_title: version_title,
                     article_content: article_content,
                     language_id: $(ele).data("language"),
                 });
-            });
+            }
 
             tagifyTo.value.map((val) => {
                 types.push(val.policy_type_id);
             });
 
-            $("#loading").show();
-            $.ajax({
-                url: "/ArticlePolicy/Add",
-                method: "post",
-                success: function (data) {
-                    if (data.success) {
-                        location.href = "/ArticlePolicy";
-                    }
-                    else {
-                        toastr.error(data.content);
-                    }
-                    $("#loading").hide();
-                },
-                error: function () {
-                    toastr.error("Có lỗi xảy ra");
-                    $("#loading").hide();
-                },
-                dataType: "json",
-                data: {
-                    versions: temp,
-                    types: types,
+            if (temp.length == 0) {
+                toastr.error("Bài đăng chưa có nội dung ngôn ngữ");
+                return false;
+            }
+
+            Swal.fire({
+                title: "Thông tin này sẽ có " + temp.length + " ngôn ngữ",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Quay lại",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    $("#loading").show();
+                    $.ajax({
+                        url: "/ArticlePolicy/Add",
+                        method: "post",
+                        success: function (data) {
+                            if (data.success) {
+                                location.href = "/ArticlePolicy";
+                            }
+                            else {
+                                toastr.error(data.content);
+                            }
+                            $("#loading").hide();
+                        },
+                        error: function () {
+                            toastr.error("Có lỗi xảy ra");
+                            $("#loading").hide();
+                        },
+                        dataType: "json",
+                        data: {
+                            versions: temp,
+                            types: types,
+                        }
+                    });
                 }
             });
         }

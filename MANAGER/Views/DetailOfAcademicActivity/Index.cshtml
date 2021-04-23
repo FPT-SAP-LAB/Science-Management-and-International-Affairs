@@ -1698,7 +1698,7 @@
                     let id = '#' + elemId;
                     let $statusBar = $(id + ' .uppy-status');
                     let $uploadedList = $(id + ' .uppy-list');
-                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_id + '"><div class="uppy-list-label">' + data.file_name + '</div><span class="uppy-list-remove" data-id="' + data.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + data.file_link +'>' + data.file_name + '</a></div><span class="uppy-list-remove" data-id="' + data.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                     //clear file content
                     $(id + ' .uppy-list').html('');
                     uppyDuTruEdit.removeFile(uppyDuTruEdit.getFiles().length == 0 ? '' : uppyDuTruEdit.getFiles()[0].id);
@@ -1739,7 +1739,7 @@
                     let id = '#' + elemId;
                     let $statusBar = $(id + ' .uppy-status');
                     let $uploadedList = $(id + ' .uppy-list');
-                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_id + '"><div class="uppy-list-label">' + data.file_name + '</div><span class="uppy-list-remove" data-id="' + data.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + data.file_link +'>' + data.file_name + '</a></div><span class="uppy-list-remove" data-id="' + data.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                     //clear file content
                     $(id + ' .uppy-list').html('');
                     uppyDieuChinhEdit.removeFile(uppyDieuChinhEdit.getFiles().length == 0 ? '' : uppyDieuChinhEdit.getFiles()[0].id);
@@ -1822,7 +1822,7 @@
                     let id = '#' + elemId;
                     let $statusBar = $(id + ' .uppy-status');
                     let $uploadedList = $(id + ' .uppy-list');
-                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_id + '"><div class="uppy-list-label">' + data.file_name + '</div><span class="uppy-list-remove" data-id="' + data.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + data.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + data.file_link +'>' + data.file_name + '</a></div><span class="uppy-list-remove" data-id="' + data.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                     //clear file content
                     $(id + ' .uppy-list').html('');
                     uppyThucTeEdit.removeFile(uppyThucTeEdit.getFiles().length == 0 ? '' : uppyThucTeEdit.getFiles()[0].id);
@@ -2201,7 +2201,7 @@
                             let id = '#' + elemId;
                             let $statusBar = $(id + ' .uppy-status');
                             let $uploadedList = $(id + ' .uppy-list');
-                            let uploadListHtml = '<div class="uppy-list-item" data-id="' + objData.file_id + '"><div class="uppy-list-label">' + objData.file_name + '</div><span class="uppy-list-remove" data-id="' + objData.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                            let uploadListHtml = '<div class="uppy-list-item" data-id="' + objData.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + objData.file_link +'>' + objData.file_name + '</a></div><span class="uppy-list-remove" data-id="' + objData.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                             //clear file content
                             $(id + ' .uppy-list').html('');
                             uppy2.removeFile(uppy2.getFiles().length == 0 ? '' : uppy2.getFiles()[0].id);
@@ -3167,6 +3167,7 @@
                     {
                         data: "expense_category_id",
                         title: "Hành động",
+                        className: "text-center text-nowrap",
                         sorting: false,
                         render: function (data, type, full, meta) {
                             return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDuTru('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDuTru('+data+')">Xóa</a>'
@@ -3267,6 +3268,7 @@
                     {
                         data: "expense_category_id",
                         title: "Hành động",
+                        className: "text-nowrap text-center",
                         sorting: false,
                         render: function (data, type, full, meta) {
                             return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiDieuChinh('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiDieuChinh('+data+')">Xóa</a>'
@@ -3367,6 +3369,7 @@
                     {
                         data: "expense_category_id",
                         title: "Hành động",
+                        className: "text-nowrap text-center",
                         sorting: false,
                         render: function (data, type, full, meta) {
                             return '<a href="javascript:;" class="btn btn-sm px-6 mr-3 btn-light-primary" onclick="editKinhPhiThucTe('+data+')">Sửa</a><a href="javascript:;" class="btn btn-sm btn-light-danger px-6" onclick="deleteKinhPhiThucTe('+data+')">Xóa</a>'

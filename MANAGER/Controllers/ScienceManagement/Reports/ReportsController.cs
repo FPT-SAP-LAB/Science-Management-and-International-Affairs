@@ -1,16 +1,13 @@
-﻿using MANAGER.Support;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Report;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ENTITIES;
-using BLL.ScienceManagement.Report;
-using ENTITIES.CustomModels.ScienceManagement.Report;
-using ENTITIES.CustomModels;
-using System.Globalization;
-using BLL.ModelDAL;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 
 namespace MANAGER.Controllers.ScienceManagement.Reports
 {

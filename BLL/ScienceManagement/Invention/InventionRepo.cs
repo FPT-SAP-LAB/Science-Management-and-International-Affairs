@@ -1,17 +1,13 @@
 ﻿using BLL.ModelDAL;
-using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.ScienceManagement.Invention
 {

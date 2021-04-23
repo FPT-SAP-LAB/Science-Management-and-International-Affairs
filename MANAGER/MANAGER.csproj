@@ -505,6 +505,7 @@
     <Content Include="Content\assets\js\pages\features\miscellaneous\sweetalert2.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\toastr.js" />
     <Content Include="Content\assets\js\pages\features\miscellaneous\treeview.js" />
+    <Content Include="Content\Custom JS\ScienceManagement\Reports\excelDownload.js" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-bio.js" />
     <Content Include="Content\assets\js\pages\my-script.js" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-change-avt.js" />

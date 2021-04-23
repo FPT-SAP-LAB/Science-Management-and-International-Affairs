@@ -1,17 +1,15 @@
-﻿using ENTITIES;
+﻿using BLL.Authen;
+using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
+using BLL.ModelDAL;
+using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
-using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
-using MANAGER.Support;
-using BLL.Authen;
-using Newtonsoft.Json;
-using BLL.ModelDAL;
-using System.IO;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 {

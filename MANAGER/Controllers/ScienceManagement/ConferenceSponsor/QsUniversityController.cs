@@ -1,6 +1,7 @@
 ﻿using BLL.ModelDAL;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using MANAGER.Models;
 using System.Web;
 using System.Web.Mvc;
