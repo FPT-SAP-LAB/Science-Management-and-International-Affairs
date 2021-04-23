@@ -1,9 +1,8 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
-using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 //using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace UnitTest.InternationalCollaboration.Collaboration

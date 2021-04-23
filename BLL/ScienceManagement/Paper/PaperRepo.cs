@@ -1,27 +1,19 @@
-﻿using Aspose.Cells;
+﻿using BLL.ModelDAL;
+using CsvHelper;
+using CsvHelper.Configuration;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
-using Microsoft.VisualBasic.FileIO;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.ComponentModel;
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-using System.Data.Entity.Validation;
-using BLL.ModelDAL;
 
 namespace BLL.ScienceManagement.Paper
 {

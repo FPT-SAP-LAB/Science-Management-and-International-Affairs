@@ -110,7 +110,7 @@
                             <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
                             <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
                         }
-                        else
+                        else if (ViewBag.status == 4)
                         {
                             <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
                         }
@@ -148,9 +148,7 @@
         });
 
         var status = "@ViewBag.status";
-        if (status == "4") {
-            $("#totalreward").prop("disabled", true);
-        } else {
+        if (status == "5") {
             $("#totalreward").prop("disabled", true);
         }
 
