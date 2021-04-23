@@ -15,7 +15,6 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOA
         [TestCase]
         public void TestMethod1()
         {
-
         }
     }
 }

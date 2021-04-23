@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace UnitTest.InternationalCollaboration.Collaboration.MOA
 {
     [TestFixture]
