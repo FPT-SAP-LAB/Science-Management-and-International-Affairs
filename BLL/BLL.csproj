@@ -216,6 +216,7 @@
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
+    <Compile Include="ModelDAL\SubscribeLanguageRepo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
