@@ -35,7 +35,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 ViewBag.listScopes = mou.GetCollaborationScopes();
                 ViewBag.listSpe = mou.GetSpecializations();
                 ViewBag.listCountry = mou.GetCountries();
-                ViewBag.noti = mou.getNoti();
+                //ViewBag.noti = mou.getNoti();
                 return View();
             }
             catch (Exception ex)

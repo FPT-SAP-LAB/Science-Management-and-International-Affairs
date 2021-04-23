@@ -1,14 +1,26 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace UnitTest.InternationalCollaboration.Collaboration.MOA
 {
-    [TestClass]
+    [TestFixture]
     public class CheckMOACodeUT
     {
-        [TestMethod]
-        public void TestMethod1()
+        [TestCase]
+        public void TestCheckMOACode1()
         {
+            //Arrange
+            //Act
+            //Assert
+            Assert.Pass();
         }
     }
 }
