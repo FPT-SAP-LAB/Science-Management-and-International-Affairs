@@ -1,11 +1,9 @@
 ﻿using BLL.ModelDAL;
 using BLL.ScienceManagement.Report;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers.ScienceManagement.Reports

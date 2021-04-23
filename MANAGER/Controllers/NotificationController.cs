@@ -1,8 +1,8 @@
 ﻿using BLL.ModelDAL;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using MANAGER.Models;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers
