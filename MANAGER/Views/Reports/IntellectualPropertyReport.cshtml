@@ -106,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="#" onclick="saveFile()" class="navi-link">
                                         <span class="navi-icon">
                                             <i class="la la-file-excel-o"></i>
                                         </span>
@@ -159,6 +159,7 @@
                     <th>Tiền Thưởng</th>
                 </tr>
             </thead>
+
         </table>
         <!--end: Datatable-->
         @{
@@ -173,7 +174,7 @@
 
             // DOM Layout settings
             dom: `<'row'<'col-sm-12'tr>>
-                                                        <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
             lengthMenu: [5, 10, 25, 50],
             bInfo: false,
@@ -243,9 +244,12 @@
                 allowClear: true
             });
         }
-                //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+        //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
         $("#search_btn").click(function () {
             table.ajax.reload()
         })
     </script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
 }
