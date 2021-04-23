@@ -106,6 +106,12 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
+        public int GetPartnerWidget()
+        {
+            db = new ScienceAndInternationalAffairsEntities();
+            return db.Partners.Where(x => x.is_deleted == false).Count();
+        }
+
         public AlertModal<string> AddPartner(List<HttpPostedFileBase> files_request, HttpPostedFileBase image, string content,
             PartnerArticle partner_article, int number_of_image, int account_id)
         {

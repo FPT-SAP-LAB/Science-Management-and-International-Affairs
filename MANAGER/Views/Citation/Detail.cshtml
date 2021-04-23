@@ -148,20 +148,11 @@
         });
 
         var status = "@ViewBag.status";
-        //if (status == "3") {
-        //    $("#editconfirm").show();
-        //    $("#editconfirm_manager").hide();
-        //} else if (status == "4") {
-        //    $("#editconfirm").hide();
-        //    $("#editconfirm_manager").show();
-        //    $("#confirmbtn").hide();
-        //    $("#totalreward").prop("disabled", true);
-        //} else {
-        //    $("#editconfirm").hide();
-        //    $("#editconfirm_manager").hide();
-        //    $("#confirmbtn").hide();
-        //    $("#totalreward").prop("disabled", true);
-        //}
+        if (status == "4") {
+            $("#totalreward").prop("disabled", true);
+        } else {
+            $("#totalreward").prop("disabled", true);
+        }
 
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();

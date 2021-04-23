@@ -8,7 +8,8 @@
         border: 0.5px solid #e7e7e7 !important;
         box-shadow: none !important;
     }
-    .report-elements{
+
+    .report-elements {
         margin-bottom: 2rem !important;
     }
 </style>
@@ -132,7 +133,7 @@
                                     Html.RenderPartial("_LoaderPanel");
                                 }
                             </div>
-                            
+
                             <!--end::Chart-->
                         </div>
                         <!--end::Body-->
@@ -384,232 +385,234 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
-        @section scripts{
-            <script>
-                "use strict";
+</div>
+@section scripts{
+    <script>
+        "use strict";
 
-                // Class definition
-                var KTWidgets = function () {
-                    // Private properties
-                    // Charts widgets
-                    var _initChartsWidget1 = function () {
-                        var element = document.getElementById("kt_charts_widget_1_chart");
+        // Class definition
+        var KTWidgets = function () {
+            // Private properties
+            // Charts widgets
+            var _initChartsWidget1 = function () {
+                var element = document.getElementById("kt_charts_widget_1_chart");
 
-                        if (!element) {
-                            return;
-                        }
-
-                        var options = {
-                            series: [{
-                                name: 'Q1',
-                                data: [44, 55, 57, 56, 61, 80, 80],
-
-                            }, {
-                                name: 'Q2',
-                                    data: [76, 85, 101, 98, 87, 80, 80]
-                            }, {
-                                name: 'Q3',
-                                    data: [76, 85, 101, 98, 87, 80, 80]
-                            }, {
-                                name: 'Q4',
-                                    data: [76, 85, 101, 98, 87, 80, 80]
-                            }, {
-                                name: 'QS500',
-                                    data: [76, 85, 101, 98, 15, 10, 50]
-                            }],
-                            chart: {
-                                type: 'bar',
-                                height: 350,
-                                toolbar: {
-                                    show: false
-                                }
-                            },
-                            plotOptions: {
-                                bar: {
-                                    horizontal: false,
-                                    columnWidth: ['50%'],
-                                    endingShape: 'rounded'
-                                },
-                            },
-                            legend: {
-                                show: true
-                            },
-                            dataLabels: {
-                                enabled: false
-                            },
-                            stroke: {
-                                show: true,
-                                width: 2,
-                                colors: ['transparent']
-                            },
-                            xaxis: {
-                                categories: ['HN', 'HCM', 'ĐN', 'CT', 'FSB', 'FPL','KHÁC'],
-                                axisBorder: {
-                                    show: false,
-                                },
-                                axisTicks: {
-                                    show: false
-                                },
-                                labels: {
-                                    style: {
-                                        colors: KTApp.getSettings()['colors']['gray']['gray-500'],
-                                        fontSize: '12px',
-                                        fontFamily: KTApp.getSettings()['font-family']
-                                    }
-                                }
-                            },
-                            yaxis: {
-                                labels: {
-                                    style: {
-                                        colors: KTApp.getSettings()['colors']['gray']['gray-500'],
-                                        fontSize: '12px',
-                                        fontFamily: KTApp.getSettings()['font-family']
-                                    }
-                                }
-                            },
-                            fill: {
-                                opacity: 1
-                            },
-                            states: {
-                                normal: {
-                                    filter: {
-                                        type: 'none',
-                                        value: 0
-                                    }
-                                },
-                                hover: {
-                                    filter: {
-                                        type: 'none',
-                                        value: 0
-                                    }
-                                },
-                                active: {
-                                    allowMultipleDataPointsSelection: false,
-                                    filter: {
-                                        type: 'none',
-                                        value: 0
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                style: {
-                                    fontSize: '12px',
-                                    fontFamily: KTApp.getSettings()['font-family']
-                                },
-                                y: {
-                                    formatter: function (val) {
-                                        return "$" + val + " thousands"
-                                    }
-                                }
-                            },
-                            colors: ['#4BB5B1', '#F1808D', '#A479F7', '#FFD786','#027FFF'],
-                            grid: {
-                                borderColor: KTApp.getSettings()['colors']['gray']['gray-200'],
-                                strokeDashArray: 4,
-                                yaxis: {
-                                    lines: {
-                                        show: true
-                                    }
-                                }
-                            }
-                        };
-
-                        var chart = new ApexCharts(element, options);
-                        chart.render();
-                        $("#kt_charts_widget_1_chart").find(".loader_panel").hide()
-                    }
-
-                    // Public methods
-                    return {
-                        init: function () {
-
-                            // Charts Widgets
-                            _initChartsWidget1();
-
-                        }
-                    }
-                }();
-
-                // Webpack support
-                if (typeof module !== 'undefined') {
-                    module.exports = KTWidgets;
+                if (!element) {
+                    return;
                 }
 
-                jQuery(document).ready(function () {
-                    KTWidgets.init();
-                });
-            </script>
-            <script src="~/Content/assets/plugins/custom/flot/flot.bundle.js"></script>
-            <script>
-                "use strict";
+                var options = {
+                    series: [{
+                        name: 'Q1',
+                        data: [44, 55, 57, 56, 61, 80, 80],
 
-                // Class definition
-                var KTFlotchartsDemo = function () {
-
-                    var demo6 = function () {
-                        // bar chart:
-                        var data = GenerateSeries(0);
-
-                        function GenerateSeries(added) {
-                            var data = [];
-                            var start = 100 + added;
-                            var end = 200 + added;
-
-                            for (var i = 1; i <= 12; i++) {
-                                var d = Math.floor(Math.random() * (end - start + 1) + start);
-                                data.push([i, d]);
-                                start++;
-                                end++;
-                            }
-
-                            return data;
+                    }, {
+                        name: 'Q2',
+                        data: [76, 85, 101, 98, 87, 80, 80]
+                    }, {
+                        name: 'Q3',
+                        data: [76, 85, 101, 98, 87, 80, 80]
+                    }, {
+                        name: 'Q4',
+                        data: [76, 85, 101, 98, 87, 80, 80]
+                    }, {
+                        name: 'QS500',
+                        data: [76, 85, 101, 98, 15, 10, 50]
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        toolbar: {
+                            show: false
                         }
-
-                        var options = {
-                            colors: [KTApp.getSettings()['colors']['theme']['base']["success"], KTApp.getSettings()['colors']['theme']['base']["primary"]],
-                            series: {
-                                bars: {
-                                    show: true
-                                }
-                            },
-                            bars: {
-                                barWidth: 0.8,
-                                lineWidth: 0, // in pixels
-                                shadowSize: 0,
-                                align: 'left'
-                            },
-
-                            grid: {
-                                tickColor: "#eee",
-                                borderColor: "#eee",
-                                borderWidth: 1
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: ['50%'],
+                            endingShape: 'rounded'
+                        },
+                    },
+                    legend: {
+                        show: true
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: ['HN', 'HCM', 'ĐN', 'CT', 'FSB', 'FPL', 'KHÁC'],
+                        axisBorder: {
+                            show: false,
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        labels: {
+                            style: {
+                                colors: KTApp.getSettings()['colors']['gray']['gray-500'],
+                                fontSize: '12px',
+                                fontFamily: KTApp.getSettings()['font-family']
                             }
-                        };
-
-                        $.plot($("#kt_flotcharts_6"), [{
-                            data: data,
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                colors: KTApp.getSettings()['colors']['gray']['gray-500'],
+                                fontSize: '12px',
+                                fontFamily: KTApp.getSettings()['font-family']
+                            }
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    states: {
+                        normal: {
+                            filter: {
+                                type: 'none',
+                                value: 0
+                            }
+                        },
+                        hover: {
+                            filter: {
+                                type: 'none',
+                                value: 0
+                            }
+                        },
+                        active: {
+                            allowMultipleDataPointsSelection: false,
+                            filter: {
+                                type: 'none',
+                                value: 0
+                            }
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px',
+                            fontFamily: KTApp.getSettings()['font-family']
+                        },
+                        y: {
+                            formatter: function (val) {
+                                return "$" + val + " thousands"
+                            }
+                        }
+                    },
+                    colors: ['#4BB5B1', '#F1808D', '#A479F7', '#FFD786', '#027FFF'],
+                    grid: {
+                        borderColor: KTApp.getSettings()['colors']['gray']['gray-200'],
+                        strokeDashArray: 4,
+                        yaxis: {
                             lines: {
-                                lineWidth: 1,
-                            },
-                            shadowSize: 0
-                        }], options);
-                    }
-
-
-                    return {
-                        // public functions
-                        init: function () {
-                            demo6();
+                                show: true
+                            }
                         }
-                    };
-                }();
+                    }
+                };
 
-                jQuery(document).ready(function () {
-                    KTFlotchartsDemo.init();
-                });
-            </script>
+                var chart = new ApexCharts(element, options);
+                chart.render();
+                $("#kt_charts_widget_1_chart").find(".loader_panel").hide()
+            }
+
+            // Public methods
+            return {
+                init: function () {
+
+                    // Charts Widgets
+                    _initChartsWidget1();
+
+                }
+            }
+        }();
+
+        // Webpack support
+        if (typeof module !== 'undefined') {
+            module.exports = KTWidgets;
         }
 
-        
+        jQuery(document).ready(function () {
+            KTWidgets.init();
+        });
+    </script>
+    <script src="~/Content/assets/plugins/custom/flot/flot.bundle.js"></script>
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTFlotchartsDemo = function () {
+
+            var demo6 = function () {
+                // bar chart:
+                var data = GenerateSeries(0);
+
+                function GenerateSeries(added) {
+                    var data = [];
+                    var start = 100 + added;
+                    var end = 200 + added;
+
+                    for (var i = 1; i <= 12; i++) {
+                        var d = Math.floor(Math.random() * (end - start + 1) + start);
+                        data.push([i, d]);
+                        start++;
+                        end++;
+                    }
+
+                    return data;
+                }
+
+                var options = {
+                    colors: [KTApp.getSettings()['colors']['theme']['base']["success"], KTApp.getSettings()['colors']['theme']['base']["primary"]],
+                    series: {
+                        bars: {
+                            show: true
+                        }
+                    },
+                    bars: {
+                        barWidth: 0.8,
+                        lineWidth: 0, // in pixels
+                        shadowSize: 0,
+                        align: 'left'
+                    },
+
+                    grid: {
+                        tickColor: "#eee",
+                        borderColor: "#eee",
+                        borderWidth: 1
+                    }
+                };
+
+                $.plot($("#kt_flotcharts_6"), [{
+                    data: data,
+                    lines: {
+                        lineWidth: 1,
+                    },
+                    shadowSize: 0
+                }], options);
+            }
+
+
+            return {
+                // public functions
+                init: function () {
+                    demo6();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTFlotchartsDemo.init();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
+}
+
