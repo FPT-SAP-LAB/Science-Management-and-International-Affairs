@@ -211,26 +211,26 @@ namespace BLL.ScienceManagement.Report
         public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         {
             var data = (from a in db.RequestCitations
-                        where a.status_id==2
+                        where a.status_id == 2
                         select new CitationByAuthorReport
                         {
-                            author_name=a.Author.name,
-                            scopus_citation= (from a1 in db.Citations
-                                              from b1 in db.RequestCitations
-                                              join d1 in db.Authors on b1.Author equals d1
-                                              where a1.RequestCitations.Contains(b1) 
-                                              && d1.people_id == a.people_id
-                                              && a1.source == "Scopus" && b1.status_id == 2 
-                                              && a == b1
-                                              select a1.count).Sum(),
-                            gscholar_citation = (from a1 in db.Citations
+                            author_name = a.Author.name,
+                            scopus_citation = (from a1 in db.Citations
                                                from b1 in db.RequestCitations
                                                join d1 in db.Authors on b1.Author equals d1
                                                where a1.RequestCitations.Contains(b1)
-                                               && d1.people_id == a.people_id 
-                                               && (a1.source == "Google Scholar" || a1.source == "Scholar") 
-                                               && b1.status_id == 2 && a == b1
+                                               && d1.people_id == a.people_id
+                                               && a1.source == "Scopus" && b1.status_id == 2
+                                               && a == b1
                                                select a1.count).Sum(),
+                            gscholar_citation = (from a1 in db.Citations
+                                                 from b1 in db.RequestCitations
+                                                 join d1 in db.Authors on b1.Author equals d1
+                                                 where a1.RequestCitations.Contains(b1)
+                                                 && d1.people_id == a.people_id
+                                                 && (a1.source == "Google Scholar" || a1.source == "Scholar")
+                                                 && b1.status_id == 2 && a == b1
+                                                 select a1.count).Sum(),
                             valid_date = a.BaseRequest.created_date.Value,
                             msnv = a.Author.mssv_msnv,
                             office = a.Author.Office.office_name,
