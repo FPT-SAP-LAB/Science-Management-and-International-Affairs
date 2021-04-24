@@ -348,7 +348,7 @@ $('#going_edit_officer').on('show.bs.modal', function (e) {
                     let id = '#' + elemId;
                     let $statusBar = $(id + ' .uppy-status');
                     let $uploadedList = $(id + ' .uppy-list');
-                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + acadCollab.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + acadCollabfile_link + '>' + acadCollab.file_name + '</a></div><span class="uppy-list-remove" data-id="' + acadCollab.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + acadCollab.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + acadCollab.file_link + '>' + acadCollab.file_name + '</a></div><span class="uppy-list-remove" data-id="' + acadCollab.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                     if (acadCollab.file_id != null) {
                         $uploadedList.append(uploadListHtml);
                         $statusBar.addClass('uppy-status-hidden');
