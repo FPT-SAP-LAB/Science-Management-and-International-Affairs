@@ -178,11 +178,12 @@
     <Compile Include="ModelDAL\LanguageRepo.cs" />
     <Compile Include="ModelDAL\NotificationRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
+    <Compile Include="ModelDAL\PaperCriteriaRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
     <Compile Include="ModelDAL\PolicyTypeLanguageRepo.cs" />
     <Compile Include="ModelDAL\PositionLanguageRepo.cs" />
     <Compile Include="ModelDAL\QsUniversityRepo.cs" />
-    <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
+    <Compile Include="ModelDAL\PolicyRepo.cs" />
     <Compile Include="ModelDAL\PositionRepo.cs" />
     <Compile Include="ModelDAL\ResearcherAreasRepo.cs" />
     <Compile Include="ModelDAL\SpecializationLanguageRepo.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyAddRepo.cs" />
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyDetailRepo.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyEditRepo.cs" />
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
@@ -214,6 +216,7 @@
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
+    <Compile Include="ModelDAL\SubscribeLanguageRepo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

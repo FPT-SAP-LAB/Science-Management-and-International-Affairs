@@ -1,27 +1,19 @@
-﻿using Aspose.Cells;
+﻿using BLL.ModelDAL;
+using CsvHelper;
+using CsvHelper.Configuration;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
-using Microsoft.VisualBasic.FileIO;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.ComponentModel;
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
-using System.Data.Entity.Validation;
-using BLL.ModelDAL;
 
 namespace BLL.ScienceManagement.Paper
 {
@@ -41,6 +33,17 @@ namespace BLL.ScienceManagement.Paper
             where p.paper_id = @id and prtl.language_id=1 and ptal.language_id=1";
             item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
             return item;
+        }
+
+        public string getLinkPolicy()
+        {
+            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            string sql = @"select f.link
+                        from SM_Request.Policy p join SM_Request.PolicyType pt on p.policy_type_id = pt.policy_type_id
+	                        join General.[File] f on p.file_id = f.file_id
+                        where pt.policy_type_id = 2 and expired_date is null";
+            string link = db.Database.SqlQuery<string>(sql).FirstOrDefault();
+            return link;
         }
 
         public List<ListCriteriaOfOnePaper> getCriteria(string id)
@@ -552,10 +555,10 @@ namespace BLL.ScienceManagement.Paper
                 RequestPaper rp = db.RequestPapers.Where(x => x.request_id == paper.request_id).FirstOrDefault();
                 rp.status_id = 5;
 
-                var Request = db.RequestPapers.Find(paper.request_id);
-                Account account = Request.BaseRequest.Account;
+                //var Request = db.RequestPapers.Find(paper.request_id);
+                Account account = rp.BaseRequest.Account;
                 NotificationRepo nr = new NotificationRepo(db);
-                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Paper/Edit?id=" + paper.paper_id);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Paper/Edit?id=" + paper.paper_id, false);
 
                 db.SaveChanges();
                 dbc.Commit();
@@ -1235,7 +1238,7 @@ namespace BLL.ScienceManagement.Paper
                             note = (from m in db.AuthorPapers
                                     where m.paper_id == d.paper_id
                                     select m.people_id).Count()
-                        }).ToList();
+                        }).Distinct().ToList();
             //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return data;
         }
@@ -1243,7 +1246,7 @@ namespace BLL.ScienceManagement.Paper
         public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
+            //string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
             //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
             //                     join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
             //                     join [SM_Request].BaseRequest br on rp.request_id = br.request_id
@@ -1279,7 +1282,7 @@ namespace BLL.ScienceManagement.Paper
                             note = (from m in db.AuthorPapers
                                     where m.paper_id == d.paper_id
                                     select m.people_id).Count()
-                        }).ToList();
+                        }).Distinct().ToList();
             //List<WaitDecisionPaper> list = db.Database.SqlQuery<WaitDecisionPaper>(sql, new SqlParameter("type", type), new SqlParameter("reseacher", reseacher)).ToList();
             return data;
         }

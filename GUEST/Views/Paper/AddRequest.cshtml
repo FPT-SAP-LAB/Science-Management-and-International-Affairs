@@ -68,7 +68,7 @@
                                     <ul>
                                     </ul>
                                     <br />
-                                    <a href="" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                    <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -499,14 +499,19 @@
             $("#loading").show();
             //let fd = new FormData();
             var ck = true;
-            $(".notnull").each(function () {
-                if ($(this).val() == "") {
-                    $("#loading").hide();
-                    toastr.error("Cần nhập đầy đủ các trường có dấu *");
-                    ck = false;
-                    return false;
-                }
-            });
+            //$(".notnull").each(function () {
+            //    if ($(this).val() == "") {
+            //        $("#loading").hide();
+            //        toastr.error("Cần nhập đầy đủ các trường có dấu *");
+            //        ck = false;
+            //        return false;
+            //    }
+            //});
+            if (!validateNonEmptyField([".notnull"])) {
+                $("#loading").hide();
+                ck = false;
+                return ck;
+            }
             if (people.length == 0) {
                 ck = false;
                 $("#loading").hide();

@@ -1,15 +1,10 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
-using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUPartner;
 using MANAGER.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using static BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.PartnerMOURepo;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {

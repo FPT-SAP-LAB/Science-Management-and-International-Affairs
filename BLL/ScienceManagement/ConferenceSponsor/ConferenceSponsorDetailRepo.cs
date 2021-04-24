@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace BLL.ScienceManagement.ConferenceSponsor
@@ -246,12 +244,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     if (Request.status_id >= 2)
                         return new AlertModal<string>(false, "Đề nghị đã đóng chỉnh sửa");
                     Request.editable = true;
-                    int notification_id = notificationRepo.AddByAccountID(account.account_id, 4, "/ConferenceSponsor/Detail?id=" + Request.request_id);
+                    int notification_id = notificationRepo.AddByAccountID(account.account_id, 4, "/ConferenceSponsor/Detail?id=" + Request.request_id, false);
                     trans.Commit();
-
-                    Notification notification = notificationRepo.Get(notification_id, 1);
-
-                    SmtpMailService.Send(account.email, notification.Template, "<a href=\"" + uri + notification.URL + "\">" + uri + notification.URL + "</a>", true);
 
                     return new AlertModal<string>(notification_id.ToString(), true, "Cập nhật thành công");
                 }

@@ -37,7 +37,7 @@
     </div>
     <div class="col-xl-6 form-group">
         <label>@rm.GetString("Title")</label>
-        <select class="form-control select-custom edit input_fe" id="add_author_title" name="param" style="width: 100% !important">
+        <select class="form-control select-custom select2 edit input_fe" id="add_author_title" name="param" style="width: 100% !important">
             <option disabled selected></option>
             @{
                 foreach (var item in ViewBag.title)
@@ -97,7 +97,7 @@
     <div class="col-xl-6 form-group">
     </div>
     <div class="justify-content-center col-xl-12 d-flex citationE">
-        <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save" data-dismiss="modal">@rm.GetString("AddAu")</button>
+        <button class="btn btn-light-primary px-6 font-weight-bold" id="add_author_save">@rm.GetString("AddAu")</button>
     </div>
 </div>
 @*<script src="assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
@@ -134,7 +134,11 @@
                         $("#add_author_contractType").trigger('change');
                         $("#add_author_cmnd").val(author.identification_number);
                         $("#add_author_tax").val(author.tax_code);
-                        $("#add_author_bank").val(author.bank_branch);
+
+                        var theString = author.bank_branch;
+                        var varTitle = $('#add_author_bank').html(theString).text();
+                        $("#add_author_bank").val(varTitle);
+
                         $("#add_author_accno").val(author.bank_number);
                         $("#add_author_mail").val(author.email);
                         $("#add_author_cmnd_link").val(author.identification_file_link);

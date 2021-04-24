@@ -1,14 +1,12 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 
 namespace BLL.ScienceManagement.Report
 {
@@ -88,8 +86,9 @@ namespace BLL.ScienceManagement.Report
         }
         public BaseServerSideData<ReportByAuthorAward> getAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         {
+            int tmp;
             var data = (from a in db.AuthorPapers
-                        join b in db.Authors on a.people_id equals b.people_id
+                        join b in db.Authors.GroupBy(x => x.mssv_msnv).Select(x => x.FirstOrDefault()) on a.people_id equals b.people_id
                         join c in db.Titles on b.title_id equals c.title_id
                         join d in db.TitleLanguages on c.title_id equals d.title_id
                         join e in db.Offices on b.office_id equals e.office_id
@@ -107,17 +106,17 @@ namespace BLL.ScienceManagement.Report
                                           join h in db.AuthorPapers on n.paper_id equals h.paper_id
                                           join j in db.Authors on h.people_id equals j.people_id
                                           where m.status_id == 2
-                                          && n.paper_type_id == 1
                                           && j.mssv_msnv == b.mssv_msnv
-                                          select h.money_reward).Distinct().Sum().ToString(),
-                            conferenceAward = (from m in db.RequestPapers
-                                               join n in db.Papers on m.paper_id equals n.paper_id
-                                               join h in db.AuthorPapers on n.paper_id equals h.paper_id
-                                               join j in db.Authors on h.people_id equals j.people_id
-                                               where m.status_id == 2
-                                               && n.paper_type_id == 2
-                                               && j.mssv_msnv == b.mssv_msnv
-                                               select h.money_reward).Distinct().Sum().ToString(),
+                                          select h.money_reward).ToList().Sum().ToString(),
+                            inventionAwards = (from a1 in db.Decisions
+                                               join b1 in db.RequestDecisions on a1.decision_id equals b1.decision_id
+                                               join c1 in db.BaseRequests on b1.request_id equals c1.request_id
+                                               join d1 in db.RequestInventions on c1.request_id equals d1.request_id
+                                               join e1 in db.Inventions on d1.invention_id equals e1.invention_id
+                                               join f1 in db.Authors on b.mssv_msnv equals f1.mssv_msnv
+                                               join h1 in db.AuthorInventions on f1.people_id equals h1.people_id
+                                               where f1.people_id == b.people_id
+                                               select d1.total_reward).ToList(),
                             CitationAward = "0",
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
@@ -125,7 +124,7 @@ namespace BLL.ScienceManagement.Report
             {
                 data = data.Where(x => x.office_id == search.office_id);
             }
-            if (search.name != null)
+            if (search.name != null && search.name.Trim() != "")
             {
                 data = data.Where(x => x.name.Contains(search.name));
             }
@@ -133,9 +132,12 @@ namespace BLL.ScienceManagement.Report
             {
                 data = data.Where(x => x.PublicYear == search.year);
             }
-            var result = data.Distinct().OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            var result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
                 .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].inventionAmount = result[i].inventionAwards.Select(x => Convert.ToInt64(x)).ToList().Sum().ToString();
+            }
             int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
@@ -201,6 +203,55 @@ namespace BLL.ScienceManagement.Report
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
+        }
+
+        public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        {
+            var data = (from a in db.RequestCitations
+                        where a.status_id == 2
+                        select new CitationByAuthorReport
+                        {
+                            author_name = a.Author.name,
+                            scopus_citation = (from a1 in db.Citations
+                                               from b1 in db.RequestCitations
+                                               join d1 in db.Authors on b1.Author equals d1
+                                               where a1.RequestCitations.Contains(b1)
+                                               && d1.people_id == a.people_id
+                                               && a1.source == "Scopus" && b1.status_id == 2
+                                               && a == b1
+                                               select a1.count).Sum(),
+                            gscholar_citation = (from a1 in db.Citations
+                                                 from b1 in db.RequestCitations
+                                                 join d1 in db.Authors on b1.Author equals d1
+                                                 where a1.RequestCitations.Contains(b1)
+                                                 && d1.people_id == a.people_id
+                                                 && (a1.source == "Google Scholar" || a1.source == "Scholar")
+                                                 && b1.status_id == 2 && a == b1
+                                                 select a1.count).Sum(),
+                            valid_date = a.BaseRequest.created_date.Value,
+                            msnv = a.Author.mssv_msnv,
+                            office = a.Author.Office.office_name,
+                            total_reward = a.total_reward,
+                        });
+            if (search.msnv != null && search.msnv.Trim() != "")
+            {
+                data = data.Where(x => x.msnv.Contains(search.msnv));
+            }
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            String totalAmount = "";
+            Int64 total = 0;
+            foreach (var i in res)
+            {
+                if (i.total_reward != null)
+                {
+                    total += i.total_reward.Value;
+                }
+            }
+            totalAmount = total.ToString();
+            int recordsTotal = data.Count();
+            return new Tuple<BaseServerSideData<CitationByAuthorReport>,
+                String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
         }
         public List<String> getListYearPaper()
         {

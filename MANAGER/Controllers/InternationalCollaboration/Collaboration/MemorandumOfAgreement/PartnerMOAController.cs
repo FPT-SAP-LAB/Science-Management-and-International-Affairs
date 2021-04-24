@@ -5,11 +5,7 @@ using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumO
 using MANAGER.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using static BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOARepo;
-using static BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement.PartnerMOARepo;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 {

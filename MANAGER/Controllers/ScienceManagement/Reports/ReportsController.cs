@@ -1,16 +1,13 @@
-﻿using MANAGER.Support;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Report;
+using ENTITIES;
+using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ENTITIES;
-using BLL.ScienceManagement.Report;
-using ENTITIES.CustomModels.ScienceManagement.Report;
-using ENTITIES.CustomModels;
-using System.Globalization;
-using BLL.ModelDAL;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 
 namespace MANAGER.Controllers.ScienceManagement.Reports
 {
@@ -158,7 +155,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 {
                     data.Data[i].rowNum = datatable.Start + 1 + i;
                     data.Data[i].paperAward = data.Data[i].paperAward == "" ? "0" : data.Data[i].paperAward;
-                    data.Data[i].conferenceAward = data.Data[i].conferenceAward == "" ? "0" : data.Data[i].conferenceAward;
+                    data.Data[i].inventionAmount = data.Data[i].inventionAmount == "" ? "0" : data.Data[i].inventionAmount;
                     data.Data[i].CitationAward = data.Data[i].CitationAward == "" ? "0" : data.Data[i].CitationAward;
                 }
                 return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
@@ -198,6 +195,36 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                     output.Item1.Data[i].rownum = datatable.Start + 1 + i;
                 }
                 return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
+        public JsonResult getCitationReports()
+        {
+            try
+            {
+                SearchFilter searchs = new SearchFilter()
+                {
+                    msnv = Request["search_msnv"] == null ? "" : Request["search_msnv"].ToString(),
+                };
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                BaseServerSideData<CitationByAuthorReport> data = rewardsReportRepo.getCitationByAuthorReport(datatable, searchs).Item1;
+                for (int i = 0; i < data.Data.Count; i++)
+                {
+                    data.Data[i].scopus_citation = data.Data[i].scopus_citation == null ? 0 : data.Data[i].scopus_citation;
+                    data.Data[i].gscholar_citation = data.Data[i].gscholar_citation == null ? 0 : data.Data[i].gscholar_citation;
+                    data.Data[i].total_reward = data.Data[i].total_reward == null ? 0 : data.Data[i].total_reward;
+                    data.Data[i].valid_date_string = data.Data[i].valid_date.ToString("dd/MM/yyyy");
+                    data.Data[i].rownum = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

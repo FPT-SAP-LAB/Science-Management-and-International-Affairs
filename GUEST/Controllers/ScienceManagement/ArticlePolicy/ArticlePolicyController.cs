@@ -18,7 +18,7 @@ namespace GUEST.Controllers.ScienceManagement.ArticlePolicy
         public ActionResult Index()
         {
             ViewBag.pagesTree = pagesTree;
-            ViewBag.items = IndexRepo.ListGuest(LanguageResource.GetCurrentLanguageID());
+            ViewBag.items = IndexRepo.List(LanguageResource.GetCurrentLanguageID());
             return View();
         }
 

@@ -2,6 +2,7 @@
 using CsvHelper.Configuration;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using OfficeOpenXml;
@@ -12,8 +13,6 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace BLL.ScienceManagement.MasterData

@@ -2417,7 +2417,6 @@
     <Content Include="Content\demo_partner_detail_guest.jpg" />
     <Content Include="Content\Picture1.jpg" />
     <Content Include="Content\Picture2.jpg" />
-    <Content Include="Content\Picture3.jpg" />
     <Content Include="Content\Picture4.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

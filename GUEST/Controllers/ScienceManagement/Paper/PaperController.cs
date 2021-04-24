@@ -46,6 +46,9 @@ namespace GUEST.Controllers
             List<PaperCriteria> listCriteria = md.getPaperCriteria();
             ViewBag.listCriteria = listCriteria;
 
+            string link = pr.getLinkPolicy();
+            ViewBag.link = link;
+
             return View();
         }
 
