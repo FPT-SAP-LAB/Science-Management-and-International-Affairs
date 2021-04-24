@@ -1,15 +1,12 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
+using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
-using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
-using System.Data.Entity.SqlServer;
 
 namespace BLL.ScienceManagement.Report
 {
@@ -208,48 +205,54 @@ namespace BLL.ScienceManagement.Report
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
 
-        //public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
-        //{
-        //    var data = (from a in db.BaseRequests
-        //                join b in db.RequestCitations on a.request_id equals b.request_id
-        //                from c in db.Citations
-        //                where b.Citations.Contains(c) //SAU THÊM ĐIỀU KIỆN CỦA TRƯỜNG is_verified VÀO ĐÂY
-        //                select new CitationByAuthorReport
-        //                {
-        //                    author_name = (from a1 in db.Authors
-        //                                   join b1 in db.RequestCitations on a1.people_id equals b1.people_id
-        //                                   where b1.request_id == b.request_id
-        //                                   select a1.name).FirstOrDefault(),
-        //                    decision_number = b.
-        //                });
-        //    if (search.name != null && search.name.Trim() != "")
-        //    {
-        //        data = data.Where(x => x.invention_name.Contains(search.name));
-        //    }
-        //    if (search.year != null && search.year.Trim() != "")
-        //    {
-        //        data = data.Where(x => x.date.Value.Year.ToString() == search.year);
-        //    }
-        //    if (search.office_id != null)
-        //    {
-        //        data = data.Where(x => x.authors.Select(a => a.office_id).ToList().Contains(search.office_id.Value));
-        //    }
-        //    var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
-        //    .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-        //    String totalAmount = "";
-        //    Int64 total = 0;
-        //    foreach (var i in res)
-        //    {
-        //        if (i.total_reward != null && i.total_reward.Trim() != "")
-        //        {
-        //            total += Int64.Parse(i.total_reward);
-        //        }
-        //    }
-        //    totalAmount = total.ToString();
-        //    int recordsTotal = data.Count();
-        //    return new Tuple<BaseServerSideData<CitationByAuthorReport>,
-        //        String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
-        //}
+        public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        {
+            var data = (from a in db.RequestCitations
+                        where a.status_id == 2
+                        select new CitationByAuthorReport
+                        {
+                            author_name = a.Author.name,
+                            scopus_citation = (from a1 in db.Citations
+                                               from b1 in db.RequestCitations
+                                               join d1 in db.Authors on b1.Author equals d1
+                                               where a1.RequestCitations.Contains(b1)
+                                               && d1.people_id == a.people_id
+                                               && a1.source == "Scopus" && b1.status_id == 2
+                                               && a == b1
+                                               select a1.count).Sum(),
+                            gscholar_citation = (from a1 in db.Citations
+                                                 from b1 in db.RequestCitations
+                                                 join d1 in db.Authors on b1.Author equals d1
+                                                 where a1.RequestCitations.Contains(b1)
+                                                 && d1.people_id == a.people_id
+                                                 && (a1.source == "Google Scholar" || a1.source == "Scholar")
+                                                 && b1.status_id == 2 && a == b1
+                                                 select a1.count).Sum(),
+                            valid_date = a.BaseRequest.created_date.Value,
+                            msnv = a.Author.mssv_msnv,
+                            office = a.Author.Office.office_name,
+                            total_reward = a.total_reward,
+                        });
+            if (search.msnv != null && search.msnv.Trim() != "")
+            {
+                data = data.Where(x => x.msnv.Contains(search.msnv));
+            }
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            String totalAmount = "";
+            Int64 total = 0;
+            foreach (var i in res)
+            {
+                if (i.total_reward != null)
+                {
+                    total += i.total_reward.Value;
+                }
+            }
+            totalAmount = total.ToString();
+            int recordsTotal = data.Count();
+            return new Tuple<BaseServerSideData<CitationByAuthorReport>,
+                String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
+        }
         public List<String> getListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();

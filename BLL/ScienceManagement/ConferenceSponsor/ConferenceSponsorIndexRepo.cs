@@ -1,5 +1,6 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using System.Linq;
 using System.Linq.Dynamic.Core;

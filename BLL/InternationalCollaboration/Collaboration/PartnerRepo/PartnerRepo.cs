@@ -1,6 +1,6 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
 using OfficeOpenXml;
 using System;
@@ -9,8 +9,6 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 
@@ -259,9 +257,17 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 
                 ArticleVersion articleVersion = db.ArticleVersions.Where(x => x.article_id == partner.article_id &&
                  x.language_id == language_id).FirstOrDefault();
-                if (articleVersion != null)
+                if (articleVersion != null && !String.IsNullOrWhiteSpace(articleVersion.article_content))
                 {
                     partnerArticle.partner_content = articleVersion.article_content;
+                }
+                else if (language_id == 1)
+                {
+                    partnerArticle.partner_content = "Đối tác này chưa có nội dung mô tả";
+                }
+                else if (language_id == 2)
+                {
+                    partnerArticle.partner_content = "Partner has no description content";
                 }
                 return partnerArticle;
             }

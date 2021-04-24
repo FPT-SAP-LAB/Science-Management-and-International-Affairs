@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Researcher;
+using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
-using ENTITIES;
-using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.ScienceManagement.Researcher;
 namespace BLL.ScienceManagement.Researcher
 {
     public class ResearchersDetailRepo

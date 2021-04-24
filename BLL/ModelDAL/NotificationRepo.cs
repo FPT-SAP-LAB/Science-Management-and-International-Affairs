@@ -1,5 +1,6 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using System;
 using System.Collections.Generic;
 using System.Linq;

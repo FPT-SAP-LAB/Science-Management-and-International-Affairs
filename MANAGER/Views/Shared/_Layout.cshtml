@@ -34,7 +34,7 @@
 
     <!--USED BY THIS PAGE-->
     <link href="~/Content/assets/css/style.css" rel="stylesheet" type="text/css" />
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    @*<script src="https://apis.google.com/js/platform.js" async defer></script>*@
     <link href="~/Content/Custom_CSS/Preloader/preloader.css" rel="stylesheet" />
 </head>
 <!--end::Head-->
@@ -360,7 +360,13 @@
                                         <li class="menu-item " aria-haspopup="true">
                                             <a href="/ConditionManagement" class="menu-link ">
                                                 <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                                <span class="menu-text">QUẢN LÝ ĐIỀU KIỆN HỖ TRỢ HỘI NGHỊ</span>
+                                                <span class="menu-text">ĐIỀU KIỆN HỖ TRỢ HỘI NGHỊ</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-item " aria-haspopup="true">
+                                            <a href="/CriteriaManagement" class="menu-link ">
+                                                <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                                <span class="menu-text">TIÊU CHÍ KHEN THƯỞNG</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -794,7 +800,7 @@
             await onLoad();
         });
     </script>
-    @RenderSection("scripts")
+    @RenderSection("scripts", required: false)
 
     @if (user != null)
     {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using BLL.InternationalCollaboration.MasterData;
+﻿using BLL.InternationalCollaboration.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels;
-using Newtonsoft.Json;
+using ENTITIES.CustomModels.Datatable;
+using System;
+using System.Web.Mvc;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MasterData
 {

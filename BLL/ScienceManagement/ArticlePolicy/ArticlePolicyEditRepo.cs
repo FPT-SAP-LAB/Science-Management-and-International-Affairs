@@ -13,7 +13,7 @@ namespace BLL.ScienceManagement.ArticlePolicy
         private ScienceAndInternationalAffairsEntities db;
         public ArticlePolicyEdit Detail(int article_id)
         {
-            db = new ScienceAndInternationalAffairsEntities();
+            db = db ?? new ScienceAndInternationalAffairsEntities();
             //db.Configuration.LazyLoadingEnabled = false;
             List<ArticleVersion> Versions = (from a in db.Languages
                                              orderby a.language_id
@@ -45,21 +45,38 @@ namespace BLL.ScienceManagement.ArticlePolicy
                 {
                     DateTime now = DateTime.Now;
 
+                    bool edit = false;
+
                     Article article = db.Articles.Where(x => x.article_id == article_id && x.PolicyTypes.Count > 0).FirstOrDefault();
                     if (article == null)
                         return new AlertModal<string>(false, "Bài đăng không tồn tại");
 
                     List<PolicyType> policyTypes = db.PolicyTypes.Where(x => types.Contains(x.policy_type_id)).ToList();
 
+                    ArticlePolicyEdit articleBefore = Detail(article_id);
+
                     foreach (var item in articleVersions)
                     {
-                        item.publish_time = now;
-                        article.ArticleVersions.Add(item);
+                        var versionBefore = articleBefore.Versions.Where(x => x != null && x.language_id == item.language_id).FirstOrDefault();
+                        if (versionBefore == null || !versionBefore.version_title.Equals(item.version_title)
+                            || !versionBefore.article_content.Equals(item.article_content))
+                        {
+                            item.publish_time = now;
+                            article.ArticleVersions.Add(item);
+                            edit = true;
+                        }
                     }
 
-                    article.PolicyTypes = new List<PolicyType>();
-                    policyTypes.ForEach(x => article.PolicyTypes.Add(x));
+                    List<int> typesBefore = articleBefore.TypeLanguages.Select(x => x.policy_type_id).ToList();
+                    if (!typesBefore.All(types.Contains) || typesBefore.Count != types.Count)
+                    {
+                        article.PolicyTypes = new List<PolicyType>();
+                        policyTypes.ForEach(x => article.PolicyTypes.Add(x));
+                        edit = true;
+                    }
 
+                    if (!edit)
+                        return new AlertModal<string>(false, "Không có nội dung nào thay đổi");
                     db.SaveChanges();
                     trans.Commit();
                     return new AlertModal<string>(true);
