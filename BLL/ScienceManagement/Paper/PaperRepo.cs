@@ -558,7 +558,7 @@ namespace BLL.ScienceManagement.Paper
                 //var Request = db.RequestPapers.Find(paper.request_id);
                 Account account = rp.BaseRequest.Account;
                 NotificationRepo nr = new NotificationRepo(db);
-                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Paper/Edit?id=" + paper.paper_id);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Paper/Edit?id=" + paper.paper_id, false);
 
                 db.SaveChanges();
                 dbc.Commit();

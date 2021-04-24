@@ -105,7 +105,7 @@ namespace BLL.ScienceManagement.Citation
                 //var Request = db.RequestCitations.Find(id);
                 Account account = rc.BaseRequest.Account;
                 NotificationRepo nr = new NotificationRepo(db);
-                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Citation/Edit?id=" + id);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Citation/Edit?id=" + id, false);
 
                 db.SaveChanges();
                 dbc.Commit();
