@@ -13,6 +13,9 @@ namespace BLL.ScienceManagement.ArticlePolicy
         private ScienceAndInternationalAffairsEntities db;
         public ArticlePolicyEdit Detail(int article_id)
         {
+            if (article_id <= 0 || article_id == int.MaxValue)
+                return null;
+
             db = db ?? new ScienceAndInternationalAffairsEntities();
             //db.Configuration.LazyLoadingEnabled = false;
             List<ArticleVersion> Versions = (from a in db.Languages
