@@ -123,30 +123,6 @@
     Html.RenderPartial("PartialView/MOU/Edit_Partner_MOU");
 }
 
-@*toast alert*@
-<div id="toast-container-custom" class="toast-bottom-left-custom">
-    @*toastr notice inactive*@
-    @if (@ViewBag.noti.InactiveNumber != 0)
-    {
-        <div class="toast toast-warning toast-90" aria-live="assertive" style="display:none">
-            <button type="button" class="toast-close-button" role="button">×</button>
-            <div class="toast-message">
-                Hiện có @ViewBag.noti.InactiveNumber biên bản ghi nhớ chưa hoạt động.
-            </div>
-        </div>
-    }
-
-    @*toastr notice 90 days and 30 days left*@
-    @foreach (string mou_code in ((List<string>)ViewBag.noti.ExpiredMOUCode))
-    {
-        <div class="toast toast-warning toast-30" aria-live="assertive" style="background-color: #f64e60; display:none">
-            <button type="button" class="toast-close-button" role="button">×</button>
-            <div class="toast-message">
-                Hiện có biên bản @mou_code sắp hết hạn.
-            </div>
-        </div>
-    }
-</div>
 
 @section scripts{
     <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" />

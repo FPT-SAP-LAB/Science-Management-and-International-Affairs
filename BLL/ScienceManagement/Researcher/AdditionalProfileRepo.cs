@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using ENTITIES;
+﻿using ENTITIES;
 using ENTITIES.CustomModels;
 using Newtonsoft.Json;
+using System;
+using System.Data.Entity;
+using System.Web;
 
 namespace BLL.ScienceManagement.Researcher
 {

@@ -9,7 +9,6 @@
         <!--begin: Search Form-->
         <!--begin::Search Form-->
         <div class="mb-7">
-
             <div class="row align-items-center">
                 <div class="col-lg-10 col-xl-8">
                     <div class="row align-items-center">
@@ -108,7 +107,7 @@
                                     </a>
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="#" onclick="saveFile()" class="navi-link">
                                         <span class="navi-icon">
                                             <i class="la la-file-excel-o"></i>
                                         </span>
@@ -175,7 +174,7 @@
                     responsive: true,
                     // DOM Layout settings
                     dom: `<'row'<'col-sm-12'tr>>
-                                                                    <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                                                                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     lengthMenu: [5, 10, 25, 50],
                     bInfo: false,
                     pageLength: 10,
@@ -267,5 +266,8 @@
         }
 
     </div>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
 </div>
 

@@ -1,6 +1,5 @@
 ﻿using BLL.ScienceManagement.Invention;
 using BLL.ScienceManagement.MasterData;
-using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -9,7 +8,6 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;

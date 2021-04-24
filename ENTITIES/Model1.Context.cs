@@ -92,6 +92,7 @@ namespace ENTITIES
         public virtual DbSet<SpecializationLanguage> SpecializationLanguages { get; set; }
         public virtual DbSet<TitleLanguage> TitleLanguages { get; set; }
         public virtual DbSet<NotificationBase> NotificationBases { get; set; }
+        public virtual DbSet<NotificationSubscribe> NotificationSubscribes { get; set; }
         public virtual DbSet<NotificationType> NotificationTypes { get; set; }
         public virtual DbSet<Citation> Citations { get; set; }
         public virtual DbSet<RequestCitation> RequestCitations { get; set; }
@@ -162,6 +163,5 @@ namespace ENTITIES
         public virtual DbSet<Response> Responses { get; set; }
         public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         public virtual DbSet<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
-        public virtual DbSet<NotificationSubscribe> NotificationSubscribes { get; set; }
     }
 }

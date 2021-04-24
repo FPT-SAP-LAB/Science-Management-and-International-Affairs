@@ -1,6 +1,6 @@
-﻿using BLL.Authen;
-using ENTITIES;
+﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities;
 using ENTITIES.CustomModels.InternationalCollaboration.AcademicCollaborationEntities.SaveAcademicCollaborationEntities;

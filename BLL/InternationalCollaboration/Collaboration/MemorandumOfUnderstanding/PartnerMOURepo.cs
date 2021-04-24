@@ -1,5 +1,4 @@
 ﻿using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOUPartner;
 using System;
@@ -8,8 +7,6 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {

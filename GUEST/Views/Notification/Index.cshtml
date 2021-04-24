@@ -4,7 +4,83 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 col-sm-12">
+        <!--begin::Card-->
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-6"></div>
+                    <label class="col-3 col-form-label">Thông báo qua hệ thống</label>
+                    <label class="col-3 col-form-label">Thông báo qua mail</label>
+                </div>
+                <!--begin::Form-->
+                @foreach (ENTITIES.CustomModels.SubscribeLanguage item in ViewBag.subscribes)
+                {
+                    <div data-type="@item.notification_type_id" class="form-group row subscribe">
+                        <label class="col-6 col-form-label">@item.TypeName</label>
+                        <div class="col-3">
+                            <span class="switch switch-outline switch-icon switch-success">
+                                <label>
+                                    <input class="system" type="checkbox" @(item.is_subscribe ? "checked" : "") name="select" />
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                        <div class="col-3">
+                            <span class="switch switch-outline switch-icon switch-success">
+                                <label>
+                                    <input class="mail" type="checkbox" @(item.mail_subscribe ? "checked" : "") name="select" />
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                }
+                <!--end::Form-->
+            </div>
+            <div class="card-footer text-center">
+                <a href="#" onclick="saveSubscribe()" class="btn btn-light-success px-6 font-weight-bold">Lưu</a>
+            </div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <div class="col-md-2"></div>
+</div>
 
 @section Scripts{
+    <script>
+        function saveSubscribe() {
+            let temp = []
+            for (var i = 0; i < $(".subscribe").length; i++) {
+                let ele = $(".subscribe").eq(i);
+                temp.push({
+                    notification_type_id: ele.data("type"),
+                    is_subscribe: ele.find(".system").prop("checked"),
+                    mail_subscribe: ele.find(".mail").prop("checked"),
+                })
+            }
+            $("#loading").show();
+            $.ajax({
+                url: "/Notification/Update",
+                method: "post",
+                data: {
+                    subscribes: temp
+                },
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success("Cập nhật thành công");
+                    } else {
+                        toastr.error(data.content);
+                    }
+                    $("#loading").hide();
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
+                }
+            })
+        }
+    </script>
 }

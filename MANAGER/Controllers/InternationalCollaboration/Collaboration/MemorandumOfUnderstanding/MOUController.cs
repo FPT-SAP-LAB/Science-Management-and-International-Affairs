@@ -2,17 +2,15 @@
 using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
+using MANAGER.Support;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
-using OfficeOpenXml;
-using MANAGER.Support;
-using Newtonsoft.Json.Linq;
 
 namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
 {
@@ -35,7 +33,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 ViewBag.listScopes = mou.GetCollaborationScopes();
                 ViewBag.listSpe = mou.GetSpecializations();
                 ViewBag.listCountry = mou.GetCountries();
-                ViewBag.noti = mou.getNoti();
+                //ViewBag.noti = mou.getNoti();
                 return View();
             }
             catch (Exception ex)

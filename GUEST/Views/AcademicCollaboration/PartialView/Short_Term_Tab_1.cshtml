@@ -40,8 +40,8 @@
     <div class="row justify-content-between">
         @foreach (var item in ViewBag.ListProgram)
         {
-            <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
-                <a onclick="load_detail.load_program_detail(@item.program_id)" class="link-load-detail">
+             <div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
+                <a onclick="load_detail.load_program_detail(@item.program_id)" data-toggle="tooltip" data-theme="dark" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
                     @if (item.avatar is null)
                     {
                         <img src="~/Content/assets/media/custom-image/logo_partner.png" class="item-picture" />
@@ -50,11 +50,9 @@
                     {
                         <img src="@item.avatar" class="item-picture" />
                     }
-
-
-                    <label>
-                        @item.program_name
-                    </label>
+                    <span>
+                        <i class="flaticon-add-label-button icon-md text-success"></i> @item.program_name
+                    </span>
                 </a>
             </div>
         }

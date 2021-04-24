@@ -1,15 +1,11 @@
 ﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement;
-using ENTITIES;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOA;
-using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding.MOU;
 using MANAGER.Support;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement.MOARepo;
 
 namespace MANAGER.Controllers.InternationalCollaboration.MOA
 {

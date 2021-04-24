@@ -1,10 +1,9 @@
 ﻿using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.ScienceManagement.Report
 {
@@ -44,7 +43,7 @@ namespace BLL.ScienceManagement.Report
                             office_name = o.office_name,
                             country_name = c.country_name,
                             conference_name = cf.conference_name,
-                            attendance_start = rc.attendance_start,
+                            attendance_date = rc.attendance_start,
                             total = b.total
                         }).OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
          .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
@@ -80,7 +79,7 @@ namespace BLL.ScienceManagement.Report
                                     office_name = o.office_name,
                                     country_name = c.country_name,
                                     conference_name = cf.conference_name,
-                                    attendance_start = rc.attendance_start,
+                                    attendance_date = rc.attendance_start,
                                     total = b.total
                                 }).Count();
             return new BaseServerSideData<ConferencesParticipationReport>(data, recordsTotal);

@@ -1,5 +1,4 @@
 ﻿using BLL.ModelDAL;
-using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
@@ -11,8 +10,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.ScienceManagement.Citation
 {
@@ -108,7 +105,7 @@ namespace BLL.ScienceManagement.Citation
                 //var Request = db.RequestCitations.Find(id);
                 Account account = rc.BaseRequest.Account;
                 NotificationRepo nr = new NotificationRepo(db);
-                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Citation/Edit?id=" + id);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Citation/Edit?id=" + id, false);
 
                 db.SaveChanges();
                 dbc.Commit();

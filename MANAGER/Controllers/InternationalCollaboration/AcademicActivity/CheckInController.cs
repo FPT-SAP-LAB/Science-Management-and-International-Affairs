@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ENTITIES;
-using BLL.InternationalCollaboration.AcademicActivity;
+﻿using BLL.InternationalCollaboration.AcademicActivity;
 using MANAGER.Support;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
 {

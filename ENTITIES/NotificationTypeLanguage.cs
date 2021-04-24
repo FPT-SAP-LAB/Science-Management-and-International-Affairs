@@ -18,6 +18,7 @@ namespace ENTITIES
         public int language_id { get; set; }
         public string notification_template { get; set; }
         public string notification_type_name { get; set; }
+        public string mail_template { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual NotificationType NotificationType { get; set; }
