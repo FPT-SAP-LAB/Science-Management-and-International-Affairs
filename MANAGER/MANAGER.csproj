@@ -2542,6 +2542,7 @@
     <Content Include="Views\ArticlePolicy\Edit.cshtml" />
     <Content Include="Views\CriteriaManagement\Index.cshtml" />
     <Content Include="Views\CriteriaManagement\Add.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
