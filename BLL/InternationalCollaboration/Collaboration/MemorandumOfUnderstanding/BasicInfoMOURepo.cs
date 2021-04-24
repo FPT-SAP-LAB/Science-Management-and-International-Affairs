@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
