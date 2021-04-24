@@ -121,7 +121,8 @@ namespace BLL.ScienceManagement.Report
                                              join d1 in db.Authors on b1.Author equals d1
                                              where a1.RequestCitations.Contains(b1)
                                              && d1.people_id == a.people_id
-                                             && b1.status_id == 2 select b1.total_reward).Sum().ToString(),
+                                             && b1.status_id == 2
+                                             select b1.total_reward).Sum().ToString(),
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
             if (search.office_id != null)
@@ -265,26 +266,26 @@ namespace BLL.ScienceManagement.Report
                         from e in decision.DefaultIfEmpty()
                         where b.status_id == 5
                         select new ConferencesParticipationReport
-                        { 
-                                valid_date = e.Decision.valid_date,
-                                decision_number = e.Decision.decision_number,
-                                people_name=c.name,
-                                title_name=(
+                        {
+                            valid_date = e.Decision.valid_date,
+                            decision_number = e.Decision.decision_number,
+                            people_name = c.name,
+                            title_name = (
                                     from b1 in db.TitleLanguages
                                     where b1.title_id == c.title_id && b1.language_id == 1
-                                    select b1.name 
+                                    select b1.name
                                 ).FirstOrDefault(),
-                                office_name=(
+                            office_name = (
                                     from a2 in db.Offices
                                     where a2.office_id == c.office_id
                                     select a2.office_name).FirstOrDefault(),
-                                office_id=c.office_id,
-                                country_name= b.Conference.Country.country_name,
-                                conference_name = b.Conference.conference_name,
-                                attendance_date= b.attendance_start,
-                                reimbursement = b.reimbursement,
-                                total=b.Costs.Sum(x=>x.total),
-                                requestId = b.request_id
+                            office_id = c.office_id,
+                            country_name = b.Conference.Country.country_name,
+                            conference_name = b.Conference.conference_name,
+                            attendance_date = b.attendance_start,
+                            reimbursement = b.reimbursement,
+                            total = b.Costs.Sum(x => x.total),
+                            requestId = b.request_id
                         });
             if (search.name != null && search.name.Trim() != "")
             {
@@ -304,7 +305,7 @@ namespace BLL.ScienceManagement.Report
             Int64 total = 0;
             foreach (var i in res)
             {
-                    total += i.total;
+                total += i.total;
             }
             totalAmount = total.ToString();
             int recordsTotal = data.Count();

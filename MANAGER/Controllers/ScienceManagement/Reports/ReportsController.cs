@@ -265,8 +265,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 for (int i = 0; i < output.Item1.Data.Count; i++)
                 {
                     output.Item1.Data[i].dateString = output.Item1.Data[i].attendance_date.ToString("dd/MM/yyyy");
-                    output.Item1.Data[i].valiDateString = 
-                        output.Item1.Data[i].valid_date==null?"": output.Item1.Data[i].valid_date.Value.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].valiDateString =
+                        output.Item1.Data[i].valid_date == null ? "" : output.Item1.Data[i].valid_date.Value.ToString("dd/MM/yyyy");
                     output.Item1.Data[i].RowNumber = datatable.Start + 1 + i;
                 }
                 return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
