@@ -86,7 +86,6 @@ namespace BLL.ScienceManagement.Report
         }
         public BaseServerSideData<ReportByAuthorAward> getAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         {
-            int tmp;
             var data = (from a in db.AuthorPapers
                         join b in db.Authors.GroupBy(x => x.mssv_msnv).Select(x => x.FirstOrDefault()) on a.people_id equals b.people_id
                         join c in db.Titles on b.title_id equals c.title_id
@@ -117,7 +116,12 @@ namespace BLL.ScienceManagement.Report
                                                join h1 in db.AuthorInventions on f1.people_id equals h1.people_id
                                                where f1.people_id == b.people_id
                                                select d1.total_reward).ToList(),
-                            CitationAward = "0",
+                            CitationAward = (from a1 in db.Citations
+                                             from b1 in db.RequestCitations
+                                             join d1 in db.Authors on b1.Author equals d1
+                                             where a1.RequestCitations.Contains(b1)
+                                             && d1.people_id == a.people_id
+                                             && b1.status_id == 2 select b1.total_reward).Sum().ToString(),
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
             if (search.office_id != null)
@@ -204,7 +208,6 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
-
         public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
         {
             var data = (from a in db.RequestCitations
@@ -253,6 +256,62 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<CitationByAuthorReport>,
                 String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
         }
+        public Tuple<BaseServerSideData<ConferencesParticipationReport>, String> getConferencesReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        {
+            var data = (from a in db.BaseRequests
+                        join b in db.RequestConferences on a.request_id equals b.request_id
+                        join c in db.ConferenceParticipants on b equals c.RequestConference
+                        join d in db.RequestDecisions on a.request_id equals d.request_id into decision
+                        from e in decision.DefaultIfEmpty()
+                        where b.status_id == 5
+                        select new ConferencesParticipationReport
+                        { 
+                                valid_date = e.Decision.valid_date,
+                                decision_number = e.Decision.decision_number,
+                                people_name=c.name,
+                                title_name=(
+                                    from b1 in db.TitleLanguages
+                                    where b1.title_id == c.title_id && b1.language_id == 1
+                                    select b1.name 
+                                ).FirstOrDefault(),
+                                office_name=(
+                                    from a2 in db.Offices
+                                    where a2.office_id == c.office_id
+                                    select a2.office_name).FirstOrDefault(),
+                                office_id=c.office_id,
+                                country_name= b.Conference.Country.country_name,
+                                conference_name = b.Conference.conference_name,
+                                attendance_date= b.attendance_start,
+                                reimbursement = b.reimbursement,
+                                total=b.Costs.Sum(x=>x.total),
+                                requestId = b.request_id
+                        });
+            if (search.name != null && search.name.Trim() != "")
+            {
+                data = data.Where(x => x.people_name.Contains(search.name));
+            }
+            if (search.year != null && search.year.Trim() != "")
+            {
+                data = data.Where(x => x.valid_date.Value.Year.ToString() == search.year);
+            }
+            if (search.office_id != null)
+            {
+                data = data.Where(x => x.office_id == search.office_id);
+            }
+            var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            String totalAmount = "";
+            Int64 total = 0;
+            foreach (var i in res)
+            {
+                    total += i.total;
+            }
+            totalAmount = total.ToString();
+            int recordsTotal = data.Count();
+            return new Tuple<BaseServerSideData<ConferencesParticipationReport>,
+                String>(new BaseServerSideData<ConferencesParticipationReport>(res, recordsTotal), totalAmount);
+        }
+
         public List<String> getListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();

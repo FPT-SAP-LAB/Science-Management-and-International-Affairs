@@ -57,6 +57,14 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         }
         public ActionResult ConferencesParticipationReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.getListYear(20);
+            List<PaperCriteria> criterias = rewardsReportRepo.getListCriteria();
+            ViewBag.years = years;
+            ViewBag.criterias = criterias;
             return View();
         }
         public ActionResult ConferencesParticipationReport_tgtemp()
@@ -225,6 +233,43 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                     data.Data[i].rownum = datatable.Start + 1 + i;
                 }
                 return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
+        public JsonResult getConferencesReports()
+        {
+            try
+            {
+                int? office_id;
+                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
+                else { office_id = Int32.Parse(Request["coso"]); }
+                //////////////////////////////////////////////////////////////////////////
+                string name = Request["name"];
+                string year = Request["year"];
+                SearchFilter searchs = new SearchFilter()
+                {
+                    office_id = office_id,
+                    name = name,
+                    year = year,
+                };
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                Tuple<BaseServerSideData<ConferencesParticipationReport>, String> output = rewardsReportRepo.getConferencesReport(datatable, searchs);
+                for (int i = 0; i < output.Item1.Data.Count; i++)
+                {
+                    output.Item1.Data[i].dateString = output.Item1.Data[i].attendance_date.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].valiDateString = 
+                        output.Item1.Data[i].valid_date==null?"": output.Item1.Data[i].valid_date.Value.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].RowNumber = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
             }
             catch (Exception e)
             {
