@@ -37,7 +37,7 @@
           </Key>
           <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="150" />
-          <Property Name="email" Type="nvarchar" MaxLength="150" />
+          <Property Name="email" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="google_id" Type="nvarchar" MaxLength="150" />
           <Property Name="picture" Type="nvarchar" MaxLength="150" />
           <Property Name="role_id" Type="int" Nullable="false" />
@@ -708,13 +708,10 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Property Name="URL" Type="nvarchar" MaxLength="50" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.NotificationSubscribe' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="NotificationSubscribe">
           <Key>
             <PropertyRef Name="account_id" />
             <PropertyRef Name="notification_type_id" />
-            <PropertyRef Name="is_subscribe" />
           </Key>
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="notification_type_id" Type="int" Nullable="false" />
@@ -4272,6 +4269,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="SpecializationLanguage" EntityType="Self.SpecializationLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="TitleLanguage" EntityType="Self.TitleLanguage" Schema="Localization" store:Type="Tables" />
           <EntitySet Name="NotificationBase" EntityType="Self.NotificationBase" Schema="Notification" store:Type="Tables" />
+          <EntitySet Name="NotificationSubscribe" EntityType="Self.NotificationSubscribe" Schema="Notification" store:Type="Tables" />
           <EntitySet Name="NotificationType" EntityType="Self.NotificationType" Schema="Notification" store:Type="Tables" />
           <EntitySet Name="Citation" EntityType="Self.Citation" Schema="SM_Citation" store:Type="Tables" />
           <EntitySet Name="RequestCitation" EntityType="Self.RequestCitation" Schema="SM_Citation" store:Type="Tables" />
@@ -4358,13 +4356,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
     [NotificationTypeLanguage].[notification_template] AS [notification_template], 
     [NotificationTypeLanguage].[notification_type_name] AS [notification_type_name]
     FROM [Localization].[NotificationTypeLanguage] AS [NotificationTypeLanguage]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="NotificationSubscribe" EntityType="Self.NotificationSubscribe" store:Type="Tables" store:Schema="Notification">
-            <DefiningQuery>SELECT 
-    [NotificationSubscribe].[account_id] AS [account_id], 
-    [NotificationSubscribe].[notification_type_id] AS [notification_type_id], 
-    [NotificationSubscribe].[is_subscribe] AS [is_subscribe]
-    FROM [Notification].[NotificationSubscribe] AS [NotificationSubscribe]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__AcademicA__activ__2610A626" Association="Self.FK__AcademicA__activ__2610A626">
             <End Role="AcademicActivity" EntitySet="AcademicActivity" />
@@ -5315,7 +5306,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           </Key>
           <Property Name="account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="full_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="google_id" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="picture" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="role_id" Type="Int32" Nullable="false" />
@@ -6196,6 +6187,17 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <NavigationProperty Name="Account" Relationship="Self.FK__Notificat__accou__3B95D2F1" FromRole="NotificationBase" ToRole="Account" />
           <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__3C89F72A" FromRole="NotificationBase" ToRole="NotificationType" />
         </EntityType>
+        <EntityType Name="NotificationSubscribe">
+          <Key>
+            <PropertyRef Name="account_id" />
+            <PropertyRef Name="notification_type_id" />
+          </Key>
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="notification_type_id" Type="Int32" Nullable="false" />
+          <Property Name="is_subscribe" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Notificat__accou__3E723F9C" FromRole="NotificationSubscribe" ToRole="Account" />
+          <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__3F6663D5" FromRole="NotificationSubscribe" ToRole="NotificationType" />
+        </EntityType>
         <EntityType Name="NotificationType">
           <Key>
             <PropertyRef Name="notification_type_id" />
@@ -7064,18 +7066,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <Property Name="notification_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Notificat__langu__4242D080" FromRole="NotificationTypeLanguage" ToRole="Language" />
           <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__414EAC47" FromRole="NotificationTypeLanguage" ToRole="NotificationType" />
-        </EntityType>
-        <EntityType Name="NotificationSubscribe">
-          <Key>
-            <PropertyRef Name="account_id" />
-            <PropertyRef Name="notification_type_id" />
-            <PropertyRef Name="is_subscribe" />
-          </Key>
-          <Property Name="account_id" Type="Int32" Nullable="false" />
-          <Property Name="notification_type_id" Type="Int32" Nullable="false" />
-          <Property Name="is_subscribe" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__Notificat__accou__3E723F9C" FromRole="NotificationSubscribe" ToRole="Account" />
-          <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__3F6663D5" FromRole="NotificationSubscribe" ToRole="NotificationType" />
         </EntityType>
         <Association Name="FK__CommentBa__accou__2077C861">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
@@ -9795,6 +9785,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="SpecializationLanguages" EntityType="Self.SpecializationLanguage" />
           <EntitySet Name="TitleLanguages" EntityType="Self.TitleLanguage" />
           <EntitySet Name="NotificationBases" EntityType="Self.NotificationBase" />
+          <EntitySet Name="NotificationSubscribes" EntityType="Self.NotificationSubscribe" />
           <EntitySet Name="NotificationTypes" EntityType="Self.NotificationType" />
           <EntitySet Name="Citations" EntityType="Self.Citation" />
           <EntitySet Name="RequestCitations" EntityType="Self.RequestCitation" />
@@ -9865,7 +9856,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
           <EntitySet Name="Responses" EntityType="Self.Response" />
           <EntitySet Name="ConferenceStatusLanguages" EntityType="Self.ConferenceStatusLanguage" />
           <EntitySet Name="NotificationTypeLanguages" EntityType="Self.NotificationTypeLanguage" />
-          <EntitySet Name="NotificationSubscribes" EntityType="Self.NotificationSubscribe" />
           <AssociationSet Name="FK__CommentBa__accou__2077C861" Association="Self.FK__CommentBa__accou__2077C861">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="CommentBase" EntitySet="CommentBases" />
@@ -11467,6 +11457,15 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NotificationSubscribes">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.NotificationSubscribe">
+              <MappingFragment StoreEntitySet="NotificationSubscribe">
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="notification_type_id" ColumnName="notification_type_id" />
+                <ScalarProperty Name="is_subscribe" ColumnName="is_subscribe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NotificationTypes">
             <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.NotificationType">
               <MappingFragment StoreEntitySet="NotificationType">
@@ -12203,15 +12202,6 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Notification.Notifi
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="notification_template" ColumnName="notification_template" />
                 <ScalarProperty Name="notification_type_name" ColumnName="notification_type_name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NotificationSubscribes">
-            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.NotificationSubscribe">
-              <MappingFragment StoreEntitySet="NotificationSubscribe">
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="notification_type_id" ColumnName="notification_type_id" />
-                <ScalarProperty Name="is_subscribe" ColumnName="is_subscribe" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

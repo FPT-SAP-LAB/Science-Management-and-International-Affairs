@@ -1,4 +1,5 @@
 ﻿using BLL.ModelDAL;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using GUEST.Models;
@@ -19,9 +20,18 @@ namespace GUEST.Controllers
 
         public ActionResult Index()
         {
+            SubscribeLanguageRepo subscribeRepo = new SubscribeLanguageRepo();
             ViewBag.pagesTree = pagesTree;
+            ViewBag.subscribes = subscribeRepo.GetSubscribes(CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
             return View();
         }
+
+        public ActionResult Update(List<NotificationSubscribe> subscribes)
+        {
+            SubscribeLanguageRepo subscribeRepo = new SubscribeLanguageRepo();
+            return Json(subscribeRepo.UpdateSubscribe(subscribes, CurrentAccount.AccountID(Session)));
+        }
+
         [AjaxOnly]
         public JsonResult List(int start)
         {

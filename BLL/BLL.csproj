@@ -178,11 +178,12 @@
     <Compile Include="ModelDAL\LanguageRepo.cs" />
     <Compile Include="ModelDAL\NotificationRepo.cs" />
     <Compile Include="ModelDAL\OfficeRepo.cs" />
+    <Compile Include="ModelDAL\PaperCriteriaRepo.cs" />
     <Compile Include="ModelDAL\PeopleRepo.cs" />
     <Compile Include="ModelDAL\PolicyTypeLanguageRepo.cs" />
     <Compile Include="ModelDAL\PositionLanguageRepo.cs" />
     <Compile Include="ModelDAL\QsUniversityRepo.cs" />
-    <Compile Include="ModelDAL\RequestConferencePolicyRepo.cs" />
+    <Compile Include="ModelDAL\PolicyRepo.cs" />
     <Compile Include="ModelDAL\PositionRepo.cs" />
     <Compile Include="ModelDAL\ResearcherAreasRepo.cs" />
     <Compile Include="ModelDAL\SpecializationLanguageRepo.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
+    <Compile Include="ModelDAL\SubscribeLanguageRepo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
