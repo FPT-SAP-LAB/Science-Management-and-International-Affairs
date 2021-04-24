@@ -104,7 +104,7 @@ namespace BLL.ScienceManagement.Invention
                 //var Request = db.RequestInventions.Find(inven.invention_id);
                 Account account = ri.BaseRequest.Account;
                 NotificationRepo nr = new NotificationRepo(db);
-                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Invention/Edit?id=" + inven.invention_id);
+                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Invention/Edit?id=" + inven.invention_id, false);
 
                 db.SaveChanges();
                 dbc.Commit();
