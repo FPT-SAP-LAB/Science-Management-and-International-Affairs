@@ -17,6 +17,7 @@ namespace ENTITIES
         public int account_id { get; set; }
         public int notification_type_id { get; set; }
         public bool is_subscribe { get; set; }
+        public bool mail_subscribe { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual NotificationType NotificationType { get; set; }

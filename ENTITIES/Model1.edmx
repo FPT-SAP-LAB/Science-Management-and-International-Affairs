@@ -624,6 +624,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Property Name="language_id" Type="int" Nullable="false" />
           <Property Name="notification_template" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="notification_type_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mail_template" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="PaperRewardTypeLanguage">
           <Key>
@@ -716,6 +717,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Property Name="account_id" Type="int" Nullable="false" />
           <Property Name="notification_type_id" Type="int" Nullable="false" />
           <Property Name="is_subscribe" Type="bit" Nullable="false" />
+          <Property Name="mail_subscribe" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="NotificationType">
           <Key>
@@ -4354,7 +4356,8 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
     [NotificationTypeLanguage].[notification_type_id] AS [notification_type_id], 
     [NotificationTypeLanguage].[language_id] AS [language_id], 
     [NotificationTypeLanguage].[notification_template] AS [notification_template], 
-    [NotificationTypeLanguage].[notification_type_name] AS [notification_type_name]
+    [NotificationTypeLanguage].[notification_type_name] AS [notification_type_name], 
+    [NotificationTypeLanguage].[mail_template] AS [mail_template]
     FROM [Localization].[NotificationTypeLanguage] AS [NotificationTypeLanguage]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__AcademicA__activ__2610A626" Association="Self.FK__AcademicA__activ__2610A626">
@@ -6195,6 +6198,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Property Name="account_id" Type="Int32" Nullable="false" />
           <Property Name="notification_type_id" Type="Int32" Nullable="false" />
           <Property Name="is_subscribe" Type="Boolean" Nullable="false" />
+          <Property Name="mail_subscribe" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK__Notificat__accou__3E723F9C" FromRole="NotificationSubscribe" ToRole="Account" />
           <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__3F6663D5" FromRole="NotificationSubscribe" ToRole="NotificationType" />
         </EntityType>
@@ -7064,6 +7068,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
           <Property Name="language_id" Type="Int32" Nullable="false" />
           <Property Name="notification_template" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="notification_type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail_template" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Language" Relationship="Self.FK__Notificat__langu__4242D080" FromRole="NotificationTypeLanguage" ToRole="Language" />
           <NavigationProperty Name="NotificationType" Relationship="Self.FK__Notificat__notif__414EAC47" FromRole="NotificationTypeLanguage" ToRole="NotificationType" />
         </EntityType>
@@ -11463,6 +11468,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="notification_type_id" ColumnName="notification_type_id" />
                 <ScalarProperty Name="is_subscribe" ColumnName="is_subscribe" />
+                <ScalarProperty Name="mail_subscribe" ColumnName="mail_subscribe" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -12202,6 +12208,7 @@ warning 6002: The table/view 'ScienceAndInternationalAffairs.Localization.Notifi
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
                 <ScalarProperty Name="notification_template" ColumnName="notification_template" />
                 <ScalarProperty Name="notification_type_name" ColumnName="notification_type_name" />
+                <ScalarProperty Name="mail_template" ColumnName="mail_template" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
