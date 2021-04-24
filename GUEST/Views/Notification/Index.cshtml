@@ -5,21 +5,33 @@
 }
 
 <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 col-sm-12">
         <!--begin::Card-->
         <div class="card card-custom gutter-b example example-compact">
             <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-6"></div>
+                    <label class="col-3 col-form-label">Thông báo qua hệ thống</label>
+                    <label class="col-3 col-form-label">Thông báo qua mail</label>
+                </div>
                 <!--begin::Form-->
                 @foreach (ENTITIES.CustomModels.SubscribeLanguage item in ViewBag.subscribes)
                 {
-                    <div class="form-group row">
-                        <label class="col-8 col-form-label">@item.TypeName</label>
-                        <div class="col-4">
+                    <div data-type="@item.notification_type_id" class="form-group row subscribe">
+                        <label class="col-6 col-form-label">@item.TypeName</label>
+                        <div class="col-3">
                             <span class="switch switch-outline switch-icon switch-success">
                                 <label>
-                                    <input class="subscribe" data-type="@item.notification_type_id" 
-                                           type="checkbox" @(item.is_subscribe ? "checked" : "") name="select" />
+                                    <input class="system" type="checkbox" @(item.is_subscribe ? "checked" : "") name="select" />
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                        <div class="col-3">
+                            <span class="switch switch-outline switch-icon switch-success">
+                                <label>
+                                    <input class="mail" type="checkbox" @(item.mail_subscribe ? "checked" : "") name="select" />
                                     <span></span>
                                 </label>
                             </span>
@@ -34,7 +46,7 @@
         </div>
         <!--end::Card-->
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-md-2"></div>
 </div>
 
 @section Scripts{
@@ -45,7 +57,8 @@
                 let ele = $(".subscribe").eq(i);
                 temp.push({
                     notification_type_id: ele.data("type"),
-                    is_subscribe: ele.prop("checked")
+                    is_subscribe: ele.find(".system").prop("checked"),
+                    mail_subscribe: ele.find(".mail").prop("checked"),
                 })
             }
             $("#loading").show();

@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="54204b67ddbe4914ac157e00dc492ce5" Name="Diagram1">
+      <Diagram DiagramId="b6c23cffd8f44e0eb581d27fb433fe1b" Name="Diagram1">
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.CommentBase" Width="1.5" PointX="11.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="12.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.sysdiagram" Width="1.5" PointX="8.5" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Account" Width="1.5" PointX="2.25" PointY="59.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.AccountRight" Width="1.5" PointX="4.5" PointY="61.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Area" Width="1.5" PointX="1.5" PointY="80.75" IsExpanded="true" />
@@ -72,7 +72,7 @@
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.SpecializationLanguage" Width="1.5" PointX="9.75" PointY="25.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.TitleLanguage" Width="1.5" PointX="9.75" PointY="37.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotificationBase" Width="1.5" PointX="20.75" PointY="37.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotificationSubscribe" Width="1.5" PointX="20.75" PointY="35" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotificationSubscribe" Width="1.5" PointX="20.75" PointY="33.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.NotificationType" Width="1.5" PointX="10.5" PointY="22.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Citation" Width="1.5" PointX="13.5" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.RequestCitation" Width="1.5" PointX="15.75" PointY="21.875" IsExpanded="true" />
@@ -84,7 +84,7 @@
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Cost" Width="1.5" PointX="15" PointY="31.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.EligibilityCondition" Width="1.5" PointX="15" PointY="18.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.Formality" Width="1.5" PointX="1.5" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.QsUniversity" Width="1.5" PointX="8.5" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.QsUniversity" Width="1.5" PointX="12.5" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.RequestConference" Width="1.5" PointX="12.75" PointY="22.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.ContractType" Width="1.5" PointX="3" PointY="85.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ScienceAndInternationalAffairsModel.PaperType" Width="1.5" PointX="8.25" PointY="11.625" IsExpanded="true" />
