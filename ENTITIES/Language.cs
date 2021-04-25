@@ -22,6 +22,7 @@ namespace ENTITIES
             this.ArticleVersions = new HashSet<ArticleVersion>();
             this.AcademicDegreeLanguages = new HashSet<AcademicDegreeLanguage>();
             this.AcademicDegreeTypeLanguages = new HashSet<AcademicDegreeTypeLanguage>();
+            this.CitationStatusLanguages = new HashSet<CitationStatusLanguage>();
             this.ConferenceConditionLanguages = new HashSet<ConferenceConditionLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
@@ -52,6 +53,8 @@ namespace ENTITIES
         public virtual ICollection<AcademicDegreeLanguage> AcademicDegreeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicDegreeTypeLanguage> AcademicDegreeTypeLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CitationStatusLanguage> CitationStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceConditionLanguage> ConferenceConditionLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -25,8 +25,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYearPaper();
-            List<PaperCriteria> criterias = rewardsReportRepo.getListCriteria();
+            List<String> years = rewardsReportRepo.GetListYearPaper();
+            List<PaperCriteria> criterias = rewardsReportRepo.GetListCriteria();
             ViewBag.years = years;
             ViewBag.criterias = criterias;
             return View();
@@ -37,7 +37,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYearPaper();
+            List<String> years = rewardsReportRepo.GetListYearPaper();
             ViewBag.years = years;
             return View();
         }
@@ -47,7 +47,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYear(50);
+            List<String> years = rewardsReportRepo.GetListYear(50);
             ViewBag.years = years;
             return View();
         }
@@ -61,8 +61,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYear(20);
-            List<PaperCriteria> criterias = rewardsReportRepo.getListCriteria();
+            List<String> years = rewardsReportRepo.GetListYear(20);
+            List<PaperCriteria> criterias = rewardsReportRepo.GetListCriteria();
             ViewBag.years = years;
             ViewBag.criterias = criterias;
             return View();
@@ -77,7 +77,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYearPaper();
+            List<String> years = rewardsReportRepo.GetListYearPaper();
             ViewBag.years = years;
             return View();
         }
@@ -120,7 +120,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.getAriticlesByAreaReports(datatable, searchs, type);
+                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.GetAriticlesByAreaReports(datatable, searchs, type);
                 for (int i = 0; i < output.Item1.Data.Count; i++)
                 {
                     output.Item1.Data[i].valid_date_string = output.Item1.Data[i].valid_date.ToString("dd/MM/yyyy");
@@ -158,7 +158,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.getAwardReportByAuthor(datatable, searchs);
+                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.GetAwardReportByAuthor(datatable, searchs);
                 for (int i = 0; i < data.Data.Count; i++)
                 {
                     data.Data[i].rowNum = datatable.Start + 1 + i;
@@ -196,7 +196,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.getIntellectualPropertyReport(datatable, searchs);
+                Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.GetIntellectualPropertyReport(datatable, searchs);
                 for (int i = 0; i < output.Item1.Data.Count; i++)
                 {
                     output.Item1.Data[i].date_string = output.Item1.Data[i].date.Value.ToString("dd/MM/yyyy");
@@ -223,7 +223,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<CitationByAuthorReport> data = rewardsReportRepo.getCitationByAuthorReport(datatable, searchs).Item1;
+                BaseServerSideData<CitationByAuthorReport> data = rewardsReportRepo.GetCitationByAuthorReport(datatable, searchs).Item1;
                 for (int i = 0; i < data.Data.Count; i++)
                 {
                     data.Data[i].scopus_citation = data.Data[i].scopus_citation == null ? 0 : data.Data[i].scopus_citation;
@@ -261,7 +261,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<ConferencesParticipationReport>, String> output = rewardsReportRepo.getConferencesReport(datatable, searchs);
+                Tuple<BaseServerSideData<ConferencesParticipationReport>, String> output = rewardsReportRepo.GetConferencesReport(datatable, searchs);
                 for (int i = 0; i < output.Item1.Data.Count; i++)
                 {
                     output.Item1.Data[i].dateString = output.Item1.Data[i].attendance_date.ToString("dd/MM/yyyy");

@@ -12,8 +12,8 @@ namespace BLL.ScienceManagement.Report
 {
     public class RewardsReportRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> getAriticlesByAreaReports(BaseDatatable baseDatatable, SearchFilter search, int? paperType, int account_id = 0, int language_id = 1)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public Tuple<BaseServerSideData<ArticlesInoutCountryReports>, string> GetAriticlesByAreaReports(BaseDatatable baseDatatable, SearchFilter search, int? paperType)
         {
             var data = (from a in db.Decisions
                         join b in db.RequestDecisions on a.decision_id equals b.decision_id
@@ -82,9 +82,9 @@ namespace BLL.ScienceManagement.Report
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
             String totalAmount = data.Select(x => x.total_reward).Sum().ToString();
             int recordsTotal = data.Count();
-            return new Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String>(new BaseServerSideData<ArticlesInoutCountryReports>(res, recordsTotal), totalAmount);
+            return new Tuple<BaseServerSideData<ArticlesInoutCountryReports>, string>(new BaseServerSideData<ArticlesInoutCountryReports>(res, recordsTotal), totalAmount);
         }
-        public BaseServerSideData<ReportByAuthorAward> getAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        public BaseServerSideData<ReportByAuthorAward> GetAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search)
         {
             var data = (from a in db.AuthorPapers
                         join b in db.Authors.GroupBy(x => x.mssv_msnv).Select(x => x.FirstOrDefault()) on a.people_id equals b.people_id
@@ -117,11 +117,10 @@ namespace BLL.ScienceManagement.Report
                                                where f1.people_id == b.people_id
                                                select d1.total_reward).ToList(),
                             CitationAward = (from a1 in db.Citations
-                                             from b1 in db.RequestCitations
+                                             join b1 in db.RequestCitations on a1.request_id equals b1.request_id
                                              join d1 in db.Authors on b1.Author equals d1
-                                             where a1.RequestCitations.Contains(b1)
-                                             && d1.people_id == a.people_id
-                                             && b1.status_id == 2
+                                             where d1.people_id == a.people_id
+                                             && b1.citation_status_id == 2
                                              select b1.total_reward).Sum().ToString(),
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
@@ -146,7 +145,7 @@ namespace BLL.ScienceManagement.Report
             int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
-        public Tuple<BaseServerSideData<IntellectualPropertyReport>, String> getIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        public Tuple<BaseServerSideData<IntellectualPropertyReport>, String> GetIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search)
         {
             var data = (from a in db.Decisions
                         join b in db.RequestDecisions on a.decision_id equals b.decision_id
@@ -209,28 +208,24 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
-        public Tuple<BaseServerSideData<CitationByAuthorReport>, String> getCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        public Tuple<BaseServerSideData<CitationByAuthorReport>, String> GetCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search)
         {
             var data = (from a in db.RequestCitations
-                        where a.status_id == 2
+                        where a.citation_status_id == 2
                         select new CitationByAuthorReport
                         {
                             author_name = a.Author.name,
                             scopus_citation = (from a1 in db.Citations
-                                               from b1 in db.RequestCitations
+                                               join b1 in db.RequestCitations on a1.request_id equals b1.request_id
                                                join d1 in db.Authors on b1.Author equals d1
-                                               where a1.RequestCitations.Contains(b1)
-                                               && d1.people_id == a.people_id
-                                               && a1.source == "Scopus" && b1.status_id == 2
-                                               && a == b1
+                                               where d1.people_id == a.people_id && a1.citation_type_id == 2
+                                               && b1.citation_status_id == 2 && a == b1
                                                select a1.count).Sum(),
                             gscholar_citation = (from a1 in db.Citations
-                                                 from b1 in db.RequestCitations
+                                                 join b1 in db.RequestCitations on a1.request_id equals b1.request_id
                                                  join d1 in db.Authors on b1.Author equals d1
-                                                 where a1.RequestCitations.Contains(b1)
-                                                 && d1.people_id == a.people_id
-                                                 && (a1.source == "Google Scholar" || a1.source == "Scholar")
-                                                 && b1.status_id == 2 && a == b1
+                                                 where d1.people_id == a.people_id && a1.citation_type_id == 2
+                                                 && b1.citation_status_id == 1 && a == b1
                                                  select a1.count).Sum(),
                             valid_date = a.BaseRequest.created_date.Value,
                             msnv = a.Author.mssv_msnv,
@@ -257,7 +252,7 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<CitationByAuthorReport>,
                 String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
         }
-        public Tuple<BaseServerSideData<ConferencesParticipationReport>, String> getConferencesReport(BaseDatatable baseDatatable, SearchFilter search, int account_id = 0, int language_id = 1)
+        public Tuple<BaseServerSideData<ConferencesParticipationReport>, String> GetConferencesReport(BaseDatatable baseDatatable, SearchFilter search)
         {
             var data = (from a in db.BaseRequests
                         join b in db.RequestConferences on a.request_id equals b.request_id
@@ -313,19 +308,19 @@ namespace BLL.ScienceManagement.Report
                 String>(new BaseServerSideData<ConferencesParticipationReport>(res, recordsTotal), totalAmount);
         }
 
-        public List<String> getListYearPaper()
+        public List<string> GetListYearPaper()
         {
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
             return data;
         }
-        public List<String> getListYear(int gap)
+        public List<String> GetListYear(int gap)
         {
             int end = DateTime.Now.Year;
             int start = end - gap;
             List<String> data = Enumerable.Range(start, gap + 1).Select(x => x.ToString()).OrderByDescending(x => x).ToList();
             return data;
         }
-        public List<PaperCriteria> getListCriteria()
+        public List<PaperCriteria> GetListCriteria()
         {
             List<int> criteria = new List<int>() { 1, 2, 3, 4, 5 };
             var data = (from a in db.PaperCriterias where criteria.Contains(a.criteria_id) select a).ToList();
