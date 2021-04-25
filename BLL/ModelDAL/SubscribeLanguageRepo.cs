@@ -17,13 +17,14 @@ namespace BLL.ModelDAL
             db = db ?? new ScienceAndInternationalAffairsEntities();
             db.Configuration.LazyLoadingEnabled = false;
             List<SubscribeLanguage> subscribes = (from a in db.NotificationTypeLanguages
-                                                  join b in db.NotificationSubscribes on a.notification_type_id equals b.notification_type_id into subs
+                                                  where a.language_id == language_id
+                                                  join b in db.NotificationSubscribes.Where(x => x.account_id == account_id) on a.notification_type_id equals b.notification_type_id into subs
                                                   from c in subs.DefaultIfEmpty()
-                                                  where (c == null || c.account_id == account_id) && a.language_id == language_id
                                                   select new SubscribeLanguage
                                                   {
                                                       account_id = account_id,
                                                       is_subscribe = c == null || c.is_subscribe,
+                                                      mail_subscribe = c == null || c.mail_subscribe,
                                                       notification_type_id = a.notification_type_id,
                                                       TypeName = a.notification_type_name
                                                   }).ToList();
@@ -50,6 +51,7 @@ namespace BLL.ModelDAL
                         else
                         {
                             subscribe.is_subscribe = item.is_subscribe;
+                            subscribe.mail_subscribe = item.mail_subscribe;
                         }
                     }
                     db.SaveChanges();

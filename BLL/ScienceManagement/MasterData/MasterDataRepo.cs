@@ -55,114 +55,114 @@ namespace BLL.ScienceManagement.MasterData
 
         public bool updateJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                if (file_scopus != null)
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    db.Database.ExecuteSqlCommand("delete from SM_ScientificProduct.Scopus");
-
-                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                    var package = new ExcelPackage(file_scopus.InputStream);
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets.First();
-
-                    int rows = worksheet.Dimension.Rows;
-                    //int columns = worksheet.Dimension.Columns;
-
-                    for (int i = 2; i <= rows; i++)
+                    if (file_scopus != null)
                     {
-                        Scopu temp = new Scopu();
-                        temp.Sourcerecord_ID = worksheet.Cells[i, 1].Value.ToString();
-                        temp.Source_Title_Medline_sourced_journals_are_indicated_in_Green = worksheet.Cells[i, 2].Value.ToString();
-                        if (worksheet.Cells[i, 3].Value != null) temp.Print_ISSN = worksheet.Cells[i, 3].Value.ToString();
-                        if (worksheet.Cells[i, 4].Value != null) temp.E_ISSN = worksheet.Cells[i, 4].Value.ToString();
-                        temp.Active_or_Inactive = worksheet.Cells[i, 5].Value.ToString();
+                        db.Database.ExecuteSqlCommand("delete from SM_ScientificProduct.Scopus");
 
-                        db.Scopus.Add(temp);
-                    }
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        var package = new ExcelPackage(file_scopus.InputStream);
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets.First();
 
-                    db.SaveChanges();
-                }
+                        int rows = worksheet.Dimension.Rows;
+                        //int columns = worksheet.Dimension.Columns;
 
-                if (file_SCIE != null)
-                {
-                    db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SCIE");
-
-                    var reader = new StreamReader(file_SCIE.InputStream);
-                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                    config.Delimiter = ",";
-                    config.HasHeaderRecord = true;
-                    config.BadDataFound = null;
-
-                    using (var csv = new CsvReader(reader, config))
-                    {
-                        int count = 1;
-                        while (csv.Read())
+                        for (int i = 2; i <= rows; i++)
                         {
-                            if (csv.GetField(0) != "Journal title")
-                            {
-                                SCIE temp = new SCIE();
-                                temp.Journal_title = csv.GetField(0);
-                                if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
-                                if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
-                                temp.Publisher_name = csv.GetField(3);
-                                temp.Publisher_address = csv.GetField(4);
-                                if (csv.GetField(5) != "") temp.Languages = csv.GetField(5);
-                                if (csv.GetField(6) != "") temp.Web_of_Science_Categories = csv.GetField(6);
-                                temp.SCIE_id = count.ToString();
-                                count++;
+                            Scopu temp = new Scopu();
+                            temp.Sourcerecord_ID = worksheet.Cells[i, 1].Value.ToString();
+                            temp.Source_Title_Medline_sourced_journals_are_indicated_in_Green = worksheet.Cells[i, 2].Value.ToString();
+                            if (worksheet.Cells[i, 3].Value != null) temp.Print_ISSN = worksheet.Cells[i, 3].Value.ToString();
+                            if (worksheet.Cells[i, 4].Value != null) temp.E_ISSN = worksheet.Cells[i, 4].Value.ToString();
+                            temp.Active_or_Inactive = worksheet.Cells[i, 5].Value.ToString();
 
-                                db.SCIEs.Add(temp);
-                            }
+                            db.Scopus.Add(temp);
                         }
+
                         db.SaveChanges();
                     }
-                }
 
-                if (file_SSCI != null)
-                {
-                    db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SSCI");
-
-                    var reader = new StreamReader(file_SSCI.InputStream);
-                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                    config.Delimiter = ",";
-                    config.HasHeaderRecord = true;
-                    config.BadDataFound = null;
-
-                    using (var csv = new CsvReader(reader, config))
+                    if (file_SCIE != null)
                     {
-                        int count = 1;
-                        while (csv.Read())
+                        db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SCIE");
+
+                        var reader = new StreamReader(file_SCIE.InputStream);
+                        CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                        config.Delimiter = ",";
+                        config.HasHeaderRecord = true;
+                        config.BadDataFound = null;
+
+                        using (var csv = new CsvReader(reader, config))
                         {
-                            if (csv.GetField(0) != "Journal title")
+                            int count = 1;
+                            while (csv.Read())
                             {
-                                SSCI temp = new SSCI();
-                                temp.Journal_title = csv.GetField(0);
-                                if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
-                                if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
-                                temp.Publisher_name = csv.GetField(3);
-                                temp.Publisher_address = csv.GetField(4);
-                                if (csv.GetField(5) != "") temp.Languages = csv.GetField(5);
-                                if (csv.GetField(6) != "") temp.Web_of_Science_Categories = csv.GetField(6);
-                                temp.SSCI_id = count.ToString();
-                                count++;
+                                if (csv.GetField(0) != "Journal title")
+                                {
+                                    SCIE temp = new SCIE();
+                                    temp.Journal_title = csv.GetField(0);
+                                    if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
+                                    if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
+                                    temp.Publisher_name = csv.GetField(3);
+                                    temp.Publisher_address = csv.GetField(4);
+                                    if (csv.GetField(5) != "") temp.Languages = csv.GetField(5);
+                                    if (csv.GetField(6) != "") temp.Web_of_Science_Categories = csv.GetField(6);
+                                    temp.SCIE_id = count.ToString();
+                                    count++;
 
-                                db.SSCIs.Add(temp);
+                                    db.SCIEs.Add(temp);
+                                }
                             }
+                            db.SaveChanges();
                         }
-                        db.SaveChanges();
                     }
-                }
 
-                dbc.Commit();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return false;
-            }
+                    if (file_SSCI != null)
+                    {
+                        db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SSCI");
+
+                        var reader = new StreamReader(file_SSCI.InputStream);
+                        CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
+                        config.Delimiter = ",";
+                        config.HasHeaderRecord = true;
+                        config.BadDataFound = null;
+
+                        using (var csv = new CsvReader(reader, config))
+                        {
+                            int count = 1;
+                            while (csv.Read())
+                            {
+                                if (csv.GetField(0) != "Journal title")
+                                {
+                                    SSCI temp = new SSCI();
+                                    temp.Journal_title = csv.GetField(0);
+                                    if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
+                                    if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
+                                    temp.Publisher_name = csv.GetField(3);
+                                    temp.Publisher_address = csv.GetField(4);
+                                    if (csv.GetField(5) != "") temp.Languages = csv.GetField(5);
+                                    if (csv.GetField(6) != "") temp.Web_of_Science_Categories = csv.GetField(6);
+                                    temp.SSCI_id = count.ToString();
+                                    count++;
+
+                                    db.SSCIs.Add(temp);
+                                }
+                            }
+                            db.SaveChanges();
+                        }
+                    }
+
+                    dbc.Commit();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return false;
+                }
         }
 
         public static BaseServerSideData<CustomISI> getListAllISI(BaseDatatable baseDatatable, string name_search)
@@ -204,101 +204,101 @@ namespace BLL.ScienceManagement.MasterData
 
         public int AddPaperCriteria(string name)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).FirstOrDefault();
-                if (ck != null) return -1;
-                else
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    PaperCriteria pc = new PaperCriteria
+                    PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).FirstOrDefault();
+                    if (ck != null) return -1;
+                    else
                     {
-                        name = name,
-                    };
-                    db.PaperCriterias.Add(pc);
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return pc.criteria_id;
+                        PaperCriteria pc = new PaperCriteria
+                        {
+                            name = name,
+                        };
+                        db.PaperCriterias.Add(pc);
+                        db.SaveChanges();
+                        dbc.Commit();
+                        return pc.criteria_id;
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                dbc.Rollback();
-                Console.WriteLine(e.Message);
-                return 0;
-            }
+                catch (Exception e)
+                {
+                    dbc.Rollback();
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
         }
 
         public bool addNewPolicy(HttpPostedFileBase file, List<PaperCriteria> list, Account acc)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadPolicyFile(file);
-                ENTITIES.File fl = new ENTITIES.File
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    link = f.WebViewLink,
-                    file_drive_id = f.Id,
-                    name = f.Name
-                };
-                db.Files.Add(fl);
-                db.SaveChanges();
+                    Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadPolicyFile(file);
+                    ENTITIES.File fl = new ENTITIES.File
+                    {
+                        link = f.WebViewLink,
+                        file_drive_id = f.Id,
+                        name = f.Name
+                    };
+                    db.Files.Add(fl);
+                    db.SaveChanges();
 
-                string sql_getLastPolicyPaper = @"select MAX(p.policy_id) as 'policy_id', p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id
+                    string sql_getLastPolicyPaper = @"select MAX(p.policy_id) as 'policy_id', p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id
                                                 from SM_Request.Policy p
                                                 where p.policy_type_id = 2 
                                                 group by p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id";
-                Policy p = db.Database.SqlQuery<Policy>(sql_getLastPolicyPaper).FirstOrDefault();
-                p.expired_date = DateTime.Now;
-                db.Entry(p).State = EntityState.Modified;
-                db.SaveChanges();
+                    Policy p = db.Database.SqlQuery<Policy>(sql_getLastPolicyPaper).FirstOrDefault();
+                    p.expired_date = DateTime.Now;
+                    db.Entry(p).State = EntityState.Modified;
+                    db.SaveChanges();
 
-                Policy newPolicy = new Policy()
-                {
-                    valid_date = DateTime.Now,
-                    file_id = fl.file_id,
-                    account_id = acc.account_id,
-                    policy_type_id = 2
-                };
-                db.Policies.Add(newPolicy);
-                db.SaveChanges();
+                    Policy newPolicy = new Policy()
+                    {
+                        valid_date = DateTime.Now,
+                        file_id = fl.file_id,
+                        account_id = acc.account_id,
+                        policy_type_id = 2
+                    };
+                    db.Policies.Add(newPolicy);
+                    db.SaveChanges();
 
-                foreach (var item in list)
-                {
-                    item.policy_id = newPolicy.policy_id;
-                    db.PaperCriterias.Add(item);
+                    foreach (var item in list)
+                    {
+                        item.policy_id = newPolicy.policy_id;
+                        db.PaperCriterias.Add(item);
+                    }
+                    db.SaveChanges();
+
+                    dbc.Commit();
+                    return true;
                 }
-                db.SaveChanges();
-
-                dbc.Commit();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return false;
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return false;
+                }
         }
 
         public string DeletePaperCriteria(string cri_id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                int criteria_id = Int32.Parse(cri_id);
-                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id && x.Policy.policy_type_id == 2 && x.Policy.expired_date == null).FirstOrDefault();
-                db.Entry(pc).State = EntityState.Modified;
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    int criteria_id = Int32.Parse(cri_id);
+                    PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id && x.Policy.policy_type_id == 2 && x.Policy.expired_date == null).FirstOrDefault();
+                    db.Entry(pc).State = EntityState.Modified;
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public List<PaperCriteria> getPaperCriteria()
@@ -378,21 +378,21 @@ namespace BLL.ScienceManagement.MasterData
 
         public ENTITIES.File addFile(ENTITIES.File file)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                db.Files.Add(file);
-                db.SaveChanges();
-                dbc.Commit();
-                return file;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    db.Files.Add(file);
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return file;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
 
-                return null;
-            }
+                    return null;
+                }
         }
 
         public string GetPaperCriteria(string id)
@@ -404,23 +404,23 @@ namespace BLL.ScienceManagement.MasterData
 
         public string UpdatePaperCriteria(string id, string name)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                int criteria_id = Int32.Parse(id);
-                PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
-                pc.name = name;
-                db.Entry(pc).State = EntityState.Modified;
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    int criteria_id = Int32.Parse(id);
+                    PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
+                    pc.name = name;
+                    db.Entry(pc).State = EntityState.Modified;
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public List<Title2Name> getListTitle_2Lang()
@@ -455,54 +455,54 @@ namespace BLL.ScienceManagement.MasterData
 
         public string updateTitle(int id, string tv, string ta)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                TitleLanguage tl = db.TitleLanguages.Where(x => x.title_id == id).Where(x => x.language_id == 1).FirstOrDefault();
-                if (tl == null)
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    tl = new TitleLanguage
+                    TitleLanguage tl = db.TitleLanguages.Where(x => x.title_id == id).Where(x => x.language_id == 1).FirstOrDefault();
+                    if (tl == null)
                     {
-                        language_id = 1,
-                        title_id = id,
-                        name = tv
-                    };
-                    db.TitleLanguages.Add(tl);
-                }
-                else
-                {
-                    tl.name = tv;
-                    db.Entry(tl).State = EntityState.Modified;
-                }
-                //db.SaveChanges();
-
-                TitleLanguage tl2 = db.TitleLanguages.Where(x => x.title_id == id).Where(x => x.language_id == 2).FirstOrDefault();
-                if (tl2 == null)
-                {
-                    tl2 = new TitleLanguage
+                        tl = new TitleLanguage
+                        {
+                            language_id = 1,
+                            title_id = id,
+                            name = tv
+                        };
+                        db.TitleLanguages.Add(tl);
+                    }
+                    else
                     {
-                        language_id = 2,
-                        title_id = id,
-                        name = ta
-                    };
-                    db.TitleLanguages.Add(tl2);
-                }
-                else
-                {
-                    tl2.name = ta;
-                    db.Entry(tl2).State = EntityState.Modified;
-                }
+                        tl.name = tv;
+                        db.Entry(tl).State = EntityState.Modified;
+                    }
+                    //db.SaveChanges();
 
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+                    TitleLanguage tl2 = db.TitleLanguages.Where(x => x.title_id == id).Where(x => x.language_id == 2).FirstOrDefault();
+                    if (tl2 == null)
+                    {
+                        tl2 = new TitleLanguage
+                        {
+                            language_id = 2,
+                            title_id = id,
+                            name = ta
+                        };
+                        db.TitleLanguages.Add(tl2);
+                    }
+                    else
+                    {
+                        tl2.name = ta;
+                        db.Entry(tl2).State = EntityState.Modified;
+                    }
+
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public int addTitle(string tv, string ta)
@@ -511,57 +511,57 @@ namespace BLL.ScienceManagement.MasterData
             TitleLanguage ck2 = db.TitleLanguages.Where(x => x.language_id == 2).Where(x => x.name == ta).FirstOrDefault();
             if (ck1 != null || ck2 != null) return -1;
 
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                Title t = new Title();
-                db.Titles.Add(t);
-                db.SaveChanges();
-
-                TitleLanguage tl1 = new TitleLanguage
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    language_id = 1,
-                    name = tv,
-                    title_id = t.title_id
-                };
-                db.TitleLanguages.Add(tl1);
+                    Title t = new Title();
+                    db.Titles.Add(t);
+                    db.SaveChanges();
 
-                TitleLanguage tl2 = new TitleLanguage
+                    TitleLanguage tl1 = new TitleLanguage
+                    {
+                        language_id = 1,
+                        name = tv,
+                        title_id = t.title_id
+                    };
+                    db.TitleLanguages.Add(tl1);
+
+                    TitleLanguage tl2 = new TitleLanguage
+                    {
+                        language_id = 2,
+                        name = ta,
+                        title_id = t.title_id
+                    };
+                    db.TitleLanguages.Add(tl2);
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return t.title_id;
+                }
+                catch (Exception e)
                 {
-                    language_id = 2,
-                    name = ta,
-                    title_id = t.title_id
-                };
-                db.TitleLanguages.Add(tl2);
-                db.SaveChanges();
-                dbc.Commit();
-                return t.title_id;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return 0;
-            }
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return 0;
+                }
         }
 
         public string deleteTitle(int id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                string sql = @"delete from [Localization].TitleLanguage where title_id = @id
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    string sql = @"delete from [Localization].TitleLanguage where title_id = @id
                                 delete from [SM_MasterData].Title where title_id = @id";
-                db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+                    db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
     }
 }

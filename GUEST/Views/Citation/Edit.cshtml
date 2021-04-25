@@ -200,7 +200,7 @@
             }
 
             $.ajax({
-                url: "@Url.Action("editCitation", "Citation")",
+                url: "@Url.Action("EditCitation", "Citation")",
                 type: "POST",
                 data: JSON.stringify({ 'citation': citation, 'people': people, 'request_id': "@ViewBag.request_id" }),
                 contentType: "application/json;charset=utf-8",

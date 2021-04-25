@@ -10,7 +10,7 @@ namespace MANAGER.Controllers.ScienceManagement.Decision
         // GET: Decision
         public ActionResult History()
         {
-            List<ENTITIES.Decision> list = dr.getListDecision("");
+            List<ENTITIES.Decision> list = dr.GetListDecision("");
             ViewBag.list = list;
             return View();
         }
@@ -21,8 +21,8 @@ namespace MANAGER.Controllers.ScienceManagement.Decision
             if (search == null) search = "";
             try
             {
-                List<ENTITIES.Decision> list = dr.getListDecision(search);
-                return Json(new { list = list, mess = true }, JsonRequestBehavior.AllowGet);
+                List<ENTITIES.Decision> list = dr.GetListDecision(search);
+                return Json(new { list, mess = true }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -33,8 +33,8 @@ namespace MANAGER.Controllers.ScienceManagement.Decision
         [HttpPost]
         public JsonResult deleteItem(int cri_id)
         {
-            string mess = dr.deleteDecision(cri_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            string mess = dr.DeleteDecision(cri_id);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

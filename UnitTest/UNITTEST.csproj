@@ -143,6 +143,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Demo.cs" />
     <Compile Include="Lib.cs" />
+    <Compile Include="ScienceManagement\Researchers\ResearcherBiographyTest.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyAddRepoTests.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyDetailRepoTests.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyEditRepoTests.cs" />
+    <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepoTests.cs" />
+    <Compile Include="ScienceManagement\Citation\CitationRepoTests.cs" />
+    <Compile Include="ScienceManagement\Researchers\ResearcherDetailTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -155,7 +162,6 @@
     <Folder Include="InternationalCollaboration\AcademicCollaborationRepository\" />
     <Folder Include="InternationalCollaboration\MasterData\" />
     <Folder Include="ModelDAL\" />
-    <Folder Include="ScienceManagement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADMIN\ADMIN.csproj">
