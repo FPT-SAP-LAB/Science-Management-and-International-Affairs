@@ -1,5 +1,7 @@
-﻿using BLL.ScienceManagement.Invention;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.Invention;
 using BLL.ScienceManagement.MasterData;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -46,6 +48,15 @@ namespace MANAGER.Controllers
             ViewBag.author = listAuthor;
 
             ViewBag.request_id = item.request_id;
+
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            ViewBag.acc = acc;
 
             return View();
         }
