@@ -134,7 +134,7 @@ namespace BLL.InternationalCollaboration.Dashboard
                 string query = @"SELECT COUNT(partner_id) 'count' FROM (SELECT DISTINCT (mp.partner_id)
                             FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
                             ON mou.mou_id = mp.mou_id
-                            WHERE (YEAR(mp.mou_start_date) <= {0})) a";
+                            WHERE (YEAR(mp.mou_start_date) <= {0} AND mou.is_deleted = 0)) a";
 
                 int collab = db.Database.SqlQuery<int>(query, year).FirstOrDefault();
 
@@ -153,8 +153,8 @@ namespace BLL.InternationalCollaboration.Dashboard
                 db = new ScienceAndInternationalAffairsEntities();
                 string query = @"SELECT COUNT(collab_id) 'count'
                         FROM IA_AcademicCollaboration.AcademicCollaboration
-                        WHERE YEAR(plan_study_start_date) = {0} and is_supported = 1 
-                        GROUP BY is_supported";
+                        WHERE YEAR(plan_study_start_date) = {0} and is_supported = 1 and direction_id = 1 and collab_type_id = 2
+                        GROUP BY is_supported, direction_id, collab_type_id";
 
                 int support = db.Database.SqlQuery<int>(query, year).FirstOrDefault();
 
