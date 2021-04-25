@@ -23,10 +23,7 @@ namespace User.Controllers
         private readonly CommentRepo crr = new CommentRepo();
         private readonly PaperRepo pr = new PaperRepo();
 
-        private readonly List<PageTree> pagesTree = new List<PageTree>
-        {
-
-        };
+        private readonly List<PageTree> pagesTree = new List<PageTree>();
         // GET: Citation
 
         [Auther(RightID = "29")]
