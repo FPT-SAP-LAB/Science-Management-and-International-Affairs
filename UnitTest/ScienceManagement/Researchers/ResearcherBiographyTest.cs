@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
+﻿using BLL.ScienceManagement.Researcher;
+using BLL.ScienceManagement.ResearcherListRepo;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ENTITIES.CustomModels.ScienceManagement;
-using BLL.ScienceManagement.Researcher;
-using BLL.ScienceManagement.ResearcherListRepo;
-using ENTITIES.CustomModels.Datatable;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTest.ScienceManagement.Researchers
 {
@@ -31,6 +31,6 @@ namespace UnitTest.ScienceManagement.Researchers
             var resList = _researcherListRepo.GetAwards(resId);
             Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(0, resList.Count);
         }
-        
+
     }
 }
