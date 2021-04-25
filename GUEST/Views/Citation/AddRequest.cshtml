@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
+
+<style>
+    .citationE {
+        display: none !important
+    }
+</style>
+
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
@@ -26,11 +33,36 @@
                                     </tr>
                                 </thead>
                                 <tbody id="trichdan_body">
+                                    <tr id="baseCost">
+                                        <td>
+                                            <select class="form-control trichdan_source">
+                                                @foreach (ENTITIES.CitationType item in ViewBag.citationTypes)
+                                                {
+                                                    <option value="@item.citation_type_id">@item.citation_type_name</option>
+                                                }
+                                            </select>
+                                        </td>
+                                        <td><input autocomplete='off' type='number' class='form-control trichdan_count' min='0' /></td>
+                                        <td><input autocomplete='off' type='text' class='form-control trichdan_link' /></td>
+                                        <td><a onclick="deleteCost(this)" class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a></td>
+                                    </tr>
                                 </tbody>
                             </table>
-                            <div class="col-xl-12" style="text-align: end">
-                                <button class="btn btn-light-primary px-6 font-weight-bold addrow">@rm.GetString("AddRow")</button>
-                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12" style="text-align: end;">
+                            <a onclick="addCost()" class="btn btn-success font-weight-bolder">
+                                <span class="svg-icon svg-icon-md">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                        </g>
+                                    </svg><!--end::Svg Icon-->
+                                </span> @rm.GetString("AddRow")
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -50,24 +82,20 @@
 @section scripts{
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
+        var tbodyCost = document.getElementById("trichdan_body");
+        var baseCost = document.getElementById("baseCost").cloneNode(true);
+
         var people = [];
         var citation = [];
-        $(document).ready(function () {
-            $('.citationE').attr('style', 'display:none !important');
-        });
-        $(".addrow").click(function () {
-            var id = new Date().getTime();
-            $("#trichdan_body").append("<tr id=" + id + ">" +
-                "<td><input autocomplete='off' type='text' class='form-control trichdan_source' /></td>" +
-                "<td><input autocomplete='off' type='number' class='form-control trichdan_count' min='0' /></td>" +
-                "<td><input autocomplete='off' type='text' class='form-control trichdan_link' /></td>" +
-                "<td><a onclick='deleteRow(" + id + ")' class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a></td>" +
-                "</tr>");
-        });
 
-        function deleteRow(id) {
-            var row = document.getElementById(id);
-            row.parentNode.removeChild(row);
+        function deleteCost(ele) {
+            ele.closest("tr").remove();
+            calculateTotalCost();
+        }
+
+        function addCost() {
+            let temp = baseCost.cloneNode(true);
+            tbodyCost.append(temp);
         }
 
         function addAuthor() {
@@ -116,7 +144,7 @@
             for (var i = 0; i < inputSource.length; i++) {
                 if ($(inputSource[i]).val() != "" && $(inputCount[i]).val() != "" && $(inputLink[i]).val() != "") {
                     var oneCitation = {
-                        source: $(inputSource[i]).val(),
+                        citation_type_id: $(inputSource[i]).val(),
                         count: $(inputCount[i]).val(),
                         link: $(inputLink[i]).val()
                     };
@@ -143,6 +171,9 @@
                 $("#loading").hide();
                 return false;
             }
+
+            console.log(citation);
+            console.log(AddAuthor);
 
             $.ajax({
                 url: "@Url.Action("AddCitation", "Citation")",
