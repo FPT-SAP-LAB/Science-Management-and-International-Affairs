@@ -149,6 +149,7 @@
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyEditRepoTests.cs" />
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepoTests.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepoTests.cs" />
+    <Compile Include="ScienceManagement\Researchers\ResearcherDetailTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

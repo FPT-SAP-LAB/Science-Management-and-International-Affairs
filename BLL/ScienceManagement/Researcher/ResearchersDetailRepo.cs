@@ -9,7 +9,7 @@ namespace BLL.ScienceManagement.Researcher
     {
         ResearchersBiographyRepo researcherBiographyRepo;
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public ResearcherDetail GetProfile(int id)
+        public ResearcherDetail GetProfile(int id, int language_id)
         {
             var profile = (
                 from a in db.People
@@ -33,10 +33,14 @@ namespace BLL.ScienceManagement.Researcher
                     cv = b.cv,
                     profile_page_active = b.profile_page_active
                 }).FirstOrDefault();
+            if (profile == null)
+            {
+                return null;
+            }
             var interested_fields = (from a in db.Profiles
                                      from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
                                      join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
-                                     where a.people_id == id && h.language_id == 1
+                                     where a.people_id == id && h.language_id == language_id
                                      select new SelectField
                                      {
                                          id = h.research_area_id,
@@ -47,7 +51,7 @@ namespace BLL.ScienceManagement.Researcher
                                               where !((from m in db.Profiles
                                                        from n in db.ResearchAreas
                                                        where m.ResearchAreas.Contains(n) && m.people_id == id
-                                                       select n.research_area_id).Contains(h.research_area_id)) && h.language_id == 1
+                                                       select n.research_area_id).Contains(h.research_area_id)) && h.language_id == language_id
                                               select new SelectField
                                               {
                                                   id = h.research_area_id,
@@ -57,7 +61,7 @@ namespace BLL.ScienceManagement.Researcher
             var title_fields = (from a in db.Profiles
                                 from g in db.Titles.Where(x => x.Profiles.Contains(a))
                                 join h in db.TitleLanguages on g.title_id equals h.title_id
-                                where a.people_id == id && h.language_id == 1
+                                where a.people_id == id && h.language_id == language_id
                                 select new SelectField
                                 {
                                     id = h.title_id,
@@ -68,7 +72,7 @@ namespace BLL.ScienceManagement.Researcher
                                          where !((from m in db.Profiles
                                                   from n in db.Titles
                                                   where m.title_id == n.title_id && m.people_id == id
-                                                  select n.title_id).Contains(h.title_id)) && h.language_id == 1
+                                                  select n.title_id).Contains(h.title_id)) && h.language_id == language_id
                                          select new SelectField
                                          {
                                              id = h.title_id,
@@ -78,7 +82,7 @@ namespace BLL.ScienceManagement.Researcher
             var position_fields = (from a in db.PeoplePositions
                                    join g in db.Positions on a.position_id equals g.position_id
                                    join h in db.PositionLanguages on g.position_id equals h.position_id
-                                   where a.people_id == id && h.language_id == 1
+                                   where a.people_id == id && h.language_id == language_id
                                    select new SelectField
                                    {
                                        id = h.position_id,
@@ -88,7 +92,7 @@ namespace BLL.ScienceManagement.Researcher
                                             join h in db.PositionLanguages on g.position_id equals h.position_id
                                             where !((from m in db.PeoplePositions
                                                      where m.people_id == id
-                                                     select m.position_id).Contains(h.position_id)) && h.language_id == 1
+                                                     select m.position_id).Contains(h.position_id)) && h.language_id == language_id
                                             select new SelectField
                                             {
                                                 id = h.position_id,
@@ -190,8 +194,13 @@ namespace BLL.ScienceManagement.Researcher
                    cv = b.cv,
                    profile_page_active = b.profile_page_active
                }).FirstOrDefault();
+
+            if (profile == null)
+            {
+                return null;
+            }
             profile.awards = researcherBiographyRepo.GetAwards(id);
-            profile.acadBiography = researcherBiographyRepo.GetAcadHistory(id);
+            profile.acadBiography = researcherBiographyRepo.GetAcadHistory(id, language_id);
             return profile;
         }
     }

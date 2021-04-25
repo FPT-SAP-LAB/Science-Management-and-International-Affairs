@@ -30,13 +30,14 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             ViewBag.pagesTree = pagesTree;
             ////////////////////////////////////////////
+            int languageId= LanguageResource.GetCurrentLanguageID();
             researcherListRepo = new ResearchersListRepo();
             BaseDatatable datatable = new BaseDatatable();
             datatable.Start = 0;
             datatable.Length = ListGuestLenght;
             datatable.SortColumnName = "name";
             datatable.SortDirection = "asc";
-            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
+            BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "", languageId);
             ViewBag.list = list;
             ViewBag.initNumber = datatable.Length;
             ////////////////////////////////////////////
@@ -46,6 +47,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             try
             {
+                int languageId = LanguageResource.GetCurrentLanguageID();
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable
                 {
@@ -54,7 +56,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                     SortColumnName = "name",
                     SortDirection = "asc"
                 };
-                BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "");
+                BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "", languageId);
                 ViewBag.list = list;
                 int initNumber = datatable.Start < list.RecordsTotal ? (list.RecordsTotal + datatable.Length) : list.RecordsTotal;
                 return Json(new { success = true, list, initNumber });
@@ -89,6 +91,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
                new PageTree("Chỉnh sửa thông tin", "#"),
            };
+            int languageId = LanguageResource.GetCurrentLanguageID();
             researcherDetailRepo = new ResearchersDetailRepo();
             researcherBiographyRepo = new ResearchersBiographyRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
@@ -99,9 +102,9 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 Response.Redirect("/ErrorPage/Error");
             }
-            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id, languageId);
             List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
-            List<SelectField> listTitles = researcherBiographyRepo.getTitles();
+            List<SelectField> listTitles = researcherBiographyRepo.getTitles(languageId);
             ViewBag.listAcadDegree = listAcadDegree;
             ViewBag.listTitles = listTitles;
             ViewBag.profile = profile;
@@ -120,9 +123,10 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             try
             {
+                int languageId = LanguageResource.GetCurrentLanguageID();
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 int id = Int32.Parse(Request.QueryString["id"]);
-                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id,languageId);
                 return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
