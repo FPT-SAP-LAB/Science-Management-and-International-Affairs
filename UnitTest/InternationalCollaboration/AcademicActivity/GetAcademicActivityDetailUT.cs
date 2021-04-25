@@ -31,10 +31,22 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             baseAA detail = guestRepo.getBaseAADetail(1, 1);
             Assert.Pass();
         }
+        [TestCase]
         public void GetAcademicActivityDetailUT_3()
         {
             guestRepo = new AcademicActivityGuestRepo();
             baseAA detail = guestRepo.getBaseAADetail(1, 2);
+            Assert.Pass();
+        }
+        [TestCase]
+        public void GetAcademicActivityDetailUT_4()
+        {
+            guestRepo = new AcademicActivityGuestRepo();
+            baseAA detail = guestRepo.getBaseAADetail(1, 2);
+            if (detail != null)
+            {
+                List<subContent> subContents = guestRepo.GetSubContent(1, 2);
+            }
             Assert.Pass();
         }
     }
