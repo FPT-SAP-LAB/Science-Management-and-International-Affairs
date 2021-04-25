@@ -36,6 +36,7 @@ namespace BLL.ScienceManagement.ArticlePolicy
                     foreach (var item in articleVersions)
                     {
                         item.publish_time = now;
+                        item.account_id = account_id;
                         article.ArticleVersions.Add(item);
                     }
 

@@ -20,7 +20,9 @@ namespace ENTITIES
         public string article_content { get; set; }
         public int article_id { get; set; }
         public int language_id { get; set; }
+        public Nullable<int> account_id { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual Article Article { get; set; }
         public virtual Language Language { get; set; }
     }
