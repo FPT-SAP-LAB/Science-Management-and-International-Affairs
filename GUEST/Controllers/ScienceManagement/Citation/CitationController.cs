@@ -55,10 +55,6 @@ namespace User.Controllers
 
             List<ListOnePerson_Citation> list = cr.GetList(CurrentAccount.AccountID(Session));
             ViewBag.list = list;
-            for (int i = 0; i < list.Count; i++)
-            {
-                list[i].note = list[i].status_id + "_" + list[i].request_id;
-            }
             return View();
         }
 

@@ -72,7 +72,7 @@ namespace MANAGER.Controllers
         public JsonResult editCitation(string request_id, string total)
         {
             string mess = cr.UpdateReward(request_id, total);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -97,21 +97,21 @@ namespace MANAGER.Controllers
             ENTITIES.File myFile = mrd.addFile(fl);
             string mess = cr.UploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatus(string request_id)
         {
             string mess = cr.ChangeStatus(request_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteRequest(int id)
         {
             string mess = cr.DeleteRequest(id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
