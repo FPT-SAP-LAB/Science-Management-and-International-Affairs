@@ -1,4 +1,5 @@
 ﻿using BLL.ModelDAL;
+using BLL.InternationalCollaboration.AcademicActivity;
 using Microsoft.AspNet.SignalR;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +26,8 @@ namespace MANAGER
         {
             NotificationRepo.GuestURI = GuestURI;
             NotificationRepo.ManagerURI = ManagerURI;
+            FormRepo.GuestURL = GuestURI;
+            FormRepo.ManagerURL = ManagerURI;
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseOpenIdConnectAuthentication(
