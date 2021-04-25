@@ -78,7 +78,7 @@ namespace User.Controllers
 
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
-            ViewBag.ckEdit = rc.status_id;
+            ViewBag.ckEdit = rc.citation_status_id;
 
             return View();
         }

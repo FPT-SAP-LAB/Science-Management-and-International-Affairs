@@ -63,7 +63,7 @@ namespace BLL.ScienceManagement.DecisionHistory
                         foreach (var item in list)
                         {
                             RequestCitation temp = db.RequestCitations.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                            temp.status_id = 4;
+                            temp.citation_status_id = 4;
                             db.Entry(temp).State = EntityState.Modified;
                         }
                     }

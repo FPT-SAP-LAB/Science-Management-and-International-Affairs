@@ -12,15 +12,18 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class Citation
+    public partial class CitationType
     {
-        public int citation_id { get; set; }
-        public int count { get; set; }
-        public string link { get; set; }
-        public int citation_type_id { get; set; }
-        public int request_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CitationType()
+        {
+            this.Citations = new HashSet<Citation>();
+        }
     
-        public virtual CitationType CitationType { get; set; }
-        public virtual RequestCitation RequestCitation { get; set; }
+        public int citation_type_id { get; set; }
+        public string citation_type_name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Citation> Citations { get; set; }
     }
 }
