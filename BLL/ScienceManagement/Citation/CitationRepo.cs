@@ -22,17 +22,22 @@ namespace BLL.ScienceManagement.Citation
             if (account_id <= 0 || account_id == int.MaxValue)
                 return null;
 
-            string sql = @"select STRING_AGG(c.source, ',') AS 'source',SUM(c.count) as 'count', br.created_date, rc.status_id, rc.request_id
-                           from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
-	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
-	                            join [SM_Request].BaseRequest br on br.request_id = rc.request_id
-                           where br.account_id = @id
-                           group by br.created_date, rc.status_id,  rc.request_id";
-            List<ListOnePerson_Citation> list = db.Database.SqlQuery<ListOnePerson_Citation>(sql, new SqlParameter("id", account_id)).ToList();
-            for (int i = 0; i < list.Count; i++)
-            {
-                list[i].note = list[i].status_id + "_" + list[i].request_id;
-            }
+            List<ListOnePerson_Citation> list = (from a in db.RequestCitations
+                                                 join b in db.BaseRequests on a.request_id equals b.request_id
+                                                 where b.account_id == account_id
+                                                 select new ListOnePerson_Citation
+                                                 {
+                                                     count = a.Citations.Select(x => x.count).Sum(),
+                                                     created_date = b.created_date.Value,
+                                                     note = a.citation_status_id + "_" + a.request_id,
+                                                     request_id = a.request_id,
+                                                     TypeNames = (from c in db.CitationTypes
+                                                                  join d in db.Citations on c.citation_type_id equals d.citation_type_id
+                                                                  where d.request_id == a.request_id
+                                                                  select c.citation_type_name).Distinct().ToList(),
+                                                     status_id = a.citation_status_id
+                                                 }).ToList();
+            list.ForEach(x => x.source = string.Join(", ", x.TypeNames));
             return list;
         }
 
@@ -58,8 +63,8 @@ namespace BLL.ScienceManagement.Citation
                 return null;
 
             string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ah.identification_file_link, ah.people_id
-                            from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
-	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
+                            from [SM_Citation].Citation c
+	                            join [SM_Citation].RequestCitation rc on c.request_id = rc.request_id
 	                            join [SM_ScientificProduct].Author ah on rc.people_id = ah.people_id
 	                            join [General].Office o on o.office_id = ah.office_id
 	                            join [SM_MasterData].ContractType ct on ah.contract_id = ct.contract_id
@@ -143,12 +148,7 @@ namespace BLL.ScienceManagement.Citation
             if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return null;
 
-            string sql = @"select c.*
-                           from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
-	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
-                           where rc.request_id = @id";
-            List<ENTITIES.Citation> list = db.Database.SqlQuery<ENTITIES.Citation>(sql, new SqlParameter("id", request_id)).ToList();
-            return list;
+            return db.Citations.Where(x => x.request_id == request_id).ToList();
         }
 
         public Author EditAuthor(List<AddAuthor> people)
