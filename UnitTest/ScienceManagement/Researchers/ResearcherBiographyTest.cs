@@ -16,8 +16,8 @@ namespace UnitTest.ScienceManagement.Researchers
     public class ResearcherBiographyTest
     {
         private ResearchersBiographyRepo _researcherListRepo;
-        private int vieLang=1;
-        private int enLang =2;
+        private int vieLang = 1;
+        private int enLang = 2;
         [TestInitialize]
         public void Setup()
         {
@@ -56,16 +56,16 @@ namespace UnitTest.ScienceManagement.Researchers
         [DataRow(int.MinValue)]
         public void getResearcherAcadHistoryVietnamese(int id)
         {
-            var res = _researcherListRepo.GetAcadHistory(id,vieLang);
+            var res = _researcherListRepo.GetAcadHistory(id, vieLang);
             Assert.AreEqual(0, res.Count);
         }
-        
+
         [TestMethod]
         [DataRow(int.MaxValue)]
         [DataRow(int.MinValue)]
         public void getResearcherAcadHistoryEng(int id)
         {
-            var res = _researcherListRepo.GetAcadHistory(id,enLang);
+            var res = _researcherListRepo.GetAcadHistory(id, enLang);
             Assert.AreEqual(0, res.Count);
         }
     }

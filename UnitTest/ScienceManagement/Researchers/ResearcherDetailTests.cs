@@ -30,10 +30,10 @@ namespace UnitTest.ScienceManagement.Researchers
         [DataRow(int.MinValue)]
         public void GetResearcerProfileByIdMANAGER(int id)
         {
-            var resVie = _researcherDetailRepo.GetProfile(id,vieLang);
-            var resEng = _researcherDetailRepo.GetProfile(id,enLang);
-            Assert.AreEqual(null,resVie);
-            Assert.AreEqual(null,resEng);
+            var resVie = _researcherDetailRepo.GetProfile(id, vieLang);
+            var resEng = _researcherDetailRepo.GetProfile(id, enLang);
+            Assert.AreEqual(null, resVie);
+            Assert.AreEqual(null, resEng);
         }
 
         [TestMethod]

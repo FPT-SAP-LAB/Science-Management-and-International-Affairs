@@ -30,7 +30,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             ViewBag.pagesTree = pagesTree;
             ////////////////////////////////////////////
-            int languageId= LanguageResource.GetCurrentLanguageID();
+            int languageId = LanguageResource.GetCurrentLanguageID();
             researcherListRepo = new ResearchersListRepo();
             BaseDatatable datatable = new BaseDatatable();
             datatable.Start = 0;
@@ -126,7 +126,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 int languageId = LanguageResource.GetCurrentLanguageID();
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 int id = Int32.Parse(Request.QueryString["id"]);
-                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id,languageId);
+                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id, languageId);
                 return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
