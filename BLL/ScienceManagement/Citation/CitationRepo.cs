@@ -153,7 +153,6 @@ namespace BLL.ScienceManagement.Citation
 
         public Author EditAuthor(List<AddAuthor> people)
         {
-
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
             {
                 try
