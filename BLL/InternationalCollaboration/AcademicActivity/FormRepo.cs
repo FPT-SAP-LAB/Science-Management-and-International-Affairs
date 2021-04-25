@@ -268,7 +268,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 where aap.activity_id = @activity_id and p.email != ''";
                 List<string> to = db.Database.SqlQuery<string>(sql, new SqlParameter("activity_id", aap.activity_id)).ToList();
                 string uri = "/AcademicActivity/loadForm?pid=" + data.phase_id;
-                data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='"+GuestURL+uri+"' alt='_blank'>Tại đây</a>";
+                data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='" + GuestURL + uri + "' alt='_blank'>Tại đây</a>";
                 ENTITIES.CustomModels.SmtpMailService.Send(to, data.title, data.content, true);
                 return true;
             }
