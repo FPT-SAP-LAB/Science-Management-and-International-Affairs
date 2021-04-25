@@ -1,4 +1,5 @@
 ﻿using BLL.ModelDAL;
+using BLL.Support;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
@@ -37,9 +38,7 @@ namespace BLL.ScienceManagement.Citation
 
         public int GetStatus(string id)
         {
-            if (!int.TryParse(id, out int request_id))
-                return 0;
-            if (request_id <= 0 || request_id == int.MaxValue)
+            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return 0;
             try
             {
@@ -55,10 +54,9 @@ namespace BLL.ScienceManagement.Citation
 
         public AuthorInfo GetAuthor(string id)
         {
-            if (!int.TryParse(id, out int request_id))
+            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return null;
-            if (request_id <= 0 || request_id == int.MaxValue)
-                return null;
+
             string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ah.identification_file_link, ah.people_id
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
@@ -83,6 +81,7 @@ namespace BLL.ScienceManagement.Citation
         {
             if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return null;
+
             RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
             return rc;
         }
@@ -113,9 +112,7 @@ namespace BLL.ScienceManagement.Citation
 
         public string ChangeStatus(string id)
         {
-            if (!int.TryParse(id, out int request_id))
-                return "ff";
-            if (request_id <= 0 || request_id == int.MaxValue)
+            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return "ff";
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
             {
@@ -143,21 +140,30 @@ namespace BLL.ScienceManagement.Citation
 
         public List<ENTITIES.Citation> GetCitation(string id)
         {
+            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
+                return null;
+
             string sql = @"select c.*
                            from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
                            where rc.request_id = @id";
-            List<ENTITIES.Citation> list = db.Database.SqlQuery<ENTITIES.Citation>(sql, new SqlParameter("id", id)).ToList();
+            List<ENTITIES.Citation> list = db.Database.SqlQuery<ENTITIES.Citation>(sql, new SqlParameter("id", request_id)).ToList();
             return list;
         }
 
         public Author EditAuthor(List<AddAuthor> people)
         {
+            if (people == null || people.Count == 0)
+                return null;
+            AddAuthor temp = people[0];
+            SupportClass.TrimProperties(temp);
+            if (temp.name == null || temp.email == null)
+                return null;
+
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
             {
                 try
                 {
-                    AddAuthor temp = people[0];
                     Author author = db.Authors.Where(x => x.people_id == temp.people_id).FirstOrDefault();
                     author.name = temp.name;
                     author.email = temp.email;
@@ -190,69 +196,6 @@ namespace BLL.ScienceManagement.Citation
                     return null;
                 }
             }
-        }
-
-        public Author AddAuthor(List<AddAuthor> list)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    Author author = new Author();
-                    foreach (var item in list)
-                    {
-                        author.name = item.name;
-                        author.email = item.email;
-
-                        if (item.office_id != 0)
-                        {
-                            author.office_id = item.office_id;
-                            author.bank_number = item.bank_number;
-                            author.bank_branch = item.bank_branch;
-                            author.tax_code = item.tax_code;
-                            author.identification_number = item.identification_number;
-                            author.mssv_msnv = item.mssv_msnv;
-                            author.is_reseacher = item.is_reseacher;
-                            author.title_id = item.title_id;
-                            author.contract_id = item.contract_id;
-                            author.identification_file_link = item.identification_file_link;
-                        }
-                        db.Authors.Add(author);
-                    }
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return author;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return null;
-                }
-        }
-
-        public string AddCitationRequest(BaseRequest br, Author author)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    RequestCitation rc = new RequestCitation
-                    {
-                        request_id = br.request_id,
-                        status_id = 3,
-                        people_id = author.people_id
-                        //current_mssv_msnv = author.mssv_msnv
-                    };
-                    db.RequestCitations.Add(rc);
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
         }
 
         public string AddCitaion(List<ENTITIES.Citation> citation)
