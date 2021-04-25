@@ -15,9 +15,9 @@ namespace BLL.ScienceManagement.ArticlePolicy.Tests
         private readonly ArticlePolicyDetailRepo policyDetailRepo = new ArticlePolicyDetailRepo();
 
         [TestMethod()]
-        [DataRow(int.MinValue, int.MinValue)]
-        [DataRow(0, int.MinValue)]
-        [DataRow(int.MaxValue, int.MinValue)]
+        [DataRow(int.MinValue, 1)]
+        [DataRow(0, 1)]
+        [DataRow(int.MaxValue, 1)]
         [DataRow(1, int.MinValue)]
         [DataRow(1, 0)]
         [DataRow(1, int.MaxValue)]

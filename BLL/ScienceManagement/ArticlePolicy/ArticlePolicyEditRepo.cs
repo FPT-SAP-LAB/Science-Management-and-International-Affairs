@@ -41,6 +41,10 @@ namespace BLL.ScienceManagement.ArticlePolicy
         }
         public AlertModal<string> Edit(List<ArticleVersion> articleVersions, List<int> types, int article_id, int account_id)
         {
+            AlertModal<string> result = ValidateEdit(articleVersions, types, article_id, account_id);
+            if (!result.success)
+                return result;
+
             db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -92,6 +96,25 @@ namespace BLL.ScienceManagement.ArticlePolicy
                 }
             }
             return new AlertModal<string>(false);
+        }
+
+        private static AlertModal<string> ValidateEdit(List<ArticleVersion> articleVersions, List<int> types, int article_id, int account_id)
+        {
+            if (articleVersions == null || articleVersions.Count == 0 ||
+                articleVersions.All(x => x.article_content == null) || articleVersions.All(x => x.article_content == "") ||
+                articleVersions.All(x => x.version_title == null) || articleVersions.All(x => x.version_title == ""))
+                return new AlertModal<string>(false, "Không có nội dung nào thay đổi");
+
+            if (types == null || types.Count == 0 || types.All(x => x <= 0))
+                return new AlertModal<string>(false, "Loại chính sách không được bỏ trống");
+
+            if (account_id <= 0 || account_id == int.MaxValue)
+                return new AlertModal<string>(false, "Tài khoản không tồn tại");
+
+            if (article_id <= 0 || article_id == int.MaxValue)
+                return new AlertModal<string>(false, "Bài đăng không tồn tại");
+
+            return new AlertModal<string>(true);
         }
     }
 }
