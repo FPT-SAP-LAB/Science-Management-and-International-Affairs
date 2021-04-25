@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace UnitTest.ScienceManagement.Researchers
 {
-
     [TestClass]
     public class ResearcherBiographyTest
     {

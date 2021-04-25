@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace UnitTest.ScienceManagement.Researchers
 {
     [TestClass]
@@ -46,6 +45,5 @@ namespace UnitTest.ScienceManagement.Researchers
             Assert.AreEqual(null, resVie);
             Assert.AreEqual(null, resEng);
         }
-
     }
 }
