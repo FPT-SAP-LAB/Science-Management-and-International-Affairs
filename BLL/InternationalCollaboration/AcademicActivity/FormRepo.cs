@@ -9,6 +9,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class FormRepo
     {
+        public static string GuestURL;
+        public static string ManagerURL;
         ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public DetailOfAcademicActivityRepo.baseForm getFormbyPhase(int phase_id)
         {
@@ -265,10 +267,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 left join SMIA_AcademicActivity.Participant p on p.participant_role_id = pr.participant_role_id
                                 where aap.activity_id = @activity_id and p.email != ''";
                 List<string> to = db.Database.SqlQuery<string>(sql, new SqlParameter("activity_id", aap.activity_id)).ToList();
-                //for local
-                data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='https://localhost:44316/AcademicActivity/loadForm?pid=" + data.phase_id + "' alt='_blank'>Tại đây</a>";
-                ////for server
-                //data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='http://103.77.167.209.xip.io:81/AcademicActivity/loadForm?pid=" + data.phase_id + "' alt='_blank'>Tại đây</a>";
+                string uri = "/AcademicActivity/loadForm?pid=" + data.phase_id;
+                data.content += "<br/>Link mẫu đăng ký/khảo sát: <a href='"+GuestURL+uri+"' alt='_blank'>Tại đây</a>";
                 ENTITIES.CustomModels.SmtpMailService.Send(to, data.title, data.content, true);
                 return true;
             }
