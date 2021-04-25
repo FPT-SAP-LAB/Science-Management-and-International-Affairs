@@ -1,5 +1,7 @@
-﻿using BLL.ScienceManagement.Invention;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.Invention;
 using BLL.ScienceManagement.MasterData;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -47,6 +49,15 @@ namespace MANAGER.Controllers
 
             ViewBag.request_id = item.request_id;
 
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            ViewBag.acc = acc;
+
             return View();
         }
 
@@ -69,7 +80,7 @@ namespace MANAGER.Controllers
             }
             string mess = ir.updateRewardInven(inven);
             if (mess == "ss") mess = ir.updateAuthorReward(inven, people);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -94,28 +105,28 @@ namespace MANAGER.Controllers
             ENTITIES.File myFile = mrd.addFile(fl);
             string mess = ir.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatus(DetailInvention inven)
         {
             string mess = ir.changeStatus(inven);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatusManager(DetailInvention inven)
         {
             string mess = ir.changeStatusManager(inven);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteRequest(int id)
         {
             string mess = ir.deleteRequest(id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

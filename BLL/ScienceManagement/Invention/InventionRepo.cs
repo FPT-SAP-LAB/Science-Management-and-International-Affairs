@@ -76,207 +76,207 @@ namespace BLL.ScienceManagement.Invention
 
         public string deleteRequest(int id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                RequestInvention rp = db.RequestInventions.Where(x => x.request_id == id).FirstOrDefault();
-                rp.status_id = 1;
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    RequestInvention rp = db.RequestInventions.Where(x => x.request_id == id).FirstOrDefault();
+                    rp.status_id = 1;
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public string changeStatus(DetailInvention inven)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
-                ri.status_id = 5;
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                    ri.status_id = 5;
 
-                //var Request = db.RequestInventions.Find(inven.invention_id);
-                Account account = ri.BaseRequest.Account;
-                NotificationRepo nr = new NotificationRepo(db);
-                int notification_id = nr.AddByAccountID(account.account_id, 4, "/Invention/Edit?id=" + inven.invention_id);
+                    //var Request = db.RequestInventions.Find(inven.invention_id);
+                    Account account = ri.BaseRequest.Account;
+                    NotificationRepo nr = new NotificationRepo(db);
+                    int notification_id = nr.AddByAccountID(account.account_id, 4, "/Invention/Edit?id=" + inven.invention_id, false);
 
-                db.SaveChanges();
-                dbc.Commit();
-                return notification_id.ToString();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                dbc.Rollback();
-                return "ff";
-            }
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return notification_id.ToString();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public string changeStatusManager(DetailInvention inven)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
-                ri.status_id = 3;
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                dbc.Rollback();
-                return "ff";
-            }
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    RequestInvention ri = db.RequestInventions.Where(x => x.request_id == inven.request_id).FirstOrDefault();
+                    ri.status_id = 3;
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public int addInven_refactor(ENTITIES.Invention inven, string type, List<Country> listCountry, List<AddAuthor> author, File fl, Account acc)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                InventionType ck = db.InventionTypes.Where(x => x.name == type).FirstOrDefault();
-                if (ck == null)
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    InventionType ip = new InventionType
+                    InventionType ck = db.InventionTypes.Where(x => x.name == type).FirstOrDefault();
+                    if (ck == null)
                     {
-                        name = type
-                    };
-                    db.InventionTypes.Add(ip);
-                    db.SaveChanges();
-                }
-                inven.type_id = ck.invention_type_id;
-                db.Inventions.Add(inven);
-                db.SaveChanges();
-
-                BaseRequest b = new BaseRequest
-                {
-                    account_id = acc.account_id,
-                    created_date = DateTime.Today
-                };
-                db.BaseRequests.Add(b);
-                db.SaveChanges();
-
-                RequestInvention ri = new RequestInvention
-                {
-                    request_id = b.request_id,
-                    status_id = 3,
-                    invention_id = inven.invention_id,
-                    reward_type = "2"
-                };
-                db.RequestInventions.Add(ri);
-                db.SaveChanges();
-
-                foreach (var item in listCountry)
-                {
-                    InventionCountry ic = new InventionCountry()
-                    {
-                        invention_id = inven.invention_id,
-                        country_id = item.country_id
-                    };
-                    db.InventionCountries.Add(ic);
-                }
-                db.SaveChanges();
-
-                List<Author> listAuthor = new List<Author>();
-                foreach (var item in author)
-                {
-                    Author temp = new Author
-                    {
-                        name = item.name,
-                        email = item.email
-                    };
-                    if (item.office_id != 0)
-                    {
-                        temp.office_id = item.office_id;
-                        temp.bank_number = item.bank_number;
-                        temp.bank_branch = item.bank_branch;
-                        temp.tax_code = item.tax_code;
-                        temp.identification_number = item.identification_number;
-                        temp.mssv_msnv = item.mssv_msnv;
-                        temp.is_reseacher = item.is_reseacher;
-                        temp.title_id = item.title_id;
-                        temp.contract_id = item.contract_id;
+                        InventionType ip = new InventionType
+                        {
+                            name = type
+                        };
+                        db.InventionTypes.Add(ip);
+                        db.SaveChanges();
                     }
-                    db.Authors.Add(temp);
-                    listAuthor.Add(temp);
-                }
-                db.SaveChanges();
+                    inven.type_id = ck.invention_type_id;
+                    db.Inventions.Add(inven);
+                    db.SaveChanges();
 
-                foreach (var item in listAuthor)
-                {
-                    AuthorInvention ai = new AuthorInvention
+                    BaseRequest b = new BaseRequest
                     {
-                        people_id = item.people_id,
-                        invention_id = inven.invention_id,
-                        money_reward = 0
+                        account_id = acc.account_id,
+                        created_date = DateTime.Today
                     };
-                    db.AuthorInventions.Add(ai);
-                }
-                db.SaveChanges();
+                    db.BaseRequests.Add(b);
+                    db.SaveChanges();
 
-                dbc.Commit();
-                return inven.invention_id;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return 0;
-            }
+                    RequestInvention ri = new RequestInvention
+                    {
+                        request_id = b.request_id,
+                        status_id = 3,
+                        invention_id = inven.invention_id,
+                        reward_type = "2"
+                    };
+                    db.RequestInventions.Add(ri);
+                    db.SaveChanges();
+
+                    foreach (var item in listCountry)
+                    {
+                        InventionCountry ic = new InventionCountry()
+                        {
+                            invention_id = inven.invention_id,
+                            country_id = item.country_id
+                        };
+                        db.InventionCountries.Add(ic);
+                    }
+                    db.SaveChanges();
+
+                    List<Author> listAuthor = new List<Author>();
+                    foreach (var item in author)
+                    {
+                        Author temp = new Author
+                        {
+                            name = item.name,
+                            email = item.email
+                        };
+                        if (item.office_id != 0)
+                        {
+                            temp.office_id = item.office_id;
+                            temp.bank_number = item.bank_number;
+                            temp.bank_branch = item.bank_branch;
+                            temp.tax_code = item.tax_code;
+                            temp.identification_number = item.identification_number;
+                            temp.mssv_msnv = item.mssv_msnv;
+                            temp.is_reseacher = item.is_reseacher;
+                            temp.title_id = item.title_id;
+                            temp.contract_id = item.contract_id;
+                        }
+                        db.Authors.Add(temp);
+                        listAuthor.Add(temp);
+                    }
+                    db.SaveChanges();
+
+                    foreach (var item in listAuthor)
+                    {
+                        AuthorInvention ai = new AuthorInvention
+                        {
+                            people_id = item.people_id,
+                            invention_id = inven.invention_id,
+                            money_reward = 0
+                        };
+                        db.AuthorInventions.Add(ai);
+                    }
+                    db.SaveChanges();
+
+                    dbc.Commit();
+                    return inven.invention_id;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return 0;
+                }
         }
 
         public string uploadDecision(DateTime date_format, int file_id, string number, string file_drive_id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                Decision decision = new Decision
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    valid_date = date_format,
-                    file_id = file_id,
-                    decision_number = number
-                };
-                db.Decisions.Add(decision);
-
-                List<WaitDecisionInven> wait = getListWaitDecision();
-                foreach (var item in wait)
-                {
-                    RequestDecision request = new RequestDecision
+                    Decision decision = new Decision
                     {
-                        request_id = item.request_id,
-                        decision_id = decision.decision_id
+                        valid_date = date_format,
+                        file_id = file_id,
+                        decision_number = number
                     };
-                    db.RequestDecisions.Add(request);
-                    RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                    rc.status_id = 2;
-                }
+                    db.Decisions.Add(decision);
 
-                foreach (var item in wait)
+                    List<WaitDecisionInven> wait = getListWaitDecision();
+                    foreach (var item in wait)
+                    {
+                        RequestDecision request = new RequestDecision
+                        {
+                            request_id = item.request_id,
+                            decision_id = decision.decision_id
+                        };
+                        db.RequestDecisions.Add(request);
+                        RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                        rc.status_id = 2;
+                    }
+
+                    foreach (var item in wait)
+                    {
+                        BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                        br.finished_date = DateTime.Now;
+                        db.Entry(br).State = EntityState.Modified;
+                    }
+
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
                 {
-                    BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                    br.finished_date = DateTime.Now;
-                    db.Entry(br).State = EntityState.Modified;
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    GoogleDriveService.DeleteFile(file_drive_id);
+                    return "ff";
                 }
-
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                GoogleDriveService.DeleteFile(file_drive_id);
-                return "ff";
-            }
         }
 
         public string addFile(File f)
@@ -339,55 +339,55 @@ namespace BLL.ScienceManagement.Invention
 
         public string addAuthor(List<AddAuthor> list, int invention_id)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                List<Author> listAuthor = new List<Author>();
-                foreach (var item in list)
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    Author author = new Author
+                    List<Author> listAuthor = new List<Author>();
+                    foreach (var item in list)
                     {
-                        name = item.name,
-                        email = item.email
-                    };
-                    if (item.office_id != 0)
-                    {
-                        author.office_id = item.office_id;
-                        author.bank_number = item.bank_number;
-                        author.bank_branch = item.bank_branch;
-                        author.tax_code = item.tax_code;
-                        author.identification_number = item.identification_number;
-                        author.mssv_msnv = item.mssv_msnv;
-                        author.is_reseacher = item.is_reseacher;
-                        author.title_id = item.title_id;
-                        author.contract_id = item.contract_id;
+                        Author author = new Author
+                        {
+                            name = item.name,
+                            email = item.email
+                        };
+                        if (item.office_id != 0)
+                        {
+                            author.office_id = item.office_id;
+                            author.bank_number = item.bank_number;
+                            author.bank_branch = item.bank_branch;
+                            author.tax_code = item.tax_code;
+                            author.identification_number = item.identification_number;
+                            author.mssv_msnv = item.mssv_msnv;
+                            author.is_reseacher = item.is_reseacher;
+                            author.title_id = item.title_id;
+                            author.contract_id = item.contract_id;
+                        }
+                        db.Authors.Add(author);
+                        listAuthor.Add(author);
                     }
-                    db.Authors.Add(author);
-                    listAuthor.Add(author);
-                }
-                db.SaveChanges();
+                    db.SaveChanges();
 
-                foreach (var item in listAuthor)
-                {
-                    AuthorInvention ai = new AuthorInvention
+                    foreach (var item in listAuthor)
                     {
-                        people_id = item.people_id,
-                        invention_id = invention_id,
-                        money_reward = 0
-                    };
-                    db.AuthorInventions.Add(ai);
-                }
-                db.SaveChanges();
+                        AuthorInvention ai = new AuthorInvention
+                        {
+                            people_id = item.people_id,
+                            invention_id = invention_id,
+                            money_reward = 0
+                        };
+                        db.AuthorInventions.Add(ai);
+                    }
+                    db.SaveChanges();
 
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public string addInvenRequest(BaseRequest br, ENTITIES.Invention inven)
@@ -452,55 +452,55 @@ namespace BLL.ScienceManagement.Invention
 
         public string updateAuthor(int id, List<AddAuthor> people)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                List<AddAuthor> list = new List<AddAuthor>();
-                //string sql = @"delete from [SM_ScientificProduct].AuthorInvention where invention_id = @id";
-                //db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
-                //addAuthor(people, id);
-                foreach (var item in people)
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    if (item.people_id == 0)
+                    List<AddAuthor> list = new List<AddAuthor>();
+                    //string sql = @"delete from [SM_ScientificProduct].AuthorInvention where invention_id = @id";
+                    //db.Database.ExecuteSqlCommand(sql, new SqlParameter("id", id));
+                    //addAuthor(people, id);
+                    foreach (var item in people)
                     {
-                        list.Add(item);
-                    }
-                    else
-                    {
-                        Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
-                        author.name = item.name;
-                        author.email = item.email;
-                        if (item.office_id == 0 || item.office_id == null)
+                        if (item.people_id == 0)
                         {
-                            author.office_id = null;
+                            list.Add(item);
                         }
                         else
                         {
-                            author.office_id = item.office_id;
-                            author.bank_number = item.bank_number;
-                            author.bank_branch = item.bank_branch;
-                            author.tax_code = item.tax_code;
-                            author.identification_number = item.identification_number;
-                            author.mssv_msnv = item.mssv_msnv;
-                            author.is_reseacher = item.is_reseacher;
-                            author.title_id = item.title_id;
-                            author.contract_id = 1;
-                            author.identification_file_link = item.identification_file_link;
+                            Author author = db.Authors.Where(x => x.people_id == item.people_id).FirstOrDefault();
+                            author.name = item.name;
+                            author.email = item.email;
+                            if (item.office_id == 0 || item.office_id == null)
+                            {
+                                author.office_id = null;
+                            }
+                            else
+                            {
+                                author.office_id = item.office_id;
+                                author.bank_number = item.bank_number;
+                                author.bank_branch = item.bank_branch;
+                                author.tax_code = item.tax_code;
+                                author.identification_number = item.identification_number;
+                                author.mssv_msnv = item.mssv_msnv;
+                                author.is_reseacher = item.is_reseacher;
+                                author.title_id = item.title_id;
+                                author.contract_id = 1;
+                                author.identification_file_link = item.identification_file_link;
+                            }
+                            db.Entry(author).State = EntityState.Modified;
                         }
-                        db.Entry(author).State = EntityState.Modified;
                     }
+                    db.SaveChanges();
+                    dbc.Commit();
+                    addAuthor(list, id);
+                    return "ss";
                 }
-                db.SaveChanges();
-                dbc.Commit();
-                addAuthor(list, id);
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public List<PendingInvention_Manager> getListPending()
@@ -516,47 +516,47 @@ namespace BLL.ScienceManagement.Invention
 
         public string updateRewardInven(DetailInvention item)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                RequestInvention ri = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                ri.total_reward = item.total_reward;
-                ri.status_id = 4;
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
+                {
+                    RequestInvention ri = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
+                    ri.total_reward = item.total_reward;
+                    ri.status_id = 4;
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public string updateAuthorReward(DetailInvention inven, List<AuthorInfoWithNull> people)
         {
-            DbContextTransaction dbc = db.Database.BeginTransaction();
-            try
-            {
-                foreach (var item in people)
+            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+                try
                 {
-                    AuthorInvention ai = db.AuthorInventions
-                                            .Where(x => x.invention_id == inven.invention_id)
-                                            .Where(x => x.people_id == item.people_id)
-                                            .FirstOrDefault();
-                    ai.money_reward = item.money_reward;
+                    foreach (var item in people)
+                    {
+                        AuthorInvention ai = db.AuthorInventions
+                                                .Where(x => x.invention_id == inven.invention_id)
+                                                .Where(x => x.people_id == item.people_id)
+                                                .FirstOrDefault();
+                        ai.money_reward = item.money_reward;
+                    }
+                    db.SaveChanges();
+                    dbc.Commit();
+                    return "ss";
                 }
-                db.SaveChanges();
-                dbc.Commit();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                dbc.Rollback();
-                return "ff";
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    dbc.Rollback();
+                    return "ff";
+                }
         }
 
         public List<WaitDecisionInven> getListWaitDecision()

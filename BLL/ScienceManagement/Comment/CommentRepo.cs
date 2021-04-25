@@ -55,32 +55,32 @@ namespace BLL.ScienceManagement.Comment
                     if (path.Contains("ConferenceSponsor"))
                     {
                         if (is_manager)
-                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id).ToString();
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/ConferenceSponsor/Detail?id=" + request.request_id, false).ToString();
                         else
-                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 22, 34 }, 1, "/ConferenceSponsor/Detail?id=" + request.request_id));
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 22, 34 }, 1, "/ConferenceSponsor/Detail?id=" + request.request_id, true));
                     }
                     else if (path.Contains("Paper"))
                     {
-                        int id = getPaperID(request.request_id);
+                        int id = GetPaperID(request.request_id);
                         if (is_manager)
-                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Paper/Edit?id=" + id).ToString();
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Paper/Edit?id=" + id, false).ToString();
                         else
-                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Paper/Detail?id=" + id));
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Paper/Detail?id=" + id, true));
                     }
                     else if (path.Contains("Invention"))
                     {
-                        int id = getInvenID(request.request_id);
+                        int id = GetInvenID(request.request_id);
                         if (is_manager)
-                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Invention/Edit?id=" + id).ToString();
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Invention/Edit?id=" + id, false).ToString();
                         else
-                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Invention/Detail?id=" + id));
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Invention/Detail?id=" + id, true));
                     }
                     else if (path.Contains("Citation"))
                     {
                         if (is_manager)
-                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Citation/Edit?id=" + request.request_id).ToString();
+                            notification_id = notificationRepo.AddByAccountID(request.account_id, 1, "/Citation/Edit?id=" + request.request_id, false).ToString();
                         else
-                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Citation/Detail?id=" + request.request_id));
+                            notification_id = JsonConvert.SerializeObject(notificationRepo.AddByRightID(new List<int> { 16, 17 }, 1, "/Citation/Detail?id=" + request.request_id, true));
                     }
                     db.SaveChanges();
                     trans.Commit();
@@ -95,13 +95,13 @@ namespace BLL.ScienceManagement.Comment
             return new AlertModal<string>(false);
         }
 
-        public int getPaperID(int requestID)
+        public int GetPaperID(int requestID)
         {
             RequestPaper rp = db.RequestPapers.Where(x => x.request_id == requestID).FirstOrDefault();
             return rp.paper_id;
         }
 
-        public int getInvenID(int requestID)
+        public int GetInvenID(int requestID)
         {
             RequestInvention rp = db.RequestInventions.Where(x => x.request_id == requestID).FirstOrDefault();
             return rp.invention_id;

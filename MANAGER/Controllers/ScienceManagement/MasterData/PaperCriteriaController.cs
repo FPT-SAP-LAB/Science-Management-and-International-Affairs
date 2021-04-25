@@ -57,14 +57,14 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
 
             bool mess = md.addNewPolicy(file, list, acc);
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteItem(string cri_id)
         {
             string mess = md.DeletePaperCriteria(cri_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }
