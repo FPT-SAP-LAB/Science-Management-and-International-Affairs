@@ -68,7 +68,7 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
         {
             MasterDataRepo md = new MasterDataRepo();
             bool mess = md.updateJournal(file_scopus, file_SCIE, file_SSCI);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }
