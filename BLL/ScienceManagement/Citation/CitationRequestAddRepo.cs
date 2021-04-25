@@ -25,9 +25,6 @@ namespace BLL.ScienceManagement.Citation
                 {
                     Author author = AddAuthor(addAuthor);
 
-                    db.Citations.AddRange(citation);
-                    db.SaveChanges();
-
                     BaseRequest b = new BaseRequest
                     {
                         account_id = account_id,

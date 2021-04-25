@@ -9,7 +9,7 @@
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
+                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("AuthorInfo")</h3>
                     @{
                         Html.RenderAction("AddAuthor", "PartialView");
                     }
@@ -26,10 +26,10 @@
                                 </thead>
                                 <tbody id="trichdan_body">
                                     @{
-                                        foreach (var item in ViewBag.citation)
+                                        foreach (ENTITIES.Citation item in ViewBag.citation)
                                         {
                                             <tr>
-                                                <td><input autocomplete="off" class="form-control edit trichdan_source" type="text" value="@item.source" /></td>
+                                                <td><input autocomplete="off" class="form-control edit trichdan_source" type="text" value="@item.CitationType.citation_type_name" /></td>
                                                 <td><input autocomplete="off" class="form-control edit trichdan_count" type="number" value="@item.count" /></td>
                                                 <td><input autocomplete="off" class="form-control edit trichdan_link" type="text" value="@item.link" /></td>
                                             </tr>
@@ -37,22 +37,28 @@
                                     }
                                 </tbody>
                             </table>
+                        </div>
+                        @if (ViewBag.ckEdit == 5)
+                        {
                             <div class="col-xl-12" style="text-align: end">
                                 <button class="btn btn-light-danger px-6 font-weight-bold deleterow edit">@rm.GetString("DelRow")</button>
                                 <button class="btn btn-light-primary px-6 font-weight-bold addrow edit">@rm.GetString("AddRow")</button>
                             </div>
-                        </div>
+                        }
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
                     <div class="row">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("TotalReward")</label>
-                            <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.author.total_reward"  />
+                            <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.author.total_reward" />
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <button class="btn btn-light-success px-6 font-weight-bold edit" id="btn-submit">@rm.GetString("Send")</button>
-                    </div>
+                    @if (ViewBag.ckEdit == 5)
+                    {
+                        <div class="row justify-content-center">
+                            <button class="btn btn-light-success px-6 font-weight-bold edit" id="btn-submit">@rm.GetString("Send")</button>
+                        </div>
+                    }
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
                     <div>
                         @{ Html.RenderAction("Index", "CommentRequest", new { request_id = ViewBag.request_id }); }
@@ -66,8 +72,8 @@
     <input name="id" id="nameEdit" />
     <input name="editable" id="ckEdit" />
 </form>
-<input class="form-control" value="@ViewBag.author.name" id="name_temp" style="display:none"/>
-<input class="form-control" value="@Html.Raw(ViewBag.author.bank_branch)" id="bank_branch_temp" style="display:none"/>
+<input class="form-control" value="@ViewBag.author.name" id="name_temp" style="display:none" />
+<input class="form-control" value="@Html.Raw(ViewBag.author.bank_branch)" id="bank_branch_temp" style="display:none" />
 @section scripts{
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
@@ -110,12 +116,12 @@
             $("#add_author_accno").val("@ViewBag.author.bank_number");
             $("#add_author_isReseacher").prop("checked", is_r);
 
+            var x = $("#totalreward").val();
+            $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
             var ck = "@ViewBag.ckEdit";
             if (ck != "5") $(".edit").prop("disabled", true);
             else $(".edit").prop("disabled", false);
-
-            var x = $("#totalreward").val();
-            $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         });
 
         $(".addrow").click(function () {

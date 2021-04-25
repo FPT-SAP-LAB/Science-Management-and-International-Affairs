@@ -14,5 +14,6 @@ namespace ENTITIES.CustomModels.ScienceManagement
         public int status_id { get; set; }
         public int request_id { get; set; }
         public string note { get; set; }
+        public List<string> TypeNames { get; set; }
     }
 }
