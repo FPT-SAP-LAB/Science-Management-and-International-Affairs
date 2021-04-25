@@ -32,6 +32,7 @@ namespace ENTITIES
             this.PolicyTypes = new HashSet<PolicyType>();
             this.Profiles = new HashSet<Profile>();
             this.ActivityPartners = new HashSet<ActivityPartner>();
+            this.ArticleVersions = new HashSet<ArticleVersion>();
             this.MOABonus = new HashSet<MOABonu>();
             this.MOUBonus = new HashSet<MOUBonu>();
         }
@@ -77,6 +78,8 @@ namespace ENTITIES
         public virtual ICollection<Profile> Profiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticleVersion> ArticleVersions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MOABonu> MOABonus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
