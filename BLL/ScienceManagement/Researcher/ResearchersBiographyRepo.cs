@@ -14,14 +14,14 @@ namespace BLL.ScienceManagement.Researcher
     public class ResearchersBiographyRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<AcadBiography> GetAcadHistory(int id)
+        public List<AcadBiography> GetAcadHistory(int id, int language_id)
         {
             var profile = (
                 from a in db.Profiles
                 join b in db.ProfileAcademicDegrees on a.people_id equals b.people_id
                 join c in db.AcademicDegrees on b.academic_degree_id equals c.academic_degree_id
                 join d in db.AcademicDegreeLanguages on c.academic_degree_id equals d.academic_degree_id
-                where d.language_id == 1 && a.people_id == id
+                where d.language_id == language_id && a.people_id == id
                 select new AcadBiography
                 {
                     people_id = a.people_id,
@@ -177,11 +177,11 @@ namespace BLL.ScienceManagement.Researcher
             }
             return 1;
         }
-        public List<SelectField> getTitles()
+        public List<SelectField> getTitles(int language_id)
         {
             var data = (from a in db.Titles
                         join b in db.TitleLanguages on a.title_id equals b.title_id
-                        where b.language_id == 1
+                        where b.language_id == language_id
                         select new SelectField
                         {
                             id = a.title_id,

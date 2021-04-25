@@ -25,7 +25,6 @@ namespace BLL.ScienceManagement.Citation.Tests
         public void GetListTest(int account_id)
         {
             List<ListOnePerson_Citation> actual = citationRepo.GetList(account_id);
-
             Assert.AreEqual(null, actual);
         }
 
