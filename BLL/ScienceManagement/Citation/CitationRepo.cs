@@ -24,16 +24,15 @@ namespace BLL.ScienceManagement.Citation
 	                            join [SM_Request].BaseRequest br on br.request_id = rc.request_id
                            where br.account_id = @id
                            group by br.created_date, rc.status_id,  rc.request_id";
-            List<ListOnePerson_Citation> list = new List<ListOnePerson_Citation>();
-            list = db.Database.SqlQuery<ListOnePerson_Citation>(sql, new SqlParameter("id", id)).ToList();
+            List<ListOnePerson_Citation> list = db.Database.SqlQuery<ListOnePerson_Citation>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
 
-        public int getStatus(string id)
+        public int GetStatus(string id)
         {
             try
             {
-                int request_id = Int32.Parse(id);
+                int request_id = int.Parse(id);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
                 return rc.status_id;
             }
@@ -44,9 +43,8 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public AuthorInfo getAuthor(string id)
+        public AuthorInfo GetAuthor(string id)
         {
-            AuthorInfo item = new AuthorInfo();
             string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ah.identification_file_link, ah.people_id
                             from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
@@ -54,11 +52,11 @@ namespace BLL.ScienceManagement.Citation
 	                            join [General].Office o on o.office_id = ah.office_id
 	                            join [SM_MasterData].ContractType ct on ah.contract_id = ct.contract_id
                             where rc.request_id = @id";
-            item = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            AuthorInfo item = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", id)).FirstOrDefault();
             return item;
         }
 
-        public List<string> getAuthorEmail()
+        public List<string> GetAuthorEmail()
         {
             string sql = @"select distinct ah.email
                             from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
@@ -67,14 +65,14 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public RequestCitation getRequestCitation(string id)
+        public RequestCitation GetRequestCitation(string id)
         {
-            int r_id = Int32.Parse(id);
+            int r_id = int.Parse(id);
             RequestCitation rc = db.RequestCitations.Where(x => x.request_id == r_id).FirstOrDefault();
             return rc;
         }
 
-        public string deleteRequest(int id)
+        public string DeleteRequest(int id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -93,12 +91,12 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string changeStatus(string request_id)
+        public string ChangeStatus(string request_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                int id = Int32.Parse(request_id);
+                int id = int.Parse(request_id);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == id).FirstOrDefault();
                 rc.status_id = 5;
 
@@ -119,18 +117,17 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public List<ENTITIES.Citation> getCitation(string id)
+        public List<ENTITIES.Citation> GetCitation(string id)
         {
-            List<ENTITIES.Citation> list = new List<ENTITIES.Citation>();
             string sql = @"select c.*
                            from [SM_Citation].Citation c join [SM_Citation].RequestHasCitation rhc on c.citation_id = rhc.citation_id
 	                            join [SM_Citation].RequestCitation rc on rhc.request_id = rc.request_id
                            where rc.request_id = @id";
-            list = db.Database.SqlQuery<ENTITIES.Citation>(sql, new SqlParameter("id", id)).ToList();
+            List<ENTITIES.Citation> list = db.Database.SqlQuery<ENTITIES.Citation>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
 
-        public Author editAuthor(List<AddAuthor> people)
+        public Author EditAuthor(List<AddAuthor> people)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -169,7 +166,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public Author addAuthor(List<AddAuthor> list)
+        public Author AddAuthor(List<AddAuthor> list)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -207,7 +204,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string addCitationRequest(BaseRequest br, Author author)
+        public string AddCitationRequest(BaseRequest br, Author author)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -232,7 +229,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string addCitaion(List<ENTITIES.Citation> citation)
+        public string AddCitaion(List<ENTITIES.Citation> citation)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -253,7 +250,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string addRequestHasCitation(List<ENTITIES.Citation> citation, BaseRequest br)
+        public string AddRequestHasCitation(List<ENTITIES.Citation> citation, BaseRequest br)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -280,13 +277,13 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public string editCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, Author author)
+        public string EditCitation(List<ENTITIES.Citation> citation, List<ENTITIES.Citation> newcitation, string request_id, Author author)
         {
             try
             {
                 string sql = "";
                 List<SqlParameter> listParam = new List<SqlParameter>();
-                int id = Int32.Parse(request_id);
+                int id = int.Parse(request_id);
                 BaseRequest br = db.BaseRequests.Where(x => x.request_id == id).FirstOrDefault();
                 for (int i = 0; i < citation.Count; i++)
                 {
@@ -304,8 +301,8 @@ namespace BLL.ScienceManagement.Citation
                 }
                 db.SaveChanges();
 
-                addCitaion(newcitation);
-                addRequestHasCitation(newcitation, br);
+                AddCitaion(newcitation);
+                AddRequestHasCitation(newcitation, br);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
                 rc.people_id = author.people_id;
                 rc.status_id = 3;
@@ -320,7 +317,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public List<PendingCitation_manager> getListPending()
+        public List<PendingCitation_manager> GetListPending()
         {
             string sql = @"select acc.email, br.created_date, br.request_id, rc.status_id
                            from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
@@ -330,21 +327,21 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public Nullable<int> getTotalReward(string id)
+        public Nullable<int> GetTotalReward(string id)
         {
-            int request_id = Int32.Parse(id);
+            int request_id = int.Parse(id);
             RequestCitation item = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
             return item.total_reward;
         }
 
-        public string updateReward(string id, string total)
+        public string UpdateReward(string id, string total)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
             {
-                int request_id = Int32.Parse(id);
+                int request_id = int.Parse(id);
                 string temp = total.Replace(",", "");
-                int reward = Int32.Parse(temp);
+                int reward = int.Parse(temp);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
                 rc.total_reward = reward;
                 rc.status_id = 4;
@@ -361,7 +358,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public List<WaitDecisionCitation> getListWait()
+        public List<WaitDecisionCitation> GetListWait()
         {
             string sql = @"select po.name, o.office_abbreviation, pro.mssv_msnv, rc.total_reward, SUM(c.COUNT) as 'sum', rc.request_id
                             from [SM_Citation].RequestCitation rc join [SM_Request].BaseRequest br on rc.request_id = br.request_id
@@ -377,7 +374,7 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public string uploadDecision(DateTime date, int file_id, string number, string file_drive_id)
+        public string UploadDecision(DateTime date, int file_id, string number, string file_drive_id)
         {
             DbContextTransaction dbc = db.Database.BeginTransaction();
             try
@@ -391,7 +388,7 @@ namespace BLL.ScienceManagement.Citation
                 db.Decisions.Add(decision);
                 db.SaveChanges();
 
-                List<WaitDecisionCitation> wait = getListWait();
+                List<WaitDecisionCitation> wait = GetListWait();
                 foreach (var item in wait)
                 {
                     RequestDecision request = new RequestDecision
@@ -424,7 +421,7 @@ namespace BLL.ScienceManagement.Citation
             }
         }
 
-        public List<Citation_Appendix_1> getListAppendix1()
+        public List<Citation_Appendix_1> GetListAppendix1()
         {
             string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, a.sum_scopus, b.sum_scholar
                             from SM_ScientificProduct.Author ah
@@ -446,7 +443,7 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public List<Citation_Appendix_2> getListAppendix2()
+        public List<Citation_Appendix_2> GetListAppendix2()
         {
             string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, rc.total_reward
                             from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
