@@ -1,4 +1,5 @@
-﻿using BLL.ScienceManagement.MasterData;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
@@ -55,6 +56,18 @@ namespace MANAGER.Controllers
             Author p = pr.getAuthorReceived_all(id);
             if (p == null) p = new Author();
             ViewBag.p = p;
+
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            ViewBag.acc = acc;
+
+            List<PaperCriteria> listCriteria = mdr.getPaperCriteria();
+            ViewBag.listCriteria = listCriteria;
 
             return View();
         }
@@ -303,6 +316,15 @@ namespace MANAGER.Controllers
         {
             bool mess = pr.editAuthorReward(request_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            string temp = pr.updateCriteria(criteria, paper_id);
+            bool mess = true;
+            if (temp == "ff") mess = false;
+            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

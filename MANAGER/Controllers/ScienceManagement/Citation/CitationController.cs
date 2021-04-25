@@ -1,5 +1,7 @@
-﻿using BLL.ScienceManagement.Citation;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.Citation;
 using BLL.ScienceManagement.MasterData;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
@@ -49,6 +51,15 @@ namespace MANAGER.Controllers
 
             int status = cr.GetStatus(id);
             ViewBag.status = status;
+
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            ViewBag.acc = acc;
 
             return View();
         }
