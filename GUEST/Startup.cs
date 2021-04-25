@@ -1,15 +1,21 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using BLL.ModelDAL;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
+using System.Configuration;
 
 [assembly: OwinStartup(typeof(GUEST.Startup))]
 namespace GUEST
 {
     public class Startup
     {
+        public readonly static string GuestURI = ConfigurationManager.AppSettings["GuestURI"];
+        public readonly static string ManagerURI = ConfigurationManager.AppSettings["ManagerURI"];
         public void Configuration(IAppBuilder app)
         {
+            NotificationRepo.GuestURI = GuestURI;
+            NotificationRepo.ManagerURI = ManagerURI;
             // Branch the pipeline here for requests that start with "/signalr"
             app.Map("/signalr", map =>
             {

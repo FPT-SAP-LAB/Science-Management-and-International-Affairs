@@ -722,52 +722,115 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             TimeSpan value = end_date.Subtract(today);
             return value.Duration().Days;
         }
-        public NotificationInfo getNoti()
-        {
-            try
-            {
-                NotificationInfo noti = new NotificationInfo();
-                DateTime nextMonth = DateTime.Now.AddMonths(1);
-                DateTime next3Months = DateTime.Now.AddMonths(3);
-                //Warning 1: end_date < next3Months && notiCount = 0
-                //warning 2: end_date < nextMonths && notiCount = 1
-                string sql_inactive_number
-                    = @"select count(*) from IA_Collaboration.MOU tb1 left join 
-                        (
-                        select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                        from IA_Collaboration.MOUStatusHistory 
-                        group by mou_status_id, mou_id) tb2 
-                        on tb1.mou_id = tb2.mou_id
-                        where tb1.is_deleted = 0";
-                string sql_expired
-                    = @"select mou_code from IA_Collaboration.MOU
-                        where (mou_end_date < @next3Months and mou_end_date > getdate() and noti_count = 0) or 
-                        (mou_end_date < @nextMonth and mou_end_date > getdate() and noti_count = 1)";
-                noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
-                noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired,
-                    new SqlParameter("@next3Months", next3Months),
-                    new SqlParameter("@nextMonth", nextMonth)).ToList();
-                updateNotiCount(noti);
-                return noti;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        private void updateNotiCount(NotificationInfo noti)
+        public void getNoti()
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    foreach (string mouCode in noti.ExpiredMOUCode)
+                    //check latest time creating noti.
+                    //get noti of expired MOU and inactive MOU.
+                    string sql_max_time = @"select isnull(max(created_date),'1900-01-01') as max_date from Notification.NotificationBase t1 inner join
+                        Localization.NotificationTypeLanguage t2 on
+                        t2.notification_type_id = t1.notification_type_id
+                        where notification_type_name like N'%Trạng thái biên bản%'";
+                    DateTime max_date = db.Database.SqlQuery<DateTime>(sql_max_time).First();
+                    max_date = max_date.AddDays(1);
+
+                    if (DateTime.Compare(DateTime.Now, max_date) > 0)
                     {
-                        MOU mou = db.MOUs.Where(x => x.mou_code.Equals(mouCode)).First();
-                        mou.noti_count += 1;
-                        db.Entry(mou).State = EntityState.Modified;
+                        NotificationInfo noti = new NotificationInfo();
+                        DateTime nextMonth = DateTime.Now.AddMonths(1);
+                        DateTime next3Months = DateTime.Now.AddMonths(3);
+                        //Warning 1: end_date < next3Months && notiCount = 0
+                        //warning 2: end_date < nextMonths && notiCount = 1
+                        string sql_inactive_number
+                            = @"select count(*) from IA_Collaboration.MOU tb1 left join 
+                            (
+                            select max([datetime]) as 'maxdate',mou_status_id, mou_id
+                            from IA_Collaboration.MOUStatusHistory 
+                            group by mou_status_id, mou_id) tb2 
+                            on tb1.mou_id = tb2.mou_id
+                            where tb1.is_deleted = 0";
+                        string sql_expired
+                            = @"select mou_code from IA_Collaboration.MOU
+                        where (mou_end_date < @next3Months and mou_end_date > getdate() and noti_count = 0) or 
+                        (mou_end_date < @nextMonth and mou_end_date > getdate() and noti_count = 1)";
+                        noti.InactiveNumber = db.Database.SqlQuery<int>(sql_inactive_number).First();
+                        noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired,
+                            new SqlParameter("@next3Months", next3Months),
+                            new SqlParameter("@nextMonth", nextMonth)).ToList();
+                        updateNotiCount(noti);
+
+                        //get Account
+                        var list_role = new int[] { 2, 3 };
+                        var account_list_obj = from a in db.Accounts
+                                               where list_role.Contains(a.role_id)
+                                               select a.account_id;
+                        List<int> account_list = account_list_obj.ToList<int>();
+
+                        //ExpiredMOUCode:
+                        foreach (string mou_code in noti.ExpiredMOUCode)
+                        {
+                            //add NotificationType 
+                            //add NotificationTypeLanguage
+                            //add NotificationBase
+                            NotificationType ntAdded = db.NotificationTypes.Add(new NotificationType
+                            {
+                                icon = "flaticon-calendar-with-a-clock-time-tools text-dark"
+                            });
+                            db.SaveChanges();
+                            db.NotificationTypeLanguages.Add(new NotificationTypeLanguage
+                            {
+                                notification_type_id = ntAdded.notification_type_id,
+                                language_id = 1,
+                                notification_template = "Biên bản " + mou_code + " sắp hết hạn.",
+                                notification_type_name = "Trạng thái biên bản."
+                            });
+                            foreach (int account_id in account_list)
+                            {
+                                db.NotificationBases.Add(new NotificationBase
+                                {
+                                    account_id = account_id,
+                                    notification_type_id = ntAdded.notification_type_id,
+                                    is_read = false,
+                                    URL = "../MOU/List",
+                                    created_date = DateTime.Now
+                                });
+                            }
+                        }
+                        db.SaveChanges();
+
+                        //ExpiredMOUCode:
+                        //add NotificationType 
+                        //add NotificationTypeLanguage
+                        //add NotificationBase
+                        NotificationType ntAdded2 = db.NotificationTypes.Add(new NotificationType
+                        {
+                            icon = "flaticon-calendar-with-a-clock-time-tools text-dark"
+                        });
+                        db.SaveChanges();
+                        db.NotificationTypeLanguages.Add(new NotificationTypeLanguage
+                        {
+                            //notification_type_id = ntAdded2.notification_type_id,
+                            //notification_type_id = 7,
+                            language_id = 1,
+                            notification_template = "Hiện có " + noti.InactiveNumber + " biên bản ghi nhớ chưa hoạt động.",
+                            notification_type_name = "Trạng thái biên bản."
+                        });
+                        foreach (int account_id in account_list)
+                        {
+                            db.NotificationBases.Add(new NotificationBase
+                            {
+                                account_id = account_id,
+                                notification_type_id = ntAdded2.notification_type_id,
+                                is_read = false,
+                                URL = "../MOU/List",
+                                created_date = DateTime.Now
+                            });
+                        }
+                        db.SaveChanges();
                     }
-                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -775,6 +838,23 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     transaction.Rollback();
                     throw ex;
                 }
+            }
+        }
+        private void updateNotiCount(NotificationInfo noti)
+        {
+            try
+            {
+                foreach (string mouCode in noti.ExpiredMOUCode)
+                {
+                    MOU mou = db.MOUs.Where(x => x.mou_code.Equals(mouCode)).First();
+                    mou.noti_count += 1;
+                    db.Entry(mou).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
         public void UpdateStatusMOU()

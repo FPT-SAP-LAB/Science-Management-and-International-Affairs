@@ -46,7 +46,7 @@ namespace GUEST.Controllers
         {
             AdditionalProfileRepo additionalProfileRepo = new AdditionalProfileRepo();
             AlertModal<int> result = additionalProfileRepo.Add(identification, person, profile, username, CurrentAccount.AccountID(Session));
-            if (result.success.Value)
+            if (result.success)
             {
                 LoginRepo repo = new LoginRepo();
                 LoginRepo.User u = repo.getAccount(result.obj, new List<int> { 0 });

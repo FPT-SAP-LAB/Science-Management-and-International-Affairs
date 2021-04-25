@@ -13,6 +13,9 @@ namespace BLL.ScienceManagement.ArticlePolicy
         private ScienceAndInternationalAffairsEntities db;
         public ArticlePolicyEdit Detail(int article_id)
         {
+            if (article_id <= 0 || article_id == int.MaxValue)
+                return null;
+
             db = db ?? new ScienceAndInternationalAffairsEntities();
             //db.Configuration.LazyLoadingEnabled = false;
             List<ArticleVersion> Versions = (from a in db.Languages
@@ -36,7 +39,7 @@ namespace BLL.ScienceManagement.ArticlePolicy
                                                       }).ToList();
             return new ArticlePolicyEdit(Versions, TypeLanguages);
         }
-        public AlertModal<string> Edit(List<ArticleVersion> articleVersions, List<int> types, int article_id)
+        public AlertModal<string> Edit(List<ArticleVersion> articleVersions, List<int> types, int article_id, int account_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -62,6 +65,7 @@ namespace BLL.ScienceManagement.ArticlePolicy
                             || !versionBefore.article_content.Equals(item.article_content))
                         {
                             item.publish_time = now;
+                            item.account_id = account_id;
                             article.ArticleVersions.Add(item);
                             edit = true;
                         }
