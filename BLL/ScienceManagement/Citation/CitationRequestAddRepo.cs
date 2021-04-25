@@ -39,7 +39,7 @@ namespace BLL.ScienceManagement.Citation
                     RequestCitation rc = new RequestCitation
                     {
                         request_id = b.request_id,
-                        status_id = 3,
+                        citation_status_id = 3,
                         people_id = author.people_id,
                         Citations = citation
                     };

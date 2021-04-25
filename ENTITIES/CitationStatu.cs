@@ -12,23 +12,20 @@ namespace ENTITIES
     using System;
     using System.Collections.Generic;
     
-    public partial class RequestCitation
+    public partial class CitationStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RequestCitation()
+        public CitationStatu()
         {
-            this.Citations = new HashSet<Citation>();
+            this.CitationStatusLanguages = new HashSet<CitationStatusLanguage>();
+            this.RequestCitations = new HashSet<RequestCitation>();
         }
     
-        public int request_id { get; set; }
         public int citation_status_id { get; set; }
-        public int people_id { get; set; }
-        public Nullable<int> total_reward { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Citation> Citations { get; set; }
-        public virtual CitationStatu CitationStatu { get; set; }
-        public virtual Author Author { get; set; }
-        public virtual BaseRequest BaseRequest { get; set; }
+        public virtual ICollection<CitationStatusLanguage> CitationStatusLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestCitation> RequestCitations { get; set; }
     }
 }
