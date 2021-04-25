@@ -3,6 +3,7 @@ using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
@@ -83,26 +84,22 @@ namespace User.Controllers
         }
 
         [HttpPost]
-        public JsonResult addCitation(List<Citation> citation, List<AddAuthor> people)
+        public JsonResult AddCitation(List<Citation> citation, AddAuthor addAuthor)
         {
-            Author author = cr.AddAuthor(people);
+            CitationRequestAddRepo addRepo = new CitationRequestAddRepo();
 
-            cr.AddCitaion(citation);
-
-            BaseRequest b = pr.addBaseRequest(CurrentAccount.AccountID(Session));
-            cr.AddCitationRequest(b, author);
-            string mess = cr.AddRequestHasCitation(citation, b);
-            return Json(new { mess, id = b.request_id }, JsonRequestBehavior.AllowGet);
+            AlertModal<int> result = addRepo.AddRequestCitation(citation, addAuthor, CurrentAccount.AccountID(Session));
+            return Json(new { result.success, id = result.obj });
         }
 
         [HttpPost]
-        public JsonResult editCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
+        public JsonResult EditCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
         {
             //cr.addAuthor(people);
             List<Citation> oldcitation = cr.GetCitation(request_id);
             Author author = cr.EditAuthor(people);
             string mess = cr.EditCitation(oldcitation, citation, request_id, author);
-            return Json(new { mess, id = request_id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id = request_id });
         }
     }
 }
