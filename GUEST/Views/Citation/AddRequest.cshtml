@@ -101,13 +101,14 @@
                 identification_file_link: $("#add_author_cmnd_link").val(),
                 is_reseacher: $('#add_author_isReseacher').is(':checked'),
             }
-            people.push(AddAuthor);
+            //people.push(AddAuthor);
+            return AddAuthor;
         }
 
         $("#btn-submit").click(function () {
             $("#loading").show();
             citation = [];
-            addAuthor();
+            let AddAuthor = addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
             var inputLink = $(".trichdan_link");
@@ -132,30 +133,37 @@
                 $("#loading").hide();
                 return false;
             }
-            if (people.length == 0) {
-                toastr.error("Nhập thông tin tác giả");
+            if (AddAuthor.name == undefined || AddAuthor.name == "") {
+                toastr.error("Tên tác giả không phù hợp");
+                $("#loading").hide();
+                return false;
+            }
+            if (AddAuthor.email == undefined || AddAuthor.email == "") {
+                toastr.error("Email tác giả không phù hợp");
                 $("#loading").hide();
                 return false;
             }
 
             $.ajax({
-                url: "@Url.Action("addCitation", "Citation")",
+                url: "@Url.Action("AddCitation", "Citation")",
                 type: "POST",
-                data: JSON.stringify({ 'citation': citation, 'people': people }),
+                data: JSON.stringify({ 'citation': citation, 'addAuthor': AddAuthor }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    if (response.mess == "ss") {
-                        $("#loading").hide();
-                        $("#nameEdit").val(response.id);
+                    if (response.success) {
+                        $("#nameEdit").val(response.obj);
                         $("#ckEdit").val("3");
                         $("#CitationForm").submit();
                     }
-                    else alert('loi');
+                    else {
+                        toastr.error(response.content);
+                        $("#loading").hide();
+                    }
                 },
                 error: function () {
-                    //alert("fail");
+                    toastr.error("Có lỗi xảy ra");
                 }
             });
         });
