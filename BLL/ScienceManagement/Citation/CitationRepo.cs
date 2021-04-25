@@ -43,7 +43,7 @@ namespace BLL.ScienceManagement.Citation
             try
             {
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                return rc.status_id;
+                return rc.citation_status_id;
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace BLL.ScienceManagement.Citation
                 try
                 {
                     RequestCitation rp = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                    rp.status_id = 1;
+                    rp.citation_status_id = 1;
                     db.SaveChanges();
                     dbc.Commit();
                     return "ss";
@@ -119,7 +119,7 @@ namespace BLL.ScienceManagement.Citation
                 try
                 {
                     RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                    rc.status_id = 5;
+                    rc.citation_status_id = 5;
 
                     Account account = rc.BaseRequest.Account;
                     NotificationRepo nr = new NotificationRepo(db);
@@ -274,7 +274,7 @@ namespace BLL.ScienceManagement.Citation
                 AddRequestHasCitation(newcitation, br);
                 RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
                 rc.people_id = author.people_id;
-                rc.status_id = 3;
+                rc.citation_status_id = 3;
 
                 db.SaveChanges();
                 return "ss";
@@ -313,7 +313,7 @@ namespace BLL.ScienceManagement.Citation
                     int reward = int.Parse(temp);
                     RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
                     rc.total_reward = reward;
-                    rc.status_id = 4;
+                    rc.citation_status_id = 4;
                     db.SaveChanges();
                     dbc.Commit();
 
@@ -367,7 +367,7 @@ namespace BLL.ScienceManagement.Citation
                         };
                         db.RequestDecisions.Add(request);
                         RequestCitation rc = db.RequestCitations.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                        rc.status_id = 2;
+                        rc.citation_status_id = 2;
                     }
 
                     foreach (var item in wait)

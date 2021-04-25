@@ -80,6 +80,7 @@ namespace ENTITIES
         public virtual DbSet<Scholarship> Scholarships { get; set; }
         public virtual DbSet<AcademicDegreeLanguage> AcademicDegreeLanguages { get; set; }
         public virtual DbSet<AcademicDegreeTypeLanguage> AcademicDegreeTypeLanguages { get; set; }
+        public virtual DbSet<CitationStatusLanguage> CitationStatusLanguages { get; set; }
         public virtual DbSet<ConferenceConditionLanguage> ConferenceConditionLanguages { get; set; }
         public virtual DbSet<FormalityLanguage> FormalityLanguages { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
@@ -96,6 +97,8 @@ namespace ENTITIES
         public virtual DbSet<NotificationSubscribe> NotificationSubscribes { get; set; }
         public virtual DbSet<NotificationType> NotificationTypes { get; set; }
         public virtual DbSet<Citation> Citations { get; set; }
+        public virtual DbSet<CitationStatu> CitationStatus { get; set; }
+        public virtual DbSet<CitationType> CitationTypes { get; set; }
         public virtual DbSet<RequestCitation> RequestCitations { get; set; }
         public virtual DbSet<ApprovalProcess> ApprovalProcesses { get; set; }
         public virtual DbSet<Condition> Conditions { get; set; }
