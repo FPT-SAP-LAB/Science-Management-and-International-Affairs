@@ -27,7 +27,7 @@ namespace MANAGER.Controllers
         public ActionResult Pending()
         {
             ViewBag.title = "Danh sách trích dẫn đang chờ xét duyệt";
-            List<PendingCitation_manager> listPending = cr.getListPending();
+            List<PendingCitation_manager> listPending = cr.GetListPending();
             ViewBag.pending = listPending;
 
             return View();
@@ -38,10 +38,10 @@ namespace MANAGER.Controllers
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết trích dẫn";
-            List<ENTITIES.Citation> listCitation = cr.getCitation(id);
+            List<ENTITIES.Citation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
-            AuthorInfo author = cr.getAuthor(id);
+            AuthorInfo author = cr.GetAuthor(id);
             ViewBag.author = author;
 
             List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
@@ -49,7 +49,7 @@ namespace MANAGER.Controllers
 
             ViewBag.request_id = id;
 
-            int status = cr.getStatus(id);
+            int status = cr.GetStatus(id);
             ViewBag.status = status;
 
             LoginRepo.User u = new LoginRepo.User();
@@ -68,7 +68,7 @@ namespace MANAGER.Controllers
         public ActionResult WaitDecision()
         {
             ViewBag.title = "Các trích dẫn đang chờ quyết định";
-            List<WaitDecisionCitation> list = cr.getListWait();
+            List<WaitDecisionCitation> list = cr.GetListWait();
             foreach (var item in list)
             {
                 CultureInfo cul = new CultureInfo("vi-VN");
@@ -82,8 +82,8 @@ namespace MANAGER.Controllers
         [HttpPost]
         public JsonResult editCitation(string request_id, string total)
         {
-            string mess = cr.updateReward(request_id, total);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            string mess = cr.UpdateReward(request_id, total);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -95,7 +95,7 @@ namespace MANAGER.Controllers
 
             string name = "QD_" + number + "_" + date;
 
-            List<string> listE = cr.getAuthorEmail();
+            List<string> listE = cr.GetAuthorEmail();
 
             Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
             ENTITIES.File fl = new ENTITIES.File
@@ -106,23 +106,23 @@ namespace MANAGER.Controllers
             };
 
             ENTITIES.File myFile = mrd.addFile(fl);
-            string mess = cr.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
+            string mess = cr.UploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatus(string request_id)
         {
-            string mess = cr.changeStatus(request_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            string mess = cr.ChangeStatus(request_id);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteRequest(int id)
         {
-            string mess = cr.deleteRequest(id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            string mess = cr.DeleteRequest(id);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -135,7 +135,7 @@ namespace MANAGER.Controllers
             ExcelPackage excelPackage = new ExcelPackage(file);
             ExcelWorkbook excelWorkbook = excelPackage.Workbook;
 
-            List<Citation_Appendix_1> list1 = cr.getListAppendix1();
+            List<Citation_Appendix_1> list1 = cr.GetListAppendix1();
             ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
             int i = 2;
             int count = 1;
@@ -151,7 +151,7 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Citation_Appendix_2> list2 = cr.getListAppendix2();
+            List<Citation_Appendix_2> list2 = cr.GetListAppendix2();
             ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
             i = 2;
             count = 1;
