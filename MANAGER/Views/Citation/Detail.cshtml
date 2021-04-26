@@ -106,13 +106,20 @@
                     @{
                         if (ViewBag.status == 3 || ViewBag.status_id == 8)
                         {
-                            <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
-                            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
-                            <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
+                            if (ViewBag.acc.role_id == 2)
+                            {
+                                <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
+                                <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+                                <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
+                            }
                         }
-                        else
+                        else if (ViewBag.status == 4)
                         {
-                            <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+                            if (ViewBag.acc.role_id == 3)
+                            {
+
+                                <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+                            }
                         }
                     }
                 </div>
@@ -148,9 +155,9 @@
         });
 
         var status = "@ViewBag.status";
-        if (status == "4") {
+        if (status == "5") {
             $("#totalreward").prop("disabled", true);
-        } else {
+        } else if (status == "4") {
             $("#totalreward").prop("disabled", true);
         }
 

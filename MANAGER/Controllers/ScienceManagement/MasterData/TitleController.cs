@@ -7,7 +7,7 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
 {
     public class TitleController : Controller
     {
-        MasterDataRepo md = new MasterDataRepo();
+        private readonly MasterDataRepo md = new MasterDataRepo();
         // GET: Title
         public ActionResult List()
         {
@@ -20,7 +20,7 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
         public JsonResult getItem(int cri_id)
         {
             Title2Name pc = md.GetTitleWithName(cri_id);
-            return Json(new { success = "ss", pc = pc }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = "ss", pc }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -36,14 +36,14 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
             int id = md.addTitle(tv, ta);
             string mess = "ss";
             if (id == 0) mess = "ff";
-            return Json(new { mess = mess, id = id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteItem(int cri_id)
         {
             string mess = md.deleteTitle(cri_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -170,6 +170,7 @@
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
     <Compile Include="ModelDAL\BaseRequestRepo.cs" />
+    <Compile Include="ModelDAL\CitationTypeRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
     <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
     <Compile Include="ModelDAL\CostRepo.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyEditRepo.cs" />
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
+    <Compile Include="ScienceManagement\Citation\CitationRequestAddRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />
@@ -216,6 +218,8 @@
     <Compile Include="ScienceManagement\Researcher\ResearchersListRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductOnePersonRepo.cs" />
     <Compile Include="ScienceManagement\ScientificProduct\ListProductRepo.cs" />
+    <Compile Include="ModelDAL\SubscribeLanguageRepo.cs" />
+    <Compile Include="Support\SupportClass.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

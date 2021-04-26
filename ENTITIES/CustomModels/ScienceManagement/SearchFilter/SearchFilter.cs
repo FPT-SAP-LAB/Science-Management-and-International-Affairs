@@ -12,5 +12,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.SearchFilter
         public string year { get; set; }
         public string name { get; set; }
         public int? hang { get; set; }
+        public string msnv { get; set; }
     }
 }

@@ -187,6 +187,15 @@
     <Compile Include="Citation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="CitationStatu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CitationStatusLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CitationType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="CollaborationScope.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -311,6 +320,7 @@
     <Compile Include="CustomModels\InternationalCollaboration\YearSearching.cs" />
     <Compile Include="CustomModels\Notification.cs" />
     <Compile Include="CustomModels\Datatable\ResultDatatable.cs" />
+    <Compile Include="CustomModels\SubscribeLanguage.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyEdit.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyIndex.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_1.cs" />

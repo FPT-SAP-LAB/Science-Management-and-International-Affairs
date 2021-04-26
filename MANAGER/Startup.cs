@@ -1,26 +1,33 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using BLL.ModelDAL;
+using BLL.InternationalCollaboration.AcademicActivity;
+using Microsoft.AspNet.SignalR;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using System.Configuration;
 using Owin;
-using System;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Owin.Security.Notifications;
+
 [assembly: OwinStartup(typeof(MANAGER.Startup))]
 namespace MANAGER
 {
     public class Startup
     {
-        public readonly static string clientId = System.Configuration.ConfigurationManager.AppSettings["ClientId"];
-        public readonly static string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
-        public readonly static string tenant = System.Configuration.ConfigurationManager.AppSettings["Tenant"];
-        public readonly static string GuestURI = System.Configuration.ConfigurationManager.AppSettings["GuestURI"];
-        public readonly static string authority = string.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
+        public readonly static string clientId = ConfigurationManager.AppSettings["ClientId"];
+        public readonly static string redirectUri = ConfigurationManager.AppSettings["RedirectUri"];
+        public readonly static string tenant = ConfigurationManager.AppSettings["Tenant"];
+        public readonly static string GuestURI = ConfigurationManager.AppSettings["GuestURI"];
+        public readonly static string ManagerURI = ConfigurationManager.AppSettings["ManagerURI"];
+        public readonly static string authority = string.Format(System.Globalization.CultureInfo.InvariantCulture, ConfigurationManager.AppSettings["Authority"], tenant);
         public void Configuration(IAppBuilder app)
         {
+            NotificationRepo.GuestURI = GuestURI;
+            NotificationRepo.ManagerURI = ManagerURI;
+            FormRepo.GuestURL = GuestURI;
+            FormRepo.ManagerURL = ManagerURI;
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseOpenIdConnectAuthentication(

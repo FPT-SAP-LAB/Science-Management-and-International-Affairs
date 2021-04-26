@@ -18,8 +18,14 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public string valid_date_string { get; set; }
         public DateTime valid_date { get; set; }
         public Int64? total_reward { get; set; }
-        public int gscholar_citation { get; set; }
-        public int scopus_citation { get; set; }
+        public int? gscholar_citation { get; set; }
+        public int? scopus_citation { get; set; }
         public String co_author { get; set; }
+    }
+    public class SupportClassAuthorCitation
+    {
+        public int people_id { get; set; }
+        public int sum_scopus { get; set; }
+        public int sum_scholar { get; set; }
     }
 }

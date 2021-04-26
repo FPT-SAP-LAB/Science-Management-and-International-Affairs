@@ -1,4 +1,5 @@
-﻿using BLL.ScienceManagement.MasterData;
+﻿using BLL.Authen;
+using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
@@ -56,6 +57,18 @@ namespace MANAGER.Controllers
             if (p == null) p = new Author();
             ViewBag.p = p;
 
+            LoginRepo.User u = new LoginRepo.User();
+            Account acc = new Account();
+            if (Session["User"] != null)
+            {
+                u = (LoginRepo.User)Session["User"];
+                acc = u.account;
+            }
+            ViewBag.acc = acc;
+
+            List<PaperCriteria> listCriteria = mdr.getPaperCriteria();
+            ViewBag.listCriteria = listCriteria;
+
             return View();
         }
 
@@ -109,7 +122,7 @@ namespace MANAGER.Controllers
             string mess = pr.updateRewardPaper(paper);
             if (mess == "ss") mess = pr.updateAuthorReward(paper, people, id);
             if (mess == "ss") mess = pr.updateCriteria_ManagerCheck(paper.paper_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -234,7 +247,7 @@ namespace MANAGER.Controllers
 
             string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -260,28 +273,28 @@ namespace MANAGER.Controllers
 
             string mess = pr.uploadDecision2(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatus(DetailPaper paper)
         {
             string mess = pr.changeStatus(paper);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatusManager(DetailPaper paper)
         {
             string mess = pr.changeStatusManager(paper);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteRequest(int id)
         {
             string mess = pr.deleteRequest(id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult waitVerify()
@@ -295,13 +308,22 @@ namespace MANAGER.Controllers
         public JsonResult confirmReqward(int request_id)
         {
             bool mess = pr.confirmReward(request_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult editAuthorReqward(int request_id)
         {
             bool mess = pr.editAuthorReward(request_id);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
+        {
+            string temp = pr.updateCriteria(criteria, paper_id);
+            bool mess = true;
+            if (temp == "ff") mess = false;
             return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
         }
     }

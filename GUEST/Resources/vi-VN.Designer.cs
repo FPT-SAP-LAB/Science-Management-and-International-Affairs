@@ -1186,7 +1186,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gửi yêu cầu.
+        ///   Looks up a localized string similar to Gửi đề nghị.
         /// </summary>
         public static string Send {
             get {
