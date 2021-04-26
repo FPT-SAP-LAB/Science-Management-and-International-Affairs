@@ -1,5 +1,6 @@
 ﻿namespace ENTITIES.CustomModels
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public class AlertModal<T>
     {
         public bool success { get; set; }
