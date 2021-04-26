@@ -5,9 +5,9 @@ namespace BLL.ModelDAL
 {
     public class PolicyRepo
     {
-        public string GetCurrentLink(int policy_type_id)
+        public string GetCurrentLink(int policy_type_id, ScienceAndInternationalAffairsEntities db = null)
         {
-            ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+            db = db ?? new ScienceAndInternationalAffairsEntities();
             Policy policy = GetCurrentPolicy(policy_type_id, db);
             if (policy == null)
                 return null;
