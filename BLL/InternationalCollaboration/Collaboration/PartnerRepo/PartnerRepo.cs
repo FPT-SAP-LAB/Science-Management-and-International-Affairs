@@ -23,28 +23,26 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 db = new ScienceAndInternationalAffairsEntities();
                 string sql = @" select * from (select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
-                                a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
+                                a.partner_id, a.is_deleted, a.website, a.address, max(a.is_collab) 'is_collab',
                                 STRING_AGG(a.[name], ',') 'specialization_name', a.country_name from 
                                 (select distinct t1.partner_name, t1.partner_id, t1.is_deleted, t1.website, t1.address,
-		                        t4.[name],
-		                        t5.country_name,
-                                case when t2.partner_id is null     
-		                        then 1 else 2 end as 'is_collab'
+                                t4.[name], t5.country_name, case when t2.partner_id is not null and t6.is_deleted = 0    
+                                then 2 else 1 end as 'is_collab'
                                 from IA_Collaboration.Partner t1 
                                 left join IA_Collaboration.MOUPartner t2 on
                                 t2.partner_id = t1.partner_id left join IA_Collaboration.MOU t6
-		                        on t6.mou_id = t2.mou_id 
+                                on t6.mou_id = t2.mou_id
                                 left join IA_Collaboration.MOUPartnerSpecialization t3 on
                                 t3.mou_partner_id = t2.mou_partner_id
                                 left join Localization.SpecializationLanguage t4 on 
                                 t4.specialization_id = t3.specialization_id 
-		                        left join General.Country t5 on 
-		                        t1.country_id = t5.country_id 
+                                left join General.Country t5 on 
+                                t1.country_id = t5.country_id 
                                 where ( t1.is_deleted = {0}) and (t4.language_id = {1} or t4.language_id is null)) as a
-								group by a.partner_name, a.partner_id, 
-		                        a.is_deleted, a.website, a.address, a.partner_id,
-		                        a.country_name, a.is_collab
-								) as xyz
+                                group by a.partner_name, a.partner_id, 
+                                a.is_deleted, a.website, a.address, a.partner_id,
+                                a.country_name
+                                ) as xyz
 								where isnull(xyz.partner_name, '') like {2} and
 								isnull(xyz.specialization_name, '') like {3} and
 								isnull(xyz.country_name, '') like {4} and
