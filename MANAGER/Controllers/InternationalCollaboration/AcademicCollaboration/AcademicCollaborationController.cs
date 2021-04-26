@@ -1,6 +1,7 @@
 ﻿using BLL.Authen;
 using BLL.InternationalCollaboration.AcademicCollaborationRepository;
 using BLL.InternationalCollaboration.MasterData;
+using BLL.ModelDAL;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
@@ -95,8 +96,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<Country>> alertModal = academicCollaborationRepo.Countries(country_name);
+                CountryRepo countryRepo = new CountryRepo();
+                AlertModal<List<Country>> alertModal = new AlertModal<List<Country>>(countryRepo.GetCountries(country_name), true);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)

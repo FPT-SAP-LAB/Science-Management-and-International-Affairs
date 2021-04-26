@@ -121,23 +121,6 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             }
         }
 
-        public AlertModal<List<Country>> Countries(string country_name)
-        {
-            try
-            {
-                var sql = @"-----1.1. Danh sách Country
-                        select * from General.Country
-                        where country_name like @country_name";
-                List<Country> countries = db.Database.SqlQuery<Country>(sql,
-                    new SqlParameter("country_name", country_name == null ? "%%" : "%" + country_name + "%")).ToList();
-                return new AlertModal<List<Country>>(countries, true);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         public AlertModal<List<Year>> YearSearching()
         {
             try
