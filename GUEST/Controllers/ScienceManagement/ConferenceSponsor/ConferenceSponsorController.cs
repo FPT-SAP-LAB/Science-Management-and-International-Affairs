@@ -98,11 +98,11 @@ namespace GUEST.Controllers
             return View();
         }
         [HttpPost]
-        public string Edit(string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
+        public JsonResult Edit(string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
             ConferenceSponsorEditRepo EditRepo = new ConferenceSponsorEditRepo();
-            string output = EditRepo.EditRequestConference(CurrentAccount.AccountID(Session), input, invite, paper, request_id);
-            return output;
+            AlertModal<int> output = EditRepo.EditRequestConference(CurrentAccount.AccountID(Session), input, invite, paper, request_id);
+            return Json(output);
         }
         public ActionResult Detail(int id)
         {
