@@ -402,14 +402,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
                         if (evidence_file != null)
                         {
-                            f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
+                            f = academicCollaborationRepo.UploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
                         }
 
                         File file = new File();
                         //save file if null, else just save activityPartner
                         if (f != null)
                         {
-                            file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                            file = academicCollaborationRepo.SaveFileToFile(f, evidence_file);
                         }
 
                         //update to PartnerScope
@@ -440,11 +440,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 partnerScope = db.PartnerScopes.Where(x => x.partner_id == partner_id && x.scope_id == scope_id).FirstOrDefault();
                 if (partnerScope != null)
                 {
-                    academicCollaborationRepo.increaseReferenceCountOfPartnerScope(partnerScope);
+                    academicCollaborationRepo.IncreaseReferenceCountOfPartnerScope(partnerScope);
                 }
                 else
                 {
-                    partnerScope = academicCollaborationRepo.savePartnerScope(partner_id, scope_id);
+                    partnerScope = academicCollaborationRepo.SavePartnerScope(partner_id, scope_id);
                 }
             }
             catch (Exception e)
@@ -530,13 +530,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             {
                                 //update file on Google Drive
                                 f = GoogleDriveService.UpdateFile(evidence_file.FileName, evidence_file.InputStream, evidence_file.ContentType, old_file.file_drive_id);
-                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                                new_file = academicCollaborationRepo.SaveFileToFile(f, evidence_file);
                             }
                             else
                             {
                                 //upload to Goolge Drive
-                                f = academicCollaborationRepo.uploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
-                                new_file = academicCollaborationRepo.saveFileToFile(f, evidence_file);
+                                f = academicCollaborationRepo.UploadEvidenceFile(evidence_file, "Collab partner - " + folder_name, 5, false);
+                                new_file = academicCollaborationRepo.SaveFileToFile(f, evidence_file);
                             }
                         }
                         else
@@ -612,7 +612,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     //decrease re_cou of old partner_scope
                     PartnerScope old_partner_scope = db.PartnerScopes.Find(activityPartner.partner_scope_id);
-                    academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(old_partner_scope);
+                    academicCollaborationRepo.DecreaseReferenceCountOfPartnerScope(old_partner_scope);
                     if (old_partner_scope.reference_count <= 0)
                     {
                         db.PartnerScopes.Remove(old_partner_scope);
@@ -644,7 +644,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     //decrease ref_cou
                     PartnerScope partnerScope = db.PartnerScopes.Find(activityPartner.partner_scope_id);
-                    academicCollaborationRepo.decreaseReferenceCountOfPartnerScope(partnerScope);
+                    academicCollaborationRepo.DecreaseReferenceCountOfPartnerScope(partnerScope);
                     //delete activi_partner
                     db.ActivityPartners.Remove(activityPartner);
                     db.SaveChanges();
