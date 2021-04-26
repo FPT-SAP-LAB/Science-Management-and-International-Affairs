@@ -148,6 +148,7 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\FormRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationExportRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationGuestRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationLongRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationShortRepo.cs" />

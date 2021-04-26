@@ -412,8 +412,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<AcademicCollaborationTypeLanguage> alertModal = academicCollaborationRepo.GetLTContent(collab_type_id, language_id);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<AcademicCollaborationTypeLanguage> alertModal = academicCollaborationLongRepo.GetLTContent(collab_type_id, language_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -429,8 +429,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<string> alertModal = academicCollaborationRepo.UpdateLTContent(collab_type_id, language_id, description);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<string> alertModal = academicCollaborationLongRepo.UpdateLTContent(collab_type_id, language_id, description);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -445,8 +445,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<CollaborationTypeDirectionLanguage> alertModal = academicCollaborationRepo.GetLTGCContent(direction_id, collab_type_id, language_id);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<CollaborationTypeDirectionLanguage> alertModal = academicCollaborationLongRepo.GetLTGCContent(direction_id, collab_type_id, language_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -462,8 +462,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<string> alertModal = academicCollaborationRepo.UpdateLTGCContent(collab_type_direction_id, language_id, description);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<string> alertModal = academicCollaborationLongRepo.UpdateLTGCContent(collab_type_direction_id, language_id, description);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
