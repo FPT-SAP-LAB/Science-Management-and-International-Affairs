@@ -277,6 +277,29 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             }
         }
 
+        public bool CheckDuplicatePartner(PartnerArticle partner_article, int partner_id)
+        {
+            db = new ScienceAndInternationalAffairsEntities();
+            string partner_name_check = db.Partners.Find(partner_id).partner_name;
+            if (!partner_article.partner_name.ToLower().Equals(partner_name_check.ToLower()))
+            {
+                int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
+                if (partner_check > 0)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
+                if (partner_check > 1)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public AlertModal<string> EditPartner(List<HttpPostedFileBase> files_request, HttpPostedFileBase image, string content,
             PartnerArticle partner_article, int number_of_image, int partner_id, int account_id)
         {
@@ -286,21 +309,9 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 {
                     db = new ScienceAndInternationalAffairsEntities();
                     string partner_name_check = db.Partners.Find(partner_id).partner_name;
-                    if (!partner_article.partner_name.ToLower().Equals(partner_name_check.ToLower()))
+                    if (CheckDuplicatePartner(partner_article, partner_id))
                     {
-                        int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
-                        if (partner_check > 0)
-                        {
-                            return new AlertModal<string>(false, "Tên đối tác bị trùng");
-                        }
-                    }
-                    else
-                    {
-                        int partner_check = db.Partners.Where(x => x.partner_name.ToLower().Equals(partner_article.partner_name.ToLower()) && x.is_deleted == false).ToList().Count();
-                        if (partner_check > 1)
-                        {
-                            return new AlertModal<string>(false, "Tên đối tác bị trùng");
-                        }
+                        return new AlertModal<string>(false, "Tên đối tác bị trùng");
                     }
                     List<string> image_drive_id = new List<string>();
                     List<string> image_drive_data_link = new List<string>();
