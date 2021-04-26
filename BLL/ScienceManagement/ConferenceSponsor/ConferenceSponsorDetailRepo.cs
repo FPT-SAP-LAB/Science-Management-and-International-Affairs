@@ -180,8 +180,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id, string comment)
         {
             int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
-            if (position_id == null)
-                return new AlertModal<string>(false, "Tài khoản chưa có chức vụ");
 
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -409,6 +407,44 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 Console.WriteLine(e.ToString());
                 return new AlertModal<string>(false, "Có lỗi xảy ra");
+            }
+        }
+        public AlertModal<string> CancelRequest(int request_id, int account_id)
+        {
+            int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+
+            RequestConference request = db.RequestConferences.Find(request_id);
+            if (request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+
+            Account account = db.Accounts.Find(account_id);
+            if (account.role_id == 2 || (request.editable && request.BaseRequest.account_id == account_id))
+            {
+                DateTime now = DateTime.Now;
+
+                using (DbContextTransaction trans = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        request.status_id = 6;
+                        request.BaseRequest.finished_date = now;
+
+                        ApprovalProcessRepo.Add(db, account_id, now, position_id, request_id, "Kết thúc đề nghị");
+
+                        trans.Commit();
+                        return new AlertModal<string>(true);
+                    }
+                    catch (Exception e)
+                    {
+                        trans.Rollback();
+                        Console.WriteLine(e.ToString());
+                        return new AlertModal<string>(false);
+                    }
+                }
+            }
+            else
+            {
+                return new AlertModal<string>(false, "Tài khoản không được phép kết thúc đề nghị này");
             }
         }
     }

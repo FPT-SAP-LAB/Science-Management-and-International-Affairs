@@ -1,7 +1,6 @@
 ﻿using BLL.ModelDAL;
 using BLL.ScienceManagement.ConferenceSponsor;
 using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
@@ -19,7 +18,6 @@ namespace GUEST.Controllers
     public class ConferenceSponsorController : Controller
     {
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
-        readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
         readonly CountryRepo countryRepo = new CountryRepo();
         readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
@@ -44,6 +42,7 @@ namespace GUEST.Controllers
         [AjaxOnly, HttpPost]
         public JsonResult List(ConferenceSearch search)
         {
+            ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
             BaseDatatable datatable = new BaseDatatable(Request);
             BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search,
                 CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
@@ -130,15 +129,20 @@ namespace GUEST.Controllers
             else
                 return Json(new { success = true });
         }
-        [ChildActionOnly]
-        public ActionResult CostMenu(int id)
+        [HttpPost]
+        public JsonResult CancelRequest(int request_id)
         {
-            ViewBag.id = id;
-            ViewBag.CheckboxColumn = id == 2;
-            ViewBag.ReimbursementColumn = id >= 3;
-            ViewBag.EditAble = id == 2;
-            return PartialView();
+            return Json(DetailRepos.CancelRequest(request_id, CurrentAccount.AccountID(Session)));
         }
+        //[ChildActionOnly]
+        //public ActionResult CostMenu(int id)
+        //{
+        //    ViewBag.id = id;
+        //    ViewBag.CheckboxColumn = id == 2;
+        //    ViewBag.ReimbursementColumn = id >= 3;
+        //    ViewBag.EditAble = id == 2;
+        //    return PartialView();
+        //}
         [AjaxOnly]
         public JsonResult GetInformationPeopleWithID(string id)
         {
