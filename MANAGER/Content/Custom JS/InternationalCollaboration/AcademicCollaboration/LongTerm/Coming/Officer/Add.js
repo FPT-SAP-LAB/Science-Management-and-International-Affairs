@@ -332,7 +332,7 @@ $('#coming_add_officer_save').on('click', function () {
         || isEmptyOrNullOrUndefined(partner) || isEmptyOrNullOrUndefined(partner_country_id)
         || isEmptyOrNullOrUndefined(collab_scope_id) || isEmptyOrNullOrUndefined(status_id)
         || isEmptyOrNullOrUndefined(plan_start_date) || isEmptyOrNullOrUndefined(plan_end_date)) {
-        return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+        return toastr.warning("Chưa chọn đủ trường thông tin bắt buộc.");
     } else {
         let person_name = person.split('/')[0];
         let person_id = person.split('/')[1];

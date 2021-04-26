@@ -2065,7 +2065,7 @@
             let contact_point_phone = $('#add_phone_DongToChuc').val();
 
             if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id) || isEmptyOrNullOrUndefined(cooperation_date_start) || isEmptyOrNullOrUndefined(cooperation_date_end)) {
-                return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+                return toastr.warning("Chưa chọn đủ trường thông tin bắt buộc.");
             } else {
                 if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
                     return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
@@ -2259,7 +2259,7 @@
             let contact_point_phone = $('#edit_phone_DongToChuc').val();
 
             if (isEmptyOrNullOrUndefined(partner_id) || isEmptyOrNullOrUndefined(scope_id) || isEmptyOrNullOrUndefined(cooperation_date_start) || isEmptyOrNullOrUndefined(cooperation_date_end)) {
-                return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+                return toastr.warning("Chưa chọn đủ trường thông tin bắt buộc.");
             } else {
                 if (!datePickerFromToValidate(cooperation_date_start, cooperation_date_end)) {
                     return toastr.error("Thời hạn bắt đầu không được vượt quá thời hạn kết thúc.");
