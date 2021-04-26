@@ -21,7 +21,6 @@ namespace GUEST.Controllers
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
         readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        readonly ConferenceSponsorEditRepo EditRepo = new ConferenceSponsorEditRepo();
         readonly CountryRepo countryRepo = new CountryRepo();
         readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
         readonly FormalityLanguageRepo formalityLanguageRepo = new FormalityLanguageRepo();
@@ -101,6 +100,7 @@ namespace GUEST.Controllers
         [HttpPost]
         public string Edit(string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
+            ConferenceSponsorEditRepo EditRepo = new ConferenceSponsorEditRepo();
             string output = EditRepo.EditRequestConference(CurrentAccount.AccountID(Session), input, invite, paper, request_id);
             return output;
         }

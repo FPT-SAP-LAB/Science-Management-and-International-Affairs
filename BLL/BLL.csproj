@@ -172,7 +172,6 @@
     <Compile Include="ModelDAL\BaseRequestRepo.cs" />
     <Compile Include="ModelDAL\CitationTypeRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
-    <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
     <Compile Include="ModelDAL\CostRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />

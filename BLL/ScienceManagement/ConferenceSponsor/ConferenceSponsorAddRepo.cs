@@ -84,7 +84,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public string AddRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper)
         {
             List<string> FileIDs = new List<string>();
-            ConferenceParticipantRepo participantRepo = new ConferenceParticipantRepo();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -216,7 +215,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
                     participant.request_id = @base.request_id;
-                    participantRepo.AddWithTempData(db, participant);
+                    db.ConferenceParticipants.Add(participant);
 
                     int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
 

@@ -18,7 +18,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public string EditRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
-            ConferenceParticipantRepo participantRepo = new ConferenceParticipantRepo();
 
             RequestConference request = db.RequestConferences.Where(x => x.request_id == request_id && x.BaseRequest.account_id == account_id).FirstOrDefault();
             if (request == null)
@@ -91,7 +90,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
                     participant.request_id = request_id;
-                    participantRepo.AddWithTempData(db, participant);
+                    db.ConferenceParticipants.Add(participant);
 
                     foreach (var item in request.EligibilityConditions)
                     {
