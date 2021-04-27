@@ -307,7 +307,7 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
                 {
                     db = new ScienceAndInternationalAffairsEntities();
                     string partner_name_check = db.Partners.Find(partner_id).partner_name;
-                    if (CheckDuplicatePartner(partner_article, partner_id))
+                    if (!CheckDuplicatePartner(partner_article, partner_id))
                     {
                         return new AlertModal<string>(false, "Tên đối tác bị trùng");
                     }
