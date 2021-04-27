@@ -1,8 +1,10 @@
 ﻿using BLL.ModelDAL;
+using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using MANAGER.Models;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers
@@ -13,8 +15,17 @@ namespace MANAGER.Controllers
 
         public ActionResult Index()
         {
+            SubscribeLanguageRepo subscribeRepo = new SubscribeLanguageRepo();
+            ViewBag.subscribes = subscribeRepo.GetSubscribes(CurrentAccount.AccountID(Session), 1);
             return View();
         }
+
+        public ActionResult Update(List<NotificationSubscribe> subscribes)
+        {
+            SubscribeLanguageRepo subscribeRepo = new SubscribeLanguageRepo();
+            return Json(subscribeRepo.UpdateSubscribe(subscribes, CurrentAccount.AccountID(Session)));
+        }
+
         [AjaxOnly]
         public JsonResult List(int start)
         {

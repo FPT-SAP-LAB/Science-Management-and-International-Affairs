@@ -11,7 +11,7 @@ namespace BLL.ScienceManagement.ResearcherListRepo
     public class ResearchersListRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public BaseServerSideData<ResearcherList> GetList(BaseDatatable baseDatatable, string coso, string name)
+        public BaseServerSideData<ResearcherList> GetList(BaseDatatable baseDatatable, string coso, string name, int language_id)
         {
             var data = (from a in db.People
                         join b in db.Profiles on a.people_id equals b.people_id
@@ -31,7 +31,7 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                             positions = ((from m in db.People
                                           join n in db.PeoplePositions on m.people_id equals n.people_id
                                           join h in db.PositionLanguages on n.position_id equals h.position_id
-                                          where h.language_id == 1 && m.people_id == a.people_id
+                                          where h.language_id == language_id && m.people_id == a.people_id
                                           select h.name
                             ).ToList<String>()),
                             avatar = (

@@ -24,7 +24,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             for (int i = 0; i < output.Data.Count; i++)
             {
                 output.Data[i].RowNumber = datatable.Start + 1 + i;
-                output.Data[i].CreatedDate = output.Data[i].valid_date.ToString("dd/MM/yyyy");
+                output.Data[i].CreatedDate = output.Data[i].valid_date.Value.ToString("dd/MM/yyyy");
             }
             return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
         }

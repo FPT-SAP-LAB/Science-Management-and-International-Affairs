@@ -295,13 +295,22 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUStatusHistory
                     File evidence_file = saveFile(file, evidence);
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
+                    int? evidence_value;
+                    if (evidence_file.file_id == 0)
+                    {
+                        evidence_value = null;
+                    }
+                    else
+                    {
+                        evidence_value = evidence_file.file_id;
+                    }
                     DateTime mou_end_date = DateTime.ParseExact(input.BasicInfo.mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     MOU m = new MOU
                     {
                         mou_code = input.BasicInfo.mou_code,
                         mou_end_date = mou_end_date,
                         mou_note = input.BasicInfo.mou_note,
-                        evidence = evidence_file.file_id,
+                        evidence = evidence_value,
                         office_id = input.BasicInfo.office_id,
                         account_id = user is null ? 1 : user.account.account_id,
                         add_time = DateTime.Now,

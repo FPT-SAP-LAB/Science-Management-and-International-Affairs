@@ -25,8 +25,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYearPaper();
-            List<PaperCriteria> criterias = rewardsReportRepo.getListCriteria();
+            List<String> years = rewardsReportRepo.GetListYearPaper();
+            List<PaperCriteria> criterias = rewardsReportRepo.GetListCriteria();
             ViewBag.years = years;
             ViewBag.criterias = criterias;
             return View();
@@ -37,7 +37,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYearPaper();
+            List<String> years = rewardsReportRepo.GetListYearPaper();
             ViewBag.years = years;
             return View();
         }
@@ -47,7 +47,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYear(50);
+            List<String> years = rewardsReportRepo.GetListYear(50);
             ViewBag.years = years;
             return View();
         }
@@ -57,6 +57,14 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         }
         public ActionResult ConferencesParticipationReport()
         {
+            OfficeRepo o = new OfficeRepo();
+            rewardsReportRepo = new RewardsReportRepo();
+            List<Office> listOffices = o.GetList();
+            ViewBag.listOffices = listOffices;
+            List<String> years = rewardsReportRepo.GetListYear(20);
+            List<PaperCriteria> criterias = rewardsReportRepo.GetListCriteria();
+            ViewBag.years = years;
+            ViewBag.criterias = criterias;
             return View();
         }
         public ActionResult ConferencesParticipationReport_tgtemp()
@@ -69,7 +77,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             rewardsReportRepo = new RewardsReportRepo();
             List<Office> listOffices = o.GetList();
             ViewBag.listOffices = listOffices;
-            List<String> years = rewardsReportRepo.getListYearPaper();
+            List<String> years = rewardsReportRepo.GetListYearPaper();
             ViewBag.years = years;
             return View();
         }
@@ -112,7 +120,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.getAriticlesByAreaReports(datatable, searchs, type);
+                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.GetAriticlesByAreaReports(datatable, searchs, type);
                 for (int i = 0; i < output.Item1.Data.Count; i++)
                 {
                     output.Item1.Data[i].valid_date_string = output.Item1.Data[i].valid_date.ToString("dd/MM/yyyy");
@@ -150,7 +158,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.getAwardReportByAuthor(datatable, searchs);
+                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.GetAwardReportByAuthor(datatable, searchs);
                 for (int i = 0; i < data.Data.Count; i++)
                 {
                     data.Data[i].rowNum = datatable.Start + 1 + i;
@@ -188,7 +196,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.getIntellectualPropertyReport(datatable, searchs);
+                Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.GetIntellectualPropertyReport(datatable, searchs);
                 for (int i = 0; i < output.Item1.Data.Count; i++)
                 {
                     output.Item1.Data[i].date_string = output.Item1.Data[i].date.Value.ToString("dd/MM/yyyy");
@@ -215,7 +223,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<CitationByAuthorReport> data = rewardsReportRepo.getCitationByAuthorReport(datatable, searchs).Item1;
+                BaseServerSideData<CitationByAuthorReport> data = rewardsReportRepo.GetCitationByAuthorReport(datatable, searchs).Item1;
                 for (int i = 0; i < data.Data.Count; i++)
                 {
                     data.Data[i].scopus_citation = data.Data[i].scopus_citation == null ? 0 : data.Data[i].scopus_citation;
@@ -225,6 +233,43 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                     data.Data[i].rownum = datatable.Start + 1 + i;
                 }
                 return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = e.Message
+                });
+            }
+        }
+        public JsonResult getConferencesReports()
+        {
+            try
+            {
+                int? office_id;
+                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
+                else { office_id = Int32.Parse(Request["coso"]); }
+                //////////////////////////////////////////////////////////////////////////
+                string name = Request["name"];
+                string year = Request["year"];
+                SearchFilter searchs = new SearchFilter()
+                {
+                    office_id = office_id,
+                    name = name,
+                    year = year,
+                };
+                rewardsReportRepo = new RewardsReportRepo();
+                BaseDatatable datatable = new BaseDatatable(Request);
+                Tuple<BaseServerSideData<ConferencesParticipationReport>, String> output = rewardsReportRepo.GetConferencesReport(datatable, searchs);
+                for (int i = 0; i < output.Item1.Data.Count; i++)
+                {
+                    output.Item1.Data[i].dateString = output.Item1.Data[i].attendance_date.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].valiDateString =
+                        output.Item1.Data[i].valid_date == null ? "" : output.Item1.Data[i].valid_date.Value.ToString("dd/MM/yyyy");
+                    output.Item1.Data[i].RowNumber = datatable.Start + 1 + i;
+                }
+                return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
             }
             catch (Exception e)
             {

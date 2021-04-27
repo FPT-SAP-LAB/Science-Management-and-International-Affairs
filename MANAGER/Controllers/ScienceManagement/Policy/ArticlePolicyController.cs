@@ -60,7 +60,7 @@ namespace MANAGER.Controllers.ScienceManagement.Policy
         [ValidateInput(false)]
         public JsonResult Edit(List<ArticleVersion> versions, List<int> types, int id)
         {
-            return Json(EditRepo.Edit(versions, types, id));
+            return Json(EditRepo.Edit(versions, types, id, CurrentAccount.AccountID(Session)));
         }
     }
 }

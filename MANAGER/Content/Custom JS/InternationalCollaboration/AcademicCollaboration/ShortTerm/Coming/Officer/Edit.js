@@ -345,7 +345,7 @@ $('#coming_edit_officer').on('show.bs.modal', function (e) {
                     let id = '#' + elemId;
                     let $statusBar = $(id + ' .uppy-status');
                     let $uploadedList = $(id + ' .uppy-list');
-                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + acadCollab.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + acadCollabfile_link + '>' + acadCollab.file_name + '</a></div><span class="uppy-list-remove" data-id="' + acadCollab.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                    let uploadListHtml = '<div class="uppy-list-item" data-id="' + acadCollab.file_id + '"><div class="uppy-list-label"><a target="_blank" href=' + acadCollab.file_link + '>' + acadCollab.file_name + '</a></div><span class="uppy-list-remove" data-id="' + acadCollab.file_id + '"><i class="flaticon2-cancel-music"></i></span></div>';
                     if (acadCollab.file_id != null) {
                         $uploadedList.append(uploadListHtml);
                         $statusBar.addClass('uppy-status-hidden');
@@ -400,7 +400,7 @@ $('#coming_edit_officer_save').on('click', function () {
         || isEmptyOrNullOrUndefined(partner) || isEmptyOrNullOrUndefined(partner_country_id)
         || isEmptyOrNullOrUndefined(collab_scope_id) || isEmptyOrNullOrUndefined(status_id)
         || isEmptyOrNullOrUndefined(plan_start_date) || isEmptyOrNullOrUndefined(plan_end_date)) {
-        return toastr.error("Chưa chọn đủ trường thông tin bắt buộc.");
+        return toastr.warning("Chưa chọn đủ trường thông tin bắt buộc.");
     } else {
         let person_name = person.split('/')[0];
         let person_id = person.split('/')[1]

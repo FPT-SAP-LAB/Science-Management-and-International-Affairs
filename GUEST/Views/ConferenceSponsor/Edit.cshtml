@@ -744,12 +744,12 @@
             $.ajax({
                 url: "/ConferenceSponsor/Edit",
                 method: "post",
-                complete: function (data) {
-                    if (data.responseJSON.id) {
-                        location.href = "/ConferenceSponsor/Detail?id=" + data.responseJSON.id;
+                success: function (data) {
+                    if (data.obj) {
+                        location.href = "/ConferenceSponsor/Detail?id=" + data.obj;
                     }
                     else {
-                        toastr.error(data.responseJSON.message);
+                        toastr.error(data.content);
                     }
                     $("#loading").hide();
                 },
