@@ -53,7 +53,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable
                 {
-                    Start = Int32.Parse(Request["start"]),
+                    Start = int.Parse(Request["start"]),
                     Length = ListGuestLenght,
                     SortColumnName = "name",
                     SortDirection = "asc"
@@ -73,7 +73,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "#"));
             researcherDetailRepo = new ResearchersDetailRepo();
-            int id = Int32.Parse(Request.QueryString["id"]);
+            int id = int.Parse(Request.QueryString["id"]);
             ResearcherDetail profile = researcherDetailRepo.GetDetailView(id, LanguageResource.GetCurrentLanguageID());
             ViewBag.profile = profile;
             ViewBag.pagesTree = pagesTree;
@@ -82,7 +82,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         public ActionResult GetPublications()
         {
             researcherBiographyRepo = new ResearchersBiographyRepo();
-            int id = Int32.Parse(Request.QueryString["id"]);
+            int id = int.Parse(Request.QueryString["id"]);
             List<ResearcherPublications> researcher_public = researcherBiographyRepo.GetPublications(id);
             return Json(new { success = true, data = researcher_public, draw = Request["draw"], recordsTotal = researcher_public.Count, recordsFiltered = researcher_public.Count }, JsonRequestBehavior.AllowGet);
         }
@@ -96,11 +96,11 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             int languageId = LanguageResource.GetCurrentLanguageID();
             researcherDetailRepo = new ResearchersDetailRepo();
             researcherBiographyRepo = new ResearchersBiographyRepo();
-            int id = Int32.Parse(Request.QueryString["id"]);
+            int id = int.Parse(Request.QueryString["id"]);
             pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "/Researchers/ViewInfo?id=" + id));
             pagesTree.Add(new PageTree("Chỉnh sửa thông tin", "#"));
             researcherDetailRepo = new ResearchersDetailRepo();
-            if (CurrentAccount.getProfile(Session).people_id != id)
+            if (CurrentAccount.GetProfile(Session).people_id != id)
             {
                 Response.Redirect("/ErrorPage/Error");
             }
@@ -127,7 +127,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             {
                 int languageId = LanguageResource.GetCurrentLanguageID();
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                int id = Int32.Parse(Request.QueryString["id"]);
+                int id = int.Parse(Request.QueryString["id"]);
                 List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id, languageId);
                 return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
             }
@@ -142,7 +142,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                int id = Int32.Parse(Request.QueryString["id"]);
+                int id = int.Parse(Request.QueryString["id"]);
                 List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
                 workList = workList.Select(x => { x.records.Profile = null; return x; }).ToList();
                 return Json(new
@@ -172,7 +172,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         {
             researcherEditResearcherInfo = new EditResearcherInfoRepo();
             var uploadfile = Request.Files["imageInput"];
-            int people_id = Int32.Parse(Request.Form["people_id"]);
+            int people_id = int.Parse(Request.Form["people_id"]);
             Account account = CurrentAccount.Account(Session);
             var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
             int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
@@ -181,7 +181,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         public JsonResult GetAwards()
         {
             researcherBiographyRepo = new ResearchersBiographyRepo();
-            int id = Int32.Parse(Request.QueryString["id"]);
+            int id = int.Parse(Request.QueryString["id"]);
             ///////////////////////////////////////////////////////////////
             List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
             return Json(new

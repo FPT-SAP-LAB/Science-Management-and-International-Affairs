@@ -1,10 +1,10 @@
-﻿using BLL.Authen;
-using BLL.ScienceManagement.MasterData;
+﻿using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using MANAGER.Models;
 using MANAGER.Support;
 using OfficeOpenXml;
 using System;
@@ -19,14 +19,14 @@ namespace MANAGER.Controllers
 {
     public class PaperController : Controller
     {
-        PaperRepo pr = new PaperRepo();
-        MasterDataRepo mdr = new MasterDataRepo();
+        private readonly PaperRepo pr = new PaperRepo();
+        private readonly MasterDataRepo mdr = new MasterDataRepo();
         // GET: Paper
         [Auther(RightID = "16")]
         public ActionResult Pending()
         {
             ViewBag.title = "Danh sách bài báo đang chờ xét duyệt";
-            List<PendingPaper_Manager> list = pr.listPending();
+            List<PendingPaper_Manager> list = pr.ListPending();
             ViewBag.list = list;
             return View();
         }
@@ -36,10 +36,10 @@ namespace MANAGER.Controllers
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết bài báo";
-            DetailPaper paper = pr.getDetail(id);
+            DetailPaper paper = pr.GetDetail(id);
             ViewBag.paper = paper;
 
-            List<ListCriteriaOfOnePaper> listCrite = pr.getCriteria(id);
+            List<ListCriteriaOfOnePaper> listCrite = pr.GetCriteria(id);
             ViewBag.crite = listCrite;
 
             List<SpecializationLanguage> listSpec = mdr.getSpec("vi-VN");
@@ -48,23 +48,16 @@ namespace MANAGER.Controllers
             List<PaperType> listType = mdr.getPaperType();
             ViewBag.type = listType;
 
-            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id, "vi-VN");
+            List<AuthorInfoWithNull> listAuthor = pr.GetAuthorPaper(id, "vi-VN");
             ViewBag.author = listAuthor;
 
             ViewBag.request_id = paper.request_id;
 
-            Author p = pr.getAuthorReceived_all(id);
+            Author p = pr.GetAuthorReceived_all(id);
             if (p == null) p = new Author();
             ViewBag.p = p;
 
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            ViewBag.acc = acc;
+            ViewBag.acc = CurrentAccount.Account(Session);
 
             List<PaperCriteria> listCriteria = mdr.getPaperCriteria();
             ViewBag.listCriteria = listCriteria;
@@ -77,10 +70,10 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Chờ quyết định khen thưởng (giảng viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision("2", 0);
+            List<WaitDecisionPaper> listWaitQT = pr.GetListWwaitDecision("2", 0);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision("1", 0);
+            List<WaitDecisionPaper> listWaitTN = pr.GetListWwaitDecision("1", 0);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -91,10 +84,10 @@ namespace MANAGER.Controllers
         {
             ViewBag.title = "Chờ quyết định khen thưởng (nghiên cứu viên)";
 
-            List<WaitDecisionPaper> listWaitQT = pr.getListWwaitDecision2("2", 1);
+            List<WaitDecisionPaper> listWaitQT = pr.GetListWwaitDecision2("2", 1);
             ViewBag.waitQT = listWaitQT;
 
-            List<WaitDecisionPaper> listWaitTN = pr.getListWwaitDecision2("1", 1);
+            List<WaitDecisionPaper> listWaitTN = pr.GetListWwaitDecision2("1", 1);
             ViewBag.waitTN = listWaitTN;
 
             return View();
@@ -104,10 +97,10 @@ namespace MANAGER.Controllers
         [HttpPost]
         public JsonResult UpdateJournal()
         {
-            bool mess = pr.updateJournal();
+            bool mess = pr.UpdateJournal();
             string content = "Cập nhật thành công";
             if (!mess) content = "Cập nhật thất bại";
-            return Json(new { mess = mess, content = content }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, content }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
@@ -119,9 +112,9 @@ namespace MANAGER.Controllers
                 else temp = temp.Replace(",", "");
                 item.money_reward = Int32.Parse(temp);
             }
-            string mess = pr.updateRewardPaper(paper);
-            if (mess == "ss") mess = pr.updateAuthorReward(paper, people, id);
-            if (mess == "ss") mess = pr.updateCriteria_ManagerCheck(paper.paper_id);
+            string mess = pr.UpdateRewardPaper(paper);
+            if (mess == "ss") mess = pr.UpdateAuthorReward(paper, people, id);
+            if (mess == "ss") mess = pr.UpdateCriteria_ManagerCheck(paper.paper_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -135,7 +128,7 @@ namespace MANAGER.Controllers
             ExcelPackage excelPackage = new ExcelPackage(file);
             ExcelWorkbook excelWorkbook = excelPackage.Workbook;
 
-            List<Paper_Appendix_1> list1 = pr.getListAppendix1_2("1", reseacher);
+            List<Paper_Appendix_1> list1 = pr.GetListAppendix1_2("1", reseacher);
             ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
             int i = 2;
             int count = 1;
@@ -158,7 +151,7 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Paper_Appendix_1> list2 = pr.getListAppendix1_2("2", reseacher);
+            List<Paper_Appendix_1> list2 = pr.GetListAppendix1_2("2", reseacher);
             ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
             i = 2;
             count = 1;
@@ -181,7 +174,7 @@ namespace MANAGER.Controllers
                 i++;
             }
 
-            List<Paper_Apendix_3> list3 = pr.getListAppendix3_4("1", reseacher);
+            List<Paper_Apendix_3> list3 = pr.GetListAppendix3_4("1", reseacher);
             ExcelWorksheet excelWorksheet3 = excelWorkbook.Worksheets[2];
             i = 2;
             count = 1;
@@ -199,7 +192,7 @@ namespace MANAGER.Controllers
                 count++;
             }
 
-            List<Paper_Apendix_3> list4 = pr.getListAppendix3_4("2", reseacher);
+            List<Paper_Apendix_3> list4 = pr.GetListAppendix3_4("2", reseacher);
             ExcelWorksheet excelWorksheet4 = excelWorkbook.Worksheets[3];
             i = 2;
             count = 1;
@@ -218,7 +211,7 @@ namespace MANAGER.Controllers
             }
 
             string Flocation = "/Excel_template/download/Paper.xlsx";
-            string savePath = HostingEnvironment.MapPath(Flocation);
+            //string savePath = HostingEnvironment.MapPath(Flocation);
             excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Paper.xlsx")));
 
             return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);
@@ -233,7 +226,7 @@ namespace MANAGER.Controllers
 
             string name1 = "QD_" + number1 + "_" + date1;
 
-            List<string> listE = pr.getLstEmailAuthor(0);
+            List<string> listE = pr.GetLstEmailAuthor(0);
 
             Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadDecisionFile(file1, name1, listE);
             ENTITIES.File fl1 = new ENTITIES.File
@@ -245,7 +238,7 @@ namespace MANAGER.Controllers
 
             ENTITIES.File myFile1 = mdr.addFile(fl1);
 
-            string mess = pr.uploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
+            string mess = pr.UploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
@@ -259,7 +252,7 @@ namespace MANAGER.Controllers
 
             string name1 = "QD_" + number1 + "_" + date1;
 
-            List<string> listE = pr.getLstEmailAuthor(1);
+            List<string> listE = pr.GetLstEmailAuthor(1);
 
             Google.Apis.Drive.v3.Data.File f1 = GoogleDriveService.UploadDecisionFile(file1, name1, listE);
             ENTITIES.File fl1 = new ENTITIES.File
@@ -271,7 +264,7 @@ namespace MANAGER.Controllers
 
             ENTITIES.File myFile1 = mdr.addFile(fl1);
 
-            string mess = pr.uploadDecision2(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
+            string mess = pr.UploadDecision2(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
@@ -279,27 +272,27 @@ namespace MANAGER.Controllers
         [HttpPost]
         public JsonResult changeStatus(DetailPaper paper)
         {
-            string mess = pr.changeStatus(paper);
+            string mess = pr.ChangeStatus(paper);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult changeStatusManager(DetailPaper paper)
         {
-            string mess = pr.changeStatusManager(paper);
+            string mess = pr.ChangeStatusManager(paper);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult deleteRequest(int id)
         {
-            string mess = pr.deleteRequest(id);
+            string mess = pr.DeleteRequest(id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult waitVerify()
         {
-            List<PendingPaper_Manager> list = pr.listWaitVerify();
+            List<PendingPaper_Manager> list = pr.ListWaitVerify();
             ViewBag.list = list;
             return View();
         }
@@ -307,24 +300,24 @@ namespace MANAGER.Controllers
         [HttpPost]
         public JsonResult confirmReqward(int request_id)
         {
-            bool mess = pr.confirmReward(request_id);
+            bool mess = pr.ConfirmReward(request_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult editAuthorReqward(int request_id)
         {
-            bool mess = pr.editAuthorReward(request_id);
+            bool mess = pr.EditAuthorReward(request_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
         {
-            string temp = pr.updateCriteria(criteria, paper_id);
+            string temp = pr.UpdateCriteria(criteria, paper_id);
             bool mess = true;
             if (temp == "ff") mess = false;
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }
