@@ -202,7 +202,7 @@ namespace GUEST.Controllers
         public JsonResult addAuthor(List<AddAuthor> people, int invention_id)
         {
             string mess = ir.addAuthor(people, invention_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -225,7 +225,7 @@ namespace GUEST.Controllers
         public JsonResult deleteFile(string id)
         {
             string mess = ir.deleteFileCM(id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }
 }

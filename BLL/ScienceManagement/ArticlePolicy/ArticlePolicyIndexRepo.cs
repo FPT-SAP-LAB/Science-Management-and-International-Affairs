@@ -10,6 +10,9 @@ namespace BLL.ScienceManagement.ArticlePolicy
         ScienceAndInternationalAffairsEntities db;
         public List<ArticlePolicyIndex> List(int language_id)
         {
+            if (language_id <= 0 || language_id == int.MaxValue)
+                return null;
+
             db = new ScienceAndInternationalAffairsEntities();
             var temp = (from c in db.Articles
                         where c.article_status_id == 2 && c.PolicyTypes.Count > 0

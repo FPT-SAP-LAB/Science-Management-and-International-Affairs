@@ -24,10 +24,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                            join d in db.Files on a.invitation_file_id equals d.file_id
                                            join e in db.Papers on a.paper_id equals e.paper_id
                                            join f in db.Files on e.file_id equals f.file_id
-                                           join g in db.ConferenceStatus on a.status_id equals g.status_id
-                                           join h in db.ConferenceStatusLanguages on g.status_id equals h.status_id
-                                           join i in db.Formalities on b.formality_id equals i.formality_id
-                                           join j in db.FormalityLanguages on i.formality_id equals j.formality_id
+                                           join h in db.ConferenceStatusLanguages on a.status_id equals h.status_id
+                                           join j in db.FormalityLanguages on b.formality_id equals j.formality_id
                                            join k in db.SpecializationLanguages on a.specialization_id equals k.specialization_id
                                            where h.language_id == language_id && j.language_id == language_id && k.language_id == language_id
                                            && (r.account_id == account_id || account_id == 0) && r.request_id == request_id
@@ -81,7 +79,8 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                                       ValidDate = b.valid_date
                                   }).FirstOrDefault();
             }
-            string Link = db.Policies.Where(x => x.expired_date == null).Select(x => x.File).FirstOrDefault().link;
+            PolicyRepo policyRepo = new PolicyRepo();
+            string Link = policyRepo.GetCurrentLink(1, db);
             List<ConferenceCriteria> Criterias = (from a in db.EligibilityConditions
                                                   join b in db.ConferenceConditionLanguages on a.condition_id equals b.condition_id
                                                   where b.language_id == language_id && a.request_id == request_id
@@ -181,8 +180,6 @@ namespace BLL.ScienceManagement.ConferenceSponsor
         public AlertModal<string> UpdateCosts(string costs, int request_id, int account_id, string comment)
         {
             int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
-            if (position_id == null)
-                return new AlertModal<string>(false, "Tài khoản chưa có chức vụ");
 
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -228,7 +225,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                 }
             }
         }
-        public AlertModal<string> RequestEdit(int request_id, string uri)
+        public AlertModal<string> RequestEdit(int request_id)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -410,6 +407,44 @@ namespace BLL.ScienceManagement.ConferenceSponsor
             {
                 Console.WriteLine(e.ToString());
                 return new AlertModal<string>(false, "Có lỗi xảy ra");
+            }
+        }
+        public AlertModal<string> CancelRequest(int request_id, int account_id)
+        {
+            int? position_id = PositionRepo.GetPositionIdByAccountId(db, account_id);
+
+            RequestConference request = db.RequestConferences.Find(request_id);
+            if (request == null)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+
+            Account account = db.Accounts.Find(account_id);
+            if (account.role_id == 2 || (request.editable && request.BaseRequest.account_id == account_id))
+            {
+                DateTime now = DateTime.Now;
+
+                using (DbContextTransaction trans = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        request.status_id = 6;
+                        request.BaseRequest.finished_date = now;
+
+                        ApprovalProcessRepo.Add(db, account_id, now, position_id, request_id, "Kết thúc đề nghị");
+
+                        trans.Commit();
+                        return new AlertModal<string>(true);
+                    }
+                    catch (Exception e)
+                    {
+                        trans.Rollback();
+                        Console.WriteLine(e.ToString());
+                        return new AlertModal<string>(false);
+                    }
+                }
+            }
+            else
+            {
+                return new AlertModal<string>(false, "Tài khoản không được phép kết thúc đề nghị này");
             }
         }
     }

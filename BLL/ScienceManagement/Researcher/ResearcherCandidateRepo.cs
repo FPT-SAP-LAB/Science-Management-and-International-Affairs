@@ -12,14 +12,14 @@ namespace BLL.ScienceManagement.Researcher
     public class ResearcherCandidateRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public BaseServerSideData<ResearcherCandidate> GetList(BaseDatatable baseDatatable, string name, string chucdanh, string coso)
+        public BaseServerSideData<ResearcherCandidate> GetList(BaseDatatable baseDatatable, string name, string chucdanh, string coso, int language_id)
         {
             var data = (from b in db.People
                         join c in db.Profiles on b.people_id equals c.people_id
                         join d in db.Titles on c.title_id equals d.title_id
                         join e in db.TitleLanguages on d.title_id equals e.title_id
                         join f in db.Offices.DefaultIfEmpty() on b.office_id equals f.office_id
-                        where e.language_id == 1 && (d.title_id == 1 || d.title_id == 2) && c.profile_page_active == false
+                        where e.language_id == language_id && (d.title_id == 1 || d.title_id == 2) && c.profile_page_active == false
                         select new ResearcherCandidate
                         {
                             people_id = b.people_id,

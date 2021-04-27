@@ -41,7 +41,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 string name = (Request["name"]);
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable, coso, name);
+                BaseServerSideData<ResearcherList> output = researcherListRepo.GetList(datatable, coso, name, 1);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
@@ -62,7 +62,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 string chucdanh = (Request["chucdanh"]);
                 researcherCandidate = new ResearcherCandidateRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable, name, chucdanh, coso);
+                BaseServerSideData<ResearcherCandidate> output = researcherCandidate.GetList(datatable, name, chucdanh, coso, 1);
                 for (int i = 0; i < output.Data.Count; i++)
                 {
                     output.Data[i].rowNum = datatable.Start + 1 + i;
@@ -78,7 +78,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id, 1);
             if (profile.profile_page_active == false)
             {
                 ViewBag.profile_page_active = false;
@@ -96,15 +96,15 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherDetailRepo = new ResearchersDetailRepo();
             researcherBiographyRepo = new ResearchersBiographyRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id, 1);
             ViewBag.profile = profile;
             ///////////////////////////////////////////////////////////////
-            List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+            List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id, 1);
             ViewBag.acadList = acadList;
             /////////////////////////////////////////////////////////////
             List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles();
+            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles(1);
             ViewBag.workList = workList;
             ViewBag.listAcadDegree = listAcadDegree;
             ViewBag.listWorkHistory = listWorkHistory;
@@ -115,7 +115,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherDetailRepo = new ResearchersDetailRepo();
             researcherBiographyRepo = new ResearchersBiographyRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id, 1);
             ViewBag.profile = profile;
             ///////////////////////////////////////////////////////////////
             List<ResearcherPublications> publications = researcherBiographyRepo.GetPublications(id);
@@ -130,7 +130,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherDetailRepo = new ResearchersDetailRepo();
             researcherBiographyRepo = new ResearchersBiographyRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id, 1);
             ViewBag.profile = profile;
             ///////////////////////////////////////////////////////////////
             List<BaseRecord<Award>> awards = researcherBiographyRepo.GetAwards(id);
@@ -159,7 +159,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             researcherDetailRepo = new ResearchersDetailRepo();
             int id = Int32.Parse(Request.QueryString["id"]);
-            ResearcherDetail profile = researcherDetailRepo.GetProfile(id);
+            ResearcherDetail profile = researcherDetailRepo.GetProfile(id, 1);
             ViewBag.profile = profile;
             if (profile.profile_page_active)
             {
@@ -176,7 +176,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             /////////////////////////////////////////////////////////////
             List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles();
+            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles(1);
             ///////////////////////////////////////////////////////////////
             List<ResearcherPublications> publications = researcherBiographyRepo.GetPublications(id);
             ViewBag.publications = publications;
@@ -227,7 +227,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
                 int id = Int32.Parse(Request.QueryString["id"]);
-                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id);
+                List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id, 1);
                 return Json(new { success = true, data = acadList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)

@@ -15,16 +15,15 @@ namespace BLL.ScienceManagement.ConferenceSponsor
     public class ConferenceSponsorEditRepo
     {
         ScienceAndInternationalAffairsEntities db;
-        public string EditRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
+        public AlertModal<int> EditRequestConference(int account_id, string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
-            ConferenceParticipantRepo participantRepo = new ConferenceParticipantRepo();
 
             RequestConference request = db.RequestConferences.Where(x => x.request_id == request_id && x.BaseRequest.account_id == account_id).FirstOrDefault();
             if (request == null)
-                return JsonConvert.SerializeObject(new { success = false, message = "Đề nghị không tồn tại" });
+                return new AlertModal<int>(false, "Đề nghị không tồn tại");
             if (request.status_id >= 2 || !request.editable)
-                return JsonConvert.SerializeObject(new { success = false, message = "Đề nghị không thể chỉnh sửa" });
+                return new AlertModal<int>(false, "Đề nghị không thể chỉnh sửa");
 
             List<string> FileIDs = new List<string>();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
@@ -91,7 +90,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
 
                     ConferenceParticipant participant = @object["ConferenceParticipant"].ToObject<ConferenceParticipant>();
                     participant.request_id = request_id;
-                    participantRepo.AddWithTempData(db, participant);
+                    db.ConferenceParticipants.Add(participant);
 
                     foreach (var item in request.EligibilityConditions)
                     {
@@ -100,7 +99,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     db.SaveChanges();
 
                     trans.Commit();
-                    return JsonConvert.SerializeObject(new { success = true, message = "OK", id = request.request_id });
+                    return new AlertModal<int>(request.request_id, false);
                 }
                 catch (Exception e)
                 {
@@ -110,7 +109,7 @@ namespace BLL.ScienceManagement.ConferenceSponsor
                     {
                         GoogleDriveService.DeleteFile(item);
                     }
-                    return JsonConvert.SerializeObject(new { success = false, message = "Có lỗi xảy ra" });
+                    return new AlertModal<int>(false, "Có lỗi xảy ra");
                 }
             }
         }

@@ -34,5 +34,18 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int totalEnglishType = guestRepo.getListType(2).Count;
             Assert.AreEqual(totalVietnameseType, totalEnglishType);
         }
+        [TestCase]
+        public void GetListTypeUT_4()
+        {
+            guestRepo = new AcademicActivityGuestRepo();
+            int totalType = guestRepo.getListType(1).Count;
+            Assert.Pass();
+        }
+        public void GetListTypeUT_5()
+        {
+            guestRepo = new AcademicActivityGuestRepo();
+            int totalType = guestRepo.getListType(2).Count;
+            Assert.Pass();
+        }
     }
 }

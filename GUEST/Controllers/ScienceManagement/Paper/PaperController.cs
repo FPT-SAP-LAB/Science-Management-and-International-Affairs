@@ -21,9 +21,9 @@ namespace GUEST.Controllers
 {
     public class PaperController : Controller
     {
-        PaperRepo pr = new PaperRepo();
-        MasterDataRepo md = new MasterDataRepo();
-        CommentRepo cr = new CommentRepo();
+        private readonly PaperRepo pr = new PaperRepo();
+        private readonly MasterDataRepo md = new MasterDataRepo();
+        private readonly CommentRepo cr = new CommentRepo();
 
         [Auther(RightID = "26")]
         public ActionResult AddRequest()
@@ -133,21 +133,21 @@ namespace GUEST.Controllers
             }
             BaseRequest b = pr.addBaseRequest(acc.account_id);
             string mess = pr.addRequestPaper(b.request_id, request, daidien);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult AddAuthor(List<AddAuthor> people, string paper_id)
         {
             string mess = pr.addAuthor(people, paper_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult AddCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             string mess = pr.addCriteria(criteria, paper_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]
@@ -192,7 +192,7 @@ namespace GUEST.Controllers
         public JsonResult editPaper(string paper_id, Paper paper)
         {
             string mess = pr.updatePaper(paper_id, paper);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -206,7 +206,7 @@ namespace GUEST.Controllers
         public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             string mess = pr.updateCriteria(criteria, paper_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -234,7 +234,7 @@ namespace GUEST.Controllers
         public JsonResult editPaperAuthorReward(List<AddAuthor> people, int paper_id)
         {
             string mess = pr.updateRewardAuthorAfterDecision(people, paper_id);
-            return Json(new { mess = mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

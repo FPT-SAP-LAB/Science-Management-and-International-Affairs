@@ -1,13 +1,14 @@
 ﻿namespace ENTITIES.CustomModels
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public class AlertModal<T>
     {
-        public bool? success { get; set; }
+        public bool success { get; set; }
         public string title { get; set; }
         public string content { get; set; }
         public T obj { get; set; }
 
-        public AlertModal(T obj, bool? success, string title, string content)
+        public AlertModal(T obj, bool success, string title, string content)
         {
             this.obj = obj;
             this.success = success;
