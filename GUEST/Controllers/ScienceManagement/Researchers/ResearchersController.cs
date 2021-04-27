@@ -32,11 +32,13 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ////////////////////////////////////////////
             int languageId = LanguageResource.GetCurrentLanguageID();
             researcherListRepo = new ResearchersListRepo();
-            BaseDatatable datatable = new BaseDatatable();
-            datatable.Start = 0;
-            datatable.Length = ListGuestLenght;
-            datatable.SortColumnName = "name";
-            datatable.SortDirection = "asc";
+            BaseDatatable datatable = new BaseDatatable
+            {
+                Start = 0,
+                Length = ListGuestLenght,
+                SortColumnName = "name",
+                SortDirection = "asc"
+            };
             BaseServerSideData<ResearcherList> list = researcherListRepo.GetList(datatable, "", "", languageId);
             ViewBag.list = list;
             ViewBag.initNumber = datatable.Length;
@@ -149,13 +151,13 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                     data = (from a in workList
                             select new
                             {
-                                index = a.index,
-                                id = a.records.id,
-                                people_id = a.records.pepple_id,
-                                work_unit = a.records.work_unit,
-                                title = a.records.title,
-                                start_year = a.records.start_year,
-                                end_year = a.records.end_year
+                                a.index,
+                                a.records.id,
+                                a.records.pepple_id,
+                                a.records.work_unit,
+                                a.records.title,
+                                a.records.start_year,
+                                a.records.end_year
                             })
                 },
                 JsonRequestBehavior.AllowGet);
@@ -174,7 +176,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             Account account = CurrentAccount.Account(Session);
             var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
             int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
-            return Json(new { res = res });
+            return Json(new { res });
         }
         public JsonResult GetAwards()
         {
@@ -189,9 +191,9 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                         select new
                         {
                             id = a.records.award_id,
-                            index = a.index,
-                            competion_name = a.records.competion_name,
-                            rank = a.records.rank,
+                            a.index,
+                            a.records.competion_name,
+                            a.records.rank,
                             award_time = a.records.award_time != null ? a.records.award_time.Value.ToString("dd/MM/yyyy") : ""
                         })
             }, JsonRequestBehavior.AllowGet);

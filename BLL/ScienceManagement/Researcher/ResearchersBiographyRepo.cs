@@ -52,7 +52,7 @@ namespace BLL.ScienceManagement.Researcher
                         {
                             index = index + 1,
                             records = x.records
-                        }).OrderBy(x => x.records.start_year).ToList<BaseRecord<WorkingProcess>>();
+                        }).OrderBy(x => x.records.start_year).ToList();
             return list;
         }
 
@@ -60,7 +60,8 @@ namespace BLL.ScienceManagement.Researcher
         {
             var data = (from a in db.Papers
                         join b in db.AuthorPapers on a.paper_id equals b.paper_id
-                        where b.people_id == id
+                        join c in db.Profiles on b.Author.mssv_msnv equals c.mssv_msnv
+                        where c.people_id == id
                         select new ResearcherPublications
                         {
                             paper_id = a.paper_id,
@@ -69,7 +70,7 @@ namespace BLL.ScienceManagement.Researcher
                             publish_date = a.publish_date,
                             co_author =
                             (from m in db.Profiles
-                             join n in db.AuthorPapers on m.people_id equals n.people_id
+                             join n in db.AuthorPapers on m.mssv_msnv equals n.Author.mssv_msnv
                              where n.paper_id == a.paper_id
                              select m.Person.name).ToList<string>(),
                             link = a.link_doi
@@ -90,19 +91,15 @@ namespace BLL.ScienceManagement.Researcher
             var data = (from a in db.Papers
                         join b in db.RequestConferences on a.paper_id equals b.paper_id
                         join c in db.Conferences on b.conference_id equals c.conference_id
-                        join d in db.AuthorPapers on a.paper_id equals d.paper_id
-                        where d.people_id == id
+                        join d in db.ConferenceParticipants on b.request_id equals d.request_id
+                        join e in db.Profiles on d.mssv_msnv equals e.mssv_msnv
+                        where e.people_id == id
                         select new ResearcherPublications
                         {
                             paper_id = a.paper_id,
                             journal_or_cfr_name = c.conference_name,
                             paper_name = a.name,
                             publish_date = a.publish_date,
-                            co_author =
-                            (from m in db.Profiles
-                             join n in db.AuthorPapers on m.people_id equals n.people_id
-                             where n.paper_id == a.paper_id && m.people_id != id
-                             select m.Person.name).ToList<string>()
                         }).OrderByDescending(x => x.publish_date).AsEnumerable<ResearcherPublications>().Select((x, index) => new ResearcherPublications
                         {
                             rownum = index + 1,
@@ -110,7 +107,6 @@ namespace BLL.ScienceManagement.Researcher
                             journal_or_cfr_name = x.journal_or_cfr_name,
                             paper_name = x.paper_name,
                             publish_date = x.publish_date,
-                            co_author = x.co_author
                         }).ToList<ResearcherPublications>();
             return data;
         }

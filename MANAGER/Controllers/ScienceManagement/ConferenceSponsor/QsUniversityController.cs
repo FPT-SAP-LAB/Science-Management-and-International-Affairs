@@ -22,9 +22,10 @@ namespace MANAGER.Controllers.ScienceManagement.ConferenceSponsor
         {
             BaseDatatable datatable = new BaseDatatable(Request);
             BaseServerSideData<QsUniversity> output = qsUniversityRepo.List(datatable, university);
-            return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            return Json(new ResultDatatable<QsUniversity>(output, Request), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public JsonResult Add(HttpPostedFileBase ListUniversity)
         {
             AlertModal<string> result = qsUniversityRepo.Add(ListUniversity);
