@@ -201,7 +201,7 @@
 
                 if (ViewBag.paper.status_id == 3 || ViewBag.paper.status_id == 8)
                 {
-                    if (ViewBag.acc.role_id == 2 && ViewBag.paper.type == 2)
+                    if (ViewBag.acc.role_id == 2 && ViewBag.paper.type == "2")
                     {
                         <div class="col-xl-12">
                             <a @*onclick="gatCriteria(@ViewBag.paper.paper_id)"*@ class="btn btn-light-primary" id="edit_criteria" data-toggle="modal" data-target="#editCriteria">Chỉnh sửa tiêu chí</a>
