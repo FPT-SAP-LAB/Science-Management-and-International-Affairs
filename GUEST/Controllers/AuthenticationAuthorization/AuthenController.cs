@@ -36,7 +36,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
                 else
                     return Json(new { success = false, content = "Tài khoản của bạn không được phép truy cập vào hệ thống" });
                 AccountRepo accountRepo = new AccountRepo();
-                accountRepo.add(new AccountRepo.baseAccount
+                accountRepo.Add(new AccountRepo.baseAccount
                 {
                     email = user.email,
                     role_id = role_id

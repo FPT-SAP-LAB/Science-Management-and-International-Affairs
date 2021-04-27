@@ -44,7 +44,7 @@ namespace GUEST.Controllers
             ViewBag.type = listType;
 
             PaperRepo pr = new PaperRepo();
-            string link = pr.getLinkPolicy();
+            string link = pr.GetLinkPolicy();
             ViewBag.link = link;
 
             return View();
@@ -192,7 +192,7 @@ namespace GUEST.Controllers
 
             string mess = ir.addAuthor(people, i.invention_id);
 
-            BaseRequest b = pr.addBaseRequest(acc.account_id);
+            BaseRequest b = pr.AddBaseRequest(acc.account_id);
             if (mess == "ss") mess = ir.addInvenRequest(b, i);
 
             return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
