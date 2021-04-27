@@ -85,7 +85,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         publish_time = DateTime.Now,
                         version_title = obj.activity_name,
                         language_id = language_id,
-                        article_content = ""
+                        article_content = "",
+                        account_id = u.account.account_id
                     });
                     db.SaveChanges();
                     transaction.Commit();
@@ -255,7 +256,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     publish_time = DateTime.Now,
                     version_title = activity_name,
                     language_id = language_id,
-                    article_content = ""
+                    article_content = "",
+                    account_id = u.account.account_id
                 });
                 db.SaveChanges();
             }
@@ -294,8 +296,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     transaction.Commit();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     transaction.Rollback();
                     return false;
                 }
@@ -391,7 +394,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     Article ar = db.Articles.Add(new ENTITIES.Article
                     {
-                        account_id = 1,
+                        account_id = account_id,
                         article_status_id = 1,
                         need_approved = false
                     });
@@ -408,7 +411,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         publish_time = DateTime.Now,
                         version_title = obj.activity_name,
                         language_id = 1,
-                        article_content = ""
+                        article_content = "",
+                        account_id = account_id
                     });
                     db.SaveChanges();
                     int activity_id = aa.activity_id;
@@ -430,7 +434,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 cloneKP(obj, obj.content.Contains("KP"), activity_id);
                 cloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
-                cloneND(obj, obj.content.Contains("ND"), activity_id, av_new);
+                cloneND(obj, obj.content.Contains("ND"), activity_id, av_new, account_id);
                 cloneTD(obj, obj.content.Contains("TD"), activity_id, account_id);
             }
         }
@@ -576,7 +580,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.SaveChanges();
             }
         }
-        public void cloneND(cloneBase obj, bool start, int activity_id, ArticleVersion av_new)
+        public void cloneND(cloneBase obj, bool start, int activity_id, ArticleVersion av_new, int account_id)
         {
             if (start)
             {
@@ -586,7 +590,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     Article a = db.Articles.Add(new Article
                     {
-                        account_id = 1,
+                        account_id = account_id,
                         article_status_id = 1,
                         need_approved = false
                     });
@@ -600,7 +604,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             publish_time = DateTime.Now,
                             version_title = o.version_title,
                             language_id = o.language_id,
-                            article_content = o.article_content
+                            article_content = o.article_content,
+                            account_id = account_id
                         });
                     }
                     db.SaveChanges();

@@ -15,14 +15,14 @@ namespace ADMIN.Controllers
         public ActionResult Index()
         {
             ViewBag.pageTitle = "Quản lí quyền hạn";
-            ViewBag.module = repo.getModules();
+            ViewBag.module = repo.GetModules();
             return View();
         }
         [HttpPost]
         public ActionResult getDatatable()
         {
             BaseDatatable baseDatatable = new BaseDatatable(Request);
-            BaseServerSideData<RightRepo.infoRight> data = repo.getRights(baseDatatable);
+            BaseServerSideData<RightRepo.infoRight> data = repo.GetRights(baseDatatable);
             return Json(new
             {
                 success = true,
@@ -35,7 +35,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult add(RightRepo.baseRight obj)
         {
-            bool res = repo.add(obj);
+            bool res = repo.Add(obj);
             if (res)
             {
                 return Json("Thêm thành công");
@@ -45,7 +45,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult delete(int right_id)
         {
-            bool res = repo.delete(right_id);
+            bool res = repo.Delete(right_id);
             if (res)
             {
                 return Json("Xóa thành công");
@@ -55,7 +55,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult edit(RightRepo.infoRight obj)
         {
-            bool res = repo.edit(obj);
+            bool res = repo.Edit(obj);
             if (res)
             {
                 return Json("Chỉnh sửa thành công");

@@ -10,7 +10,7 @@ namespace BLL.Admin
     public class AccountRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<extendAccount> getAccounts()
+        public List<extendAccount> GetAccounts()
         {
             try
             {
@@ -26,7 +26,7 @@ namespace BLL.Admin
                 return new List<extendAccount>();
             }
         }
-        public List<baseRight> getRightByAccount(int account_id)
+        public List<baseRight> GetRightByAccount(int account_id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace BLL.Admin
                 return new List<baseRight>();
             }
         }
-        public List<baseRight> getRightByRole(int role_id)
+        public List<baseRight> GetRightByRole(int role_id)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace BLL.Admin
                 return new List<baseRight>();
             }
         }
-        public List<Right> getRightsByModule(int module_id)
+        public List<Right> GetRightsByModule(int module_id)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace BLL.Admin
                 return new baseAccount();
             }
         }
-        public bool add(baseAccount obj)
+        public bool Add(baseAccount obj)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
@@ -121,7 +121,7 @@ namespace BLL.Admin
                 }
             }
         }
-        public string edit(infoAccount obj)
+        public string Edit(infoAccount obj)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace BLL.Admin
                 return String.Empty;
             }
         }
-        public string delete(int account_id)
+        public string Delete(int account_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -229,7 +229,7 @@ namespace BLL.Admin
                 }
             }
         }
-        public List<baseRole> getRoles()
+        public List<baseRole> GetRoles()
         {
             try
             {

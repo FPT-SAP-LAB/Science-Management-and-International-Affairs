@@ -10,7 +10,7 @@ namespace BLL.Admin
     public class RoleRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<infoRole> getRoles()
+        public List<infoRole> GetRoles()
         {
             try
             {
@@ -23,7 +23,7 @@ namespace BLL.Admin
                 return new List<infoRole>();
             }
         }
-        public List<baseRight> getRightByRole(int role_id)
+        public List<baseRight> GetRightByRole(int role_id)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace BLL.Admin
                 return new List<baseRight>();
             }
         }
-        public List<Right> getRightsByModule(int module_id)
+        public List<Right> GetRightsByModule(int module_id)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace BLL.Admin
                 return new infoRole();
             }
         }
-        public bool add(baseRole obj)
+        public bool Add(baseRole obj)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace BLL.Admin
                 return false;
             }
         }
-        public bool edit(infoRole obj)
+        public bool Edit(infoRole obj)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace BLL.Admin
                 return false;
             }
         }
-        public bool delete(int role_id)
+        public bool Delete(int role_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
