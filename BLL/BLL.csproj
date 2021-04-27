@@ -146,7 +146,9 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\FormRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationExportRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationGuestRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationLongRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationShortRepo.cs" />
@@ -170,8 +172,8 @@
     <Compile Include="InternationalCollaboration\MasterData\SpecializationRepo.cs" />
     <Compile Include="ModelDAL\ApprovalProcessRepo.cs" />
     <Compile Include="ModelDAL\BaseRequestRepo.cs" />
+    <Compile Include="ModelDAL\CitationTypeRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
-    <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
     <Compile Include="ModelDAL\CostRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />

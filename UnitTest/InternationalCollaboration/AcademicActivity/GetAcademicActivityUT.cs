@@ -38,5 +38,24 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int listAll = guestRepo.getBaseAA(0, typeAll, 2, null).Count;
             Assert.AreEqual(subList, listAll);
         }
+        [TestCase]
+        public void GetAcademicActivityUT_4()
+        {
+            guestRepo = new AcademicActivityGuestRepo();
+            List<int> subType = new List<int> { 1, 2 };
+            List<int> typeAll = new List<int> { 1, 2, 3, 4 };
+            int subList = guestRepo.getBaseAA(0, subType, 2, null).Count;
+            int listAll = guestRepo.getBaseAA(0, typeAll, 2, null).Count;
+            Assert.LessOrEqual(subList, listAll);
+        }
+        public void GetAcademicActivityUT_5()
+        {
+            guestRepo = new AcademicActivityGuestRepo();
+            List<int> subType = new List<int> { 1, 2, 3 };
+            List<int> typeAll = new List<int> { 1, 2, 3, 4 };
+            int subList = guestRepo.getBaseAA(0, subType, 2, null).Count;
+            int listAll = guestRepo.getBaseAA(0, typeAll, 2, null).Count;
+            Assert.LessOrEqual(subList, listAll);
+        }
     }
 }
