@@ -77,7 +77,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 foreach (var item in infoSumDetail.subContent)
                 {
                     List<HttpPostedFileBase> list_image = new List<HttpPostedFileBase>();
-                    if(item.number_of_image > 0)
+                    if (item.number_of_image > 0)
                     {
                         for (int i = 0; i < item.number_of_image; i++)
                         {

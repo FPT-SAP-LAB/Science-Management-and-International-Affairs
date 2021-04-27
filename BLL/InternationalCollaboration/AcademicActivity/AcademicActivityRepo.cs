@@ -430,7 +430,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 cloneKP(obj, obj.content.Contains("KP"), activity_id);
                 cloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
-                cloneND(obj, obj.content.Contains("ND"), activity_id, av_new,account_id);
+                cloneND(obj, obj.content.Contains("ND"), activity_id, av_new, account_id);
                 cloneTD(obj, obj.content.Contains("TD"), activity_id, account_id);
             }
         }
@@ -576,7 +576,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.SaveChanges();
             }
         }
-        public void cloneND(cloneBase obj, bool start, int activity_id, ArticleVersion av_new,int account_id)
+        public void cloneND(cloneBase obj, bool start, int activity_id, ArticleVersion av_new, int account_id)
         {
             if (start)
             {
