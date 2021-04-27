@@ -86,38 +86,36 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
-            var mytable = $("#mytable").DataTable({
-                responsive: true,
-                // DOM Layout settings
-                dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
-                lengthMenu: [5, 10, 25, 50],
-                pageLength: 10,
-                language: {
-                    'lengthMenu': 'Display _MENU_',
-                },
-                serverSide: true,
-                ajax: {
-                    url: "/QsUniversity/List",
-                    datatype: "json",
-                    cache: true,
-                    data: {
-                        university: function myfunction() {
-                            return $("#search_name").val()
-                        }
+        var mytable = $("#mytable").DataTable({
+            responsive: true,
+            // DOM Layout settings
+            dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
+            serverSide: true,
+            ajax: {
+                url: "/QsUniversity/List",
+                datatype: "json",
+                cache: true,
+                data: {
+                    university: function myfunction() {
+                        return $("#search_name").val()
                     }
-                },
-                ordering: false,
-                columns: [
-                    { data: "ranking" },
-                    { data: "university" },
-                ]
-            });
-
-            $("#search_list").click(function () {
-                mytable.ajax.reload();
-            })
+                }
+            },
+            ordering: false,
+            columns: [
+                { data: "ranking" },
+                { data: "university" },
+            ]
         });
+
+        $("#search_list").click(function () {
+            mytable.ajax.reload();
+        })
 
         const Tus = Uppy.Tus;
         const StatusBar = Uppy.StatusBar;

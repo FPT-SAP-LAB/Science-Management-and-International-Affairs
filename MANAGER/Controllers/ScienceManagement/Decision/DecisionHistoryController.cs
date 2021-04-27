@@ -6,7 +6,7 @@ namespace MANAGER.Controllers.ScienceManagement.Decision
 {
     public class DecisionHistoryController : Controller
     {
-        DecisionRepo dr = new DecisionRepo();
+        private readonly DecisionRepo dr = new DecisionRepo();
         // GET: Decision
         public ActionResult History()
         {

@@ -23,7 +23,7 @@ namespace GUEST.Models
             }
             return acc;
         }
-        public static Profile getProfile(HttpSessionStateBase Session)
+        public static Profile GetProfile(HttpSessionStateBase Session)
         {
             return BLL.Authen.LoginRepo.getProfileByAccount(Account(Session));
         }

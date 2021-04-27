@@ -6,6 +6,7 @@ using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
+using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -74,7 +75,7 @@ namespace User.Controllers
             AuthorInfo author = cr.GetAuthor(id);
             ViewBag.author = author;
 
-            List<Citation> listCitation = cr.GetCitation(id);
+            List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
             List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
@@ -83,6 +84,9 @@ namespace User.Controllers
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
             ViewBag.ckEdit = rc.citation_status_id;
+
+            CitationTypeRepo citationTypeRepo = new CitationTypeRepo();
+            ViewBag.citationTypes = citationTypeRepo.GetCitationTypes();
 
             return View();
         }
@@ -100,7 +104,7 @@ namespace User.Controllers
         public JsonResult EditCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
         {
             //cr.addAuthor(people);
-            List<Citation> oldcitation = cr.GetCitation(request_id);
+            List<CustomCitation> oldcitation = cr.GetCitation(request_id);
             Author author = cr.EditAuthor(people);
             string mess = cr.EditCitation(oldcitation, citation, request_id, author);
             return Json(new { mess, id = request_id });

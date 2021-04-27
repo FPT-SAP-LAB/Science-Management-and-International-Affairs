@@ -8,11 +8,11 @@ namespace BLL.ModelDAL
         public string GetCurrentLink(int policy_type_id, ScienceAndInternationalAffairsEntities db = null)
         {
             db = db ?? new ScienceAndInternationalAffairsEntities();
-            Policy policy = GetCurrentPolicy(policy_type_id, db);
-            if (policy == null)
-                return null;
-            else
-                return policy.File.link;
+            string link = (from a in db.Policies
+                           join b in db.Files on a.file_id equals b.file_id
+                           where a.expired_date == null && a.policy_type_id == policy_type_id
+                           select b.link).FirstOrDefault();
+            return link;
         }
 
         public Policy GetCurrentPolicy(int policy_type_id, ScienceAndInternationalAffairsEntities db = null)
