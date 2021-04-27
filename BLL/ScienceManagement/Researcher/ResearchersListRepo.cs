@@ -1,8 +1,6 @@
 ﻿using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -28,17 +26,14 @@ namespace BLL.ScienceManagement.ResearcherListRepo
                             select c.name
                             ).FirstOrDefault(),
                             website = b.website,
-                            positions = ((from m in db.People
-                                          join n in db.PeoplePositions on m.people_id equals n.people_id
+                            positions = ((from n in db.PeoplePositions
                                           join h in db.PositionLanguages on n.position_id equals h.position_id
-                                          where h.language_id == language_id && m.people_id == a.people_id
+                                          where h.language_id == language_id && n.people_id == a.people_id
                                           select h.name
-                            ).ToList<String>()),
-                            avatar = (
-                                    from f in db.Profiles
-                                    join ff in db.Files on f.avatar_id equals ff.file_id
-                                    where f.people_id == a.people_id
-                                    select ff.link
+                            ).ToList()),
+                            avatar = (from ff in db.Files
+                                      where b.avatar_id == ff.file_id
+                                      select ff.link
                                       ).FirstOrDefault(),
                             office_id = f.office_id,
                             office_name = f.office_name,
@@ -47,7 +42,7 @@ namespace BLL.ScienceManagement.ResearcherListRepo
             List<ResearcherList> result = null;
             if (coso.Trim() != "")
             {
-                int cosoint = Int32.Parse(coso);
+                int cosoint = int.Parse(coso);
                 data = data.Where(x => x.office_id == cosoint);
             }
             if (name.Trim() != "")
