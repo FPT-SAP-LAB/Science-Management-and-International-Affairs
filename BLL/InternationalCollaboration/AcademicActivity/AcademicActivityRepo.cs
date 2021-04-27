@@ -85,7 +85,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         publish_time = DateTime.Now,
                         version_title = obj.activity_name,
                         language_id = language_id,
-                        article_content = ""
+                        article_content = "",
+                        account_id = u.account.account_id
                     });
                     db.SaveChanges();
                     transaction.Commit();
@@ -255,7 +256,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     publish_time = DateTime.Now,
                     version_title = activity_name,
                     language_id = language_id,
-                    article_content = ""
+                    article_content = "",
+                    account_id = u.account.account_id
                 });
                 db.SaveChanges();
             }
@@ -408,7 +410,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         publish_time = DateTime.Now,
                         version_title = obj.activity_name,
                         language_id = 1,
-                        article_content = ""
+                        article_content = "",
+                        account_id = account_id
                     });
                     db.SaveChanges();
                     int activity_id = aa.activity_id;
@@ -600,7 +603,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             publish_time = DateTime.Now,
                             version_title = o.version_title,
                             language_id = o.language_id,
-                            article_content = o.article_content
+                            article_content = o.article_content,
+                            account_id = account_id
                         });
                     }
                     db.SaveChanges();
