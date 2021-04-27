@@ -18,7 +18,6 @@ namespace ENTITIES
         public PaperStatu()
         {
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
-            this.RequestCitations = new HashSet<RequestCitation>();
             this.RequestInventions = new HashSet<RequestInvention>();
             this.RequestPapers = new HashSet<RequestPaper>();
         }
@@ -27,8 +26,6 @@ namespace ENTITIES
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaperStatusLanguage> PaperStatusLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestCitation> RequestCitations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestInvention> RequestInventions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

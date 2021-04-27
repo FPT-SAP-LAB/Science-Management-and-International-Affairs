@@ -3,7 +3,7 @@
     ViewBag.Title = "Danh sách Nghiên cứu viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using GUEST.Models
 <div class="">
     <!--begin::Container-->
     <!--<div class="row">
@@ -98,7 +98,11 @@
                                         <!--end::User-->
                                         <!--begin::Name-->
                                         <div class="my-2">
-                                            <a href="/Researchers/ViewInfo?id=@researcher.peopleId" class="text-dark font-weight-bold text-hover-primary font-size-h4">@researcher.name</a>
+                                            <a href="/Researchers/ViewInfo?id=@researcher.peopleId"
+                                               class="text-dark font-weight-bold text-hover-primary font-size-h4"
+                                               data-toggle="tooltip" data-theme="dark" data-original-title="@researcher.name">
+                                                @(researcher.name.Length > 26 ? researcher.name.Substring(0, 22) + "..." : researcher.name)
+                                            </a>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Label-->

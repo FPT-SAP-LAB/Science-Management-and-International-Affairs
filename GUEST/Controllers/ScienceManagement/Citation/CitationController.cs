@@ -1,4 +1,5 @@
-﻿using BLL.ScienceManagement.Citation;
+﻿using BLL.ModelDAL;
+using BLL.ScienceManagement.Citation;
 using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
@@ -44,6 +45,9 @@ namespace User.Controllers
             pagesTree.Add(new PageTree("Đề xuất khen thưởng số trích dẫn", "/Citation/AddRequest"));
             ViewBag.pagesTree = pagesTree;
 
+            CitationTypeRepo citationTypeRepo = new CitationTypeRepo();
+            ViewBag.citationTypes = citationTypeRepo.GetCitationTypes();
+
             return View();
         }
 
@@ -78,7 +82,7 @@ namespace User.Controllers
 
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
-            ViewBag.ckEdit = rc.status_id;
+            ViewBag.ckEdit = rc.citation_status_id;
 
             return View();
         }
@@ -89,7 +93,7 @@ namespace User.Controllers
             CitationRequestAddRepo addRepo = new CitationRequestAddRepo();
 
             AlertModal<int> result = addRepo.AddRequestCitation(citation, addAuthor, CurrentAccount.AccountID(Session));
-            return Json(new { result.success, id = result.obj });
+            return Json(new { result.success, id = result.obj, result.content });
         }
 
         [HttpPost]

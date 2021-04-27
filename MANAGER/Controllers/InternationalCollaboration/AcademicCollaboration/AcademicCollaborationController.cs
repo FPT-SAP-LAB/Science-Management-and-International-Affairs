@@ -1,6 +1,7 @@
 ﻿using BLL.Authen;
 using BLL.InternationalCollaboration.AcademicCollaborationRepository;
 using BLL.InternationalCollaboration.MasterData;
+using BLL.ModelDAL;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
@@ -41,7 +42,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 Session["collab_type_id"] = collab_type_id;
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.academicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
+                BaseServerSideData<AcademicCollaboration_Ext> baseServerSideData = academicCollaborationRepo.AcademicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
                 return Json(new
                 {
                     success = true,
@@ -62,7 +63,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 ObjectSearching_AcademicCollaboration obj_searching = (ObjectSearching_AcademicCollaboration)Session["obj_searching"];
-                academicCollaborationRepo = new AcademicCollaborationRepo();
+                AcademicCollaborationExportRepo academicCollaborationRepo = new AcademicCollaborationExportRepo();
                 System.IO.MemoryStream memoryStream = academicCollaborationRepo.ExportACExcel((int)Session["direction"], (int)Session["collab_type_id"], obj_searching);
                 string downloadFile = "ACDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
@@ -95,8 +96,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<Country>> alertModal = academicCollaborationRepo.countries(country_name);
+                CountryRepo countryRepo = new CountryRepo();
+                AlertModal<List<Country>> alertModal = new AlertModal<List<Country>>(countryRepo.GetCountries(country_name), true);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -111,7 +112,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<Year>> alertModal = academicCollaborationRepo.yearSearching();
+                AlertModal<List<Year>> alertModal = academicCollaborationRepo.YearSearching();
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -126,7 +127,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<Office>> alertModal = academicCollaborationRepo.offices(office_name);
+                AlertModal<List<Office>> alertModal = academicCollaborationRepo.Offices(office_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -141,7 +142,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partners(partner_name);
+                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.Partners(partner_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -156,7 +157,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.partnersSearching(partner_name);
+                AlertModal<List<AcademicCollaborationPartner_Ext>> alertModal = academicCollaborationRepo.PartnersSearching(partner_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -172,7 +173,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<AcademicCollaborationPerson_Ext>> alertModal = academicCollaborationRepo.people(person_name);
+                AlertModal<List<AcademicCollaborationPerson_Ext>> alertModal = academicCollaborationRepo.People(person_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -187,7 +188,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<CollaborationScope>> alertModal = academicCollaborationRepo.collaborationScopes(collab_abbreviation_name);
+                AlertModal<List<CollaborationScope>> alertModal = academicCollaborationRepo.CollaborationScopes(collab_abbreviation_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -202,7 +203,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<List<AcademicCollaborationStatu>> alertModal = academicCollaborationRepo.academicCollaborationStatus(status_type_specific);
+                AlertModal<List<AcademicCollaborationStatu>> alertModal = academicCollaborationRepo.AcademicCollaborationStatus(status_type_specific);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -217,7 +218,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<AcademicCollaborationPerson_Ext> alertModal = academicCollaborationRepo.person(people_id, people_name);
+                AlertModal<AcademicCollaborationPerson_Ext> alertModal = academicCollaborationRepo.Person(people_id, people_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -232,7 +233,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<AcademicCollaborationPartner_Ext> alertModal = academicCollaborationRepo.partner(partner_id, partner_name);
+                AlertModal<AcademicCollaborationPartner_Ext> alertModal = academicCollaborationRepo.Partner(partner_id, partner_name);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -266,7 +267,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     else
                     {
                         //Save academic collab
-                        AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.saveAcademicCollaboration(direction_id, collab_type_id,
+                        AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.SaveAcademicCollaboration(direction_id, collab_type_id,
                             obj_person, obj_partner, obj_academic_collab, evidence, folder_name, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
@@ -290,7 +291,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.getAcademicCollaboration(direction, collab_type_id, acad_collab_id);
+                AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.GetAcademicCollaboration(direction, collab_type_id, acad_collab_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -322,7 +323,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     else
                     {
                         //Save academic collab
-                        AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.updateAcademicCollaboration(direction_id, collab_type_id,
+                        AlertModal<AcademicCollaboration_Ext> alertModal = academicCollaborationRepo.UpdateAcademicCollaboration(direction_id, collab_type_id,
                             obj_person, obj_partner, obj_academic_collab, new_evidence, file_action, folder_name, account_id);
                         return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                     }
@@ -347,7 +348,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<string> alertModal = academicCollaborationRepo.deleteAcademicCollaboration(acad_collab_id);
+                AlertModal<string> alertModal = academicCollaborationRepo.DeleteAcademicCollaboration(acad_collab_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -364,7 +365,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             {
                 academicCollaborationRepo = new AcademicCollaborationRepo();
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<StatusHistory> baseServerSideData = academicCollaborationRepo.getStatusHistories(baseDatatable, collab_id);
+                BaseServerSideData<StatusHistory> baseServerSideData = academicCollaborationRepo.GetStatusHistories(baseDatatable, collab_id);
                 return Json(new
                 {
                     success = true,
@@ -391,7 +392,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 int account_id = CurrentAccount.AccountID(Session);
                 if (account_id != 0)
                 {
-                    AlertModal<string> alertModal = academicCollaborationRepo.changeStatus(collab_id, evidence_file, folder_name, status_id, note, account_id);
+                    AlertModal<string> alertModal = academicCollaborationRepo.ChangeStatus(collab_id, evidence_file, folder_name, status_id, note, account_id);
                     return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
                 }
                 else
@@ -412,8 +413,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<AcademicCollaborationTypeLanguage> alertModal = academicCollaborationRepo.getLTContent(collab_type_id, language_id);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<AcademicCollaborationTypeLanguage> alertModal = academicCollaborationLongRepo.GetLTContent(collab_type_id, language_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -429,8 +430,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<string> alertModal = academicCollaborationRepo.updateLTContent(collab_type_id, language_id, description);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<string> alertModal = academicCollaborationLongRepo.UpdateLTContent(collab_type_id, language_id, description);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -445,8 +446,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<CollaborationTypeDirectionLanguage> alertModal = academicCollaborationRepo.getLTGCContent(direction_id, collab_type_id, language_id);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<CollaborationTypeDirectionLanguage> alertModal = academicCollaborationLongRepo.GetLTGCContent(direction_id, collab_type_id, language_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -462,8 +463,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
         {
             try
             {
-                academicCollaborationRepo = new AcademicCollaborationRepo();
-                AlertModal<string> alertModal = academicCollaborationRepo.updateLTGCContent(collab_type_direction_id, language_id, description);
+                AcademicCollaborationLongRepo academicCollaborationLongRepo = new AcademicCollaborationLongRepo();
+                AlertModal<string> alertModal = academicCollaborationLongRepo.UpdateLTGCContent(collab_type_direction_id, language_id, description);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)

@@ -301,7 +301,6 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\ArticlePolicyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
-    <Compile Include="Controllers\ScienceManagement\Policy\ConditionManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -319,7 +318,6 @@
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\UpdateJournalController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
-    <Compile Include="Controllers\ScienceManagement\Policy\CriteriaManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyTypeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
@@ -2540,9 +2538,6 @@
     <Content Include="Views\ArticlePolicy\Detail.cshtml" />
     <Content Include="Views\PolicyType\Index.cshtml" />
     <Content Include="Views\ArticlePolicy\Edit.cshtml" />
-    <Content Include="Views\CriteriaManagement\Index.cshtml" />
-    <Content Include="Views\CriteriaManagement\Add.cshtml" />
-    <Content Include="Views\Notification\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

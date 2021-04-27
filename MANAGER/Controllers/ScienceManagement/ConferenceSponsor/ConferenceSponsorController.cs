@@ -65,7 +65,7 @@ namespace MANAGER.Controllers
         public JsonResult RequestEdit(int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
-            return Json(DetailRepos.RequestEdit(request_id, Startup.GuestURI));
+            return Json(DetailRepos.RequestEdit(request_id));
         }
         [HttpPost]
         public ActionResult UpdateCosts(string data, int request_id, string comment)
@@ -129,13 +129,11 @@ namespace MANAGER.Controllers
             else
                 return File(Word, "application/vnd.ms-word", "Đề-nghị-cử-bán-bộ-đi-công-tác.docx");
         }
-        //[ChildActionOnly]
-        //public ActionResult CostMenu(int id)
-        //{
-        //    ViewBag.id = id;
-        //    ViewBag.CheckboxColumn = id == 2;
-        //    ViewBag.ReimbursementColumn = id >= 3;
-        //    return PartialView();
-        //}
+        [HttpPost]
+        public JsonResult CancelRequest(int request_id)
+        {
+            DetailRepos = new ConferenceSponsorDetailRepo();
+            return Json(DetailRepos.CancelRequest(request_id, CurrentAccount.AccountID(Session)));
+        }
     }
 }
