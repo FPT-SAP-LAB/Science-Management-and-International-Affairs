@@ -22,30 +22,53 @@
                                         <th>@rm.GetString("Source")</th>
                                         <th>@rm.GetString("CitationCount")</th>
                                         <th>@rm.GetString("Link")</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="trichdan_body">
                                     @{
-                                        foreach (ENTITIES.Citation item in ViewBag.citation)
+                                        int temp_count = 1;
+                                        foreach (var item in ViewBag.citation)
                                         {
-                                            <tr>
-                                                <td><input autocomplete="off" class="form-control edit trichdan_source" type="text" value="@item.CitationType.citation_type_name" /></td>
+                                            <tr id="@(temp_count == 1 ? "baseCost" : "")">
+                                                <td>
+                                                    <select class="form-control edit trichdan_source">
+                                                        @foreach (ENTITIES.CitationType item2 in ViewBag.citationTypes)
+                                                        {
+                                                            <option value="@item2.citation_type_id" @(item.source == item2.citation_type_name ? "selected" : "")>@item2.citation_type_name</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                @*<td><input autocomplete="off" class="form-control edit trichdan_source" type="text" value="@item.source" /></td>*@
                                                 <td><input autocomplete="off" class="form-control edit trichdan_count" type="number" value="@item.count" /></td>
                                                 <td><input autocomplete="off" class="form-control edit trichdan_link" type="text" value="@item.link" /></td>
+                                                <td>@{ if (ViewBag.ckEdit == 5) {<a onclick = "deleteCost(this)" class='btn btn-sm btn-clean btn-icon edit' title='Delete'> <i class='la la-trash'></i> </a>} }</td>
                                             </tr>
+                                            temp_count++;
                                         }
                                     }
                                 </tbody>
                             </table>
                         </div>
-                        @if (ViewBag.ckEdit == 5)
-                        {
-                            <div class="col-xl-12" style="text-align: end">
-                                <button class="btn btn-light-danger px-6 font-weight-bold deleterow edit">@rm.GetString("DelRow")</button>
-                                <button class="btn btn-light-primary px-6 font-weight-bold addrow edit">@rm.GetString("AddRow")</button>
-                            </div>
-                        }
                     </div>
+                    @if (ViewBag.ckEdit == 5)
+                    {
+                        <div class="row">
+                            <div class="col-xl-12" style="text-align: end;">
+                                <a onclick="addCost()" class="btn btn-success font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md">
+                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <circle fill="#000000" cx="9" cy="15" r="6"></circle>
+                                                <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg><!--end::Svg Icon-->
+                                    </span> @rm.GetString("AddRow")
+                                </a>
+                            </div>
+                        </div>
+                    }
                     <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
                     <div class="row">
                         <div class="col-xl-6 form-group">
@@ -78,7 +101,24 @@
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         var people = [];
-        var citation = [];
+                                            var citation = [];
+                                            var tbodyCost = document.getElementById("trichdan_body");
+                                            var baseCost = document.getElementById("baseCost").cloneNode(true);
+
+                                            function deleteCost(ele) {
+                                                ele.closest("tr").remove();
+                                                //calculateTotalCost();
+                                            }
+
+                                            function addCost() {
+                                                let temp = baseCost.cloneNode(true);
+                                                tbodyCost.append(temp);
+                                                var count_temp = $(".trichdan_count");
+            $(count_temp[count_temp.length - 1]).val("0");
+                                                var link_temp = $(".trichdan_link");
+            $(link_temp[link_temp.length - 1]).val("");
+                                            }
+
         $(document).ready(function () {
 
             $('.citationE').attr('style', 'display:none !important');
@@ -86,15 +126,15 @@
             $("#ckfe").val("@ViewBag.author.office_abbreviation");
             $("#ckfe").trigger('change');
 
-            var temp_ms = "@ViewBag.author.mssv_msnv";
-            if ($('#add_author_msnv').find("option[value='" + temp_ms + "']").length) {
+                                                var temp_ms = "@ViewBag.author.mssv_msnv";
+                                                if ($('#add_author_msnv').find("option[value='" + temp_ms + "']").length) {
                 $('#add_author_msnv').val(temp_ms).trigger('change');
-            } else {
-                // Create a DOM Option and pre-select by default
-                var newOption = new Option(temp_ms, temp_ms, true, true);
+                                                } else {
+                                                    // Create a DOM Option and pre-select by default
+                                                    var newOption = new Option(temp_ms, temp_ms, true, true);
                 // Append it to the select
                 $('#add_author_msnv').append(newOption).trigger('change');
-            }
+                                                }
 
             @*$("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
             $("#add_author_msnv").trigger('change');*@
@@ -182,7 +222,7 @@
             for (var i = 0; i < inputSource.length; i++) {
                 if ($(inputSource[i]).val() != "" && $(inputCount[i]).val() != "" && $(inputLink[i]).val() != "") {
                     var oneCitation = {
-                        source: $(inputSource[i]).val(),
+                        citation_type_id: $(inputSource[i]).val(),
                         count: $(inputCount[i]).val(),
                         link: $(inputLink[i]).val()
                     };
