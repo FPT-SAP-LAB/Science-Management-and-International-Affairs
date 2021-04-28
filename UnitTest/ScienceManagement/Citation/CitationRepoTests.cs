@@ -2,6 +2,7 @@
 using BLL.Support;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement;
+using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -109,7 +110,7 @@ namespace BLL.ScienceManagement.Citation.Tests
         [DataRow("")]
         public void GetCitationTest(string request_id)
         {
-            List<ENTITIES.Citation> actual = citationRepo.GetCitation(request_id);
+            List<CustomCitation> actual = citationRepo.GetCitation(request_id);
 
             Assert.AreEqual(null, actual);
         }
