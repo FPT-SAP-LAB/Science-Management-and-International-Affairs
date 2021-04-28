@@ -42,10 +42,10 @@ namespace MANAGER.Controllers
             List<ListCriteriaOfOnePaper> listCrite = pr.GetCriteria(id);
             ViewBag.crite = listCrite;
 
-            List<SpecializationLanguage> listSpec = mdr.getSpec("vi-VN");
+            List<SpecializationLanguage> listSpec = mdr.GetSpec("vi-VN");
             ViewBag.spec = listSpec;
 
-            List<PaperType> listType = mdr.getPaperType();
+            List<PaperType> listType = mdr.GetPaperType();
             ViewBag.type = listType;
 
             List<AuthorInfoWithNull> listAuthor = pr.GetAuthorPaper(id, "vi-VN");
@@ -59,7 +59,7 @@ namespace MANAGER.Controllers
 
             ViewBag.acc = CurrentAccount.Account(Session);
 
-            List<PaperCriteria> listCriteria = mdr.getPaperCriteria();
+            List<PaperCriteria> listCriteria = mdr.GetPaperCriteria();
             ViewBag.listCriteria = listCriteria;
 
             return View();
@@ -236,7 +236,7 @@ namespace MANAGER.Controllers
                 name = name1
             };
 
-            ENTITIES.File myFile1 = mdr.addFile(fl1);
+            ENTITIES.File myFile1 = mdr.AddFile(fl1);
 
             string mess = pr.UploadDecision(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 
@@ -262,7 +262,7 @@ namespace MANAGER.Controllers
                 name = name1
             };
 
-            ENTITIES.File myFile1 = mdr.addFile(fl1);
+            ENTITIES.File myFile1 = mdr.AddFile(fl1);
 
             string mess = pr.UploadDecision2(date_format1, myFile1.file_id, number1, myFile1.file_drive_id, reseacher);
 

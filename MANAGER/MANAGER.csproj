@@ -314,10 +314,11 @@
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\QsUniversityController.cs" />
     <Compile Include="Controllers\ScienceManagement\Decision\DecisionHistoryController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
-    <Compile Include="Controllers\ScienceManagement\MasterData\PaperCriteriaController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\UpdateJournalController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Policy\ConditionManagementController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Policy\CriteriaManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyTypeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
@@ -2523,7 +2524,6 @@
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Coming.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\PaperCriteria\List.cshtml" />
     <Content Include="Views\Paper\WaitDecision2.cshtml" />
     <Content Include="Views\Title\List.cshtml" />
     <Content Include="Views\QsUniversity\Index.cshtml" />
@@ -2538,6 +2538,10 @@
     <Content Include="Views\ArticlePolicy\Detail.cshtml" />
     <Content Include="Views\PolicyType\Index.cshtml" />
     <Content Include="Views\ArticlePolicy\Edit.cshtml" />
+    <Content Include="Views\CriteriaManagement\Add.cshtml" />
+    <Content Include="Views\CriteriaManagement\Index.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Research\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2556,9 +2560,6 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\Biography\" />
-    <Folder Include="Views\ErrorPage\" />
-    <Folder Include="Views\Specialization\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
