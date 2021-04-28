@@ -36,7 +36,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 						inner join
 						IA_Article.ArticleVersion av2 on av1.article_id = av2.article_id and av1.language_id = av2.language_id) as av
                         on av.article_id = ai.article_id and al.language_id = av.language_id and at.language_id = al.language_id
-                        WHERE YEAR(aa.activity_date_start) = @year";
+                        WHERE @year between year(aa.activity_date_start) and YEAR(aa.activity_date_end)";
                 List<ListAA> data = db.Database.SqlQuery<ListAA>(sql,
                         new SqlParameter("year", year)).ToList();
 

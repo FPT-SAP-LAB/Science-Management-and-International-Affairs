@@ -603,13 +603,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select '' as 'title', a.dang_ky, b.tham_du 
+                string sql = @"select '' as 'title', a.dang_ky, case when b.tham_du is null then 0 else b.tham_du end as 'tham_du' 
                                     from (select ap.activity_id, count(p.participant_id) 'dang_ky'
                                     from SMIA_AcademicActivity.Participant p inner join SMIA_AcademicActivity.ParticipantRole pr on 
                                     p.participant_role_id = pr.participant_role_id inner join SMIA_AcademicActivity.AcademicActivityPhase ap
                                     on ap.phase_id = pr.phase_id
                                     where ap.activity_id = @activity_id
-                                    group by ap.activity_id) a inner join 
+                                    group by ap.activity_id) a left join 
                                     (select ap.activity_id, count(p.participant_id) 'tham_du'
                                     from SMIA_AcademicActivity.Participant p inner join SMIA_AcademicActivity.ParticipantRole pr on 
                                     p.participant_role_id = pr.participant_role_id inner join SMIA_AcademicActivity.AcademicActivityPhase ap
@@ -629,13 +629,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select a.office_name as 'title', a.dang_ky, b.tham_du 
+                string sql = @"select a.office_name as 'title', a.dang_ky, case when b.tham_du is null then 0 else b.tham_du end as 'tham_du'
                                     from (select ap.activity_id, o.office_id, o.office_name, count(p.participant_id) 'dang_ky'
                                     from SMIA_AcademicActivity.Participant p inner join SMIA_AcademicActivity.ParticipantRole pr on 
                                     p.participant_role_id = pr.participant_role_id inner join SMIA_AcademicActivity.AcademicActivityPhase ap
                                     on ap.phase_id = pr.phase_id inner join General.Office o ON o.office_id = p.office_id
                                     where ap.activity_id = @activity_id
-                                    group by ap.activity_id, o.office_id, o.office_name) a inner join 
+                                    group by ap.activity_id, o.office_id, o.office_name) a left join 
                                     (select ap.activity_id, o.office_id, o.office_name, count(p.participant_id) 'tham_du'
                                     from SMIA_AcademicActivity.Participant p inner join SMIA_AcademicActivity.ParticipantRole pr on 
                                     p.participant_role_id = pr.participant_role_id inner join SMIA_AcademicActivity.AcademicActivityPhase ap
@@ -655,14 +655,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
         {
             try
             {
-                string sql = @"select a.unit_name as 'title', a.dang_ky, b.tham_du 
+                string sql = @"select a.unit_name as 'title', a.dang_ky, case when b.tham_du is null then 0 else b.tham_du end as 'tham_du'  
                                     from (select ap.activity_id, u.unit_id, u.unit_name, count(p.participant_id) 'dang_ky'
                                     from SMIA_AcademicActivity.Participant p inner join SMIA_AcademicActivity.ParticipantRole pr on 
                                     p.participant_role_id = pr.participant_role_id inner join SMIA_AcademicActivity.AcademicActivityPhase ap
                                     on ap.phase_id = pr.phase_id inner join General.Office o ON o.office_id = p.office_id
                                     inner join General.InternalUnit u ON o.unit_id = u.unit_id
                                     where ap.activity_id = @activity_id
-                                    group by ap.activity_id, u.unit_id, u.unit_name) a inner join 
+                                    group by ap.activity_id, u.unit_id, u.unit_name) a left join 
                                     (select ap.activity_id, u.unit_id, u.unit_name, count(p.participant_id) 'tham_du'
                                     from SMIA_AcademicActivity.Participant p inner join SMIA_AcademicActivity.ParticipantRole pr on 
                                     p.participant_role_id = pr.participant_role_id inner join SMIA_AcademicActivity.AcademicActivityPhase ap
