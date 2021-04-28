@@ -40,10 +40,10 @@ namespace GUEST.Controllers
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            List<SpecializationLanguage> listSpec = md.GetSpec(lang);
             ViewBag.listSpec = listSpec;
 
-            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            List<PaperCriteria> listCriteria = md.GetPaperCriteria();
             ViewBag.listCriteria = listCriteria;
 
             string link = pr.GetLinkPolicy();
@@ -172,10 +172,10 @@ namespace GUEST.Controllers
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            List<SpecializationLanguage> listSpec = md.GetSpec(lang);
             ViewBag.listSpec = listSpec;
 
-            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            List<PaperCriteria> listCriteria = md.GetPaperCriteria();
             ViewBag.listCriteria = listCriteria;
 
             List<ListCriteriaOfOnePaper> listCriteriaOne = pr.GetCriteria(id);
