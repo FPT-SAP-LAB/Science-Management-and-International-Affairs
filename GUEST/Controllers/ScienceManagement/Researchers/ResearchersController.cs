@@ -45,7 +45,9 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ////////////////////////////////////////////
             return View();
         }
-        public ActionResult GetList()
+
+        [AjaxOnly, HttpGet]
+        public JsonResult GetList(string start)
         {
             try
             {
@@ -53,7 +55,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 researcherListRepo = new ResearchersListRepo();
                 BaseDatatable datatable = new BaseDatatable
                 {
-                    Start = int.Parse(Request["start"]),
+                    Start = int.Parse(start),
                     Length = ListGuestLenght,
                     SortColumnName = "name",
                     SortDirection = "asc"
@@ -69,6 +71,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+
         public ActionResult ViewInfo()
         {
             pagesTree.Add(new PageTree("Thông tin nghiên cứu viên", "#"));
@@ -79,6 +82,7 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
             ViewBag.pagesTree = pagesTree;
             return View();
         }
+
         public ActionResult GetPublications()
         {
             researcherBiographyRepo = new ResearchersBiographyRepo();
@@ -105,8 +109,8 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
                 Response.Redirect("/ErrorPage/Error");
             }
             ResearcherDetail profile = researcherDetailRepo.GetProfile(id, languageId);
-            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
-            List<SelectField> listTitles = researcherBiographyRepo.getTitles(languageId);
+            List<SelectField> listAcadDegree = researcherBiographyRepo.GetAcadDegrees();
+            List<SelectField> listTitles = researcherBiographyRepo.GetTitles(languageId);
             ViewBag.listAcadDegree = listAcadDegree;
             ViewBag.listTitles = listTitles;
             ViewBag.profile = profile;
