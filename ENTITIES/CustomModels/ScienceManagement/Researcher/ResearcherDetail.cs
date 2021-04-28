@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Researcher
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public class ResearcherDetail
     {
         public int id { get; set; }

@@ -38,7 +38,7 @@ namespace MANAGER.Controllers
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết trích dẫn";
-            List<ENTITIES.Citation> listCitation = cr.GetCitation(id);
+            List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
             AuthorInfo author = cr.GetAuthor(id);

@@ -102,9 +102,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id, 1);
             ViewBag.acadList = acadList;
             /////////////////////////////////////////////////////////////
-            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<SelectField> listAcadDegree = researcherBiographyRepo.GetAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles(1);
+            List<SelectField> listWorkHistory = researcherBiographyRepo.GetTitles(1);
             ViewBag.workList = workList;
             ViewBag.listAcadDegree = listAcadDegree;
             ViewBag.listWorkHistory = listWorkHistory;
@@ -174,9 +174,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherBiographyRepo = new ResearchersBiographyRepo();
 
             /////////////////////////////////////////////////////////////
-            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<SelectField> listAcadDegree = researcherBiographyRepo.GetAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles(1);
+            List<SelectField> listWorkHistory = researcherBiographyRepo.GetTitles(1);
             ///////////////////////////////////////////////////////////////
             List<ResearcherPublications> publications = researcherBiographyRepo.GetPublications(id);
             ViewBag.publications = publications;

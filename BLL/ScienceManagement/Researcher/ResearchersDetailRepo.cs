@@ -57,7 +57,7 @@ namespace BLL.ScienceManagement.Researcher
                                                   id = h.research_area_id,
                                                   name = h.name,
                                                   selected = 0
-                                              }).ToList<SelectField>();
+                                              }).ToList();
             var title_fields = (from a in db.Profiles
                                 from g in db.Titles.Where(x => x.Profiles.Contains(a))
                                 join h in db.TitleLanguages on g.title_id equals h.title_id
@@ -78,7 +78,7 @@ namespace BLL.ScienceManagement.Researcher
                                              id = h.title_id,
                                              name = h.name,
                                              selected = 0
-                                         }).ToList<SelectField>();
+                                         }).ToList();
             var position_fields = (from a in db.PeoplePositions
                                    join g in db.Positions on a.position_id equals g.position_id
                                    join h in db.PositionLanguages on g.position_id equals h.position_id
@@ -98,7 +98,7 @@ namespace BLL.ScienceManagement.Researcher
                                                 id = h.position_id,
                                                 name = h.name,
                                                 selected = 0
-                                            }).ToList<SelectField>();
+                                            }).ToList();
             var offices_fields = (from a in db.People
                                   join g in db.Offices on a.office_id equals g.office_id
                                   where a.people_id == id
@@ -117,7 +117,7 @@ namespace BLL.ScienceManagement.Researcher
                                                id = g.office_id,
                                                name = g.office_name,
                                                selected = 0
-                                           }).ToList<SelectField>();
+                                           }).ToList();
             var countries_fields = (from a in db.Profiles
                                     from g in db.Countries.Where(x => x.Profiles.Contains(a))
                                     where a.people_id == id
@@ -136,7 +136,7 @@ namespace BLL.ScienceManagement.Researcher
                                                  id = g.country_id,
                                                  name = g.country_name,
                                                  selected = 0
-                                             }).ToList<SelectField>();
+                                             }).ToList();
             profile.interested_fields = interested_fields;
             profile.title_fields = title_fields;
             profile.position_fields = position_fields;
@@ -147,7 +147,7 @@ namespace BLL.ScienceManagement.Researcher
 
         public ResearcherView GetDetailView(int id, int language_id)
         {
-            researcherBiographyRepo = new ResearchersBiographyRepo();
+            researcherBiographyRepo = new ResearchersBiographyRepo(db);
             var profile = (
                from a in db.People
                join b in db.Profiles on a.people_id equals b.people_id
@@ -157,37 +157,31 @@ namespace BLL.ScienceManagement.Researcher
                    id = a.people_id,
                    name = a.name,
                    dob = b.birth_date,
-                   position_fields = (from a in db.Profiles
-                                      join g in db.PeoplePositions on a.people_id equals g.people_id
+                   position_fields = (from g in db.PeoplePositions
                                       join h in db.PositionLanguages on g.position_id equals h.position_id
-                                      where a.people_id == id && h.language_id == language_id
+                                      where g.people_id == id && h.language_id == language_id
                                       select new SelectField
                                       {
                                           name = h.name
                                       }).ToList(),
-                   interested_fields = (from a in db.Profiles
-                                        from g in db.ResearchAreas.Where(x => x.Profiles.Contains(a))
+                   interested_fields = (from g in b.ResearchAreas
                                         join h in db.ResearchAreaLanguages on g.research_area_id equals h.research_area_id
-                                        where a.people_id == id && h.language_id == language_id
+                                        where h.language_id == language_id
                                         select new SelectField
                                         {
                                             name = h.name
                                         }).ToList(),
-                   title_fields = (from a in db.Profiles
-                                   from g in db.Titles.Where(x => x.Profiles.Contains(a))
-                                   join h in db.TitleLanguages on g.title_id equals h.title_id
-                                   where a.people_id == id && h.language_id == language_id
+                   title_fields = (from h in db.TitleLanguages
+                                   where h.language_id == language_id && b.title_id == h.title_id
                                    select new SelectField
                                    {
                                        name = h.name
                                    }).ToList(),
                    email = a.email,
                    phone = a.phone_number,
-                   avatar = (from f in db.Profiles
-                             join ff in db.Files on f.avatar_id equals ff.file_id
-                             where f.people_id == a.people_id
-                             select ff.link
-                                      ).FirstOrDefault(),
+                   avatar = (from ff in db.Files
+                             where b.avatar_id == ff.file_id
+                             select ff.link).FirstOrDefault(),
                    website = b.website,
                    office = (from m in db.Offices where a.office_id == m.office_id select m.office_name).FirstOrDefault(),
                    gscholar = b.google_scholar,
