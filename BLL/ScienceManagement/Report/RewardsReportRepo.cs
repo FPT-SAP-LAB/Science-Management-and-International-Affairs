@@ -84,41 +84,102 @@ namespace BLL.ScienceManagement.Report
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<ArticlesInoutCountryReports>, string>(new BaseServerSideData<ArticlesInoutCountryReports>(res, recordsTotal), totalAmount);
         }
-        public BaseServerSideData<ReportByAuthorAward> GetAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search)
+        //public BaseServerSideData<ReportByAuthorAward> GetAwardReportByAuthor(BaseDatatable baseDatatable, SearchFilter search)
+        public List<ReportByAuthorAward> GetAwardReportByAuthor()
         {
-            var data = (from a in db.AuthorPapers
-                        join b in db.Authors.GroupBy(x => x.mssv_msnv).Select(x => x.FirstOrDefault()) on a.people_id equals b.people_id
-                        join c in db.Titles on b.title_id equals c.title_id
-                        join d in db.TitleLanguages on c.title_id equals d.title_id
-                        join e in db.Offices on b.office_id equals e.office_id
-                        join f in db.Papers on a.paper_id equals f.paper_id
-                        where d.language_id == 1
-                        select new ReportByAuthorAward
-                        {
-                            name = b.name,
-                            msnv_mssv = b.mssv_msnv,
-                            title = d.name,
-                            office = e.office_name,
-                            office_id = e.office_id,
-                            paperAward = (from m in db.RequestPapers
-                                          join n in db.Papers on m.paper_id equals n.paper_id
-                                          join h in db.AuthorPapers on n.paper_id equals h.paper_id
-                                          join j in db.Authors on h.people_id equals j.people_id
-                                          where m.status_id == 2
-                                          && j.mssv_msnv == b.mssv_msnv
-                                          select h.money_reward).ToList().Sum().ToString(),
-                            inventionAwards = (from a1 in db.Decisions
-                                               join b1 in db.RequestDecisions on a1.decision_id equals b1.decision_id
-                                               join c1 in db.BaseRequests on b1.request_id equals c1.request_id
-                                               join d1 in db.RequestInventions on c1.request_id equals d1.request_id
-                                               join e1 in db.Inventions on d1.invention_id equals e1.invention_id
-                                               join f1 in db.Authors on b.mssv_msnv equals f1.mssv_msnv
-                                               join h1 in db.AuthorInventions on f1.people_id equals h1.people_id
-                                               where f1.people_id == b.people_id
-                                               select d1.total_reward).ToList(),
-                            CitationAward = "",
-                            PublicYear = f.publish_date.Value.Year.ToString()
-                        });
+            db.Configuration.LazyLoadingEnabled = true;
+
+            var paperInvention = db.Authors.Select(x => new ReportByAuthorAward
+            {
+                msnv_mssv = x.mssv_msnv,
+                paperAward = (from m in db.RequestPapers
+                              join n in db.Papers on m.paper_id equals n.paper_id
+                              join h in x.AuthorPapers on n.paper_id equals h.paper_id
+                              where m.status_id == 2 && h.money_reward != null
+                              select h.money_reward.Value).ToList(),
+                inventionAmount = (from m in db.RequestInventions
+                                   join n in db.Inventions on m.invention_id equals n.invention_id
+                                   join h in x.AuthorInventions on n.invention_id equals h.invention_id
+                                   where m.status_id == 2 && h.money_reward != null
+                                   select h.money_reward.Value).ToList()
+            }).ToList();
+
+            var citation = (from m in db.RequestCitations
+                            join a in db.BaseRequests on m.request_id equals a.request_id
+                            join b in db.Profiles on a.account_id equals b.account_id
+                            where m.citation_status_id == 2 && m.total_reward != null
+                            select new ReportByAuthorAward
+                            {
+                                msnv_mssv = b.mssv_msnv,
+                                CitationAward = m.total_reward.Value
+                            }).GroupBy(x => x.msnv_mssv).Select(x => new ReportByAuthorAward
+                            {
+                                msnv_mssv = x.Key,
+                                CitationAward = x.Sum(y => y.CitationAward),
+                            }).ToList();
+
+            foreach (var item in citation)
+            {
+                item.inventionAmount = new List<int>();
+                item.paperAward = new List<int>();
+            }
+
+            Dictionary<string, ReportByAuthorAward> dict = new Dictionary<string, ReportByAuthorAward>();
+
+            foreach (var item in paperInvention)
+            {
+                if (dict.TryGetValue(item.msnv_mssv, out ReportByAuthorAward temp))
+                {
+                    temp.paperAward.AddRange(item.paperAward);
+                    temp.inventionAmount.AddRange(item.inventionAmount);
+                }
+                else
+                {
+                    dict.Add(item.msnv_mssv, item);
+                }
+            }
+
+            foreach (var item in citation)
+            {
+                if (dict.TryGetValue(item.msnv_mssv, out ReportByAuthorAward temp))
+                {
+                    temp.CitationAward += temp.CitationAward;
+                }
+                else
+                {
+                    dict.Add(item.msnv_mssv, item);
+                }
+            }
+
+            var informations = dict
+                .Where(x => x.Value.inventionAmount.Count > 0 || x.Value.paperAward.Count > 0 || x.Value.CitationAward > 0)
+                .Select(x => x.Value).ToList();
+
+            foreach (var info in informations)
+            {
+                info.name = db.People.Where(y => y.Profile.mssv_msnv.Equals(info.msnv_mssv)).Select(y => y.name).FirstOrDefault();
+                info.office = db.People.Where(y => y.Profile.mssv_msnv.Equals(info.msnv_mssv)).Select(y => y.Office.office_name).FirstOrDefault();
+                info.title = (from a in db.People
+                              join b in db.Profiles on a.people_id equals b.people_id
+                              join c in db.TitleLanguages on b.title_id equals c.title_id
+                              where c.language_id == 1
+                              select c.name).FirstOrDefault();
+            }
+
+            for (int i = 0; i < informations.Count; i++)
+            {
+                var info = informations[i];
+                if (info.name == null)
+                {
+                    info.name = db.Authors.Where(y => y.mssv_msnv.Equals(info.msnv_mssv)).Select(y => y.name).FirstOrDefault();
+                    info.office = db.Authors.Where(y => y.mssv_msnv.Equals(info.msnv_mssv)).Select(y => y.Office.office_name).FirstOrDefault();
+                    info.title = (from b in db.Authors
+                                  join c in db.TitleLanguages on b.title_id equals c.title_id
+                                  where c.language_id == 1
+                                  select c.name).FirstOrDefault();
+                }
+            }
+
             //.Union(from d1 in db.Profiles
             //         join a1 in db.Accounts on d1.account_id equals a1.account_id
             //         join e1 in db.People on d1.people_id equals e1.people_id
@@ -136,34 +197,35 @@ namespace BLL.ScienceManagement.Report
             //                              where b1.citation_status_id == 2 && c1.account_id == d1.account_id
             //                              select b1.total_reward).Sum().ToString()
             //         });
-            if (search.office_id != null)
-            {
-                data = data.Where(x => x.office_id == search.office_id);
-            }
-            if (search.name != null && search.name.Trim() != "")
-            {
-                data = data.Where(x => x.name.Contains(search.name));
-            }
-            if (search.year != null)
-            {
-                data = data.Where(x => x.PublicYear == search.year);
-            }
-            var result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
-                .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-            for (int i = 0; i < result.Count; i++)
-            {
-                result[i].inventionAmount = result[i].inventionAwards.Select(x => Convert.ToInt64(x)).ToList().Sum().ToString();
-            }
 
-            for (int i = 0; i < result.Count; i++)
-            {
-                result[i].rowNum = baseDatatable.Start + 1 + i;
-                result[i].paperAward = result[i].paperAward == "" ? "0" : result[i].paperAward;
-                result[i].inventionAmount = result[i].inventionAmount == "" ? "0" : result[i].inventionAmount;
-                result[i].CitationAward = result[i].CitationAward == "" ? "0" : result[i].CitationAward;
-            }
-            int recordsTotal = data.Count();
-            return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
+
+
+            //if (search.office_id != null)
+            //{
+            //    data = data.Where(x => x.office_id == search.office_id);
+            //}
+            //if (search.name != null && search.name.Trim() != "")
+            //{
+            //    data = data.Where(x => x.name.Contains(search.name));
+            //}
+            //if (search.year != null)
+            //{
+            //    data = data.Where(x => x.PublicYear == search.year);
+            //}
+            //var result = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
+            //    .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
+            //for (int i = 0; i < result.Count; i++)
+            //{
+            //    result[i].inventionAmount = result[i].inventionAwards.Select(x => Convert.ToInt32(x)).ToList().Sum();
+            //}
+
+            //for (int i = 0; i < result.Count; i++)
+            //{
+            //    result[i].rowNum = baseDatatable.Start + 1 + i;
+            //}
+            //int recordsTotal = data.Count();
+            //return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
+            return informations;
         }
         public Tuple<BaseServerSideData<IntellectualPropertyReport>, string> GetIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search)
         {

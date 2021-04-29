@@ -79,6 +79,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.listOffices = listOffices;
             List<String> years = rewardsReportRepo.GetListYearPaper();
             ViewBag.years = years;
+            ViewBag.informations = rewardsReportRepo.GetAwardReportByAuthor();
             return View();
         }
         public ActionResult ListOfIncomePaid()
@@ -137,39 +138,39 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 });
             }
         }
-        public JsonResult getAwardByAuthors()
-        {
-            try
-            {
-                int? office_id;
-                if (Request["coso"] == null || Request["coso"] == "")
-                {
-                    office_id = null;
-                }
-                else
-                {
-                    office_id = Int32.Parse(Request["coso"]);
-                }
-                SearchFilter searchs = new SearchFilter()
-                {
-                    office_id = office_id,
-                    name = Request["name"].ToString(),
-                    year = Request["year"]
-                };
-                rewardsReportRepo = new RewardsReportRepo();
-                BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.GetAwardReportByAuthor(datatable, searchs);
-                return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                return Json(new
-                {
-                    success = false,
-                    message = e.Message
-                });
-            }
-        }
+        //public JsonResult getAwardByAuthors()
+        //{
+        //    try
+        //    {
+        //        int? office_id;
+        //        if (Request["coso"] == null || Request["coso"] == "")
+        //        {
+        //            office_id = null;
+        //        }
+        //        else
+        //        {
+        //            office_id = Int32.Parse(Request["coso"]);
+        //        }
+        //        SearchFilter searchs = new SearchFilter()
+        //        {
+        //            office_id = office_id,
+        //            name = Request["name"].ToString(),
+        //            year = Request["year"]
+        //        };
+        //        rewardsReportRepo = new RewardsReportRepo();
+        //        BaseDatatable datatable = new BaseDatatable(Request);
+        //        BaseServerSideData<ReportByAuthorAward> data = rewardsReportRepo.GetAwardReportByAuthor(datatable, searchs);
+        //        return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = e.Message
+        //        });
+        //    }
+        //}
         public JsonResult getIntellectualPropertyReport()
         {
             try

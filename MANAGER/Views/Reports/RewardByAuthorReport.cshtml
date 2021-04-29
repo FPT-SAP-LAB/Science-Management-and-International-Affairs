@@ -156,7 +156,21 @@
                 </tr>
             </thead>
 
-            <tbody></tbody>
+            <tbody>
+                @foreach (ENTITIES.CustomModels.ScienceManagement.Report.ReportByAuthorAward item in ViewBag.informations)
+                {
+                    <tr>
+                        <td>@item.name</td>
+                        <td>@item.msnv_mssv</td>
+                        <td>@item.title</td>
+                        <td>@item.office</td>
+                        <td>@item.paperAward.Sum()</td>
+                        <td>@item.CitationAward</td>
+                        <td>@item.inventionAmount.Sum()</td>
+                        <td>@(item.paperAward.Sum() + item.CitationAward + item.inventionAmount.Sum())</td>
+                    </tr>
+                }
+            </tbody>
 
         </table>
         <!--end: Datatable-->
@@ -178,50 +192,50 @@
             },
             // Order settings
             order: [[1, 'desc']],
-            serverSide: true,
-            ajax: {
-                url: "/Reports/getAwardByAuthors",
-                data: function (d) {
-                    d.name = $("#search_name").val();
-                    d.nam = $("#search_nam").val()
-                    d.coso = $("#search_coso").val()
-                },
-                datatype: "json",
-                cache: false
-            },
-            columns: [
-                {
-                    data: {}, name: "name", render: function (data) {
-                        return data.name
-                    }
-                },
-                { data: "msnv_mssv", name: "msnv_mssv" },
-                { data: "title", name: "title" },
-                {
-                    data: "office", name: "office"
-                },
-                {
-                    data: "paperAward", name: "paperAward", render: function (data) {
-                        return AddComma(data)
-                    }
-                },
-                {
-                    data: "CitationAward", name: "CitationAward", render: function (data) {
-                        return AddComma(data)
-                    }
-                },
-                {
-                    data: "inventionAmount", name: "inventionAmount", render: function (data) {
-                        return AddComma(data)
-                    }
-                },
-                {
-                    data: {}, name: "paperAward", render: function (data) {
-                        a = eval(data.paperAward + "+" + data.inventionAmount + "+" + data.CitationAward)
-                        return AddComma(a)
-                    }
-                },
-            ],
+            //serverSide: true,
+            //ajax: {
+            //    url: "/Reports/getAwardByAuthors",
+            //    data: function (d) {
+            //        d.name = $("#search_name").val();
+            //        d.nam = $("#search_nam").val()
+            //        d.coso = $("#search_coso").val()
+            //    },
+            //    datatype: "json",
+            //    cache: false
+            //},
+            //columns: [
+            //    {
+            //        data: {}, name: "name", render: function (data) {
+            //            return data.name
+            //        }
+            //    },
+            //    { data: "msnv_mssv", name: "msnv_mssv" },
+            //    { data: "title", name: "title" },
+            //    {
+            //        data: "office", name: "office"
+            //    },
+            //    {
+            //        data: "paperAward", name: "paperAward", render: function (data) {
+            //            return AddComma(data)
+            //        }
+            //    },
+            //    {
+            //        data: "CitationAward", name: "CitationAward", render: function (data) {
+            //            return AddComma(data)
+            //        }
+            //    },
+            //    {
+            //        data: "inventionAmount", name: "inventionAmount", render: function (data) {
+            //            return AddComma(data)
+            //        }
+            //    },
+            //    {
+            //        data: {}, name: "paperAward", render: function (data) {
+            //            a = eval(data.paperAward + "+" + data.inventionAmount + "+" + data.CitationAward)
+            //            return AddComma(a)
+            //        }
+            //    },
+            //],
             initComplete: function () {
                 $("#loader_panel").hide()
             }
