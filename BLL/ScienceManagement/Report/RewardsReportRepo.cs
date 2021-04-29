@@ -198,8 +198,6 @@ namespace BLL.ScienceManagement.Report
             //                              select b1.total_reward).Sum().ToString()
             //         });
 
-
-
             //if (search.office_id != null)
             //{
             //    data = data.Where(x => x.office_id == search.office_id);
