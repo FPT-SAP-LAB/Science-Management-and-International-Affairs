@@ -78,7 +78,7 @@ namespace User.Controllers
             List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
-            List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
+            List<DetailComment> listCmt = crr.GetComment(int.Parse(id));
             ViewBag.cmt = listCmt;
 
             ViewBag.request_id = id;
@@ -96,7 +96,7 @@ namespace User.Controllers
         {
             CitationRequestAddRepo addRepo = new CitationRequestAddRepo();
 
-            AlertModal<int> result = addRepo.AddRequestCitation(citation, addAuthor, CurrentAccount.AccountID(Session));
+            AlertModal<int> result = addRepo.AddRequestCitation(citation, CurrentAccount.AccountID(Session));
             return Json(new { result.success, id = result.obj, result.content });
         }
 
@@ -105,7 +105,7 @@ namespace User.Controllers
         {
             CitationRequestEditRepo editRepo = new CitationRequestEditRepo();
 
-            AlertModal<string> result = editRepo.EditRequestCitation(citation, addAuthor, CurrentAccount.AccountID(Session), request_id);
+            AlertModal<string> result = editRepo.EditRequestCitation(citation, CurrentAccount.AccountID(Session), request_id);
             return Json(result);
         }
     }

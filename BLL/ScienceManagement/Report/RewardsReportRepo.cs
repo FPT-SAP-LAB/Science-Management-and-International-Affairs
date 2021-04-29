@@ -80,7 +80,7 @@ namespace BLL.ScienceManagement.Report
             }
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-            String totalAmount = data.Select(x => x.total_reward).Sum().ToString();
+            string totalAmount = data.Select(x => x.total_reward).Sum().ToString();
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<ArticlesInoutCountryReports>, string>(new BaseServerSideData<ArticlesInoutCountryReports>(res, recordsTotal), totalAmount);
         }
@@ -116,14 +116,26 @@ namespace BLL.ScienceManagement.Report
                                                join h1 in db.AuthorInventions on f1.people_id equals h1.people_id
                                                where f1.people_id == b.people_id
                                                select d1.total_reward).ToList(),
-                            CitationAward = (from a1 in db.Citations
-                                             join b1 in db.RequestCitations on a1.request_id equals b1.request_id
-                                             join d1 in db.Authors on b1.Author equals d1
-                                             where d1.people_id == a.people_id
-                                             && b1.citation_status_id == 2
-                                             select b1.total_reward).Sum().ToString(),
+                            CitationAward = "",
                             PublicYear = f.publish_date.Value.Year.ToString()
                         });
+            //.Union(from d1 in db.Profiles
+            //         join a1 in db.Accounts on d1.account_id equals a1.account_id
+            //         join e1 in db.People on d1.people_id equals e1.people_id
+            //         join f1 in db.TitleLanguages on d1.title_id equals f1.title_id
+            //         join g1 in db.Offices on e1.office_id equals g1.office_id
+            //         select new ReportByAuthorAward
+            //         {
+            //             name = e1.name,
+            //             msnv_mssv = d1.mssv_msnv,
+            //             title = f1.name,
+            //             office = g1.office_name,
+            //             office_id = g1.office_id,
+            //             CitationAward = (from b1 in db.RequestCitations
+            //                              join c1 in db.BaseRequests on b1.request_id equals c1.request_id
+            //                              where b1.citation_status_id == 2 && c1.account_id == d1.account_id
+            //                              select b1.total_reward).Sum().ToString()
+            //         });
             if (search.office_id != null)
             {
                 data = data.Where(x => x.office_id == search.office_id);
@@ -142,10 +154,18 @@ namespace BLL.ScienceManagement.Report
             {
                 result[i].inventionAmount = result[i].inventionAwards.Select(x => Convert.ToInt64(x)).ToList().Sum().ToString();
             }
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].rowNum = baseDatatable.Start + 1 + i;
+                result[i].paperAward = result[i].paperAward == "" ? "0" : result[i].paperAward;
+                result[i].inventionAmount = result[i].inventionAmount == "" ? "0" : result[i].inventionAmount;
+                result[i].CitationAward = result[i].CitationAward == "" ? "0" : result[i].CitationAward;
+            }
             int recordsTotal = data.Count();
             return new BaseServerSideData<ReportByAuthorAward>(result, recordsTotal);
         }
-        public Tuple<BaseServerSideData<IntellectualPropertyReport>, String> GetIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search)
+        public Tuple<BaseServerSideData<IntellectualPropertyReport>, string> GetIntellectualPropertyReport(BaseDatatable baseDatatable, SearchFilter search)
         {
             var data = (from a in db.Decisions
                         join b in db.RequestDecisions on a.decision_id equals b.decision_id
@@ -194,42 +214,37 @@ namespace BLL.ScienceManagement.Report
             }
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-            String totalAmount = "";
-            Int64 total = 0;
+            string totalAmount = "";
+            long total = 0;
             foreach (var i in res)
             {
                 if (i.total_reward != null && i.total_reward.Trim() != "")
                 {
-                    total += Int64.Parse(i.total_reward);
+                    total += long.Parse(i.total_reward);
                 }
             }
             totalAmount = total.ToString();
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
-                String>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
+                string>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
-        public Tuple<BaseServerSideData<CitationByAuthorReport>, String> GetCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search)
+        public Tuple<BaseServerSideData<CitationByAuthorReport>, string> GetCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search)
         {
+            db.Configuration.LazyLoadingEnabled = true;
+
             var data = (from a in db.RequestCitations
+                        join b in db.BaseRequests on a.request_id equals b.request_id
+                        join c in db.Profiles on b.account_id equals c.account_id
+                        join d in db.People on c.people_id equals d.people_id
                         where a.citation_status_id == 2
                         select new CitationByAuthorReport
                         {
-                            author_name = a.Author.name,
-                            scopus_citation = (from a1 in db.Citations
-                                               join b1 in db.RequestCitations on a1.request_id equals b1.request_id
-                                               join d1 in db.Authors on b1.Author equals d1
-                                               where d1.people_id == a.people_id && a1.citation_type_id == 2
-                                               && b1.citation_status_id == 2 && a == b1
-                                               select a1.count).Sum(),
-                            gscholar_citation = (from a1 in db.Citations
-                                                 join b1 in db.RequestCitations on a1.request_id equals b1.request_id
-                                                 join d1 in db.Authors on b1.Author equals d1
-                                                 where d1.people_id == a.people_id && a1.citation_type_id == 2
-                                                 && b1.citation_status_id == 1 && a == b1
-                                                 select a1.count).Sum(),
+                            author_name = d.name,
+                            scopus_citation = a.Citations.Where(x => x.citation_type_id == 2).Select(x => x.count).Sum(),
+                            gscholar_citation = a.Citations.Where(x => x.citation_type_id == 1).Select(x => x.count).Sum(),
                             valid_date = a.BaseRequest.created_date.Value,
-                            msnv = a.Author.mssv_msnv,
-                            office = a.Author.Office.office_name,
+                            msnv = c.mssv_msnv,
+                            office = d.Office.office_name,
                             total_reward = a.total_reward,
                         });
             if (search.msnv != null && search.msnv.Trim() != "")
@@ -238,8 +253,8 @@ namespace BLL.ScienceManagement.Report
             }
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-            String totalAmount = "";
-            Int64 total = 0;
+            string totalAmount = "";
+            long total = 0;
             foreach (var i in res)
             {
                 if (i.total_reward != null)
@@ -250,9 +265,9 @@ namespace BLL.ScienceManagement.Report
             totalAmount = total.ToString();
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<CitationByAuthorReport>,
-                String>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
+                string>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
         }
-        public Tuple<BaseServerSideData<ConferencesParticipationReport>, String> GetConferencesReport(BaseDatatable baseDatatable, SearchFilter search)
+        public Tuple<BaseServerSideData<ConferencesParticipationReport>, string> GetConferencesReport(BaseDatatable baseDatatable, SearchFilter search)
         {
             var data = (from a in db.BaseRequests
                         join b in db.RequestConferences on a.request_id equals b.request_id
@@ -296,8 +311,8 @@ namespace BLL.ScienceManagement.Report
             }
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-            String totalAmount = "";
-            Int64 total = 0;
+            string totalAmount = "";
+            long total = 0;
             foreach (var i in res)
             {
                 total += i.total;
@@ -305,7 +320,7 @@ namespace BLL.ScienceManagement.Report
             totalAmount = total.ToString();
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<ConferencesParticipationReport>,
-                String>(new BaseServerSideData<ConferencesParticipationReport>(res, recordsTotal), totalAmount);
+                string>(new BaseServerSideData<ConferencesParticipationReport>(res, recordsTotal), totalAmount);
         }
 
         public List<string> GetListYearPaper()
@@ -313,11 +328,11 @@ namespace BLL.ScienceManagement.Report
             var data = (from a in db.BaseRequests select a.created_date.Value.Year.ToString()).Distinct().ToList();
             return data;
         }
-        public List<String> GetListYear(int gap)
+        public List<string> GetListYear(int gap)
         {
             int end = DateTime.Now.Year;
             int start = end - gap;
-            List<String> data = Enumerable.Range(start, gap + 1).Select(x => x.ToString()).OrderByDescending(x => x).ToList();
+            List<string> data = Enumerable.Range(start, gap + 1).Select(x => x.ToString()).OrderByDescending(x => x).ToList();
             return data;
         }
         public List<PaperCriteria> GetListCriteria()

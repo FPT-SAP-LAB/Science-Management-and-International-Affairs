@@ -216,13 +216,13 @@
                     }
                 },
                 {
-                    data: "paperAward", name: "paperAward", render: function (data, type, row, meta) {
-                        a = eval(row.paperAward + "+" + row.inventionAmount + "+" + row.CitationAward)
+                    data: {}, name: "paperAward", render: function (data) {
+                        a = eval(data.paperAward + "+" + data.inventionAmount + "+" + data.CitationAward)
                         return AddComma(a)
                     }
                 },
             ],
-            initComplete: function (settings, json) {
+            initComplete: function () {
                 $("#loader_panel").hide()
             }
         });
