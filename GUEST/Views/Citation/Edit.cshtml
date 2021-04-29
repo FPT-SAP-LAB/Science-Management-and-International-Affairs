@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
+
+<style>
+    .citationE {
+        display: none !important;
+    }
+</style>
+
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
@@ -30,7 +37,7 @@
                                         int temp_count = 1;
                                         foreach (var item in ViewBag.citation)
                                         {
-                                            <tr id="@(temp_count == 1 ? "baseCost" : "")">
+                                            <tr id="@(temp_count == 1 ? "baseCitation" : "")">
                                                 <td>
                                                     <select class="form-control edit trichdan_source">
                                                         @foreach (ENTITIES.CitationType item2 in ViewBag.citationTypes)
@@ -39,10 +46,12 @@
                                                         }
                                                     </select>
                                                 </td>
-                                                @*<td><input autocomplete="off" class="form-control edit trichdan_source" type="text" value="@item.source" /></td>*@
                                                 <td><input autocomplete="off" class="form-control edit trichdan_count" type="number" value="@item.count" /></td>
                                                 <td><input autocomplete="off" class="form-control edit trichdan_link" type="text" value="@item.link" /></td>
-                                                <td>@{ if (ViewBag.ckEdit == 5) {<a onclick = "deleteCost(this)" class='btn btn-sm btn-clean btn-icon edit' title='Delete'> <i class='la la-trash'></i> </a>} }</td>
+                                                <td>
+                                                    @{ if (ViewBag.ckEdit == 5)
+                                                        {<a onclick="deleteCitation(this)" class='btn btn-sm btn-clean btn-icon edit' title='Delete'> <i class='la la-trash'></i> </a>} }
+                                                </td>
                                             </tr>
                                             temp_count++;
                                         }
@@ -55,7 +64,7 @@
                     {
                         <div class="row">
                             <div class="col-xl-12" style="text-align: end;">
-                                <a onclick="addCost()" class="btn btn-success font-weight-bolder">
+                                <a onclick="addCitation()" class="btn btn-success font-weight-bolder">
                                     <span class="svg-icon svg-icon-md">
                                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -69,14 +78,17 @@
                             </div>
                         </div>
                     }
-                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
-                    <div class="row">
-                        <div class="col-xl-6 form-group">
-                            <label>@rm.GetString("TotalReward")</label>
-                            <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.author.total_reward" />
+                    @if (ViewBag.ckEdit != 5)
+                    {
+                        <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                        <div class="row">
+                            <div class="col-xl-6 form-group">
+                                <label>@rm.GetString("TotalReward")</label>
+                                <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.author.total_reward" />
+                            </div>
                         </div>
-                    </div>
-                    @if (ViewBag.ckEdit == 5)
+                    }
+                    else
                     {
                         <div class="row justify-content-center">
                             <button class="btn btn-light-success px-6 font-weight-bold edit" id="btn-submit">@rm.GetString("Send")</button>
@@ -92,7 +104,7 @@
     </div>
 </div>
 <form style="visibility: hidden" method="post" action="/Citation/Edit" id="CitationForm">
-    <input name="id" id="nameEdit" />
+    <input name="id" value="@ViewBag.request_id" id="nameEdit" />
     <input name="editable" id="ckEdit" />
 </form>
 <input class="form-control" value="@ViewBag.author.name" id="name_temp" style="display:none" />
@@ -100,29 +112,26 @@
 @section scripts{
     <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
-        var people = [];
-                                            var citation = [];
-                                            var tbodyCost = document.getElementById("trichdan_body");
-                                            var baseCost = document.getElementById("baseCost").cloneNode(true);
+        var citation = [];
+        var tbodyCitation = document.getElementById("trichdan_body");
+        var baseCitation = document.getElementById("baseCitation").cloneNode(true);
 
-                                            function deleteCost(ele) {
-                                                ele.closest("tr").remove();
-                                                //calculateTotalCost();
-                                            }
+        function deleteCitation(ele) {
+            let rowCount = $('#trichdan_body tr').length;
+            if (rowCount > 1) ele.closest("tr").remove();
+            else toastr.error("@rm.GetString("ErrorCita")", "@rm.GetString("Error")");
+        }
 
-                                            function addCost() {
-                                                let temp = baseCost.cloneNode(true);
-                                                tbodyCost.append(temp);
-                                                var count_temp = $(".trichdan_count");
+        function addCitation() {
+            let temp = baseCitation.cloneNode(true);
+            tbodyCitation.append(temp);
+            var count_temp = $(".trichdan_count");
             $(count_temp[count_temp.length - 1]).val("0");
-                                                var link_temp = $(".trichdan_link");
+            var link_temp = $(".trichdan_link");
             $(link_temp[link_temp.length - 1]).val("");
-                                            }
+        }
 
         $(document).ready(function () {
-
-            $('.citationE').attr('style', 'display:none !important');
-
             $("#ckfe").val("@ViewBag.author.office_abbreviation");
             $("#ckfe").trigger('change');
 
@@ -164,20 +173,6 @@
             else $(".edit").prop("disabled", false);
         });
 
-        $(".addrow").click(function () {
-            $("#trichdan_body tr:last").after("<tr>" +
-                "<td><input autocomplete='off' type='text' class='form-control trichdan_source' /></td>" +
-                "<td><input autocomplete='off' type='number' class='form-control trichdan_count' min='0' /></td>" +
-                "<td><input autocomplete='off' type='text' class='form-control trichdan_link' /></td>" +
-                "</tr>");
-        });
-
-        $(".deleterow").click(function () {
-            var rowCount = $('#trichdan_body tr').length;
-            if (rowCount > 1) $("#trichdan_body tr:last").remove();
-            else toastr.error("@rm.GetString("ErrorCita")", "@rm.GetString("Error")");
-        });
-
         function addAuthor() {
             ckfe = $("#ckfe").val()
             add_author_workplace = $("#ckfe").val()
@@ -210,12 +205,12 @@
                 identification_file_link: $("#add_author_cmnd_link").val(),
                 is_reseacher: $('#add_author_isReseacher').is(':checked'),
             }
-            people.push(AddAuthor);
+            return AddAuthor;
         }
 
         $("#btn-submit").click(function () {
             $("#loading").show();
-            addAuthor();
+            let AddAuthor = addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
             var inputLink = $(".trichdan_link");
@@ -239,8 +234,13 @@
                 $("#loading").hide();
                 return false;
             }
-            if (people.length == 0) {
-                toastr.error("Nhập thông tin tác giả");
+            if (AddAuthor.name == undefined || AddAuthor.name == "") {
+                toastr.error("Tên tác giả không phù hợp");
+                $("#loading").hide();
+                return false;
+            }
+            if (AddAuthor.email == undefined || AddAuthor.email == "") {
+                toastr.error("Email tác giả không phù hợp");
                 $("#loading").hide();
                 return false;
             }
@@ -248,18 +248,19 @@
             $.ajax({
                 url: "@Url.Action("EditCitation", "Citation")",
                 type: "POST",
-                data: JSON.stringify({ 'citation': citation, 'people': people, 'request_id': "@ViewBag.request_id" }),
+                data: JSON.stringify({ 'citation': citation, 'addAuthor': AddAuthor, 'request_id': "@ViewBag.request_id" }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
                 success: function (response) {
-                    if (response.mess == "ss") {
-                        $("#loading").hide();
-                        $("#nameEdit").val(response.id);
+                    if (response.success) {
                         $("#ckEdit").val("3");
                         $("#CitationForm").submit();
                     }
-                    else alert('loi');
+                    else {
+                        toastr.error(response.content);
+                        $("#loading").hide();
+                    }
                 },
                 error: function () {
                     //alert("fail");

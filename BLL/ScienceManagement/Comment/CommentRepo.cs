@@ -15,6 +15,8 @@ namespace BLL.ScienceManagement.Comment
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<DetailComment> GetComment(int request_id)
         {
+            if (request_id <= 0 || request_id == int.MaxValue)
+                return new List<DetailComment>();
             List<DetailComment> list = (from a in db.CommentBases
                                         join b in db.Accounts on a.account_id equals b.account_id
                                         where a.BaseRequest.request_id == request_id
@@ -29,8 +31,10 @@ namespace BLL.ScienceManagement.Comment
         }
         public AlertModal<string> AddComment(int request_id, int account_id, string content, int role_id, bool is_manager, string path)
         {
-            NotificationRepo notificationRepo = new NotificationRepo(db);
-
+            if (request_id <= 0 || request_id == int.MaxValue)
+                return new AlertModal<string>(false, "Đề nghị không tồn tại");
+            if (account_id <= 0 || account_id == int.MaxValue)
+                return new AlertModal<string>(false, "Tài khoản không tồn tại");
             List<int> manager_account_id = new List<int> { 2, 3 };
             if (string.IsNullOrWhiteSpace(content))
                 return new AlertModal<string>(false, "Nội dung không được bỏ trống");
@@ -41,6 +45,8 @@ namespace BLL.ScienceManagement.Comment
                 return new AlertModal<string>(false, "Bạn không có quyền bình luận vào đề nghị này");
             if (request.finished_date != null)
                 return new AlertModal<string>(false, "Đề nghị đã kết thúc");
+
+            NotificationRepo notificationRepo = new NotificationRepo(db);
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try

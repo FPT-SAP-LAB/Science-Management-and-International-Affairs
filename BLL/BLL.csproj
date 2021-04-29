@@ -198,6 +198,7 @@
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRequestAddRepo.cs" />
+    <Compile Include="ScienceManagement\Citation\CitationRequestEditRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />
