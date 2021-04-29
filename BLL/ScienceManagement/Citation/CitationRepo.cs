@@ -96,22 +96,17 @@ namespace BLL.ScienceManagement.Citation
             if (request_id <= 0 || request_id == int.MaxValue)
                 return "ff";
 
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    RequestCitation rp = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                    rp.citation_status_id = 1;
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
+                RequestCitation rp = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                rp.citation_status_id = 1;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
             }
         }
 
