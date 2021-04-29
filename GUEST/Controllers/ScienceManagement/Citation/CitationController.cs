@@ -101,13 +101,12 @@ namespace User.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
+        public JsonResult EditCitation(List<Citation> citation, AddAuthor addAuthor, int request_id)
         {
-            //cr.addAuthor(people);
-            List<CustomCitation> oldcitation = cr.GetCitation(request_id);
-            Author author = cr.EditAuthor(people);
-            string mess = cr.EditCitation(oldcitation, citation, request_id, author);
-            return Json(new { mess, id = request_id });
+            CitationRequestEditRepo editRepo = new CitationRequestEditRepo();
+
+            AlertModal<string> result = editRepo.EditRequestCitation(citation, addAuthor, CurrentAccount.AccountID(Session), request_id);
+            return Json(result);
         }
     }
 }
