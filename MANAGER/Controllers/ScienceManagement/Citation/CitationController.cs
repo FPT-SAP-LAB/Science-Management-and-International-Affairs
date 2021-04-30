@@ -1,14 +1,11 @@
-﻿using BLL.Authen;
-using BLL.ScienceManagement.Citation;
+﻿using BLL.ScienceManagement.Citation;
 using BLL.ScienceManagement.MasterData;
 using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
+using MANAGER.Models;
 using MANAGER.Support;
 using OfficeOpenXml;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -20,8 +17,8 @@ namespace MANAGER.Controllers
 {
     public class CitationController : Controller
     {
-        CitationRepo cr = new CitationRepo();
-        MasterDataRepo mrd = new MasterDataRepo();
+        private readonly CitationRepo cr = new CitationRepo();
+        private readonly MasterDataRepo mrd = new MasterDataRepo();
         // GET: Citation
         [Auther(RightID = "16")]
         public ActionResult Pending()
@@ -37,29 +34,20 @@ namespace MANAGER.Controllers
         [Auther(RightID = "16")]
         public ActionResult Detail(string id)
         {
-            ViewBag.title = "Chi tiết trích dẫn";
             List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
-            AuthorInfo author = cr.GetAuthor(id);
-            ViewBag.author = author;
+            ViewBag.request_id = id;
+            RequestCitation rc = cr.GetRequestCitation(id);
+            ViewBag.total_reward = rc.total_reward;
 
             List<TitleWithName> listTitle = mrd.GetTitle("vi-VN");
             ViewBag.ctitle = listTitle;
 
-            ViewBag.request_id = id;
-
-            int status = cr.GetStatus(id);
+            int status = rc.citation_status_id;
             ViewBag.status = status;
 
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            ViewBag.acc = acc;
+            ViewBag.acc = CurrentAccount.Account(Session);
 
             return View();
         }
@@ -80,35 +68,15 @@ namespace MANAGER.Controllers
         }
 
         [HttpPost]
-        public JsonResult editCitation(string request_id, string total)
+        public JsonResult UpdateReward(string request_id, string total)
         {
-            string mess = cr.UpdateReward(request_id, total);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(cr.UpdateReward(request_id, total));
         }
 
         [HttpPost]
-        public JsonResult uploadDecision(HttpPostedFileBase file, string number, string date)
+        public JsonResult UploadDecision(HttpPostedFileBase file, string number, string date)
         {
-            string[] arr = date.Split('/');
-            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
-            DateTime date_format = DateTime.Parse(format);
-
-            string name = "QD_" + number + "_" + date;
-
-            List<string> listE = cr.GetAuthorEmail();
-
-            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
-            ENTITIES.File fl = new ENTITIES.File
-            {
-                link = f.WebViewLink,
-                file_drive_id = f.Id,
-                name = name
-            };
-
-            ENTITIES.File myFile = mrd.AddFile(fl);
-            string mess = cr.UploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
-
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(cr.UploadDecision(file, number, date));
         }
 
         [HttpPost]
@@ -167,7 +135,7 @@ namespace MANAGER.Controllers
             }
 
             string Flocation = "/Excel_template/download/Citation.xlsx";
-            string savePath = HostingEnvironment.MapPath(Flocation);
+            //string savePath = HostingEnvironment.MapPath(Flocation);
             excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Citation.xlsx")));
 
             return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);

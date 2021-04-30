@@ -5,21 +5,11 @@
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
-<style>
-    .citationE {
-        display: none !important
-    }
-</style>
-
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
-                    @{
-                        Html.RenderAction("AddAuthor", "PartialView");
-                    }
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("CitationInfo")</h3>
                     <div class="row">
                         <div class="col-xl-12">
@@ -75,22 +65,18 @@
         </div>
     </div>
 </div>
-<form style="visibility: hidden" method="post" action="/Citation/Edit" id="CitationForm">
-    <input name="id" id="nameEdit" />
-    <input name="editable" id="ckEdit" />
-</form>
+
 @section scripts{
-    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         var tbodyCost = document.getElementById("trichdan_body");
         var baseCost = document.getElementById("baseCost").cloneNode(true);
 
-        var people = [];
         var citation = [];
 
         function deleteCost(ele) {
-            ele.closest("tr").remove();
-            calculateTotalCost();
+            let rowCount = $('#trichdan_body tr').length;
+            if (rowCount > 1) ele.closest("tr").remove();
+            else toastr.error("@rm.GetString("ErrorCita")", "@rm.GetString("Error")");
         }
 
         function addCost() {
@@ -98,44 +84,9 @@
             tbodyCost.append(temp);
         }
 
-        function addAuthor() {
-            ckfe = $("#ckfe").val()
-            add_author_workplace = $("#ckfe").val()
-            add_author_msnv = $("#add_author_msnv").val()
-            add_author_name = $("#add_author_name").val()
-            add_author_title = $("#add_author_title option:selected").text()
-            add_author_contractType = $("#add_author_contractType option:selected").text()
-            add_author_cmnd = $("#add_author_cmnd").val()
-            add_author_tax = $("#add_author_tax").val()
-            add_author_bank = $("#add_author_bank").val()
-            add_author_accno = $("#add_author_accno").val()
-            add_author_reward = $("#add_author_reward").val()
-            add_author_note = $("#add_author_note").val()
-            add_author_email = $("#add_author_mail").val()
-            id = new Date().getTime()
-            var AddAuthor = {
-                name: add_author_name,
-                email: add_author_email,
-                bank_number: add_author_accno,
-                tax_code: add_author_tax,
-                bank_branch: add_author_bank,
-                identification_number: add_author_cmnd,
-                mssv_msnv: add_author_msnv,
-                office_id: $("#ckfe option:selected").attr("name"),
-                contract_id: $("#add_author_contractType").val(),
-                title_id: $("#add_author_title").val(),
-                temp_id: id,
-                office_abbreviation: $("#ckfe option:selected").val(),
-                identification_file_link: $("#add_author_cmnd_link").val(),
-                is_reseacher: $('#add_author_isReseacher').is(':checked'),
-            }
-            return AddAuthor;
-        }
-
         $("#btn-submit").click(function () {
             $("#loading").show();
             citation = [];
-            let AddAuthor = addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
             var inputLink = $(".trichdan_link");
@@ -160,32 +111,17 @@
                 $("#loading").hide();
                 return false;
             }
-            if (AddAuthor.name == undefined || AddAuthor.name == "") {
-                toastr.error("Tên tác giả không phù hợp");
-                $("#loading").hide();
-                return false;
-            }
-            if (AddAuthor.email == undefined || AddAuthor.email == "") {
-                toastr.error("Email tác giả không phù hợp");
-                $("#loading").hide();
-                return false;
-            }
-
-            console.log(citation);
-            console.log(AddAuthor);
 
             $.ajax({
                 url: "@Url.Action("AddCitation", "Citation")",
                 type: "POST",
-                data: JSON.stringify({ 'citation': citation, 'addAuthor': AddAuthor }),
+                data: JSON.stringify({ 'citation': citation }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
                 success: function (response) {
                     if (response.success) {
-                        $("#nameEdit").val(response.obj);
-                        $("#ckEdit").val("3");
-                        $("#CitationForm").submit();
+                        location.href = "/Citation/Edit?id=" + response.obj;
                     }
                     else {
                         toastr.error(response.content);

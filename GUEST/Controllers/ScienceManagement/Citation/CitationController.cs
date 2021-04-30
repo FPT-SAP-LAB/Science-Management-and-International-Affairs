@@ -1,18 +1,11 @@
 ﻿using BLL.ModelDAL;
 using BLL.ScienceManagement.Citation;
-using BLL.ScienceManagement.Comment;
-using BLL.ScienceManagement.MasterData;
-using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
-using ENTITIES.CustomModels.ScienceManagement.Comment;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
-using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using GUEST.Models;
 using GUEST.Support;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using User.Models;
@@ -22,9 +15,6 @@ namespace User.Controllers
     public class CitationController : Controller
     {
         private readonly CitationRepo cr = new CitationRepo();
-        private readonly MasterDataRepo md = new MasterDataRepo();
-        private readonly CommentRepo crr = new CommentRepo();
-        private readonly PaperRepo pr = new PaperRepo();
 
         private readonly List<PageTree> pagesTree = new List<PageTree>();
         // GET: Citation
@@ -65,24 +55,19 @@ namespace User.Controllers
         }
 
         [Auther(RightID = "29")]
-        //[HttpPost]
         public ActionResult Edit(string id)
         {
             ViewBag.title = "Chỉnh sửa số trích dẫn";
             pagesTree.Add(new PageTree("Chỉnh sửa số trích dẫn", "/Citation/Edit"));
             ViewBag.pagesTree = pagesTree;
 
-            AuthorInfo author = cr.GetAuthor(id);
-            ViewBag.author = author;
-
             List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
-            List<DetailComment> listCmt = crr.GetComment(int.Parse(id));
-            ViewBag.cmt = listCmt;
-
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
+            ViewBag.total_reward = rc.total_reward;
+
             ViewBag.ckEdit = rc.citation_status_id;
 
             CitationTypeRepo citationTypeRepo = new CitationTypeRepo();
@@ -92,16 +77,18 @@ namespace User.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddCitation(List<Citation> citation, AddAuthor addAuthor)
+        [Auther(RightID = "29")]
+        public JsonResult AddCitation(List<Citation> citation)
         {
             CitationRequestAddRepo addRepo = new CitationRequestAddRepo();
 
             AlertModal<int> result = addRepo.AddRequestCitation(citation, CurrentAccount.AccountID(Session));
-            return Json(new { result.success, id = result.obj, result.content });
+            return Json(result);
         }
 
         [HttpPost]
-        public JsonResult EditCitation(List<Citation> citation, AddAuthor addAuthor, int request_id)
+        [Auther(RightID = "29")]
+        public JsonResult EditCitation(List<Citation> citation, int request_id)
         {
             CitationRequestEditRepo editRepo = new CitationRequestEditRepo();
 
