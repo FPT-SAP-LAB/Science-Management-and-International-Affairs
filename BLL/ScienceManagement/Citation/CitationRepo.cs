@@ -1,16 +1,15 @@
 ﻿using BLL.ModelDAL;
-using BLL.Support;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
-using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace BLL.ScienceManagement.Citation
 {
@@ -41,53 +40,12 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public int GetStatus(string id)
-        {
-            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
-                return 0;
-            try
-            {
-                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                return rc.citation_status_id;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return 0;
-            }
-        }
-
-        public AuthorInfo GetAuthor(string id)
-        {
-            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
-                return null;
-
-            string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ah.identification_file_link, ah.people_id
-                            from [SM_Citation].Citation c
-	                            join [SM_Citation].RequestCitation rc on c.request_id = rc.request_id
-	                            join [SM_ScientificProduct].Author ah on rc.people_id = ah.people_id
-	                            join [General].Office o on o.office_id = ah.office_id
-	                            join [SM_MasterData].ContractType ct on ah.contract_id = ct.contract_id
-                            where rc.request_id = @id";
-            AuthorInfo item = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", request_id)).FirstOrDefault();
-            return item;
-        }
-
-        public List<string> GetAuthorEmail()
-        {
-            string sql = @"select distinct ah.email
-                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-                            where rc.citation_status_id in (4, 6, 7)";
-            List<string> list = db.Database.SqlQuery<string>(sql).ToList();
-            return list;
-        }
-
         public RequestCitation GetRequestCitation(string id)
         {
             if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return null;
-
-            RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+            db.Configuration.LazyLoadingEnabled = false;
+            RequestCitation rc = db.RequestCitations.Find(request_id);
             return rc;
         }
 
@@ -98,7 +56,7 @@ namespace BLL.ScienceManagement.Citation
 
             try
             {
-                RequestCitation rp = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                RequestCitation rp = db.RequestCitations.Find(request_id);
                 rp.citation_status_id = 1;
                 db.SaveChanges();
                 return "ss";
@@ -161,28 +119,30 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public string UpdateReward(string id, string total)
+        public AlertModal<string> UpdateReward(string id, string total)
         {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    int request_id = int.Parse(id);
-                    string temp = total.Replace(",", "");
-                    int reward = int.Parse(temp);
-                    RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                    rc.total_reward = reward;
-                    rc.citation_status_id = 4;
-                    db.SaveChanges();
-                    dbc.Commit();
+            if (total == null)
+                return new AlertModal<string>(false, "Số tiền không hợp lệ");
+            try
+            {
+                int request_id = int.Parse(id);
+                string temp = total.Replace(",", "");
+                int.TryParse(temp, out int reward);
+                if (reward <= 0)
+                    return new AlertModal<string>(false, "Số tiền không hợp lệ");
 
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                rc.total_reward = reward;
+                rc.citation_status_id = 4;
+                db.SaveChanges();
+
+                return new AlertModal<string>(true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new AlertModal<string>(false);
+            }
         }
 
         public List<WaitDecisionCitation> GetListWait()
@@ -200,51 +160,80 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public string UploadDecision(DateTime date, int file_id, string number, string file_drive_id)
+        public AlertModal<string> UploadDecision(HttpPostedFileBase file, string number, string date)
         {
+            string file_drive_id = null;
+            DateTime finish = DateTime.Now;
+
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            {
                 try
                 {
+                    if (!DateTime.TryParseExact(date, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime valid_date))
+                        return new AlertModal<string>(false, "Ngày có hiệu lực không hợp lệ");
+
+                    string name = "QD_" + number + "_" + date;
+
+                    List<int> acceptedStatusIds = new List<int>() { 4, 6, 7 };
+
+                    var requests = (from a in db.RequestCitations
+                                    join b in db.BaseRequests on a.request_id equals b.request_id
+                                    join c in db.Accounts on b.account_id equals c.account_id
+                                    where acceptedStatusIds.Contains(a.citation_status_id)
+                                    select new
+                                    {
+                                        a.request_id,
+                                        RequestCitation = a,
+                                        BaseRequest = b,
+                                        c.email
+                                    }).ToList();
+
+                    if (requests.Count == 0)
+                        return new AlertModal<string>(false, "Chưa có đề nghị nào để cập nhật quyết định");
+
+                    List<string> listE = requests.Select(x => x.email).Distinct().ToList();
+
+                    Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
+                    file_drive_id = f.Id;
+
                     Decision decision = new Decision
                     {
-                        valid_date = date,
-                        file_id = file_id,
+                        valid_date = valid_date,
+                        File = new File
+                        {
+                            link = f.WebViewLink,
+                            file_drive_id = f.Id,
+                            name = name
+                        },
                         decision_number = number
                     };
                     db.Decisions.Add(decision);
                     db.SaveChanges();
 
-                    List<WaitDecisionCitation> wait = GetListWait();
-                    foreach (var item in wait)
+                    foreach (var item in requests)
                     {
-                        RequestDecision request = new RequestDecision
+                        db.RequestDecisions.Add(new RequestDecision
                         {
                             request_id = item.request_id,
                             decision_id = decision.decision_id
-                        };
-                        db.RequestDecisions.Add(request);
-                        RequestCitation rc = db.RequestCitations.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                        rc.citation_status_id = 2;
-                    }
-
-                    foreach (var item in wait)
-                    {
-                        BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                        br.finished_date = DateTime.Now;
-                        db.Entry(br).State = EntityState.Modified;
+                        });
+                        item.RequestCitation.citation_status_id = 2;
+                        item.BaseRequest.finished_date = finish;
                     }
 
                     db.SaveChanges();
                     dbc.Commit();
-                    return "ss";
+                    return new AlertModal<string>(true);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     dbc.Rollback();
-                    GoogleDriveService.DeleteFile(file_drive_id);
-                    return "ff";
+                    if (file_drive_id != null)
+                        GoogleDriveService.DeleteFile(file_drive_id);
+                    return new AlertModal<string>(false);
                 }
+            }
         }
 
         public List<Citation_Appendix_1> GetListAppendix1()
