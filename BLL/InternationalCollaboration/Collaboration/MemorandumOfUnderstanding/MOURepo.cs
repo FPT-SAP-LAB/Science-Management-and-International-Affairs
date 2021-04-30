@@ -183,7 +183,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
                         tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
-                        tb4.scope_abbreviation
+                        tb4.scope_abbreviation,tb12.link
                         order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
                         "OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 sql_mouList += sql_BonusQuery;
