@@ -2369,7 +2369,6 @@
     <Content Include="Excel_template\Invention.xlsx" />
     <Content Include="Excel_template\Download\Invention.xlsx" />
     <Content Include="Excel_template\Citation.xlsx" />
-    <Content Include="Excel_template\Download\Citation.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Download\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Partner.xlsx" />
