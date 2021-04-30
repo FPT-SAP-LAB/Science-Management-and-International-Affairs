@@ -102,9 +102,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             List<AcadBiography> acadList = researcherBiographyRepo.GetAcadHistory(id, 1);
             ViewBag.acadList = acadList;
             /////////////////////////////////////////////////////////////
-            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<SelectField> listAcadDegree = researcherBiographyRepo.GetAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles(1);
+            List<SelectField> listWorkHistory = researcherBiographyRepo.GetTitles(1);
             ViewBag.workList = workList;
             ViewBag.listAcadDegree = listAcadDegree;
             ViewBag.listWorkHistory = listWorkHistory;
@@ -146,7 +146,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             Account account = CurrentAccount.Account(Session);
             var file = GoogleDriveService.UploadProfileMedia(uploadfile, account.email);
             int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
-            return Json(new { res = res });
+            return Json(new { res });
         }
         public ActionResult EditResearcher()
         {
@@ -174,9 +174,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherBiographyRepo = new ResearchersBiographyRepo();
 
             /////////////////////////////////////////////////////////////
-            List<SelectField> listAcadDegree = researcherBiographyRepo.getAcadDegrees();
+            List<SelectField> listAcadDegree = researcherBiographyRepo.GetAcadDegrees();
             List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
-            List<SelectField> listWorkHistory = researcherBiographyRepo.getTitles(1);
+            List<SelectField> listWorkHistory = researcherBiographyRepo.GetTitles(1);
             ///////////////////////////////////////////////////////////////
             List<ResearcherPublications> publications = researcherBiographyRepo.GetPublications(id);
             ViewBag.publications = publications;
@@ -195,7 +195,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         {
             string data = Request["status"];
             int id = Int32.Parse(Request["id"]);
-            bool status = data == "1" ? true : false;
+            bool status = data == "1";
             researcherCandidate = new ResearcherCandidateRepo();
             bool update = researcherCandidate.UpdateProfilePage(id, status);
             return Json(new { success = update });
@@ -213,9 +213,9 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                         select new
                         {
                             id = a.records.award_id,
-                            index = a.index,
-                            competion_name = a.records.competion_name,
-                            rank = a.records.rank,
+                            a.index,
+                            a.records.competion_name,
+                            a.records.rank,
                             award_time = a.records.award_time != null ? a.records.award_time.Value.ToString("dd/MM/yyyy") : ""
                         })
             }, JsonRequestBehavior.AllowGet);
@@ -241,7 +241,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             try
             {
                 researcherBiographyRepo = new ResearchersBiographyRepo();
-                int id = Int32.Parse(Request.QueryString["id"]);
+                int id = int.Parse(Request.QueryString["id"]);
                 List<BaseRecord<WorkingProcess>> workList = researcherBiographyRepo.GetWorkHistory(id);
                 workList = workList.Select(x => { x.records.Profile = null; return x; }).ToList();
                 return Json(new
@@ -250,13 +250,13 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                     data = (from a in workList
                             select new
                             {
-                                index = a.index,
-                                id = a.records.id,
-                                people_id = a.records.pepple_id,
-                                work_unit = a.records.work_unit,
-                                title = a.records.title,
-                                start_year = a.records.start_year,
-                                end_year = a.records.end_year
+                                a.index,
+                                a.records.id,
+                                a.records.pepple_id,
+                                a.records.work_unit,
+                                a.records.title,
+                                a.records.start_year,
+                                a.records.end_year
                             })
                 },
                 JsonRequestBehavior.AllowGet);

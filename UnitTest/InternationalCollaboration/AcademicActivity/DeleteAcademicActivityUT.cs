@@ -34,7 +34,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 Assert.Pass();
         }
         [TestCase]
-        public void TestAddAcademicActivity_6()
+        public void DeleteAcademicActivityUT_3()
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             new AddAcademicActivityUT().TestAddAcademicActivity_1();

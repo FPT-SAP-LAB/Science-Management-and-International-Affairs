@@ -6,6 +6,7 @@ using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
+using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -74,15 +75,18 @@ namespace User.Controllers
             AuthorInfo author = cr.GetAuthor(id);
             ViewBag.author = author;
 
-            List<Citation> listCitation = cr.GetCitation(id);
+            List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
-            List<DetailComment> listCmt = crr.GetComment(Int32.Parse(id));
+            List<DetailComment> listCmt = crr.GetComment(int.Parse(id));
             ViewBag.cmt = listCmt;
 
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
             ViewBag.ckEdit = rc.citation_status_id;
+
+            CitationTypeRepo citationTypeRepo = new CitationTypeRepo();
+            ViewBag.citationTypes = citationTypeRepo.GetCitationTypes();
 
             return View();
         }
@@ -92,18 +96,17 @@ namespace User.Controllers
         {
             CitationRequestAddRepo addRepo = new CitationRequestAddRepo();
 
-            AlertModal<int> result = addRepo.AddRequestCitation(citation, addAuthor, CurrentAccount.AccountID(Session));
+            AlertModal<int> result = addRepo.AddRequestCitation(citation, CurrentAccount.AccountID(Session));
             return Json(new { result.success, id = result.obj, result.content });
         }
 
         [HttpPost]
-        public JsonResult EditCitation(List<Citation> citation, List<AddAuthor> people, string request_id)
+        public JsonResult EditCitation(List<Citation> citation, AddAuthor addAuthor, int request_id)
         {
-            //cr.addAuthor(people);
-            List<Citation> oldcitation = cr.GetCitation(request_id);
-            Author author = cr.EditAuthor(people);
-            string mess = cr.EditCitation(oldcitation, citation, request_id, author);
-            return Json(new { mess, id = request_id });
+            CitationRequestEditRepo editRepo = new CitationRequestEditRepo();
+
+            AlertModal<string> result = editRepo.EditRequestCitation(citation, CurrentAccount.AccountID(Session), request_id);
+            return Json(result);
         }
     }
 }

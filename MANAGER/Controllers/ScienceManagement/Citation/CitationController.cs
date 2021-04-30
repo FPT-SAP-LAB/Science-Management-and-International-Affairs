@@ -38,13 +38,13 @@ namespace MANAGER.Controllers
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết trích dẫn";
-            List<ENTITIES.Citation> listCitation = cr.GetCitation(id);
+            List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
             AuthorInfo author = cr.GetAuthor(id);
             ViewBag.author = author;
 
-            List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
+            List<TitleWithName> listTitle = mrd.GetTitle("vi-VN");
             ViewBag.ctitle = listTitle;
 
             ViewBag.request_id = id;
@@ -105,7 +105,7 @@ namespace MANAGER.Controllers
                 name = name
             };
 
-            ENTITIES.File myFile = mrd.addFile(fl);
+            ENTITIES.File myFile = mrd.AddFile(fl);
             string mess = cr.UploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
             return Json(new { mess }, JsonRequestBehavior.AllowGet);

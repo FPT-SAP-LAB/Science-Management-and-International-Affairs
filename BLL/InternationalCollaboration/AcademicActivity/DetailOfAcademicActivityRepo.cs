@@ -233,7 +233,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             version_title = detail.activity_name,
                             article_content = detail.article_content,
                             article_id = ai.article_id,
-                            language_id = detail.language_id
+                            language_id = detail.language_id,
+                            account_id = u.account.account_id
                         });
                         db.SaveChanges();
                     }
@@ -316,7 +317,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 version_title = data.version_title,
                 article_content = data.article_content,
                 article_id = a.article_id,
-                language_id = language_id
+                language_id = language_id,
+                account_id = u.account.account_id
             });
         }
         public bool changeStatusAA(int activity_id, int status)

@@ -5,6 +5,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using MANAGER.Models;
 using MANAGER.Support;
 using OfficeOpenXml;
 using System;
@@ -18,8 +19,8 @@ namespace MANAGER.Controllers
 {
     public class InventionController : Controller
     {
-        InventionRepo ir = new InventionRepo();
-        MasterDataRepo mrd = new MasterDataRepo();
+        private readonly InventionRepo ir = new InventionRepo();
+        private readonly MasterDataRepo mrd = new MasterDataRepo();
         // GET: Invention
         [Auther(RightID = "16")]
         public ActionResult Pending()
@@ -49,14 +50,7 @@ namespace MANAGER.Controllers
 
             ViewBag.request_id = item.request_id;
 
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            ViewBag.acc = acc;
+            ViewBag.acc = CurrentAccount.Account(Session);
 
             return View();
         }
@@ -102,7 +96,7 @@ namespace MANAGER.Controllers
                 name = name
             };
 
-            ENTITIES.File myFile = mrd.addFile(fl);
+            ENTITIES.File myFile = mrd.AddFile(fl);
             string mess = ir.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
@@ -177,7 +171,7 @@ namespace MANAGER.Controllers
             }
 
             string Flocation = "/Excel_template/download/Invention.xlsx";
-            string savePath = HostingEnvironment.MapPath(Flocation);
+            //string savePath = HostingEnvironment.MapPath(Flocation);
             excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Invention.xlsx")));
 
             return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);

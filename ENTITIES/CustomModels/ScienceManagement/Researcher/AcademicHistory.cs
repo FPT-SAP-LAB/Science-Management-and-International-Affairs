@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ENTITIES.CustomModels.ScienceManagement.Researcher
+﻿namespace ENTITIES.CustomModels.ScienceManagement.Researcher
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public class AcadBiography
     {
         public int people_id { get; set; }
