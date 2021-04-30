@@ -5,12 +5,9 @@ using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using MANAGER.Models;
 using MANAGER.Support;
-using OfficeOpenXml;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers
@@ -93,52 +90,15 @@ namespace MANAGER.Controllers
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult exportExcel()
+        [HttpGet]
+        public ActionResult ExportExcel()
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            string path = HostingEnvironment.MapPath("/Excel_template/");
-            string filename = "Citation.xlsx";
-            FileInfo file = new FileInfo(path + filename);
-            ExcelPackage excelPackage = new ExcelPackage(file);
-            ExcelWorkbook excelWorkbook = excelPackage.Workbook;
-
-            List<Citation_Appendix_1> list1 = cr.GetListAppendix1();
-            ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
-            int i = 2;
-            int count = 1;
-            foreach (var item in list1)
-            {
-                excelWorksheet1.Cells[i, 1].Value = count;
-                excelWorksheet1.Cells[i, 2].Value = item.name;
-                excelWorksheet1.Cells[i, 3].Value = item.mssv_msnv;
-                excelWorksheet1.Cells[i, 4].Value = item.office_abbreviation;
-                excelWorksheet1.Cells[i, 5].Value = item.sum_scopus;
-                excelWorksheet1.Cells[i, 6].Value = item.sum_scholar;
-                count++;
-                i++;
-            }
-
-            List<Citation_Appendix_2> list2 = cr.GetListAppendix2();
-            ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
-            i = 2;
-            count = 1;
-            foreach (var item in list2)
-            {
-                excelWorksheet2.Cells[i, 1].Value = count;
-                excelWorksheet2.Cells[i, 2].Value = item.name;
-                excelWorksheet2.Cells[i, 3].Value = item.mssv_msnv;
-                excelWorksheet2.Cells[i, 4].Value = item.office_abbreviation;
-                excelWorksheet2.Cells[i, 5].Value = item.total_reward;
-                count++;
-                i++;
-            }
-
-            string Flocation = "/Excel_template/download/Citation.xlsx";
-            //string savePath = HostingEnvironment.MapPath(Flocation);
-            excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Citation.xlsx")));
-
-            return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);
+            CitationRequestExportRepo exportRepo = new CitationRequestExportRepo();
+            byte[] Excel = exportRepo.ExportExcel();
+            if (Excel == null)
+                return Redirect("/Citation/WaitDecision");
+            else
+                return File(Excel, "application/vnd.ms-excel", "Danh-sách-chờ quyết định.xlsx");
         }
     }
 }

@@ -235,37 +235,5 @@ namespace BLL.ScienceManagement.Citation
                 }
             }
         }
-
-        public List<Citation_Appendix_1> GetListAppendix1()
-        {
-            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, a.sum_scopus, b.sum_scholar
-                            from SM_ScientificProduct.Author ah
-	                            join(select ah.people_id, sum(c.count) as 'sum_scopus'
-	                            from SM_Citation.Citation c 
-		                            join SM_Citation.RequestCitation rc on c.request_id = rc.request_id
-		                            join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-	                            where rc.citation_status_id = 4 and c.citation_type_id = 2
-	                            group by ah.people_id) as a on ah.people_id = a.people_id
-	                            join(select ah.people_id, sum(c.count) as 'sum_scholar'
-	                            from SM_Citation.Citation c 
-		                            join SM_Citation.RequestCitation rc on c.request_id = rc.request_id
-		                            join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-	                            where (rc.citation_status_id = 4) and (c.citation_type_id = 1)
-	                            group by ah.people_id) as b on ah.people_id = b.people_id
-	                            join General.Office o on ah.office_id = o.office_id
-                            order by ah.name";
-            List<Citation_Appendix_1> list = db.Database.SqlQuery<Citation_Appendix_1>(sql).ToList();
-            return list;
-        }
-
-        public List<Citation_Appendix_2> GetListAppendix2()
-        {
-            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, rc.total_reward
-                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-	                            join General.Office o on o.office_id = ah.office_id
-                            where rc.citation_status_id = 4";
-            List<Citation_Appendix_2> list = db.Database.SqlQuery<Citation_Appendix_2>(sql).ToList();
-            return list;
-        }
     }
 }

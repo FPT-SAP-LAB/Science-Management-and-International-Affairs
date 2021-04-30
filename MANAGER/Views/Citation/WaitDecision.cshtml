@@ -57,7 +57,7 @@
                                     Choose an option:
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link" id="excel">
+                                    <a target="_blank" href="/Citation/ExportExcel" class="navi-link" id="excel">
                                         <span class="navi-icon">
                                             <i class="la la-file-excel-o"></i>
                                         </span>
@@ -214,7 +214,7 @@
 
         $("#excel").click(function () {
             $.ajax({
-                url: "@Url.Action("exportExcel", "Citation")",
+                url: "@Url.Action("ExportExcel", "Citation")",
                 type: "post",
                 success: function (data) {
                     window.location.href = data.location;
