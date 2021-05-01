@@ -37,26 +37,15 @@
                 <div class=" d-none d-md-block col-xl-12">
                     <div class="card card-custom gutter-b" id="banner">
                         <div class="owl-carousel owl-theme">
-                            @foreach (string item in ViewBag.images)
-                            {
-                                <div class="item">
-                                    <img style="height:30rem; object-fit: cover" src="@("https://drive.google.com/uc?export=view&id=" + item)" alt="Alternate Text" />
-                                </div>
-                            }
-                        </div>
-                        <div class="card-footer align-items-center" style="border-top:none ;">
-                            <span class="label pulse mr-10 banner-button" data-banner="0">
-                                <span class="position-relative">1</span>
-                                <span class="pulse-ring"></span>
-                            </span>
-                            <span class="label pulse mr-10 banner-button" data-banner="1">
-                                <span class="position-relative">2</span>
-                                <span class="pulse-ring"></span>
-                            </span>
-                            <span class="label pulse mr-10 banner-button" data-banner="2">
-                                <span class="position-relative">3</span>
-                                <span class="pulse-ring"></span>
-                            </span>
+                            @{ if (ViewBag.images != null)
+                                {
+                                    foreach (string item in ViewBag.images)
+                                    {
+                                        <div class="item">
+                                            <img style="height:30rem; object-fit: cover" src="@("https://drive.google.com/uc?export=view&id=" + item)" alt="Alternate Text" />
+                                        </div>
+                                    }
+                                } }
                         </div>
                     </div>
                 </div>
