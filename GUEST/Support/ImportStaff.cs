@@ -40,7 +40,6 @@ namespace GUEST.Support
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-
             }
             return emails;
         }
