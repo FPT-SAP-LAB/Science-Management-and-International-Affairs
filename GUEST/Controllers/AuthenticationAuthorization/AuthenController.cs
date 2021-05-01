@@ -1,11 +1,10 @@
-﻿using BLL.Authen;
+﻿using BLL.Admin;
+using BLL.Authen;
+using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Google.Apis.Auth;
-using BLL.Admin;
 
 namespace GUEST.Controllers.AuthenticationAuthorization
 {
@@ -28,20 +27,27 @@ namespace GUEST.Controllers.AuthenticationAuthorization
             if (u == null)
             {
                 string EmailDomain = user.email.Split('@').Last();
-                int role_id;
                 if (EmailDomain.Equals("fpt.edu.vn"))
-                    role_id = 5;
-                else if (EmailDomain.Equals("fe.edu.vn"))
-                    role_id = 6;
+                {
+                    int role_id;
+                    if (Startup.Staffs.Contains(user.email.ToLower()))
+                    {
+                        role_id = 6;
+                    }
+                    else
+                    {
+                        role_id = 5;
+                    }
+                    AccountRepo accountRepo = new AccountRepo();
+                    accountRepo.Add(new AccountRepo.baseAccount
+                    {
+                        email = user.email,
+                        role_id = role_id
+                    });
+                    u = repo.getAccount(user, roleAccept);
+                }
                 else
                     return Json(new { success = false, content = "Tài khoản của bạn không được phép truy cập vào hệ thống" });
-                AccountRepo accountRepo = new AccountRepo();
-                accountRepo.Add(new AccountRepo.baseAccount
-                {
-                    email = user.email,
-                    role_id = role_id
-                });
-                u = repo.getAccount(user, roleAccept);
             }
             Session["User"] = u;
             if (u.IsValid)
