@@ -2480,6 +2480,7 @@
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="Content\assets\plugins\global\fonts\summernote\summernote.woff2" />
     <Content Include="Excel\StaffInformation.xlsx" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\CostTableConferenceRequest.js" />
     <Content Include="Scripts\Custome_JS\InternationalCollaboration\Load_Detail_AC.js" />
