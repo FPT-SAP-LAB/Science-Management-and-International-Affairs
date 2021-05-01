@@ -669,23 +669,23 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public string CheckPartnerExistedInEditMOU(int mou_partner_id, string partner_name)
-        {
-            try
-            {
-                string sql = @"select partner_name from IA_Collaboration.MOUPartner t1 left join
-                    IA_Collaboration.Partner t2 on
-                    t1.partner_id = t2.partner_id
-                    where t1.mou_partner_id != @mou_partner_id and t2.partner_name like @partner_name";
-                string result = db.Database.SqlQuery<string>(sql,
-                    new SqlParameter("partner_name", '%' + partner_name + '%'),
-                    new SqlParameter("mou_partner_id", mou_partner_id)).FirstOrDefault();
-                return result is null ? "" : result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //public string CheckPartnerExistedInEditMOU(int mou_partner_id, string partner_name)
+        //{
+        //    try
+        //    {
+        //        string sql = @"select partner_name from IA_Collaboration.MOUPartner t1 left join
+        //            IA_Collaboration.Partner t2 on
+        //            t1.partner_id = t2.partner_id
+        //            where t1.mou_partner_id != @mou_partner_id and t2.partner_name like @partner_name";
+        //        string result = db.Database.SqlQuery<string>(sql,
+        //            new SqlParameter("partner_name", '%' + partner_name + '%'),
+        //            new SqlParameter("mou_partner_id", mou_partner_id)).FirstOrDefault();
+        //        return result is null ? "" : result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
     }
 }

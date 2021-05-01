@@ -16,7 +16,7 @@ namespace GUEST.Controllers.InternationalCollaboration.Collaboration.Partner
         private static readonly PartnerRepo partnerRePo = new PartnerRepo();
         private static readonly CountryRepo countryRepo = new CountryRepo();
         private static readonly SpecializationRepo specializationRepo = new SpecializationRepo();
-        readonly System.Resources.ResourceManager rm = LanguageResource.GetResourceManager();
+        private readonly System.Resources.ResourceManager rm = LanguageResource.GetResourceManager();
         // GET: Partner
         public ActionResult List()
         {
