@@ -213,6 +213,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return View(new HttpStatusCodeResult(400));
             }
         }
+        //chua ve class diagram
         public ActionResult CheckDuplicatedPartnerInfo(string partner_name, string mou_start_date_string)
         {
             try
@@ -252,5 +253,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        //chua ve class diagram
     }
 }
