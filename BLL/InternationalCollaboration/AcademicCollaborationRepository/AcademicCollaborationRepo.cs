@@ -366,7 +366,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         //add infor to File
                         evidence_file = SaveFileToFile(f, evidence);
                         //add to Collab Status History
-                        SaveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "edit":
                         //add file to Google Drive
@@ -374,11 +374,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         //add infor to File
                         evidence_file = SaveFileToFile(f, evidence);
                         //add to Collab Status History
-                        SaveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "remove":
                         //add to Collab Status History
-                        SaveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "none":
                         break;
@@ -1077,7 +1077,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             join General.Account a on a.account_id = csh.account_id
                             left join General.[File] f on f.[file_id] = csh.[file_id]
                             where csh.collab_id = @collab_id
-                            ORDER BY csh.change_date " + baseDatatable.SortDirection +
+                            ORDER BY " + baseDatatable.SortColumnName +" "+ baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 List<StatusHistory> statusHistory = db.Database.SqlQuery<StatusHistory>(sql, new SqlParameter("collab_id", collab_id)).ToList();
                 int totalRecords = db.CollaborationStatusHistories.Where(x => x.collab_id == collab_id).Count();
