@@ -21,6 +21,19 @@ namespace BLL.ScienceManagement.Paper
     {
         public DetailPaper GetDetail(string id)
         {
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int id_int = 0;
+            try
+            {
+                id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select p.*, CAST(rp.reward_type AS nvarchar) as reward_type, CAST(rp.type AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
               rp.status_id, f.link as 'link_file'
@@ -30,7 +43,7 @@ namespace BLL.ScienceManagement.Paper
             join Localization.PaperTypeByAreaLanguage ptal on rp.type=ptal.id
             left join [General].[File] f on p.file_id = f.file_id
             where p.paper_id = @id and prtl.language_id=1 and ptal.language_id=1";
-            DetailPaper item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", int.Parse(id))).FirstOrDefault();
+            DetailPaper item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", id_int)).FirstOrDefault();
             return item;
         }
 
@@ -47,6 +60,19 @@ namespace BLL.ScienceManagement.Paper
 
         public List<ListCriteriaOfOnePaper> GetCriteria(string id)
         {
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int id_int = 0;
+            try
+            {
+                id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select pc.name, pwc.*
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].PaperWithCriteria pwc on p.paper_id = pwc.paper_id
@@ -59,7 +85,19 @@ namespace BLL.ScienceManagement.Paper
         public Author GetAuthorReceived_all(string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            int paper_id = Int32.Parse(id);
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int paper_id = 0;
+            try
+            {
+                paper_id = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             Author p = (from a in db.RequestPapers
                         join b in db.Authors on a.author_received_reward equals b.people_id
                         where a.paper_id == paper_id
@@ -85,6 +123,19 @@ namespace BLL.ScienceManagement.Paper
 
         public List<AuthorInfoWithNull> GetAuthorPaper(string id, string lang)
         {
+            if (id == null || lang == null) return null;
+            id = id.Trim();
+            lang = lang.Trim();
+            if (id == "") return null;
+            try
+            {
+                int id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ap.money_reward, ah.identification_file_link
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -212,6 +263,19 @@ namespace BLL.ScienceManagement.Paper
 
         public List<AuthorInfoWithNull> GetAuthorPaper_FE(string id, string lang)
         {
+            if (id == null || lang == null) return null;
+            id = id.Trim();
+            lang = lang.Trim();
+            if (id == "") return null;
+            try
+            {
+                int id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else cast(1 as bit) end as 'is_reseacher'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
