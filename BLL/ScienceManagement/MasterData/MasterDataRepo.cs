@@ -21,6 +21,7 @@ namespace BLL.ScienceManagement.MasterData
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<SpecializationLanguage> GetSpec(string language)
         {
+            if (language == null) language = "";
             string sql = @"select sl.name, sl.specialization_id, sl.language_id
                             from [General].Specialization s join [Localization].SpecializationLanguage sl on s.specialization_id = sl.specialization_id
 	                            join [Localization].Language l on sl.language_id = l.language_id
