@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BLL.ScienceManagement.Paper;
+﻿using BLL.ScienceManagement.Paper;
+using ENTITIES;
+using ENTITIES.CustomModels.ScienceManagement.Paper;
+using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
-using ENTITIES;
-using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 
 namespace BLL.ScienceManagement.Paper.Tests
 {
