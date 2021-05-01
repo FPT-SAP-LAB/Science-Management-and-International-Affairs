@@ -70,6 +70,7 @@ namespace ENTITIES
         public virtual ICollection<ActivityPartner> ActivityPartners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CollaborationStatusHistory> CollaborationStatusHistories { get; set; }
+        public virtual ImageHomePage ImageHomePage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestConference> RequestConferences1 { get; set; }
     }

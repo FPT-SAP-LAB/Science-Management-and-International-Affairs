@@ -78,6 +78,15 @@
           <Property Name="link" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="file_drive_id" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="ImageHomePage">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="is_wallpaper" Type="bit" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="file_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="InternalUnit">
           <Key>
             <PropertyRef Name="unit_id" />
@@ -4016,6 +4025,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ImageHomePage_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="ImageHomePage" Type="Self.ImageHomePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="ImageHomePage">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImageHomePage_File1">
+          <End Role="File" Type="Self.File" Multiplicity="1" />
+          <End Role="ImageHomePage" Type="Self.ImageHomePage" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ImageHomePage">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MOABonus_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="MOABonus" Type="Self.MOABonus" Multiplicity="*" />
@@ -4241,6 +4274,7 @@
           <EntitySet Name="Area" EntityType="Self.Area" Schema="General" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="General" store:Type="Tables" />
           <EntitySet Name="File" EntityType="Self.File" Schema="General" store:Type="Tables" />
+          <EntitySet Name="ImageHomePage" EntityType="Self.ImageHomePage" Schema="General" store:Type="Tables" />
           <EntitySet Name="InternalUnit" EntityType="Self.InternalUnit" Schema="General" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="General" store:Type="Tables" />
           <EntitySet Name="Office" EntityType="Self.Office" Schema="General" store:Type="Tables" />
@@ -5232,6 +5266,14 @@
             <End Role="Policy" EntitySet="Policy" />
             <End Role="Condition" EntitySet="Condition" />
           </AssociationSet>
+          <AssociationSet Name="FK_ImageHomePage_Account" Association="Self.FK_ImageHomePage_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="ImageHomePage" EntitySet="ImageHomePage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageHomePage_File1" Association="Self.FK_ImageHomePage_File1">
+            <End Role="File" EntitySet="File" />
+            <End Role="ImageHomePage" EntitySet="ImageHomePage" />
+          </AssociationSet>
           <AssociationSet Name="FK_MOABonus_Account" Association="Self.FK_MOABonus_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="MOABonus" EntitySet="MOABonus" />
@@ -5361,6 +5403,7 @@
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Account" ToRole="Profile" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_Account" FromRole="Account" ToRole="ActivityPartner" />
           <NavigationProperty Name="ArticleVersions" Relationship="Self.FK_ArticleVersion_Account" FromRole="Account" ToRole="ArticleVersion" />
+          <NavigationProperty Name="ImageHomePages" Relationship="Self.FK_ImageHomePage_Account" FromRole="Account" ToRole="ImageHomePage" />
           <NavigationProperty Name="MOABonus" Relationship="Self.FK_MOABonus_Account" FromRole="Account" ToRole="MOABonus" />
           <NavigationProperty Name="MOUBonus" Relationship="Self.FK_MOUBonus_Account" FromRole="Account" ToRole="MOUBonus" />
         </EntityType>
@@ -5420,7 +5463,19 @@
           <NavigationProperty Name="ActivityExpenseDetails" Relationship="Self.FK_ActivityExpenseDetail_File" FromRole="File" ToRole="ActivityExpenseDetail" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_File" FromRole="File" ToRole="ActivityPartner" />
           <NavigationProperty Name="CollaborationStatusHistories" Relationship="Self.FK_CollaborationStatusHistory_File" FromRole="File" ToRole="CollaborationStatusHistory" />
+          <NavigationProperty Name="ImageHomePage" Relationship="Self.FK_ImageHomePage_File1" FromRole="File" ToRole="ImageHomePage" />
           <NavigationProperty Name="RequestConferences1" Relationship="Self.FK_RequestConference_File" FromRole="File" ToRole="RequestConference" />
+        </EntityType>
+        <EntityType Name="ImageHomePage">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="is_wallpaper" Type="Boolean" Nullable="false" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_ImageHomePage_Account" FromRole="ImageHomePage" ToRole="Account" />
+          <NavigationProperty Name="File" Relationship="Self.FK_ImageHomePage_File1" FromRole="ImageHomePage" ToRole="File" />
         </EntityType>
         <EntityType Name="InternalUnit">
           <Key>
@@ -7344,6 +7399,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ImageHomePage_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="ImageHomePage" Type="Self.ImageHomePage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="ImageHomePage">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MOABonus_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="MOABonus" Type="Self.MOABonu" Multiplicity="*" />
@@ -7628,6 +7695,18 @@
               <PropertyRef Name="file_id" />
             </Principal>
             <Dependent Role="CollaborationStatusHistory">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImageHomePage_File1">
+          <End Role="File" Type="Self.File" Multiplicity="1" />
+          <End Role="ImageHomePage" Type="Self.ImageHomePage" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ImageHomePage">
               <PropertyRef Name="file_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -9828,6 +9907,7 @@
           <EntitySet Name="Areas" EntityType="Self.Area" />
           <EntitySet Name="Countries" EntityType="Self.Country" />
           <EntitySet Name="Files" EntityType="Self.File" />
+          <EntitySet Name="ImageHomePages" EntityType="Self.ImageHomePage" />
           <EntitySet Name="InternalUnits" EntityType="Self.InternalUnit" />
           <EntitySet Name="Modules" EntityType="Self.Module" />
           <EntitySet Name="Offices" EntityType="Self.Office" />
@@ -10034,6 +10114,10 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="ArticleVersion" EntitySet="ArticleVersions" />
           </AssociationSet>
+          <AssociationSet Name="FK_ImageHomePage_Account" Association="Self.FK_ImageHomePage_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="ImageHomePage" EntitySet="ImageHomePages" />
+          </AssociationSet>
           <AssociationSet Name="FK_MOABonus_Account" Association="Self.FK_MOABonus_Account">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="MOABonus" EntitySet="MOABonus" />
@@ -10129,6 +10213,10 @@
           <AssociationSet Name="FK_CollaborationStatusHistory_File" Association="Self.FK_CollaborationStatusHistory_File">
             <End Role="File" EntitySet="Files" />
             <End Role="CollaborationStatusHistory" EntitySet="CollaborationStatusHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageHomePage_File1" Association="Self.FK_ImageHomePage_File1">
+            <End Role="File" EntitySet="Files" />
+            <End Role="ImageHomePage" EntitySet="ImageHomePages" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestConference_File" Association="Self.FK_RequestConference_File">
             <End Role="File" EntitySet="Files" />
@@ -10939,6 +11027,16 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="file_drive_id" ColumnName="file_drive_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageHomePages">
+            <EntityTypeMapping TypeName="ScienceAndInternationalAffairsModel.ImageHomePage">
+              <MappingFragment StoreEntitySet="ImageHomePage">
+                <ScalarProperty Name="is_wallpaper" ColumnName="is_wallpaper" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

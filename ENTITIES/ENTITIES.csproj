@@ -403,6 +403,9 @@
     <Compile Include="FormalityLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ImageHomePage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="InternalUnit.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

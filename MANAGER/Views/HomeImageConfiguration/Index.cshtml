@@ -1,0 +1,329 @@
+﻿
+@{
+    ViewBag.Title = "CẬP NHẬT ẢNH TRANG CHỦ GUEST";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <label>Ảnh bìa:</label>
+                <div class="uppy" id="kt_uppy_1">
+                    <div class="uppy-wrapper"></div>
+                    <div class="uppy-list"></div>
+                    <div class="uppy-status"></div>
+                    <div class="uppy-informer uppy-informer-min"></div>
+                </div>
+                <span class="form-text text-muted">Kích thước lớn nhất là 5MB và tối đa 1 file.</span>
+            </div>
+            <div class="col-sm-6">
+                <!--begin::Input-->
+                <label>Các ảnh banner:</label>
+                <div class="uppy" id="kt_uppy_2">
+                    <div class="uppy-wrapper"></div>
+                    <div class="uppy-list"></div>
+                    <div class="uppy-status"></div>
+                    <div class="uppy-informer uppy-informer-min"></div>
+                </div>
+                <span class="form-text text-muted">Kích thước lớn nhất là 5MB và tối đa 5 file.</span>
+                <!--end::Input-->
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row justify-content-center">
+            <button onclick="updateImage()" class="btn btn-light-success font-weight-bold">Cập nhật</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var uppy1, uppy2;
+
+        var KTUppy = function () {
+            const Tus = Uppy.Tus;
+            const StatusBar = Uppy.StatusBar;
+            const FileInput = Uppy.FileInput;
+            const Informer = Uppy.Informer;
+
+            var initUppy1 = function () {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = 'kt_uppy_1';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                uppy1 = Uppy.Core({
+                    debug: true,
+                    autoProceed: false,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 6291456, // 5mb
+                        maxNumberOfFiles: 1,
+                        minNumberOfFiles: 1,
+                        allowedFileTypes: ['.jpg', '.jpeg', '.png', '.gif']
+                    }
+                });
+
+                uppy1.use(FileInput, {
+                    target: id + ' .uppy-wrapper',
+                    pretty: false
+                });
+                uppy1.use(Informer, {
+                    target: id + ' .uppy-informer'
+                });
+
+                // demo file upload server
+                uppy1.use(Tus, {
+                    endpoint: 'https://master.tus.io/files/'
+                });
+                uppy1.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                uppy1.on('upload', function (data) {
+                    $fileLabel.text("Uploading...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                uppy1.on('file-added', function (file) {
+                    $fileLabel.text("Compressing...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var image = new Image();
+                        image.src = e.target.result;
+                        image.onload = function () {
+                            var canvas = document.createElement("canvas");
+                            var ctx = canvas.getContext("2d");
+                            canvas.width = image.width;
+                            canvas.height = image.height;
+                            ctx.drawImage(image, 0, 0);
+                            var URL = canvas.toDataURL('image/jpeg');
+                            var newfile = dataURItoBlob(URL, file.name);
+
+                            if (newfile.size < file.size) {
+                                file.data = newfile;
+                                file.size = newfile.size;
+                                var newName = file.name.substr(0, file.name.lastIndexOf(".")) + ".jpeg";
+                                file.name = newName;
+                            }
+
+                            var sizeLabel = "bytes";
+                            var filesize = file.size;
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "kb";
+
+                                if (filesize > 1024) {
+                                    filesize = filesize / 1024;
+                                    sizeLabel = "MB";
+                                }
+                            }
+
+                            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                            $uploadedList.append(uploadListHtml);
+
+                            $statusBar.addClass('uppy-status-hidden');
+                            $statusBar.removeClass('uppy-status-ongoing');
+                            $fileLabel.text("Attach files");
+                        };
+                    }
+
+                    reader.readAsDataURL(file.data);
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppy1.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                });
+            }
+
+            var initUppy2 = function () {
+                // Uppy variables
+                // For more info refer: https://uppy.io/
+                var elemId = 'kt_uppy_2';
+                var id = '#' + elemId;
+                var $statusBar = $(id + ' .uppy-status');
+                var $uploadedList = $(id + ' .uppy-list');
+                var timeout;
+
+                uppy2 = Uppy.Core({
+                    debug: true,
+                    autoProceed: false,
+                    showProgressDetails: true,
+                    restrictions: {
+                        maxFileSize: 6291456, // 5mb
+                        maxNumberOfFiles: 5,
+                        minNumberOfFiles: 0,
+                        allowedFileTypes: ['.jpg', '.jpeg', '.png', '.gif']
+                    }
+                });
+
+                uppy2.use(FileInput, {
+                    target: id + ' .uppy-wrapper',
+                    pretty: false
+                });
+                uppy2.use(Informer, {
+                    target: id + ' .uppy-informer'
+                });
+
+                // demo file upload server
+                uppy2.use(Tus, {
+                    endpoint: 'https://master.tus.io/files/'
+                });
+                uppy2.use(StatusBar, {
+                    target: id + ' .uppy-status',
+                    hideUploadButton: true,
+                    hideAfterFinish: false
+                });
+
+                $(id + ' .uppy-FileInput-input').addClass('uppy-input-control').attr('id', elemId + '_input_control');
+                $(id + ' .uppy-FileInput-container').append('<label class="uppy-input-label btn btn-light-primary btn-sm btn-bold" for="' + (elemId + '_input_control') + '">Attach files</label>');
+
+                var $fileLabel = $(id + ' .uppy-input-label');
+
+                uppy2.on('upload', function (data) {
+                    $fileLabel.text("Uploading...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+                    clearTimeout(timeout);
+                });
+
+                uppy2.on('file-added', function (file) {
+                    $fileLabel.text("Compressing...");
+                    $statusBar.addClass('uppy-status-ongoing');
+                    $statusBar.removeClass('uppy-status-hidden');
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var image = new Image();
+                        image.src = e.target.result;
+                        image.onload = function () {
+                            var canvas = document.createElement("canvas");
+                            var ctx = canvas.getContext("2d");
+                            canvas.width = image.width;
+                            canvas.height = image.height;
+                            ctx.drawImage(image, 0, 0);
+                            var URL = canvas.toDataURL('image/jpeg');
+                            var newfile = dataURItoBlob(URL, file.name);
+
+                            if (newfile.size < file.size) {
+                                file.data = newfile;
+                                file.size = newfile.size;
+                                var newName = file.name.substr(0, file.name.lastIndexOf(".")) + ".jpeg";
+                                file.name = newName;
+                            }
+
+                            var sizeLabel = "bytes";
+                            var filesize = file.size;
+                            if (filesize > 1024) {
+                                filesize = filesize / 1024;
+                                sizeLabel = "kb";
+
+                                if (filesize > 1024) {
+                                    filesize = filesize / 1024;
+                                    sizeLabel = "MB";
+                                }
+                            }
+
+                            var uploadListHtml = '<div class="uppy-list-item" data-id="' + file.id + '"><div class="uppy-list-label">' + file.name + ' (' + Math.round(filesize, 2) + ' ' + sizeLabel + ')</div><span class="uppy-list-remove" data-id="' + file.id + '"><i class="flaticon2-cancel-music"></i></span></div>';
+                            $uploadedList.append(uploadListHtml);
+
+                            $statusBar.addClass('uppy-status-hidden');
+                            $statusBar.removeClass('uppy-status-ongoing');
+                            $fileLabel.text("Attach files");
+                        };
+                    }
+
+                    reader.readAsDataURL(file.data);
+                });
+
+                $(document).on('click', id + ' .uppy-list .uppy-list-remove', function () {
+                    var itemId = $(this).attr('data-id');
+                    uppy2.removeFile(itemId);
+                    $(id + ' .uppy-list-item[data-id="' + itemId + '"').remove();
+                });
+            }
+
+            return {
+                // public functions
+                init: function () {
+                    initUppy1();
+                    initUppy2();
+                    // initUppy6();
+                }
+            };
+        }();
+
+        KTUtil.ready(function () {
+            KTUppy.init();
+        });
+
+        function dataURItoBlob(dataURI) {
+            var blobBin = atob(dataURI.split(',')[1]);
+            var array = [];
+            for (var i = 0; i < blobBin.length; i++) {
+                array.push(blobBin.charCodeAt(i));
+            }
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var file = new Blob([new Uint8Array(array)], { type: mimeString });
+            return file;
+        }
+
+        function updateImage() {
+            var fd = new FormData();
+            if (uppy1.getFiles().length > 0)
+                fd.append("wallpaper", uppy1.getFiles()[0].data, uppy1.getFiles()[0].name);
+            for (var i = 0; i < uppy2.getFiles().length; i++) {
+                let uppyFile = uppy2.getFiles()[i];
+                fd.append("banner-" + i, uppyFile.data, uppyFile.name);
+            }
+            if (!fd.get("wallpaper") && !fd.get("banner-0")) {
+                toastr.error("Chưa có ảnh nào được chọn");
+                return false;
+            }
+
+            $("#loading").show();
+            $.ajax({
+                url: "/HomeImageConfiguration/Update",
+                method: "post",
+                success: function (data) {
+                    if (data.success) {
+                        location.reload();
+                    }
+                    else {
+                        toastr.error(data.content);
+                        $("#loading").hide();
+                    }
+                },
+                error: function () {
+                    toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
+                },
+                dataType: "json",
+                data: fd,
+                processData: false,
+                contentType: false
+            });
+        }
+    </script>
+}
