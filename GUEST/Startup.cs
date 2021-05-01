@@ -1,8 +1,10 @@
 ﻿using BLL.ModelDAL;
+using GUEST.Support;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
+using System.Collections.Generic;
 using System.Configuration;
 
 [assembly: OwinStartup(typeof(GUEST.Startup))]
@@ -12,6 +14,7 @@ namespace GUEST
     {
         public readonly static string GuestURI = ConfigurationManager.AppSettings["GuestURI"];
         public readonly static string ManagerURI = ConfigurationManager.AppSettings["ManagerURI"];
+        public readonly static HashSet<string> Staffs = ImportStaff.LoadMail();
         public void Configuration(IAppBuilder app)
         {
             NotificationRepo.GuestURI = GuestURI;
