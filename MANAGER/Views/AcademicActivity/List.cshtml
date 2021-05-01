@@ -75,11 +75,8 @@
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Thêm hoạt động học thuật</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
+            <div class="modal-header justify-content-center">
+                <h4 class="modal-title font-weight-bolder">THÊM HOẠT ĐỘNG HỌC THUẬT</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
@@ -151,11 +148,8 @@
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Chỉnh sửa hoạt động học thuật</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
+            <div class="modal-header justify-content-center">
+                <h4 class="modal-title font-weight-bolder">CHỈNH SỬA HOẠT ĐỘNG HỌC THUẬT</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
@@ -236,11 +230,8 @@
 <div class="modal fade" id="cloneModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Clone sự kiện</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
+            <div class="modal-header justify-content-center">
+                <h4 class="modal-title font-weight-bolder">CLONE SỰ KIỆN</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group row">
@@ -739,7 +730,7 @@
                     },
                     {
                         data: "academic_status_name",
-                        sorting: false,
+                        orderable: false,
                         render: function (data, type, full, meta) {
                             var status = {
                                 'Chưa hoạt động': {
@@ -760,7 +751,7 @@
                     },
                     {
                         data: "activity_id",
-                        sorting: false,
+                        orderable: false,
                         render: function (data, type, full, meta) {
                             return '<div class="dropdown">' +
                                 '<button class="btn btn-light-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Thao tác</button>' +
