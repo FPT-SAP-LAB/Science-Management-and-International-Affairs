@@ -19,6 +19,7 @@
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!--begin::Page Vendors Styles(used by this page)-->
+    @RenderSection("Styles", false)
     <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/plugins/custom/uppy/uppy.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <!--end::Page Vendors Styles-->
@@ -40,7 +41,7 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" style="background-image: url(../Content/assets/media/bg/bg-10.jpg)" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
+<body id="kt_body" style="background-image: url(@("https://drive.google.com/uc?export=view&id=" + GUEST.Startup.BackgroundURL))" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
     <div id="loading"></div>
     <!--begin::Main-->
     <!--begin::Header Mobile-->
@@ -275,15 +276,15 @@
                                         <form>
                                             <!--begin::Header-->
                                             <!--<div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">-->
-                                                <!--begin::Title-->
-                                                <!--<h4 class="d-flex flex-center rounded-top">
-                                                    <span class="text-white">User Notifications</span>
-                                                    <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
-                                                        23
-                                                        new
-                                                    </span>
-                                                </h4>-->
-                                                <!--end::Title-->
+                                            <!--begin::Title-->
+                                            <!--<h4 class="d-flex flex-center rounded-top">
+                                                <span class="text-white">User Notifications</span>
+                                                <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
+                                                    23
+                                                    new
+                                                </span>
+                                            </h4>-->
+                                            <!--end::Title-->
                                             <!--</div>-->
                                             <!--end::Header-->
                                             <!--begin::Content-->
@@ -761,6 +762,7 @@
     </script>
 
     <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
     @Scripts.Render("~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6",
@@ -773,18 +775,6 @@
     "~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6",
     "~/Content/assets/plugins/custom/datatables/datatables.bundle.js"
     )
-    @*<script src="~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6"></script>*@
-    @*<script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>*@
-    @*<script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>*@
-    <!--end::Global Theme Bundle-->
-    <!--begin::Page Vendors(used by this page)-->
-    @*<script src="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6"></script>*@
-    <!--end::Page Vendors-->
-    <!--begin::Page Scripts(used by this page)-->
-    @*<script src="~/Content/assets/js/pages/widgets.js?v=7.0.6"></script>*@
-    <!--end::Page Scripts-->
-    @*<script src="~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6"></script>
-        <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
     @RenderSection("scripts")
 
     <script>
