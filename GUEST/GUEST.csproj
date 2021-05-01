@@ -636,6 +636,15 @@
     <Content Include="Content\assets\js\pages\features\miscellaneous\treeview.min.js" />
     <Content Include="Content\assets\js\pages\my-script.js" />
     <Content Include="Content\assets\js\pages\my-script.min.js" />
+    <Content Include="Content\assets\plugins\owlcarousel2\ajax-loader.gif" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.carousel.css" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.carousel.min.css" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.carousel.min.js" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.theme.default.css" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.theme.default.min.css" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.theme.green.css" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.theme.green.min.css" />
+    <Content Include="Content\assets\plugins\owlcarousel2\owl.video.play.png" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-bio.js" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-change-avt.js" />
     <Content Include="Content\Custom JS\ScienceManagement\Researcher\researcher-edit-info.js" />

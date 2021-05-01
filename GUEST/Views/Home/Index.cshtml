@@ -3,17 +3,28 @@
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
     ViewBag.Title = rm.GetString("Header");
 }
-<style>
-    #banner {
-        background: url(https://daihoc.fpt.edu.vn/media/2021/03/Bannerweb-FPTU-20215-1.png);
-        transition: background 1.5s ease-in;
-        background-size: 96rem 32rem;
-    }
-    .banner-button{
-        cursor:pointer;
-        opacity:80%
-    }
-</style>
+
+@section Styles {
+    <style>
+        #banner {
+            background: transparent;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+        }
+
+        #banner * {
+            border-radius: 0.42rem;
+        }
+
+        .banner-button {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+    </style>
+    <link href="~/Content/assets/plugins/owlcarousel2/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/plugins/owlcarousel2/owl.theme.default.min.css" rel="stylesheet" />
+}
+
 <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Subheader-->
     <!--begin::Entry-->
@@ -24,12 +35,14 @@
             <!--begin::Row-->
             <div class="row">
                 <div class=" d-none d-md-block col-xl-12">
-                    <div class="card card-custom bgi-no-repeat gutter-b"
-                         id="banner" style="height: 31rem">
-                        <div class="card-body">
-                            <div class="">
-
-                            </div>
+                    <div class="card card-custom gutter-b" id="banner">
+                        <div class="owl-carousel owl-theme">
+                            @foreach (string item in ViewBag.images)
+                            {
+                                <div class="item">
+                                    <img style="height:30rem; object-fit: cover" src="@("https://drive.google.com/uc?export=view&id=" + item)" alt="Alternate Text" />
+                                </div>
+                            }
                         </div>
                         <div class="card-footer align-items-center" style="border-top:none ;">
                             <span class="label pulse mr-10 banner-button" data-banner="0">
@@ -225,6 +238,7 @@
                                     <i class="flaticon2-cube"></i>@rm.GetString("LoadMore")</a>
                             </div> -->
                         </div>
+
                         <div class="card-body">
                             <div data-scroll="true" data-height="600" class="scroll ps ps--active-y" style="height: 200px; overflow: hidden;">
                                 <div class="news card card-custom mb-2 bg-diagonal">
@@ -540,39 +554,50 @@
     </div>
     <!--end::Entry-->
     @section scripts{
+        <script src="~/Content/assets/plugins/owlcarousel2/owl.carousel.min.js"></script>
         <script>
-            var imgs = [
-                "https://daihoc.fpt.edu.vn/media/2021/03/Bannerweb-FPTU-20215-1.png",
-                "https://daihoc.fpt.edu.vn/media/2021/02/Bannerweb-FPTU-20214.png",
-                "https://daihoc.fpt.edu.vn/media/2021/02/Screen-Shot-2021-02-03-at-23.03.39.png"
-            ]
-            var banner_index = 0
+            //var imgs = [
+            //    "https://daihoc.fpt.edu.vn/media/2021/03/Bannerweb-FPTU-20215-1.png",
+            //    "https://daihoc.fpt.edu.vn/media/2021/02/Bannerweb-FPTU-20214.png",
+            //    "https://daihoc.fpt.edu.vn/media/2021/02/Screen-Shot-2021-02-03-at-23.03.39.png"
+            //]
+            //var banner_index = 0
 
 
-            function change_banner() {
-                //console.log(banner_index)
-                $('#banner').fadeTo('slow', 0.95, function () {
-                    $("#banner").css('background-image', 'url(' + imgs[banner_index] + ')');
-                    if (banner_index != 2) {
-                        banner_index = banner_index + 1
-                    } else {
-                        banner_index =0
-                    }
-                }).fadeTo('slow', 1);
-                //if (banner_index == 3) {
-                //    banner_index = 0
-                //}
-                //console.log(banner_index)
-            }
+            //function change_banner() {
+            //    //console.log(banner_index)
+            //    $('#banner').fadeTo('slow', 0.95, function () {
+            //        $("#banner").css('background-image', 'url(' + imgs[banner_index] + ')');
+            //        if (banner_index != 2) {
+            //            banner_index = banner_index + 1
+            //        } else {
+            //            banner_index = 0
+            //        }
+            //    }).fadeTo('slow', 1);
+            //    //if (banner_index == 3) {
+            //    //    banner_index = 0
+            //    //}
+            //    //console.log(banner_index)
+            //}
 
-            var mybanners = setInterval(change_banner, 5000);
+            //var mybanners = setInterval(change_banner, 5000);
 
-            $(".banner-button").click(async function () {
-                clearInterval(mybanners);
-                banner_index = $(this).data('banner')
-                await change_banner()
-                mybanners = setInterval(change_banner, 5000);
-            })
+            //$(".banner-button").click(async function () {
+            //    clearInterval(mybanners);
+            //    banner_index = $(this).data('banner')
+            //    await change_banner()
+            //    mybanners = setInterval(change_banner, 5000);
+            //})
+            $(document).ready(function () {
+                $('.owl-carousel').owlCarousel({
+                    items: 1,
+                    loop: true,
+                    margin: 10,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true
+                })
+            });
         </script>
     }
 </div>
