@@ -36,6 +36,7 @@ namespace BLL.GuestConfiguration
                 {
                     Google.Apis.Drive.v3.Data.File uploadedWallpaper =
                         GoogleDriveService.UploadFile(wallpaper.FileName, wallpaper.InputStream, wallpaper.ContentType, HomePageDrive);
+                    GoogleDriveService.ShareWithAnyone(uploadedWallpaper.Id);
 
                     bool uploaded = AddImageHomePage(uploadedWallpaper, true, wallpaper.FileName);
                     if (!uploaded)
@@ -57,6 +58,7 @@ namespace BLL.GuestConfiguration
                 {
                     Google.Apis.Drive.v3.Data.File uploadedBanner =
                         GoogleDriveService.UploadFile(item.FileName, item.InputStream, item.ContentType, HomePageDrive);
+                    GoogleDriveService.ShareWithAnyone(uploadedBanner.Id);
 
                     bool uploaded = AddImageHomePage(uploadedBanner, false, item.FileName);
                     if (!uploaded)

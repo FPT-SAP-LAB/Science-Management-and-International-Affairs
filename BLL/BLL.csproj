@@ -138,6 +138,7 @@
     <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\LoginRepo.cs" />
     <Compile Include="GuestConfiguration\HomeImageConfigurationRepo.cs" />
+    <Compile Include="HomeRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExcelRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExpenseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityGuestRepo.cs" />

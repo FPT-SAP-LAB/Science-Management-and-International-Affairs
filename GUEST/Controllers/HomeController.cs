@@ -1,4 +1,4 @@
-﻿using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
+﻿using BLL;
 using ENTITIES.CustomModels;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -8,12 +8,17 @@ namespace GUEST.Controllers
 {
     public class HomeController : Controller
     {
-        PartnerRepo partnerRepo = new PartnerRepo();
+        private readonly HomeRepo homeRepo = new HomeRepo();
         public ActionResult Index()
         {
-            var pagesTree = new List<PageTree>();
-            ViewBag.pagesTree = pagesTree;
-            ViewBag.partner = partnerRepo.GetPartnerWidget();
+            ViewBag.pagesTree = new List<PageTree>();
+            HomeData result = homeRepo.GetHomeData();
+            Startup.BackgroundURL = homeRepo.GetBackground();
+            if (result != null)
+            {
+                ViewBag.partner = result.Partner;
+                ViewBag.images = result.Images;
+            }
             return View();
         }
     }

@@ -16,12 +16,22 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 {
     public class PartnerRepo
     {
-        ScienceAndInternationalAffairsEntities db;
+        private readonly ScienceAndInternationalAffairsEntities db;
+
+        public PartnerRepo()
+        {
+            db = new ScienceAndInternationalAffairsEntities();
+        }
+
+        public PartnerRepo(ScienceAndInternationalAffairsEntities db)
+        {
+            this.db = db;
+        }
+
         public BaseServerSideData<PartnerList> GetListAll(BaseDatatable baseDatatable, SearchPartner searchPartner)
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 string sql = @" select * from (select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
                                 a.partner_id, a.is_deleted, a.website, a.address, max(a.is_collab) 'is_collab',
                                 STRING_AGG(a.[name], ',') 'specialization_name', a.country_name from 
@@ -104,14 +114,12 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 
         public int GetPartnerWidget()
         {
-            db = new ScienceAndInternationalAffairsEntities();
             return db.Partners.Where(x => x.is_deleted == false).Count();
         }
 
         public AlertModal<string> AddPartner(List<HttpPostedFileBase> files_request, HttpPostedFileBase image, string content,
             PartnerArticle partner_article, int number_of_image, int account_id)
         {
-            db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction trans = db.Database.BeginTransaction())
             {
                 try
@@ -195,7 +203,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 Partner partner = new Partner();
                 partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
                 partner.is_deleted = true;
@@ -213,7 +220,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 Partner partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
                 PartnerArticle partnerArticle = new PartnerArticle
                 {
@@ -241,7 +247,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 Partner partner = db.Partners.Where(x => x.partner_id == id).FirstOrDefault();
                 PartnerArticle partnerArticle = new PartnerArticle
                 {
@@ -277,7 +282,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
 
         public bool CheckDuplicatePartner(PartnerArticle partner_article, int partner_id)
         {
-            db = new ScienceAndInternationalAffairsEntities();
             string partner_name_check = db.Partners.Find(partner_id).partner_name;
             if (!partner_article.partner_name.ToLower().Equals(partner_name_check.ToLower()))
             {
@@ -305,7 +309,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
             {
                 try
                 {
-                    db = new ScienceAndInternationalAffairsEntities();
                     string partner_name_check = db.Partners.Find(partner_id).partner_name;
                     if (!CheckDuplicatePartner(partner_article, partner_id))
                     {
@@ -386,7 +389,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 string query = @"WITH b AS(
                                 SELECT ps.partner_scope_id, ps.partner_id
                                 FROM IA_Collaboration.PartnerScope ps 
@@ -444,7 +446,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 string query = @"SELECT s.specialization_name
                         FROM IA_Collaboration.MOUPartnerSpecialization mps
                         INNER JOIN IA_Collaboration.MOUPartner mp ON mp.mou_partner_id = mps.mou_partner_id
@@ -530,7 +531,6 @@ namespace BLL.InternationalCollaboration.Collaboration.PartnerRepo
         {
             try
             {
-                db = new ScienceAndInternationalAffairsEntities();
                 string sql = @" select * from (select ROW_NUMBER() OVER(ORDER BY a.partner_id ASC) 'no' , partner_name,
                                 a.partner_id, a.is_deleted, a.website, a.address, a.is_collab,
                                 STRING_AGG(a.[name], ',') 'specialization_name', a.country_name from 

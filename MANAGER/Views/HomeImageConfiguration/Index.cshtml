@@ -116,7 +116,7 @@
                             canvas.height = image.height;
                             ctx.drawImage(image, 0, 0);
                             var URL = canvas.toDataURL('image/jpeg');
-                            var newfile = dataURItoBlob(URL, file.name);
+                            var newfile = dataURItoBlob(URL);
 
                             if (newfile.size < file.size) {
                                 file.data = newfile;
@@ -224,7 +224,7 @@
                             canvas.height = image.height;
                             ctx.drawImage(image, 0, 0);
                             var URL = canvas.toDataURL('image/jpeg');
-                            var newfile = dataURItoBlob(URL, file.name);
+                            var newfile = dataURItoBlob(URL);
 
                             if (newfile.size < file.size) {
                                 file.data = newfile;

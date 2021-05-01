@@ -12,6 +12,10 @@
             -webkit-box-shadow: none;
         }
 
+        #banner * {
+            border-radius: 0.42rem;
+        }
+
         .banner-button {
             cursor: pointer;
             opacity: 0.8;
@@ -33,15 +37,26 @@
                 <div class=" d-none d-md-block col-xl-12">
                     <div class="card card-custom gutter-b" id="banner">
                         <div class="owl-carousel owl-theme">
-                            <div class="item">
-                                <img src="https://daihoc.fpt.edu.vn/media/2021/03/Bannerweb-FPTU-20215-1.png" alt="Alternate Text" />
-                            </div>
-                            <div class="item">
-                                <img src="https://daihoc.fpt.edu.vn/media/2021/02/Bannerweb-FPTU-20214.png" alt="Alternate Text" />
-                            </div>
-                            <div class="item">
-                                <img src="https://daihoc.fpt.edu.vn/media/2021/02/Screen-Shot-2021-02-03-at-23.03.39.png" alt="Alternate Text" />
-                            </div>
+                            @foreach (string item in ViewBag.images)
+                            {
+                                <div class="item">
+                                    <img style="height:30rem; object-fit: cover" src="@("https://drive.google.com/uc?export=view&id=" + item)" alt="Alternate Text" />
+                                </div>
+                            }
+                        </div>
+                        <div class="card-footer align-items-center" style="border-top:none ;">
+                            <span class="label pulse mr-10 banner-button" data-banner="0">
+                                <span class="position-relative">1</span>
+                                <span class="pulse-ring"></span>
+                            </span>
+                            <span class="label pulse mr-10 banner-button" data-banner="1">
+                                <span class="position-relative">2</span>
+                                <span class="pulse-ring"></span>
+                            </span>
+                            <span class="label pulse mr-10 banner-button" data-banner="2">
+                                <span class="position-relative">3</span>
+                                <span class="pulse-ring"></span>
+                            </span>
                         </div>
                     </div>
                 </div>
