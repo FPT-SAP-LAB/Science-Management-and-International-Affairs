@@ -1,14 +1,14 @@
-﻿
+﻿@using ENTITIES.CustomModels.ScienceManagement.Report;
 @{
     ViewBag.Title = "THỐNG KÊ THƯỞNG NCKH THEO NĂM";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Dictionary<int, TotalBonusByYearItem> monthRewardsPairs = ViewBag.data;
 }
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <!--begin: Search Form-->
         <!--begin::Search Form-->
         <div class="mb-7">
-
             <div class="row align-items-center">
                 <div class="col-lg-10 col-xl-8">
                     <div class="row align-items-center">
@@ -17,14 +17,10 @@
                                 <label class="mr-3 mb-0 d-none d-md-block">Năm:</label>
                                 <select class="form-control"
                                         id="search_nam">
-                                    <option label="Label"></option>
-                                    <option value="">2021</option>
-                                    <option value="1">2020</option>
-                                    <option value="2">2019</option>
-                                    <option value="3">2018</option>
-                                    <option value="4">2017</option>
-                                    <option value="5">2016</option>
-                                    <option value="6">2015</option>
+                                    @for (int i = DateTime.Now.Year; i >= 2018; i--)
+                                    {
+                                        <option @(int.TryParse(Request["year"], out int year) && year == i ? "selected" : "")>@i</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -39,10 +35,11 @@
                                 data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                             <span class="svg-icon svg-icon-md">
-                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                                                 width="24px" height="24px" viewBox="0 0 24 24"
-                                                                                                                 version="1.1">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none"
                                        fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24" />
@@ -126,154 +123,65 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Tháng 1</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 2</td>
-                    <td>41,000,000</td>
-                    <td>240,000,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>281,000,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 3</td>
-                    <td>39,600,000</td>
-                    <td>554,378,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>593,978,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 4</td>
-                    <td>48,000,000</td>
-                    <td>557,139,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>605,139,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 5</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 6</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td>573,903,000</td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 7</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 8</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 9</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 10</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 11</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>218,163,000</td>
-                </tr>
-                <tr>
-                    <td>Tháng 12</td>
-                    <td>54,000,000</td>
-                    <td>164,163,000</td>
-                    <td>507,833,000</td>
-                    <td>66,000,000</td>
-                    <td>15,000,000</td>
-                    <td>1,510,274,000</td>
-                </tr>
-                <tr>
-                    <td>Ghi chú</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                @for (int i = 1; i < 13; i++)
+                {
+                    <tr>
+                        <td>Tháng @(i)</td>
+                        <td class="text-right">
+                            @(monthRewardsPairs.TryGetValue(i, out TotalBonusByYearItem value) && value.PaperRewards != null
+                        ? String.Format("{0:n0}", value.PaperRewards.Vietnam.Sum(x => (long)x)) : "0")
+                        </td>
+                        <td class="text-right">
+                            @(value != null && value.PaperRewards != null
+                        ? String.Format("{0:n0}", value.PaperRewards.International.Sum(x => (long)x)) : "0")
+                        </td>
+                        <td class="text-right">
+                            @(value != null && value.PaperRewards != null
+                        ? String.Format("{0:n0}", value.PaperRewards.FromResearchers.Sum(x => (long)x)) : "0")
+                        </td>
+                        <td class="text-right">
+                            @(value != null ? String.Format("{0:n0}", value.CitationRewards.Sum(x => (long)x)) : "0")
+                        </td>
+                        <td class="text-right">
+                            @(value != null ? String.Format("{0:n0}", value.InventionRewards.Sum(x => (long)x)) : "0")
+                        </td>
+                        <td class="text-right">
+                        </td>
+                    </tr>
+                }
+                @*<tr>
+                        <td>Ghi chú</td>
+                        <td class="text-right"></td>
+                        <td class="text-right"></td>
+                        <td class="text-right"></td>
+                        <td class="text-right"></td>
+                        <td class="text-right"></td>
+                        <td class="text-right"></td>
+                    </tr>*@
                 <tr>
                     <td>Total</td>
-                    <td>556,265,000</td>
-                    <td>6,441,031,000</td>
-                    <td>1,081,736,000</td>
-                    <td></td>
-                    <td></td>
-                    <td>8,160,032,000</td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
+                    <td class="text-right"></td>
                 </tr>
             </tbody>
         </table>
-        <!--end: Datatable-->
-        @*@{
-                Html.RenderPartial("_LoaderPanel");
-            }*@
     </div>
 </div>
 @section scripts{
     <script>
         //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
-        list_select = {
-            "search_nam": "Chọn năm",
-            "search_coso": "Chọn cơ sở"
-        }
-        for (let i in list_select) {
-            $('#' + i).select2({
-                placeholder: list_select[i],
-                allowClear: true
-            });
-        }
-                    //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
+        $('#search_nam').select2({
+            placeholder: "Chọn năm",
+            allowClear: false,
+        });
+        $('#search_nam').on('select2:select', function (e) {
+            location.href = "/Reports/TotalBonusByYear?year=" + e.params.data.id;
+        });
+                                    //////////////////////////////////////END SELECT TAG/////////////////////////////////////////////
     </script>
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>

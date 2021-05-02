@@ -1163,7 +1163,7 @@
           </Key>
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="status_id" Type="int" />
-          <Property Name="total_reward" Type="nvarchar" MaxLength="150" />
+          <Property Name="total_reward" Type="int" />
           <Property Name="invention_id" Type="int" Nullable="false" />
           <Property Name="reward_type" Type="nvarchar" MaxLength="150" />
         </EntityType>
@@ -6856,7 +6856,7 @@
           </Key>
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="status_id" Type="Int32" />
-          <Property Name="total_reward" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="total_reward" Type="Int32" />
           <Property Name="invention_id" Type="Int32" Nullable="false" />
           <Property Name="reward_type" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BaseRequest" Relationship="Self.FK__RequestIn__reque__3CBF0154" FromRole="RequestInvention" ToRole="BaseRequest" />
