@@ -15,7 +15,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public DateTime? date { get; set; }
         public string date_string { get; set; }
         public string invention_number { get; set; }
-        public string total_reward { get; set; }
+        public int total_reward { get; set; }
         public string kind { get; set; }
     }
 }
