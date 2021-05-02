@@ -34,7 +34,7 @@ $(function () {
             ////////////////////xử lý ở đây/////////////////////
             var url = new URL(window.location.href);
             people_id = url.searchParams.get("id");
-            name = $("#researcher_name").val()
+            let name = $("#researcher_name").val()
             dob = $("#researcher_dob").val()
             nationality = $("#country_select").select2('data');
             title = $("#title_select").select2('data');
@@ -79,8 +79,6 @@ $(function () {
         }).then(function (result) {
             if (result.value) {
                 window.location.reload()
-            } else if (result.dismiss === "cancel") {
-
             }
         });
     })

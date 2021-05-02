@@ -29,7 +29,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 },
-                sorting: false
+                orderable: false
             },
             {
                 data: 'change_date',
@@ -44,24 +44,24 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
             {
                 data: 'collab_status_id',
                 name: 'collab_status_id',
-                sorting: false
+                orderable: false
             },
             {
                 data: 'full_name',
                 name: 'full_name',
-                sorting: false
+                orderable: false
             },
             {
                 render: function (data, type, row) {
                     return `<a href=` + row.file_link + ` target="_blank">` + row.file_name + `</a>`;
                 },
-                sorting: false,
+                orderable: false,
                 className: 'text-center'
             },
             {
                 data: 'note',
                 name: 'note',
-                sorting: false
+                orderable: false
             }
         ],
         columnDefs: [

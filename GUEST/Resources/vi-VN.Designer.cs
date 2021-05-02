@@ -151,6 +151,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thông tin chính sách.
+        /// </summary>
+        public static string ArticlePolicies {
+            get {
+                return ResourceManager.GetString("ArticlePolicies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 8.
         /// </summary>
         public static string Aug {
@@ -1038,15 +1047,6 @@ namespace GUEST.Resources {
         public static string Quality {
             get {
                 return ResourceManager.GetString("Quality", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thống kê nhanh.
-        /// </summary>
-        public static string QuickStatistics {
-            get {
-                return ResourceManager.GetString("QuickStatistics", resourceCulture);
             }
         }
         

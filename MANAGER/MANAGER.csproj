@@ -282,6 +282,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
+    <Compile Include="Controllers\GuestConfiguration\HomeImageConfigurationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
@@ -2369,7 +2370,6 @@
     <Content Include="Excel_template\Invention.xlsx" />
     <Content Include="Excel_template\Download\Invention.xlsx" />
     <Content Include="Excel_template\Citation.xlsx" />
-    <Content Include="Excel_template\Download\Citation.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Download\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Partner.xlsx" />
@@ -2542,6 +2542,7 @@
     <Content Include="Views\CriteriaManagement\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Research\Index.cshtml" />
+    <Content Include="Views\HomeImageConfiguration\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

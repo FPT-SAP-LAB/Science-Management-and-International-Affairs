@@ -242,6 +242,7 @@ namespace BLL.ScienceManagement.MasterData
 
         public List<TitleWithName> GetTitle(string lang)
         {
+            if (lang == null) lang = "";
             string sql = @"select tl.name, t.*
                             from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
 	                            join [Localization].Language l on l.language_id = tl.language_id
@@ -267,6 +268,7 @@ namespace BLL.ScienceManagement.MasterData
 
         public AddAuthor GetAuthor(string ms)
         {
+            if (ms == null) ms = "";
             string sql = @"select ah.*, o.office_abbreviation
                             from SM_ScientificProduct.Author ah join General.Office o on ah.office_id = o.office_id
                             where ah.mssv_msnv = @ms
@@ -387,7 +389,7 @@ namespace BLL.ScienceManagement.MasterData
             TitleLanguage ck1 = db.TitleLanguages.Where(x => x.language_id == 1).Where(x => x.name == tv).FirstOrDefault();
             TitleLanguage ck2 = db.TitleLanguages.Where(x => x.language_id == 2).Where(x => x.name == ta).FirstOrDefault();
             if (ck1 != null || ck2 != null) return -1;
-
+            if (tv == null || ta == null || tv.Trim() == "" || ta.Trim() == "") return 0;
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
                 try
                 {

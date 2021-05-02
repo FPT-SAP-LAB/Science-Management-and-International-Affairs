@@ -32,6 +32,7 @@ namespace ENTITIES
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<ImageHomePage> ImageHomePages { get; set; }
         public virtual DbSet<InternalUnit> InternalUnits { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Office> Offices { get; set; }

@@ -37,36 +37,6 @@ namespace BLL.ScienceManagement.Citation.Tests
         [DataRow("0")]
         [DataRow(null)]
         [DataRow("")]
-        public void GetStatusTest(string request_id)
-        {
-            int actual = citationRepo.GetStatus(request_id);
-
-            Assert.AreEqual(0, actual);
-        }
-
-        [TestMethod()]
-        [DataRow("-9223372036854775808")]   //Int64.MinValue
-        [DataRow("9223372036854775807")]    //Int64.MaxValue
-        [DataRow("-2147483648")]            //Int32.MinValue
-        [DataRow("2147483647")]             //Int32.MaxValue
-        [DataRow("0")]
-        [DataRow(null)]
-        [DataRow("")]
-        public void GetAuthorTest(string request_id)
-        {
-            AuthorInfo actual = citationRepo.GetAuthor(request_id);
-
-            Assert.AreEqual(null, actual);
-        }
-
-        [TestMethod()]
-        [DataRow("-9223372036854775808")]   //Int64.MinValue
-        [DataRow("9223372036854775807")]    //Int64.MaxValue
-        [DataRow("-2147483648")]            //Int32.MinValue
-        [DataRow("2147483647")]             //Int32.MaxValue
-        [DataRow("0")]
-        [DataRow(null)]
-        [DataRow("")]
         public void GetRequestCitationTest(string request_id)
         {
             RequestCitation actual = citationRepo.GetRequestCitation(request_id);

@@ -147,6 +147,9 @@
   <data name="Area" xml:space="preserve">
     <value>Khu vực</value>
   </data>
+  <data name="ArticlePolicies" xml:space="preserve">
+    <value>Thông tin chính sách</value>
+  </data>
   <data name="Aug" xml:space="preserve">
     <value>Tháng 8</value>
   </data>
@@ -443,9 +446,6 @@
   </data>
   <data name="Quality" xml:space="preserve">
     <value>Chất lượng</value>
-  </data>
-  <data name="QuickStatistics" xml:space="preserve">
-    <value>Thống kê nhanh</value>
   </data>
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>

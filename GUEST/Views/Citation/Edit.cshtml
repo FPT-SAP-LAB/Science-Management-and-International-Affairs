@@ -5,21 +5,11 @@
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 
-<style>
-    .citationE {
-        display: none !important;
-    }
-</style>
-
 <div class="card card-custom">
     <div class="card-body p-0">
         <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
             <div class="col-xl-12 col-xxl-12">
                 <div class="">
-                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("AuthorInfo")</h3>
-                    @{
-                        Html.RenderAction("AddAuthor", "PartialView");
-                    }
                     <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("CitationInfo")</h3>
                     <div class="row">
                         <div class="col-xl-12">
@@ -84,7 +74,7 @@
                         <div class="row">
                             <div class="col-xl-6 form-group">
                                 <label>@rm.GetString("TotalReward")</label>
-                                <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.author.total_reward" />
+                                <input autocomplete="off" class="form-control form-control-lg edit" id="totalreward" readonly type="text" value="@ViewBag.total_reward" />
                             </div>
                         </div>
                     }
@@ -103,14 +93,8 @@
         </div>
     </div>
 </div>
-<form style="visibility: hidden" method="post" action="/Citation/Edit" id="CitationForm">
-    <input name="id" value="@ViewBag.request_id" id="nameEdit" />
-    <input name="editable" id="ckEdit" />
-</form>
-<input class="form-control" value="@ViewBag.author.name" id="name_temp" style="display:none" />
-<input class="form-control" value="@Html.Raw(ViewBag.author.bank_branch)" id="bank_branch_temp" style="display:none" />
+
 @section scripts{
-    <script src="~/Scripts/PartialViewScript.js"></script>
     <script>
         var citation = [];
         var tbodyCitation = document.getElementById("trichdan_body");
@@ -131,86 +115,16 @@
             $(link_temp[link_temp.length - 1]).val("");
         }
 
-        $(document).ready(function () {
-            $("#ckfe").val("@ViewBag.author.office_abbreviation");
-            $("#ckfe").trigger('change');
-
-                                                var temp_ms = "@ViewBag.author.mssv_msnv";
-                                                if ($('#add_author_msnv').find("option[value='" + temp_ms + "']").length) {
-                $('#add_author_msnv').val(temp_ms).trigger('change');
-                                                } else {
-                                                    // Create a DOM Option and pre-select by default
-                                                    var newOption = new Option(temp_ms, temp_ms, true, true);
-                // Append it to the select
-                $('#add_author_msnv').append(newOption).trigger('change');
-                                                }
-
-            @*$("#add_author_msnv").val("@ViewBag.author.mssv_msnv");
-            $("#add_author_msnv").trigger('change');*@
-
-            var is_Reseacher = "@ViewBag.author.is_reseacher";
-            var is_r = true;
-            if (is_Reseacher == "False") is_r = false;
-
-            $("#add_author_mail").val("@ViewBag.author.email");
-            $("#add_author_name").val($("#name_temp").val());
-            $("#add_author_title").val("@ViewBag.author.title_id");
-            $("#add_author_title").trigger('change');
-            $("#add_author_contractType").val("@ViewBag.author.contract_id");
-            $("#add_author_contractType").trigger('change');
-            $("#add_author_cmnd").val("@ViewBag.author.identification_number");
-            $("#add_author_cmnd_link").val("@ViewBag.author.identification_file_link");
-            $("#add_author_tax").val("@ViewBag.author.tax_code");
-            $("#add_author_bank").val($("#bank_branch_temp").val());
-            $("#add_author_accno").val("@ViewBag.author.bank_number");
-            $("#add_author_isReseacher").prop("checked", is_r);
-
-            var x = $("#totalreward").val();
+        var x = $("#totalreward").val();
+        if (x != undefined)
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
-            var ck = "@ViewBag.ckEdit";
-            if (ck != "5") $(".edit").prop("disabled", true);
-            else $(".edit").prop("disabled", false);
-        });
-
-        function addAuthor() {
-            ckfe = $("#ckfe").val()
-            add_author_workplace = $("#ckfe").val()
-            add_author_msnv = $("#add_author_msnv").val()
-            add_author_name = $("#add_author_name").val()
-            add_author_title = $("#add_author_title option:selected").text()
-            add_author_contractType = $("#add_author_contractType option:selected").text()
-            add_author_cmnd = $("#add_author_cmnd").val()
-            add_author_tax = $("#add_author_tax").val()
-            add_author_bank = $("#add_author_bank").val()
-            add_author_accno = $("#add_author_accno").val()
-            add_author_reward = $("#add_author_reward").val()
-            add_author_note = $("#add_author_note").val()
-            add_author_email = $("#add_author_mail").val()
-            id = new Date().getTime()
-            var AddAuthor = {
-                name: add_author_name,
-                email: add_author_email,
-                bank_number: add_author_accno,
-                tax_code: add_author_tax,
-                bank_branch: add_author_bank,
-                identification_number: add_author_cmnd,
-                mssv_msnv: add_author_msnv,
-                office_id: $("#ckfe option:selected").attr("name"),
-                contract_id: $("#add_author_contractType").val(),
-                title_id: $("#add_author_title").val(),
-                people_id: "@ViewBag.author.people_id",
-                temp_id: id,
-                office_abbreviation: $("#ckfe option:selected").val(),
-                identification_file_link: $("#add_author_cmnd_link").val(),
-                is_reseacher: $('#add_author_isReseacher').is(':checked'),
-            }
-            return AddAuthor;
-        }
+        var ck = "@ViewBag.ckEdit";
+        if (ck != "5") $(".edit").prop("disabled", true);
+        else $(".edit").prop("disabled", false);
 
         $("#btn-submit").click(function () {
             $("#loading").show();
-            let AddAuthor = addAuthor();
             var inputSource = $(".trichdan_source");
             var inputCount = $(".trichdan_count");
             var inputLink = $(".trichdan_link");
@@ -234,28 +148,17 @@
                 $("#loading").hide();
                 return false;
             }
-            if (AddAuthor.name == undefined || AddAuthor.name == "") {
-                toastr.error("Tên tác giả không phù hợp");
-                $("#loading").hide();
-                return false;
-            }
-            if (AddAuthor.email == undefined || AddAuthor.email == "") {
-                toastr.error("Email tác giả không phù hợp");
-                $("#loading").hide();
-                return false;
-            }
 
             $.ajax({
                 url: "@Url.Action("EditCitation", "Citation")",
                 type: "POST",
-                data: JSON.stringify({ 'citation': citation, 'addAuthor': AddAuthor, 'request_id': "@ViewBag.request_id" }),
+                data: JSON.stringify({ 'citation': citation, 'request_id': "@ViewBag.request_id" }),
                 contentType: "application/json;charset=utf-8",
                 datatype: "json",
                 cache: false,
                 success: function (response) {
                     if (response.success) {
-                        $("#ckEdit").val("3");
-                        $("#CitationForm").submit();
+                        location.reload();
                     }
                     else {
                         toastr.error(response.content);
