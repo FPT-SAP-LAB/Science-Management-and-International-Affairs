@@ -19,9 +19,9 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             guestRepo = new AcademicActivityGuestRepo();
             int language = Models.LanguageResource.GetCurrentLanguageID();
             ViewBag.title = rm.GetString("AcademicActivity");
-            ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>(), language, null);
+            ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>(), language, null, null);
             ViewBag.listActivityType = guestRepo.getListType(language);
-
+            ViewBag.YearSearching = guestRepo.yearSearching();
             var pagesTree = new List<PageTree>
             {
                 new PageTree(rm.GetString("AcademicActivity"),"/AcademicActivity/Index"),
@@ -65,11 +65,11 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             }
         }
         [HttpPost]
-        public ActionResult LoadMoreList(int count, List<int> type, string search)
+        public ActionResult LoadMoreList(int count, List<int> type, string search, int? year)
         {
             guestRepo = new AcademicActivityGuestRepo();
             int language = Models.LanguageResource.GetCurrentLanguageID();
-            List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type, language, search);
+            List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type, language, search, year);
             return Json(data);
         }
         public ActionResult loadForm(int pid)

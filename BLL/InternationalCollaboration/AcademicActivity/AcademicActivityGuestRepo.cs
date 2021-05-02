@@ -5,13 +5,14 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using ENTITIES.CustomModels.InternationalCollaboration;
 
 namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityGuestRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<baseAA> getBaseAA(int count, List<int> type, int language, string search)
+        public List<baseAA> getBaseAA(int count, List<int> type, int language, string search, int? year)
         {
             try
             {
@@ -39,21 +40,25 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         on av.article_id = ai.article_id left join General.[File] f
 						on f.[file_id] = aa.[file_id] and al.language_id = av.language_id
                         WHERE al.language_id = @language AND ar.article_status_id = 2 AND [aa].activity_type_id IN " + typestr.ToString();
-                if (search is null)
+                if (search != null)
                 {
-                    sql += @" ORDER BY [from] DESC
-                           OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
+                    sql += @" AND av.version_title LIKE ISNULL(@search, '')";
+                } 
+                if (year != null)
+                {
+                    sql += @" AND YEAR(aa.activity_date_start) = @year
+                        ORDER BY[from] DESC
+                        OFFSET @count * 6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
-                    new SqlParameter("language", language)).ToList();
-                }
-                else
+                    new SqlParameter("language", language), new SqlParameter("search", "%" + search + "%"),
+                    new SqlParameter("year", year)).ToList();
+                } else
                 {
-                    sql += @" AND av.version_title LIKE @search
-                           ORDER BY [from] DESC
-                           OFFSET @count*6 ROWS FETCH NEXT 6 ROWS ONLY";
+                    sql += @" ORDER BY[from] DESC
+                          OFFSET @count * 6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
                     new SqlParameter("language", language), new SqlParameter("search", "%" + search + "%")).ToList();
-                }
+                }                    
                 foreach (baseAA a in obj)
                 {
                     a.from = changeFormatDate(a.from);
@@ -81,6 +86,21 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             {
                 Console.WriteLine(e.ToString());
                 return new List<activityType>();
+            }
+        }
+        public YearSearching yearSearching()
+        {
+            try
+            {
+                string sql = @"SELECT YEAR(MIN(activity_date_start)) 'year_from', YEAR(MAX(activity_date_end)) 'year_to'
+                FROM SMIA_AcademicActivity.AcademicActivity ap";
+                YearSearching obj = db.Database.SqlQuery<YearSearching>(sql).FirstOrDefault();
+                return obj;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return new YearSearching();
             }
         }
         public int getPhaseCurrentByActivity(int activity_id)
