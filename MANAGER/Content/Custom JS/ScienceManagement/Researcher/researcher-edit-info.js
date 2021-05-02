@@ -3,7 +3,7 @@ var KTImageInputDemo = function () {
     // Private functions
     var initDemos = function () {
         var avatar5 = new KTImageInput('kt_image_avatar');
-        avatar5.on('cancel', function (imageInput) {
+        avatar5.on('cancel', function () {
             swal.fire({
                 title: 'Image successfully changed !',
                 type: 'success',
@@ -24,7 +24,7 @@ var KTImageInputDemo = function () {
             });
         });
 
-        avatar5.on('remove', function (imageInput) {
+        avatar5.on('remove', function () {
             swal.fire({
                 title: 'Image successfully removed !',
                 type: 'error',
@@ -76,7 +76,7 @@ $(function () {
             ////////////////////xử lý ở đây/////////////////////
             var url = new URL(window.location.href);
             people_id = url.searchParams.get("id");
-            name = $("#researcher_name").val()
+            let name = $("#researcher_name").val()
             dob = $("#researcher_dob").val()
             nationality = $("#country_select").select2('data');
             title = $("#title_select").select2('data');
