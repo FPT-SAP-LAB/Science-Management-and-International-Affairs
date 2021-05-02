@@ -1,5 +1,4 @@
 ﻿using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
 using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
@@ -7,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using static ENTITIES.CustomModels.ScienceManagement.Report.ArticlesInoutCountryReports;
+using static ENTITIES.CustomModels.ScienceManagement.Report.IntellectualPropertyReport;
 
 namespace BLL.ScienceManagement.Report
 {
