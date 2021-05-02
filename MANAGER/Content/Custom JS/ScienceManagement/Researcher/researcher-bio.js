@@ -313,7 +313,7 @@ $(function () {
             people_id = url.searchParams.get("id");
             degree = $("#acad_hocvi").val();
             acad_location = $("#acad_location").val();
-            start = $("#add_acad_start").val();
+            let start = $("#add_acad_start").val();
             end = $("#add_acad_end").val();
             let data = new AcadEvent(people_id, degree, acad_location, start, end);
             var fd = new FormData();
@@ -347,7 +347,7 @@ $(function () {
         people_id = url.searchParams.get("id");
         title = $("#work_title").val();
         work_location = $("#work_location").val();
-        start = $("#add_work_start").val();
+        let start = $("#add_work_start").val();
         end = $("#add_work_end").val();
         let data = new WorkEvent(people_id, title, work_location, start, end);
         var fd = new FormData();
