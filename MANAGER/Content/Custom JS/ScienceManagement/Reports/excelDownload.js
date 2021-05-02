@@ -19,6 +19,6 @@ window.saveFile = function saveFile() {
     console.log(data)
     var data1 = data["myrows"];
     var opts = [{ sheetid: 'One', header: true }, { sheetid: 'Two', header: false }];
-    //var res = alasql('SELECT * INTO XLSX("export.xlsx",?) FROM ?',
-    //    [opts, [data1]]);
+    //var res =
+        alasql('SELECT * INTO XLSX("export.xlsx",?) FROM ?', [opts, [data1]]);
 }
