@@ -199,7 +199,10 @@
                 },
                 cache: false,
                 dataSrc: function (json) {
-                    $("#total_money").text(AddComma(json.total) + " VND")
+                    if (json.total == "")
+                        $("#total_money").text("0 VND");
+                    else
+                        $("#total_money").text(AddComma(json.total) + " VND")
                     return json.data;
                 }
             },

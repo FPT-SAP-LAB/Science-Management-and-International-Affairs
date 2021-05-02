@@ -287,7 +287,7 @@ namespace BLL.ScienceManagement.Report
             return new Tuple<BaseServerSideData<IntellectualPropertyReport>,
                 string>(new BaseServerSideData<IntellectualPropertyReport>(res, recordsTotal), totalAmount);
         }
-        public Tuple<BaseServerSideData<CitationByAuthorReport>, string> GetCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search)
+        public Tuple<BaseServerSideData<CitationByAuthorReport>, long> GetCitationByAuthorReport(BaseDatatable baseDatatable, SearchFilter search)
         {
             db.Configuration.LazyLoadingEnabled = true;
 
@@ -295,15 +295,18 @@ namespace BLL.ScienceManagement.Report
                         join b in db.BaseRequests on a.request_id equals b.request_id
                         join c in db.Profiles on b.account_id equals c.account_id
                         join d in db.People on c.people_id equals d.people_id
+                        join e in db.RequestDecisions on b.request_id equals e.request_id
+                        join f in db.Decisions on e.decision_id equals f.decision_id
                         where a.citation_status_id == 2
                         select new CitationByAuthorReport
                         {
+                            valid_date = f.valid_date,
+                            decision_number = f.decision_number,
                             author_name = d.name,
-                            scopus_citation = a.Citations.Where(x => x.citation_type_id == 2).Select(x => x.count).Sum(),
-                            gscholar_citation = a.Citations.Where(x => x.citation_type_id == 1).Select(x => x.count).Sum(),
-                            valid_date = a.BaseRequest.created_date.Value,
                             msnv = c.mssv_msnv,
                             office = d.Office.office_name,
+                            scopus_citation = a.Citations.Where(x => x.citation_type_id == 2).Select(x => x.count).Sum(),
+                            gscholar_citation = a.Citations.Where(x => x.citation_type_id == 1).Select(x => x.count).Sum(),
                             total_reward = a.total_reward,
                         });
             if (search.msnv != null && search.msnv.Trim() != "")
@@ -312,7 +315,16 @@ namespace BLL.ScienceManagement.Report
             }
             var res = data.OrderBy(baseDatatable.SortColumnName + " " + baseDatatable.SortDirection)
             .Skip(baseDatatable.Start).Take(baseDatatable.Length).ToList();
-            string totalAmount = "";
+
+            for (int i = 0; i < res.Count; i++)
+            {
+                res[i].scopus_citation = res[i].scopus_citation == null ? 0 : res[i].scopus_citation;
+                res[i].gscholar_citation = res[i].gscholar_citation == null ? 0 : res[i].gscholar_citation;
+                res[i].total_reward = res[i].total_reward == null ? 0 : res[i].total_reward;
+                res[i].valid_date_string = res[i].valid_date.ToString("dd/MM/yyyy");
+                res[i].rownum = baseDatatable.Start + 1 + i;
+            }
+
             long total = 0;
             foreach (var i in res)
             {
@@ -321,10 +333,9 @@ namespace BLL.ScienceManagement.Report
                     total += i.total_reward.Value;
                 }
             }
-            totalAmount = total.ToString();
             int recordsTotal = data.Count();
             return new Tuple<BaseServerSideData<CitationByAuthorReport>,
-                string>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), totalAmount);
+                long>(new BaseServerSideData<CitationByAuthorReport>(res, recordsTotal), total);
         }
         public Tuple<BaseServerSideData<ConferencesParticipationReport>, string> GetConferencesReport(BaseDatatable baseDatatable, SearchFilter search)
         {
