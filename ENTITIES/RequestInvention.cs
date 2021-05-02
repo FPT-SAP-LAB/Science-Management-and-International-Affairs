@@ -16,7 +16,7 @@ namespace ENTITIES
     {
         public int request_id { get; set; }
         public Nullable<int> status_id { get; set; }
-        public string total_reward { get; set; }
+        public Nullable<int> total_reward { get; set; }
         public int invention_id { get; set; }
         public string reward_type { get; set; }
     
