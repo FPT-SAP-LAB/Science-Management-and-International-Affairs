@@ -94,39 +94,20 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
-        public JsonResult getAwardMoneyInoutCountry()
+        public JsonResult GetAwardMoneyInoutCountry(int? hang, int? type, string year, string name)
         {
             try
             {
-                int? office_id;
-                int? hang;
-                int? type;
-                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
-                else { office_id = Int32.Parse(Request["coso"]); }
-                /////////////////////////////////////////////////////////////////////////
-                if (Request["hang"] == null || Request["hang"] == "") { hang = null; }
-                else { hang = Int32.Parse(Request["hang"]); }
-                /////////////////////////////////////////////////////////////////////////
-                if (Request["type"] == null || Request["type"] == "") { type = null; }
-                else { type = Int32.Parse(Request["type"]); }
-                //////////////////////////////////////////////////////////////////////////
-                string name = Request["name"];
-                string year = Request["year"];
                 SearchFilter searchs = new SearchFilter()
                 {
-                    office_id = office_id,
                     name = name,
                     year = year,
                     hang = hang
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, String> output = rewardsReportRepo.GetAriticlesByAreaReports(datatable, searchs, type);
-                for (int i = 0; i < output.Item1.Data.Count; i++)
-                {
-                    output.Item1.Data[i].valid_date_string = output.Item1.Data[i].valid_date.ToString("dd/MM/yyyy");
-                    output.Item1.Data[i].rownum = datatable.Start + 1 + i;
-                }
+                Tuple<BaseServerSideData<ArticlesInoutCountryReports>, string> output = rewardsReportRepo.GetAriticlesByAreaReports(datatable, searchs, type);
+
                 return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
             }
             catch (Exception e)
@@ -171,17 +152,10 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         //        });
         //    }
         //}
-        public JsonResult getIntellectualPropertyReport()
+        public JsonResult GetIntellectualPropertyReport(string name, string year, int? office_id)
         {
             try
             {
-                int? office_id;
-                int? hang;
-                if (Request["coso"] == null || Request["coso"] == "") { office_id = null; }
-                else { office_id = Int32.Parse(Request["coso"]); }
-                //////////////////////////////////////////////////////////////////////////
-                string name = Request["name"];
-                string year = Request["year"];
                 SearchFilter searchs = new SearchFilter()
                 {
                     office_id = office_id,
@@ -191,11 +165,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
                 Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.GetIntellectualPropertyReport(datatable, searchs);
-                for (int i = 0; i < output.Item1.Data.Count; i++)
-                {
-                    output.Item1.Data[i].date_string = output.Item1.Data[i].date.Value.ToString("dd/MM/yyyy");
-                    output.Item1.Data[i].rownum = datatable.Start + 1 + i;
-                }
+
                 return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
             }
             catch (Exception e)
@@ -207,7 +177,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 });
             }
         }
-        public JsonResult getCitationReports()
+        public JsonResult GetCitationReports()
         {
             try
             {
@@ -237,7 +207,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 });
             }
         }
-        public JsonResult getConferencesReports()
+        public JsonResult GetConferencesReports()
         {
             try
             {
