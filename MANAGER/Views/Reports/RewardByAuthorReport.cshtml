@@ -164,10 +164,10 @@
                         <td>@item.msnv_mssv</td>
                         <td>@item.title</td>
                         <td>@item.office</td>
-                        <td>@item.paperAward.Sum()</td>
-                        <td>@item.CitationAward</td>
-                        <td>@item.inventionAmount.Sum()</td>
-                        <td>@(item.paperAward.Sum() + item.CitationAward + item.inventionAmount.Sum())</td>
+                        <td class="text-right">@String.Format("{0:n0}", item.paperAward.Sum())</td>
+                        <td class="text-right">@String.Format("{0:n0}", item.CitationAward)</td>
+                        <td class="text-right">@String.Format("{0:n0}", item.inventionAmount.Sum())</td>
+                        <td class="text-right">@String.Format("{0:n0}", (item.paperAward.Sum() + item.CitationAward + item.inventionAmount.Sum()))</td>
                     </tr>
                 }
             </tbody>

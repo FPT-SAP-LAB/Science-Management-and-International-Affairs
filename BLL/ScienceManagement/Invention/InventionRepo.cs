@@ -257,6 +257,7 @@ namespace BLL.ScienceManagement.Invention
                         db.RequestDecisions.Add(request);
                         RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
                         rc.status_id = 2;
+                        rc.Invention.is_verified = true;
                     }
 
                     foreach (var item in wait)
