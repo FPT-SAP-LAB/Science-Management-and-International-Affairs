@@ -308,28 +308,24 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public string getSuggestedMOACode(int moa_id)
+        public string getSuggestedMOACode(int mou_id)
         {
             try
             {
-                string sql_countInYear = @"select count(*) from IA_Collaboration.MOU where mou_code like @year";
-                string sql_checkDup = @"select count(*) from IA_Collaboration.MOABonus where moa_bonus_code = @newCode";
-                bool isDuplicated = false;
-                string newCode = "";
-                int countInYear = db.Database.SqlQuery<int>(sql_countInYear,
-                        new SqlParameter("year", '%' + DateTime.Now.Year + '%')).First();
-                int countInMOA = db.MOABonus.Where(x => x.moa_id == moa_id).Count();
+                bool is_duplicated = false;
+                string new_code = "";
+
+                string old_mou_code = db.MOUs.Find(mou_id).mou_code;
+                int count_moa = db.MOAs.Where(x => x.mou_id == mou_id).Count();
 
                 //fix duplicate mou_code:
-                countInYear++;
                 do
                 {
-                    countInMOA++;
-                    newCode = DateTime.Now.Year + "/" + countInYear + "_MOA/" + countInMOA;
-                    isDuplicated = db.Database.SqlQuery<int>(sql_checkDup,
-                        new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
-                } while (isDuplicated);
-                return newCode;
+                    count_moa++;
+                    new_code = old_mou_code + "_MOA/" + count_moa;
+                    is_duplicated = db.MOAs.Where(x => x.moa_code.Equals(new_code)).FirstOrDefault() is null ? false : true;
+                } while (is_duplicated);
+                return new_code;
             }
             catch (Exception ex)
             {
