@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Report
 {
@@ -17,6 +13,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public List<int> paperAward { get; set; }
         public List<int> inventionAmount { get; set; }
         public int CitationAward { get; set; }
-        //public string PublicYear { get; set; }
+        public long Total { get; set; }
     }
 }

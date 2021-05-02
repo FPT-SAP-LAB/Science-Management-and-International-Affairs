@@ -147,7 +147,7 @@ namespace BLL.ScienceManagement.Report
             {
                 if (dict.TryGetValue(item.msnv_mssv, out ReportByAuthorAward temp))
                 {
-                    temp.CitationAward += temp.CitationAward;
+                    temp.CitationAward += item.CitationAward;
                 }
                 else
                 {
@@ -158,6 +158,8 @@ namespace BLL.ScienceManagement.Report
             var informations = dict
                 .Where(x => x.Value.inventionAmount.Count > 0 || x.Value.paperAward.Count > 0 || x.Value.CitationAward > 0)
                 .Select(x => x.Value).ToList();
+
+            informations.ForEach(x => x.Total = x.CitationAward + x.inventionAmount.Sum() + x.paperAward.Sum());
 
             foreach (var info in informations)
             {
