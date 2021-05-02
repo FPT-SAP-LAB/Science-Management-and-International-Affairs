@@ -3,6 +3,7 @@ using ENTITIES.CustomModels.ScienceManagement.Report;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static ENTITIES.CustomModels.ScienceManagement.Report.TotalBonusByYearItem;
 
 namespace BLL.ScienceManagement.Report
 {

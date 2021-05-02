@@ -8,13 +8,11 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public PaperReward PaperRewards { get; set; }
         public List<int> CitationRewards { get; set; }
         public List<int> InventionRewards { get; set; }
-        public long Total { get; set; }
-    }
-    public partial class PaperReward
-    {
-        public int MyProperty { get; set; }
-        public List<int> Vietnam { get; set; }
-        public List<int> International { get; set; }
-        public List<int> FromResearchers { get; set; }
+        public class PaperReward
+        {
+            public List<int> Vietnam { get; set; }
+            public List<int> International { get; set; }
+            public List<int> FromResearchers { get; set; }
+        }
     }
 }
