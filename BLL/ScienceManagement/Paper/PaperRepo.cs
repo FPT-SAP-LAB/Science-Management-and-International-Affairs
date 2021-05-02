@@ -19,10 +19,22 @@ namespace BLL.ScienceManagement.Paper
 {
     public class PaperRepo
     {
-        public DetailPaper getDetail(string id)
+        public DetailPaper GetDetail(string id)
         {
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int id_int = 0;
+            try
+            {
+                id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            DetailPaper item = new DetailPaper();
             string sql = @"select p.*, CAST(rp.reward_type AS nvarchar) as reward_type, CAST(rp.type AS nvarchar) as type, rp.total_reward as total_reward, rp.specialization_id, rp.request_id,
               rp.status_id, f.link as 'link_file'
             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp
@@ -31,11 +43,11 @@ namespace BLL.ScienceManagement.Paper
             join Localization.PaperTypeByAreaLanguage ptal on rp.type=ptal.id
             left join [General].[File] f on p.file_id = f.file_id
             where p.paper_id = @id and prtl.language_id=1 and ptal.language_id=1";
-            item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", Int32.Parse(id))).FirstOrDefault();
+            DetailPaper item = db.Database.SqlQuery<DetailPaper>(sql, new SqlParameter("id", id_int)).FirstOrDefault();
             return item;
         }
 
-        public string getLinkPolicy()
+        public string GetLinkPolicy()
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select f.link
@@ -46,8 +58,21 @@ namespace BLL.ScienceManagement.Paper
             return link;
         }
 
-        public List<ListCriteriaOfOnePaper> getCriteria(string id)
+        public List<ListCriteriaOfOnePaper> GetCriteria(string id)
         {
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int id_int = 0;
+            try
+            {
+                id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select pc.name, pwc.*
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].PaperWithCriteria pwc on p.paper_id = pwc.paper_id
@@ -57,10 +82,22 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public Author getAuthorReceived_all(string id)
+        public Author GetAuthorReceived_all(string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            int paper_id = Int32.Parse(id);
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int paper_id = 0;
+            try
+            {
+                paper_id = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             Author p = (from a in db.RequestPapers
                         join b in db.Authors on a.author_received_reward equals b.people_id
                         where a.paper_id == paper_id
@@ -68,7 +105,7 @@ namespace BLL.ScienceManagement.Paper
             return p;
         }
 
-        public string addFile(ENTITIES.File f)
+        public string AddFile(ENTITIES.File f)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             try
@@ -84,8 +121,21 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public List<AuthorInfoWithNull> getAuthorPaper(string id, string lang)
+        public List<AuthorInfoWithNull> GetAuthorPaper(string id, string lang)
         {
+            if (id == null || lang == null) return null;
+            id = id.Trim();
+            lang = lang.Trim();
+            if (id == "") return null;
+            try
+            {
+                int id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ap.money_reward, ah.identification_file_link
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -107,7 +157,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public bool updateJournal()
+        public bool UpdateJournal()
         {
             int count = 1;
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
@@ -130,37 +180,41 @@ namespace BLL.ScienceManagement.Paper
                 db.Database.ExecuteSqlCommand("delete from [SM_ScientificProduct].Scimagojr");
                 using (var reader = new StreamReader(savePath))
                 {
-                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                    config.Delimiter = ";";
-                    config.HasHeaderRecord = true;
-                    config.BadDataFound = null;
+                    CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    {
+                        Delimiter = ";",
+                        HasHeaderRecord = true,
+                        BadDataFound = null
+                    };
                     using (var csv = new CsvReader(reader, config))
                     {
                         while (csv.Read())
                         {
                             if (csv.GetField(0) != "Rank")
                             {
-                                sci = new Scimagojr();
-                                sci.Rank = csv.GetField(0);
-                                sci.Sourceid = csv.GetField(1);
-                                sci.Title = csv.GetField(2);
-                                sci.Type = csv.GetField(3);
-                                sci.Issn = csv.GetField(4);
-                                sci.SJR = csv.GetField(5);
-                                sci.SJR_Best_Quartile = csv.GetField(6);
-                                sci.H_index = csv.GetField(7);
-                                sci.Total_Docs_2019 = csv.GetField(8);
-                                sci.Total_Docs_3years = csv.GetField(9);
-                                sci.Total_Refs = csv.GetField(10);
-                                sci.Total_Cites_3years = csv.GetField(11);
-                                sci.Citable_Docs_3years = csv.GetField(12);
-                                sci.Cites_Doc_2years = csv.GetField(13);
-                                sci.Ref_Doc = csv.GetField(14);
-                                sci.Country = csv.GetField(15);
-                                sci.Region = csv.GetField(16);
-                                sci.Publisher = csv.GetField(17);
-                                sci.Coverage = csv.GetField(18);
-                                sci.Categories = csv.GetField(19);
+                                sci = new Scimagojr
+                                {
+                                    Rank = csv.GetField(0),
+                                    Sourceid = csv.GetField(1),
+                                    Title = csv.GetField(2),
+                                    Type = csv.GetField(3),
+                                    Issn = csv.GetField(4),
+                                    SJR = csv.GetField(5),
+                                    SJR_Best_Quartile = csv.GetField(6),
+                                    H_index = csv.GetField(7),
+                                    Total_Docs_2019 = csv.GetField(8),
+                                    Total_Docs_3years = csv.GetField(9),
+                                    Total_Refs = csv.GetField(10),
+                                    Total_Cites_3years = csv.GetField(11),
+                                    Citable_Docs_3years = csv.GetField(12),
+                                    Cites_Doc_2years = csv.GetField(13),
+                                    Ref_Doc = csv.GetField(14),
+                                    Country = csv.GetField(15),
+                                    Region = csv.GetField(16),
+                                    Publisher = csv.GetField(17),
+                                    Coverage = csv.GetField(18),
+                                    Categories = csv.GetField(19)
+                                };
 
                                 db.Scimagojrs.Add(sci);
                                 count++;
@@ -207,8 +261,21 @@ namespace BLL.ScienceManagement.Paper
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public List<AuthorInfoWithNull> getAuthorPaper_FE(string id, string lang)
+        public List<AuthorInfoWithNull> GetAuthorPaper_FE(string id, string lang)
         {
+            if (id == null || lang == null) return null;
+            id = id.Trim();
+            lang = lang.Trim();
+            if (id == "") return null;
+            try
+            {
+                int id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else cast(1 as bit) end as 'is_reseacher'
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -230,7 +297,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public bool confirmReward(int request_id)
+        public bool ConfirmReward(int request_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -256,7 +323,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public bool editAuthorReward(int request_id)
+        public bool EditAuthorReward(int request_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -278,7 +345,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public List<PendingPaper_Manager> listWaitVerify()
+        public List<PendingPaper_Manager> ListWaitVerify()
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select p.name, a.email, br.created_date, p.paper_id, rp.status_id
@@ -290,7 +357,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public string deleteRequest(int id)
+        public string DeleteRequest(int id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -310,7 +377,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public List<string> getDecisionLink(int id)
+        public List<string> GetDecisionLink(int id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             try
@@ -330,7 +397,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public ENTITIES.Paper addPaper(DetailPaper item)
+        public ENTITIES.Paper AddPaper(DetailPaper item)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -373,7 +440,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public BaseRequest addBaseRequest(int account_id)
+        public BaseRequest AddBaseRequest(int account_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -404,7 +471,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string addRequestPaper(int request_id, RequestPaper r, string daidien)
+        public string AddRequestPaper(int request_id, RequestPaper r, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -442,7 +509,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string updateRewardAuthorAfterDecision(List<AddAuthor> people, int paper_id)
+        public string UpdateRewardAuthorAfterDecision(List<AddAuthor> people, int paper_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -474,7 +541,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string getAuthorReceived(string id)
+        public string GetAuthorReceived(string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             int paper_id = Int32.Parse(id);
@@ -485,7 +552,7 @@ namespace BLL.ScienceManagement.Paper
             return ms;
         }
 
-        public string addAuthor(List<AddAuthor> list, string paper_id)
+        public string AddAuthor(List<AddAuthor> list, string paper_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -546,7 +613,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string changeStatus(DetailPaper paper)
+        public string ChangeStatus(DetailPaper paper)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -574,7 +641,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string changeStatusManager(DetailPaper paper)
+        public string ChangeStatusManager(DetailPaper paper)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -596,7 +663,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string uploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1, int research)
+        public string UploadDecision(DateTime date_format1, int file_id1, string number1, string file_drive_id1, int research)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -611,8 +678,8 @@ namespace BLL.ScienceManagement.Paper
                     db.Decisions.Add(decision);
                     db.SaveChanges();
 
-                    List<WaitDecisionPaper> list = getListWait_UploadQDGV(0);
-                    List<WaiDecisionHaveReseacher> list2 = getListHaveReseacher();
+                    List<WaitDecisionPaper> list = GetListWait_UploadQDGV(0);
+                    List<WaiDecisionHaveReseacher> list2 = GetListHaveReseacher();
 
                     foreach (var item in list)
                     {
@@ -664,7 +731,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string uploadDecision2(DateTime date_format1, int file_id1, string number1, string file_drive_id1, int research)
+        public string UploadDecision2(DateTime date_format1, int file_id1, string number1, string file_drive_id1, int research)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -679,8 +746,8 @@ namespace BLL.ScienceManagement.Paper
                     db.Decisions.Add(decision);
                     db.SaveChanges();
 
-                    List<WaitDecisionPaper> list = getListWait_UploadNCV(1);
-                    List<WaiDecisionHaveReseacher> list2 = getListHaveReseacher();
+                    List<WaitDecisionPaper> list = GetListWait_UploadNCV(1);
+                    List<WaiDecisionHaveReseacher> list2 = GetListHaveReseacher();
 
                     foreach (var item in list)
                     {
@@ -732,7 +799,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public List<WaiDecisionHaveReseacher> getListHaveReseacher()
+        public List<WaiDecisionHaveReseacher> GetListHaveReseacher()
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select a.*
@@ -755,7 +822,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public List<WaitDecisionPaper> getListWait_UploadQDGV(int reseacher)
+        public List<WaitDecisionPaper> GetListWait_UploadQDGV(int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
@@ -773,7 +840,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public List<WaitDecisionPaper> getListWait_UploadNCV(int reseacher)
+        public List<WaitDecisionPaper> GetListWait_UploadNCV(int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select p.name, p.company, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, count(ap.people_id) as 'note', rp.request_id, p.paper_id
@@ -791,7 +858,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public int addPeople(string name, string mail, Nullable<int> office_id)
+        public int AddPeople(string name, string mail, int? office_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -824,7 +891,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public void addProfile(AddAuthor a)
+        public void AddProfile(AddAuthor a)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -862,7 +929,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string addCriteria(List<CustomCriteria> criteria, string paper_id)
+        public string AddCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -951,7 +1018,7 @@ namespace BLL.ScienceManagement.Paper
             }
         }
 
-        public string updatePaper(string paper_id, ENTITIES.Paper paper)
+        public string UpdatePaper(string paper_id, ENTITIES.Paper paper)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -983,7 +1050,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string updateRequest(RequestPaper item, string daidien)
+        public string UpdateRequest(RequestPaper item, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1023,7 +1090,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string updateCriteria(List<CustomCriteria> criteria, string paper_id)
+        public string UpdateCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1033,7 +1100,7 @@ namespace BLL.ScienceManagement.Paper
                     db.SaveChanges();
                     dbc.Commit();
                     dbc.Dispose();
-                    string mess = addCriteria(criteria, paper_id);
+                    string mess = AddCriteria(criteria, paper_id);
                     return mess;
                 }
                 catch (Exception e)
@@ -1045,7 +1112,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string updateAuthor(List<AddAuthor> people, string paper_id)
+        public string UpdateAuthor(List<AddAuthor> people, string paper_id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1088,7 +1155,7 @@ namespace BLL.ScienceManagement.Paper
                     db.SaveChanges();
                     dbc.Commit();
                     dbc.Dispose();
-                    addAuthor(list, paper_id);
+                    AddAuthor(list, paper_id);
                     return "ss";
                 }
                 catch (Exception e)
@@ -1100,20 +1167,19 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public List<PendingPaper_Manager> listPending()
+        public List<PendingPaper_Manager> ListPending()
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            List<PendingPaper_Manager> list = new List<PendingPaper_Manager>();
             string sql = @"select p.name, a.email, br.created_date, p.paper_id, rp.status_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].RequestPaper rp on p.paper_id = rp.paper_id
 	                            join [SM_Request].BaseRequest br on rp.request_id = br.request_id
 	                            join [General].Account a on br.account_id = a.account_id
                             where rp.status_id = 3 or rp.status_id = 5 or rp.status_id = 8";
-            list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
+            List<PendingPaper_Manager> list = db.Database.SqlQuery<PendingPaper_Manager>(sql).ToList();
             return list;
         }
 
-        public string updateRewardPaper(DetailPaper paper)
+        public string UpdateRewardPaper(DetailPaper paper)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1136,7 +1202,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string updateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
+        public string UpdateAuthorReward(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1175,7 +1241,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public string updateCriteria_ManagerCheck(int id)
+        public string UpdateCriteria_ManagerCheck(int id)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1199,7 +1265,7 @@ namespace BLL.ScienceManagement.Paper
                 }
         }
 
-        public List<WaitDecisionPaper> getListWwaitDecision(string type, int reseacher)
+        public List<WaitDecisionPaper> GetListWwaitDecision(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
@@ -1216,7 +1282,7 @@ namespace BLL.ScienceManagement.Paper
             //		group by p.paper_id) as a on p.paper_id = a.paper_id
             //                    where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher";
             int ty = Int32.Parse(type);
-            bool is_r = reseacher == 0 ? false : true;
+            bool is_r = reseacher != 0;
             var data = (from a in db.BaseRequests
                         join b in db.Profiles on a.account_id equals b.account_id
                         join c in db.People on b.people_id equals c.people_id
@@ -1243,7 +1309,7 @@ namespace BLL.ScienceManagement.Paper
             return data;
         }
 
-        public List<WaitDecisionPaper> getListWwaitDecision2(string type, int reseacher)
+        public List<WaitDecisionPaper> GetListWwaitDecision2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             //string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
@@ -1260,7 +1326,7 @@ namespace BLL.ScienceManagement.Paper
             //		group by p.paper_id) as a on p.paper_id = a.paper_id
             //                    where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
             int ty = Int32.Parse(type);
-            bool is_r = reseacher == 0 ? false : true;
+            bool is_r = reseacher != 0;
             var data = (from a in db.BaseRequests
                         join b in db.Profiles on a.account_id equals b.account_id
                         join c in db.People on b.people_id equals c.people_id
@@ -1287,7 +1353,7 @@ namespace BLL.ScienceManagement.Paper
             return data;
         }
 
-        public List<Paper_Appendix_1> getListAppendix1_2(string type, int reseacher)
+        public List<Paper_Appendix_1> GetListAppendix1_2(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, p.name, p.journal_name, a.sum, b.sumFE, p.paper_id
@@ -1308,7 +1374,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public List<Paper_Apendix_3> getListAppendix3_4(string type, int reseacher)
+        public List<Paper_Apendix_3> GetListAppendix3_4(string type, int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money', ah.identification_file_link
@@ -1324,7 +1390,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public List<string> getLstEmailAuthor(int reseacher)
+        public List<string> GetLstEmailAuthor(int reseacher)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select distinct ah.email
@@ -1337,7 +1403,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public int addPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
+        public int AddPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())

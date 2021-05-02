@@ -1,8 +1,11 @@
-﻿using BLL.ModelDAL;
+﻿using BLL;
+using BLL.ModelDAL;
+using GUEST.Support;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
+using System.Collections.Generic;
 using System.Configuration;
 
 [assembly: OwinStartup(typeof(GUEST.Startup))]
@@ -12,10 +15,15 @@ namespace GUEST
     {
         public readonly static string GuestURI = ConfigurationManager.AppSettings["GuestURI"];
         public readonly static string ManagerURI = ConfigurationManager.AppSettings["ManagerURI"];
+        public readonly static HashSet<string> Staffs = ImportStaff.LoadMail();
+        public static string BackgroundURL;
         public void Configuration(IAppBuilder app)
         {
             NotificationRepo.GuestURI = GuestURI;
             NotificationRepo.ManagerURI = ManagerURI;
+            HomeRepo homeRepo = new HomeRepo();
+            BackgroundURL = homeRepo.GetBackground();
+            BackgroundURL = BackgroundURL ?? "../Content/assets/media/bg/bg-10.jpg";
             // Branch the pipeline here for requests that start with "/signalr"
             app.Map("/signalr", map =>
             {

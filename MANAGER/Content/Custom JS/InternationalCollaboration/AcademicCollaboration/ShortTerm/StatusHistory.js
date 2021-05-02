@@ -23,14 +23,17 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
         searching: false,
         lengthChange: false,
         serverSide: true,
+        order: [1, "desc"],
         columns: [
             {
                 render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
-                }
+                },
+                orderable: false
             },
             {
                 data: 'change_date',
+                name: 'change_date',
                 render: function (data, type) {
                     if (type === "sort" || type === "") {
                         return data;
@@ -39,24 +42,32 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
                 }
             },
             {
-                data: 'collab_status_id'
+                data: 'collab_status_id',
+                name: 'collab_status_id',
+                orderable: false
             },
             {
-                data: 'full_name'
+                data: 'full_name',
+                name: 'full_name',
+                orderable: false
             },
             {
                 render: function (data, type, row) {
                     return `<a href=` + row.file_link + ` target="_blank">` + row.file_name + `</a>`;
-                }
+                },
+                orderable: false,
+                className: 'text-center'
             },
             {
-                data: 'note'
+                data: 'note',
+                name: 'note',
+                orderable: false
             }
         ],
         columnDefs: [
             {
-                targets: [0, 1, 2, 4, 5],
-                className: 'text-nowrap text-center'
+                targets: [0, 1, 2, 3],
+                className: 'text-nowrap text-center',
             },
             {
                 targets: 2,
@@ -82,7 +93,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
                     if (typeof status[data] === 'undefined') {
                         return data;
                     }
-                    return '<span class="label label-lg label-pill font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span>';
+                    return '<span class="label label-pill font-weight-bold ' + status[data].class + ' label-inline">' + status[data].title + '</span>';
                 }
             }
         ],

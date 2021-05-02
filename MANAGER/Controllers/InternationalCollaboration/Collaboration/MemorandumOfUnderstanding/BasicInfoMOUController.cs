@@ -146,6 +146,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        //chưa có class diagram
         public ActionResult getNewExtraMOUCode()
         {
             try

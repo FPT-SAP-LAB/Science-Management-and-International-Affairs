@@ -17,20 +17,20 @@ namespace ADMIN.Controllers
         public ActionResult Index()
         {
             ViewBag.pageTitle = "Quản lí chức danh";
-            ViewBag.HTright = repo.getRightsByModule(1);
-            ViewBag.QLright = repo.getRightsByModule(2);
+            ViewBag.HTright = repo.GetRightsByModule(1);
+            ViewBag.QLright = repo.GetRightsByModule(2);
             return View();
         }
         [HttpPost]
         public ActionResult getDatatable()
         {
-            List<RoleRepo.infoRole> data = repo.getRoles();
+            List<RoleRepo.infoRole> data = repo.GetRoles();
             return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult add(RoleRepo.baseRole obj)
         {
-            bool res = repo.add(obj);
+            bool res = repo.Add(obj);
             if (res)
             {
                 return Json("Thêm thành công");
@@ -40,7 +40,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult delete(int role_id)
         {
-            bool res = repo.delete(role_id);
+            bool res = repo.Delete(role_id);
             if (res)
             {
                 return Json("Xóa thành công");
@@ -50,7 +50,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult edit(RoleRepo.infoRole obj)
         {
-            bool res = repo.edit(obj);
+            bool res = repo.Edit(obj);
             if (res)
             {
                 return Json("Chỉnh sửa thành công");
@@ -66,7 +66,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult getRightByRole(int role_id)
         {
-            List<RoleRepo.baseRight> data = repo.getRightByRole(role_id);
+            List<RoleRepo.baseRight> data = repo.GetRightByRole(role_id);
             return Json(data);
         }
         [HttpPost]

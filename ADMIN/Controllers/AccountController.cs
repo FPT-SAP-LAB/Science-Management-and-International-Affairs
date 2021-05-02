@@ -18,22 +18,22 @@ namespace ADMIN.Controllers
         public ActionResult List()
         {
             ViewBag.pageTitle = "Quản lí tài khoản";
-            ViewBag.HTright = repo.getRightsByModule(1);
-            ViewBag.QLright = repo.getRightsByModule(2);
-            ViewBag.Role = repo.getRoles();
+            ViewBag.HTright = repo.GetRightsByModule(1);
+            ViewBag.QLright = repo.GetRightsByModule(2);
+            ViewBag.Role = repo.GetRoles();
             ViewBag.Postions = PositionLanguageRepo.GetPositionLanguages(1);
             return View();
         }
         [HttpPost]
         public ActionResult getDatatable()
         {
-            List<AccountRepo.extendAccount> data = repo.getAccounts();
+            List<AccountRepo.extendAccount> data = repo.GetAccounts();
             return Json(new { success = true, data });
         }
         [HttpPost]
         public JsonResult add(AccountRepo.baseAccount obj)
         {
-            bool res = repo.add(obj);
+            bool res = repo.Add(obj);
             if (res)
             {
                 return Json("Thêm thành công");
@@ -43,7 +43,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult delete(int account_id)
         {
-            string res = repo.delete(account_id);
+            string res = repo.Delete(account_id);
             if (res.Equals("ok"))
             {
                 return Json(1);
@@ -57,7 +57,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult edit(AccountRepo.infoAccount obj)
         {
-            string res = repo.edit(obj);
+            string res = repo.Edit(obj);
             if (res.Equals("ok"))
             {
                 return Json(1);
@@ -77,7 +77,7 @@ namespace ADMIN.Controllers
         [HttpPost]
         public JsonResult getRightByAccount(int account_id)
         {
-            List<AccountRepo.baseRight> data = repo.getRightByAccount(account_id);
+            List<AccountRepo.baseRight> data = repo.GetRightByAccount(account_id);
             return Json(data);
         }
         [HttpPost]

@@ -31,8 +31,8 @@ var table1 = $('#acad_history_table').DataTable({
         columns: [
             { data: "rownum", name: "rownum", orderable: false },
             {
-                data: "acad_id", name: "degree", render: function (data, type, row, meta) {
-                    return "<span class='acad-degree' data-id='" + row.acad_id + "'>" + row.degree + "</span>"
+                data: {}, name: "degree", render: function (data) {
+                    return "<span class='acad-degree' data-id='" + data.acad_id + "'>" + data.degree + "</span>"
                 }
             },
             {
@@ -46,12 +46,12 @@ var table1 = $('#acad_history_table').DataTable({
                 }
             },
             {
-                data: "acad_id", render: function (data, type, row, meta) {
-                    return "<a data-id='" + row.people_id + "-" + row.acad_id + "' data-toggle='modal' data-target='#modal_suatieusu_hoctap' class='btn btn-sm btn-clean btn-icon edit-acad' title='Edit'> <i class='far fa-edit'></i> </a>"
+                data: {}, render: function (data) {
+                    return "<a data-id='" + data.people_id + "-" + data.acad_id + "' data-toggle='modal' data-target='#modal_suatieusu_hoctap' class='btn btn-sm btn-clean btn-icon edit-acad' title='Edit'> <i class='far fa-edit'></i> </a>"
                 }
             },
         ],
-        initComplete: function (settings, json) {
+        initComplete: function () {
             $("#loader_panel").hide()
         }
 });
@@ -96,8 +96,8 @@ var table2 = $('#work_history_table').DataTable({
                 }
             },
             {
-                data: "index", render: function (data, type, row, meta) {
-                    return "<span class='work_time'>" + row.start_year + "-" + row.end_year + "</span>"
+                data: {}, render: function (data) {
+                    return "<span class='work_time'>" + data.start_year + "-" + data.end_year + "</span>"
                 }
             },
             {
@@ -106,7 +106,7 @@ var table2 = $('#work_history_table').DataTable({
                 }
             },
         ],
-        initComplete: function (settings, json) {
+        initComplete: function () {
             $("#loader_panel").hide()
         }
 });
@@ -161,7 +161,7 @@ var table3 = $('#award_history_table').DataTable({
             }
         },
     ],
-    initComplete: function (settings, json) {
+    initComplete: function () {
         $("#loader_panel").hide()
     }
 });
@@ -311,7 +311,7 @@ $(function () {
             people_id = url.searchParams.get("id");
             degree = $("#acad_hocvi").val();
             acad_location = $("#acad_location").val();
-            start = $("#add_acad_start").val();
+            let start = $("#add_acad_start").val();
             end = $("#add_acad_end").val();
             let data = new AcadEvent(people_id, degree, acad_location, start, end);
             var fd = new FormData();
@@ -345,7 +345,7 @@ $(function () {
             people_id = url.searchParams.get("id");
             title = $("#work_title").val();
             work_location = $("#work_location").val();
-            start = $("#add_work_start").val();
+            let start = $("#add_work_start").val();
             end = $("#add_work_end").val();
             let data = new WorkEvent(people_id, title, work_location, start, end);
             var fd = new FormData();
@@ -468,10 +468,9 @@ $(function () {
     $("#submit_edit_work").click(function () {
         submit_edit_work.startLoading()
         var url = new URL(window.location.href);
-        people_id = url.searchParams.get("id");
         let data = {
             id: id,
-            people_id: people_id,
+            people_id: url.searchParams.get("id"),
             place: $("#edit_work_location").val(),
             work_title: $("#edit_work_title").val(),
             start: $("#edit-work-start").val(),

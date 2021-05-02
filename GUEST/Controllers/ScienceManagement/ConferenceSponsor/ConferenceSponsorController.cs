@@ -19,9 +19,7 @@ namespace GUEST.Controllers
     public class ConferenceSponsorController : Controller
     {
         readonly ConferenceSponsorAddRepo AppRepos = new ConferenceSponsorAddRepo();
-        readonly ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
         readonly ConferenceSponsorDetailRepo DetailRepos = new ConferenceSponsorDetailRepo();
-        readonly ConferenceSponsorEditRepo EditRepo = new ConferenceSponsorEditRepo();
         readonly CountryRepo countryRepo = new CountryRepo();
         readonly SpecializationLanguageRepo specializationLanguageRepo = new SpecializationLanguageRepo();
         readonly FormalityLanguageRepo formalityLanguageRepo = new FormalityLanguageRepo();
@@ -45,6 +43,7 @@ namespace GUEST.Controllers
         [AjaxOnly, HttpPost]
         public JsonResult List(ConferenceSearch search)
         {
+            ConferenceSponsorIndexRepo IndexRepos = new ConferenceSponsorIndexRepo();
             BaseDatatable datatable = new BaseDatatable(Request);
             BaseServerSideData<ConferenceIndex> output = IndexRepos.GetIndexPage(datatable, search,
                 CurrentAccount.AccountID(Session), LanguageResource.GetCurrentLanguageID());
@@ -99,10 +98,11 @@ namespace GUEST.Controllers
             return View();
         }
         [HttpPost]
-        public string Edit(string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
+        public JsonResult Edit(string input, HttpPostedFileBase invite, HttpPostedFileBase paper, int request_id)
         {
-            string output = EditRepo.EditRequestConference(CurrentAccount.AccountID(Session), input, invite, paper, request_id);
-            return output;
+            ConferenceSponsorEditRepo EditRepo = new ConferenceSponsorEditRepo();
+            AlertModal<int> output = EditRepo.EditRequestConference(CurrentAccount.AccountID(Session), input, invite, paper, request_id);
+            return Json(output);
         }
         public ActionResult Detail(int id)
         {
@@ -130,15 +130,20 @@ namespace GUEST.Controllers
             else
                 return Json(new { success = true });
         }
-        [ChildActionOnly]
-        public ActionResult CostMenu(int id)
+        [HttpPost]
+        public JsonResult CancelRequest(int request_id)
         {
-            ViewBag.id = id;
-            ViewBag.CheckboxColumn = id == 2;
-            ViewBag.ReimbursementColumn = id >= 3;
-            ViewBag.EditAble = id == 2;
-            return PartialView();
+            return Json(DetailRepos.CancelRequest(request_id, CurrentAccount.AccountID(Session)));
         }
+        //[ChildActionOnly]
+        //public ActionResult CostMenu(int id)
+        //{
+        //    ViewBag.id = id;
+        //    ViewBag.CheckboxColumn = id == 2;
+        //    ViewBag.ReimbursementColumn = id >= 3;
+        //    ViewBag.EditAble = id == 2;
+        //    return PartialView();
+        //}
         [AjaxOnly]
         public JsonResult GetInformationPeopleWithID(string id)
         {

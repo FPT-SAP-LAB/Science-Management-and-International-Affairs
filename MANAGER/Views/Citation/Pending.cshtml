@@ -10,8 +10,8 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Người request</th>
-                    <th>Ngày request</th>
+                    <th>Người đề nghị</th>
+                    <th>Ngày đề nghị</th>
                     <th>Trạng thái</th>
                     <th>Chi tiết</th>
                 </tr>
@@ -25,8 +25,8 @@
                             <td>@count</td>
                             <td>@item.email</td>
                             <td>@item.created_date.ToString("dd/MM/yyyy")</td>
-                            <td>@item.status_id</td>
-                            <td><button id="@item.request_id" class="btn btn-sm btn-clean btn-icon btn_submit" title="View"> <i class="fas fa-eye"></i> </button></td>
+                            <td>@item.citation_status_id</td>
+                            <td><a href="/Citation/Detail?id=@item.request_id" class="btn btn-sm btn-clean btn-icon" title="View"> <i class="fas fa-eye"></i> </a></td>
                         </tr>
                         count++;
                     }
@@ -39,22 +39,6 @@
     <script src="~/Scripts/datetime-moment.js"></script>
     <script src="~/Scripts/moment.js"></script>
     <script>
-        $(".btn_submit").click(function () {
-            var id = this.id;
-            var form = document.createElement("form");
-            var element1 = document.createElement("input");
-
-            form.method = "GET";
-            form.action = "/Citation/Detail";
-
-            element1.value = id;
-            element1.name = "id";
-            form.appendChild(element1);
-
-            document.body.appendChild(form);
-
-            form.submit();
-        });
         $(document).ready(function () {
             $.fn.dataTable.moment('D/MM/YYYY');
             $("#pending").DataTable({

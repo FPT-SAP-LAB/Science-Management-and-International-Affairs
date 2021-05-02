@@ -32,6 +32,7 @@ namespace ENTITIES
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<ImageHomePage> ImageHomePages { get; set; }
         public virtual DbSet<InternalUnit> InternalUnits { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<Office> Offices { get; set; }
@@ -82,6 +83,7 @@ namespace ENTITIES
         public virtual DbSet<AcademicDegreeTypeLanguage> AcademicDegreeTypeLanguages { get; set; }
         public virtual DbSet<CitationStatusLanguage> CitationStatusLanguages { get; set; }
         public virtual DbSet<ConferenceConditionLanguage> ConferenceConditionLanguages { get; set; }
+        public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         public virtual DbSet<FormalityLanguage> FormalityLanguages { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
@@ -165,6 +167,5 @@ namespace ENTITIES
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<QuestionOption> QuestionOptions { get; set; }
         public virtual DbSet<Response> Responses { get; set; }
-        public virtual DbSet<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace BLL.Admin
 {
     public class RightRepo
     {
-        public BaseServerSideData<infoRight> getRights(BaseDatatable baseDatatable)
+        public BaseServerSideData<infoRight> GetRights(BaseDatatable baseDatatable)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace BLL.Admin
                 return new BaseServerSideData<infoRight>(new List<infoRight>(), 0);
             }
         }
-        public List<Module> getModules()
+        public List<Module> GetModules()
         {
             try
             {
@@ -66,7 +66,7 @@ namespace BLL.Admin
                 return new Right();
             }
         }
-        public bool add(baseRight obj)
+        public bool Add(baseRight obj)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace BLL.Admin
                 return false;
             }
         }
-        public bool edit(infoRight obj)
+        public bool Edit(infoRight obj)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace BLL.Admin
                 return false;
             }
         }
-        public bool delete(int right_id)
+        public bool Delete(int right_id)
         {
             try
             {

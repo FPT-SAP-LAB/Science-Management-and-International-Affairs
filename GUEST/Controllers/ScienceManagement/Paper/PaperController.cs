@@ -40,13 +40,13 @@ namespace GUEST.Controllers
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            List<SpecializationLanguage> listSpec = md.GetSpec(lang);
             ViewBag.listSpec = listSpec;
 
-            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            List<PaperCriteria> listCriteria = md.GetPaperCriteria();
             ViewBag.listCriteria = listCriteria;
 
-            string link = pr.getLinkPolicy();
+            string link = pr.GetLinkPolicy();
             ViewBag.link = link;
 
             return View();
@@ -69,7 +69,7 @@ namespace GUEST.Controllers
                 file_drive_id = f.Id,
                 name = name
             };
-            string mess = pr.addFile(fl);
+            string mess = pr.AddFile(fl);
             return Json(new { mess = mess, id = fl.file_id }, JsonRequestBehavior.AllowGet);
         }
 
@@ -112,11 +112,11 @@ namespace GUEST.Controllers
                     file_drive_id = f.Id,
                     name = name
                 };
-                string mess = pr.addFile(fl);
+                string mess = pr.AddFile(fl);
                 if (mess == "ss") paper.file_id = fl.file_id;
             }
             paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            Paper p = pr.addPaper(paper);
+            Paper p = pr.AddPaper(paper);
             if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
             else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
         }
@@ -131,22 +131,22 @@ namespace GUEST.Controllers
                 u = (LoginRepo.User)Session["User"];
                 acc = u.account;
             }
-            BaseRequest b = pr.addBaseRequest(acc.account_id);
-            string mess = pr.addRequestPaper(b.request_id, request, daidien);
+            BaseRequest b = pr.AddBaseRequest(acc.account_id);
+            string mess = pr.AddRequestPaper(b.request_id, request, daidien);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult AddAuthor(List<AddAuthor> people, string paper_id)
         {
-            string mess = pr.addAuthor(people, paper_id);
+            string mess = pr.AddAuthor(people, paper_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult AddCriteria(List<CustomCriteria> criteria, string paper_id)
         {
-            string mess = pr.addCriteria(criteria, paper_id);
+            string mess = pr.AddCriteria(criteria, paper_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
@@ -161,7 +161,7 @@ namespace GUEST.Controllers
             };
             ViewBag.pagesTree = pagesTree;
 
-            DetailPaper item = pr.getDetail(id);
+            DetailPaper item = pr.GetDetail(id);
             ViewBag.Paper = item;
             ViewBag.ckEdit = item.status_id;
 
@@ -172,13 +172,13 @@ namespace GUEST.Controllers
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<SpecializationLanguage> listSpec = md.getSpec(lang);
+            List<SpecializationLanguage> listSpec = md.GetSpec(lang);
             ViewBag.listSpec = listSpec;
 
-            List<PaperCriteria> listCriteria = md.getPaperCriteria();
+            List<PaperCriteria> listCriteria = md.GetPaperCriteria();
             ViewBag.listCriteria = listCriteria;
 
-            List<ListCriteriaOfOnePaper> listCriteriaOne = pr.getCriteria(id);
+            List<ListCriteriaOfOnePaper> listCriteriaOne = pr.GetCriteria(id);
             ViewBag.listCriteriaOne = listCriteriaOne;
 
             //List<DetailComment> listCmt = cr.GetComment(request_id);
@@ -191,28 +191,28 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult editPaper(string paper_id, Paper paper)
         {
-            string mess = pr.updatePaper(paper_id, paper);
+            string mess = pr.UpdatePaper(paper_id, paper);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult editRequest(RequestPaper item, string daidien)
         {
-            string mess = pr.updateRequest(item, daidien);
+            string mess = pr.UpdateRequest(item, daidien);
             return Json(new { mess = mess, id = item.paper_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
         {
-            string mess = pr.updateCriteria(criteria, paper_id);
+            string mess = pr.UpdateCriteria(criteria, paper_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult editAuthor(List<AddAuthor> people, string paper_id)
         {
-            string mess = pr.updateAuthor(people, paper_id);
+            string mess = pr.UpdateAuthor(people, paper_id);
             return Json(new { mess = mess, id = paper_id }, JsonRequestBehavior.AllowGet);
         }
 
@@ -224,8 +224,8 @@ namespace GUEST.Controllers
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<AuthorInfoWithNull> listAuthor = pr.getAuthorPaper(id, lang);
-            string ms = pr.getAuthorReceived(id);
+            List<AuthorInfoWithNull> listAuthor = pr.GetAuthorPaper(id, lang);
+            string ms = pr.GetAuthorReceived(id);
             if (ms == null) ms = "";
             return Json(new { author = listAuthor, ms = ms }, JsonRequestBehavior.AllowGet);
         }
@@ -233,14 +233,14 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult editPaperAuthorReward(List<AddAuthor> people, int paper_id)
         {
-            string mess = pr.updateRewardAuthorAfterDecision(people, paper_id);
+            string mess = pr.UpdateRewardAuthorAfterDecision(people, paper_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult getDecision(int id)
         {
-            List<string> link = pr.getDecisionLink(id);
+            List<string> link = pr.GetDecisionLink(id);
             return Json(new { link = link }, JsonRequestBehavior.AllowGet);
         }
 
@@ -335,11 +335,11 @@ namespace GUEST.Controllers
                 //    file_drive_id = f.Id,
                 //    name = paper.name
                 //};
-                string m = pr.addFile(fl);
+                string m = pr.AddFile(fl);
                 if (m == "ss") paper.file_id = fl.file_id;
             }
 
-            int id = pr.addPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+            int id = pr.AddPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
             bool mess = true;
             if (id == 0) mess = false;
 

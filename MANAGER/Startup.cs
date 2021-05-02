@@ -1,5 +1,5 @@
-﻿using BLL.ModelDAL;
-using BLL.InternationalCollaboration.AcademicActivity;
+﻿using BLL.InternationalCollaboration.AcademicActivity;
+using BLL.ModelDAL;
 using Microsoft.AspNet.SignalR;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
@@ -8,8 +8,8 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
-using System.Configuration;
 using Owin;
+using System.Configuration;
 
 [assembly: OwinStartup(typeof(MANAGER.Startup))]
 namespace MANAGER

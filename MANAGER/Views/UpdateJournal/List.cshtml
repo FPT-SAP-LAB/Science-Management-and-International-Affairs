@@ -233,7 +233,7 @@
             if (uppy3.getFiles()[0] != undefined) formData.append('file_SSCI', uppy3.getFiles()[0].data);
 
             $.ajax({
-                url: "/UpdateJournal/uploadJournal",
+                url: "/UpdateJournal/UploadJournal",
                 method: "post",
                 complete: function (data) {
                     var mess = data.responseJSON.mess;

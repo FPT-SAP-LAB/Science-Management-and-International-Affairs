@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENTITIES.CustomModels.ScienceManagement.Report
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
     public class CitationByAuthorReport
     {
         public int rownum { get; set; }
@@ -22,10 +19,10 @@ namespace ENTITIES.CustomModels.ScienceManagement.Report
         public int? scopus_citation { get; set; }
         public String co_author { get; set; }
     }
-    public class SupportClassAuthorCitation
-    {
-        public int people_id { get; set; }
-        public int sum_scopus { get; set; }
-        public int sum_scholar { get; set; }
-    }
+    //public class SupportClassAuthorCitation
+    //{
+    //    public int people_id { get; set; }
+    //    public int sum_scopus { get; set; }
+    //    public int sum_scholar { get; set; }
+    //}
 }

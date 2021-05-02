@@ -137,6 +137,8 @@
     <Compile Include="Admin\RightRepo.cs" />
     <Compile Include="Admin\RoleRepo.cs" />
     <Compile Include="Authen\LoginRepo.cs" />
+    <Compile Include="GuestConfiguration\HomeImageConfigurationRepo.cs" />
+    <Compile Include="HomeRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExcelRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityExpenseRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\AcademicActivityGuestRepo.cs" />
@@ -146,7 +148,9 @@
     <Compile Include="InternationalCollaboration\AcademicActivity\CheckInRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\DetailOfAcademicActivityRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicActivity\FormRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationExportRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationGuestRepo.cs" />
+    <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationLongRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationProgramRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationRepo.cs" />
     <Compile Include="InternationalCollaboration\AcademicCollaborationRepository\AcademicCollaborationShortRepo.cs" />
@@ -172,7 +176,6 @@
     <Compile Include="ModelDAL\BaseRequestRepo.cs" />
     <Compile Include="ModelDAL\CitationTypeRepo.cs" />
     <Compile Include="ModelDAL\ConferenceCriteriaLanguageRepo.cs" />
-    <Compile Include="ModelDAL\ConferenceParticipantRepo.cs" />
     <Compile Include="ModelDAL\CostRepo.cs" />
     <Compile Include="ModelDAL\CountryRepo.cs" />
     <Compile Include="ModelDAL\FormalityLanguageRepo.cs" />
@@ -197,6 +200,8 @@
     <Compile Include="ScienceManagement\ArticlePolicy\ArticlePolicyIndexRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRepo.cs" />
     <Compile Include="ScienceManagement\Citation\CitationRequestAddRepo.cs" />
+    <Compile Include="ScienceManagement\Citation\CitationRequestEditRepo.cs" />
+    <Compile Include="ScienceManagement\Citation\CitationRequestExportRepo.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorAddRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorDetailRepo.cs" />

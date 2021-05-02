@@ -77,12 +77,15 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 foreach (var item in infoSumDetail.subContent)
                 {
                     List<HttpPostedFileBase> list_image = new List<HttpPostedFileBase>();
-                    for (int i = 0; i < item.number_of_image; i++)
+                    if (item.number_of_image > 0)
                     {
-                        string label = "image_" + item.sub_id + "_" + i;
-                        list_image.Add(Request.Files[label]);
+                        for (int i = 0; i < item.number_of_image; i++)
+                        {
+                            string label = "image_" + item.sub_id + "_" + i;
+                            list_image.Add(Request.Files[label]);
+                        }
+                        list_image_sub.Add(list_image);
                     }
-                    list_image_sub.Add(list_image);
                 }
 
                 bool res = repo.updateDetail(infoSumDetail, u, list_image_main, list_image_sub);

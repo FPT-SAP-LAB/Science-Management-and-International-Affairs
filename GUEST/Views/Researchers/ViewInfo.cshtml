@@ -60,12 +60,19 @@
                 <div class="d-flex justify-content-between flex-wrap mt-1">
                     <div class="d-flex mr-3">
                         <a href="#" class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3">@ViewBag.profile.name</a>
-                        <a href="#"><i class="flaticon2-correct text-success font-size-h5"></i></a>
+                        @{
+                            if (ViewBag.profile.profile_page_active != null && ViewBag.profile.profile_page_active)
+                            {
+                                <a href="#">
+                                    <i class="flaticon2-correct text-success font-size-h5"></i>
+                                </a>
+                            }
+                        }
                     </div>
-                    @if (CurrentAccount.getProfile(Session) != null && CurrentAccount.getProfile(Session).people_id == ViewBag.profile.id)
+                    @if (CurrentAccount.GetProfile(Session) != null && CurrentAccount.GetProfile(Session).people_id == ViewBag.profile.id)
                     {
                         <div class="my-lg-0 my-3">
-                            <a href="/Researchers/EditInfo?id=@CurrentAccount.getProfile(Session).people_id" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Cập nhật thông tin</a>
+                            <a href="/Researchers/EditInfo?id=@CurrentAccount.GetProfile(Session).people_id" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Cập nhật thông tin</a>
                         </div>
                     }
                 </div>
@@ -198,7 +205,7 @@
             <div class="col-12">
                 <div class="card card-custom card-stretch gutter-b" style="padding-bottom:2rem">
                     <!--begin::Header-->
-                    <h3 class="card-label font-weight-bolder text-dark"><i class="la text-success la-navicon icon-md"></i> Công trình khoa học</h3>
+                    <h3 class="card-label font-weight-bolder text-dark">Công trình khoa học</h3>
                     <hr />
                     <!--end::Header-->
                     <!--begin::Body-->

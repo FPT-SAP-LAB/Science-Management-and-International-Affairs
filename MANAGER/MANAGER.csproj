@@ -282,6 +282,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationAuthorization\AuthenController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
+    <Compile Include="Controllers\GuestConfiguration\HomeImageConfigurationController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\BasicInfoMOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\MOAController.cs" />
     <Compile Include="Controllers\InternationalCollaboration\Collaboration\MemorandumOfAgreement\PartnerMOAController.cs" />
@@ -301,7 +302,6 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\ArticlePolicyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Comment\CommentRequestController.cs" />
-    <Compile Include="Controllers\ScienceManagement\Policy\ConditionManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\ConferenceSponsorController.cs" />
     <Compile Include="Controllers\ScienceManagement\Citation\CitationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -315,10 +315,10 @@
     <Compile Include="Controllers\ScienceManagement\ConferenceSponsor\QsUniversityController.cs" />
     <Compile Include="Controllers\ScienceManagement\Decision\DecisionHistoryController.cs" />
     <Compile Include="Controllers\ScienceManagement\Invention\InventionController.cs" />
-    <Compile Include="Controllers\ScienceManagement\MasterData\PaperCriteriaController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\TitleController.cs" />
     <Compile Include="Controllers\ScienceManagement\MasterData\UpdateJournalController.cs" />
     <Compile Include="Controllers\ScienceManagement\Paper\PaperController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Policy\ConditionManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\CriteriaManagementController.cs" />
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyTypeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
@@ -2370,7 +2370,6 @@
     <Content Include="Excel_template\Invention.xlsx" />
     <Content Include="Excel_template\Download\Invention.xlsx" />
     <Content Include="Excel_template\Citation.xlsx" />
-    <Content Include="Excel_template\Download\Citation.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Download\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Partner.xlsx" />
@@ -2525,7 +2524,6 @@
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Coming.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
-    <Content Include="Views\PaperCriteria\List.cshtml" />
     <Content Include="Views\Paper\WaitDecision2.cshtml" />
     <Content Include="Views\Title\List.cshtml" />
     <Content Include="Views\QsUniversity\Index.cshtml" />
@@ -2540,9 +2538,11 @@
     <Content Include="Views\ArticlePolicy\Detail.cshtml" />
     <Content Include="Views\PolicyType\Index.cshtml" />
     <Content Include="Views\ArticlePolicy\Edit.cshtml" />
-    <Content Include="Views\CriteriaManagement\Index.cshtml" />
     <Content Include="Views\CriteriaManagement\Add.cshtml" />
+    <Content Include="Views\CriteriaManagement\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Research\Index.cshtml" />
+    <Content Include="Views\HomeImageConfiguration\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2561,9 +2561,6 @@
     <Folder Include="Controllers\InternationalCollaboration\Collaboration\Specialization\" />
     <Folder Include="Controllers\InternationalCollaboration\News\" />
     <Folder Include="Controllers\InternationalCollaboration\ResearchCollaboration\" />
-    <Folder Include="Views\Biography\" />
-    <Folder Include="Views\ErrorPage\" />
-    <Folder Include="Views\Specialization\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,7 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
@@ -20,18 +19,17 @@ namespace BLL.ScienceManagement.MasterData
     public class MasterDataRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<SpecializationLanguage> getSpec(string language)
+        public List<SpecializationLanguage> GetSpec(string language)
         {
-            List<SpecializationLanguage> list = new List<SpecializationLanguage>();
             string sql = @"select sl.name, sl.specialization_id, sl.language_id
                             from [General].Specialization s join [Localization].SpecializationLanguage sl on s.specialization_id = sl.specialization_id
 	                            join [Localization].Language l on sl.language_id = l.language_id
                             where l.language_name = @lang";
-            list = db.Database.SqlQuery<SpecializationLanguage>(sql, new SqlParameter("lang", language)).ToList();
+            List<SpecializationLanguage> list = db.Database.SqlQuery<SpecializationLanguage>(sql, new SqlParameter("lang", language)).ToList();
             return list;
         }
 
-        public static BaseServerSideData<Scopu> getListAllScopus(BaseDatatable baseDatatable, string name_search)
+        public static BaseServerSideData<Scopu> GetListAllScopus(BaseDatatable baseDatatable, string name_search)
         {
             try
             {
@@ -53,7 +51,7 @@ namespace BLL.ScienceManagement.MasterData
             }
         }
 
-        public bool updateJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
+        public bool UpdateJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
         {
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
                 try
@@ -71,9 +69,11 @@ namespace BLL.ScienceManagement.MasterData
 
                         for (int i = 2; i <= rows; i++)
                         {
-                            Scopu temp = new Scopu();
-                            temp.Sourcerecord_ID = worksheet.Cells[i, 1].Value.ToString();
-                            temp.Source_Title_Medline_sourced_journals_are_indicated_in_Green = worksheet.Cells[i, 2].Value.ToString();
+                            Scopu temp = new Scopu
+                            {
+                                Sourcerecord_ID = worksheet.Cells[i, 1].Value.ToString(),
+                                Source_Title_Medline_sourced_journals_are_indicated_in_Green = worksheet.Cells[i, 2].Value.ToString()
+                            };
                             if (worksheet.Cells[i, 3].Value != null) temp.Print_ISSN = worksheet.Cells[i, 3].Value.ToString();
                             if (worksheet.Cells[i, 4].Value != null) temp.E_ISSN = worksheet.Cells[i, 4].Value.ToString();
                             temp.Active_or_Inactive = worksheet.Cells[i, 5].Value.ToString();
@@ -89,10 +89,12 @@ namespace BLL.ScienceManagement.MasterData
                         db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SCIE");
 
                         var reader = new StreamReader(file_SCIE.InputStream);
-                        CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                        config.Delimiter = ",";
-                        config.HasHeaderRecord = true;
-                        config.BadDataFound = null;
+                        CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            Delimiter = ",",
+                            HasHeaderRecord = true,
+                            BadDataFound = null
+                        };
 
                         using (var csv = new CsvReader(reader, config))
                         {
@@ -101,8 +103,10 @@ namespace BLL.ScienceManagement.MasterData
                             {
                                 if (csv.GetField(0) != "Journal title")
                                 {
-                                    SCIE temp = new SCIE();
-                                    temp.Journal_title = csv.GetField(0);
+                                    SCIE temp = new SCIE
+                                    {
+                                        Journal_title = csv.GetField(0)
+                                    };
                                     if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
                                     if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
                                     temp.Publisher_name = csv.GetField(3);
@@ -124,10 +128,12 @@ namespace BLL.ScienceManagement.MasterData
                         db.Database.ExecuteSqlCommand("truncate table SM_ScientificProduct.SSCI");
 
                         var reader = new StreamReader(file_SSCI.InputStream);
-                        CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                        config.Delimiter = ",";
-                        config.HasHeaderRecord = true;
-                        config.BadDataFound = null;
+                        CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            Delimiter = ",",
+                            HasHeaderRecord = true,
+                            BadDataFound = null
+                        };
 
                         using (var csv = new CsvReader(reader, config))
                         {
@@ -136,8 +142,10 @@ namespace BLL.ScienceManagement.MasterData
                             {
                                 if (csv.GetField(0) != "Journal title")
                                 {
-                                    SSCI temp = new SSCI();
-                                    temp.Journal_title = csv.GetField(0);
+                                    SSCI temp = new SSCI
+                                    {
+                                        Journal_title = csv.GetField(0)
+                                    };
                                     if (csv.GetField(1) != "") temp.ISSN = csv.GetField(1);
                                     if (csv.GetField(2) != "") temp.eISSN = csv.GetField(2);
                                     temp.Publisher_name = csv.GetField(3);
@@ -165,7 +173,7 @@ namespace BLL.ScienceManagement.MasterData
                 }
         }
 
-        public static BaseServerSideData<CustomISI> getListAllISI(BaseDatatable baseDatatable, string name_search)
+        public static BaseServerSideData<CustomISI> GetListAllISI(BaseDatatable baseDatatable, string name_search)
         {
             try
             {
@@ -202,117 +210,17 @@ namespace BLL.ScienceManagement.MasterData
             }
         }
 
-        public int AddPaperCriteria(string name)
+        public List<PaperCriteria> GetPaperCriteria()
         {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    PaperCriteria ck = db.PaperCriterias.Where(x => x.name == name).FirstOrDefault();
-                    if (ck != null) return -1;
-                    else
-                    {
-                        PaperCriteria pc = new PaperCriteria
-                        {
-                            name = name,
-                        };
-                        db.PaperCriterias.Add(pc);
-                        db.SaveChanges();
-                        dbc.Commit();
-                        return pc.criteria_id;
-                    }
-                }
-                catch (Exception e)
-                {
-                    dbc.Rollback();
-                    Console.WriteLine(e.Message);
-                    return 0;
-                }
-        }
-
-        public bool addNewPolicy(HttpPostedFileBase file, List<PaperCriteria> list, Account acc)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadPolicyFile(file);
-                    ENTITIES.File fl = new ENTITIES.File
-                    {
-                        link = f.WebViewLink,
-                        file_drive_id = f.Id,
-                        name = f.Name
-                    };
-                    db.Files.Add(fl);
-                    db.SaveChanges();
-
-                    string sql_getLastPolicyPaper = @"select MAX(p.policy_id) as 'policy_id', p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id
-                                                from SM_Request.Policy p
-                                                where p.policy_type_id = 2 
-                                                group by p.valid_date, p.expired_date, p.file_id, p.article_id, p.account_id, p.policy_type_id";
-                    Policy p = db.Database.SqlQuery<Policy>(sql_getLastPolicyPaper).FirstOrDefault();
-                    p.expired_date = DateTime.Now;
-                    db.Entry(p).State = EntityState.Modified;
-                    db.SaveChanges();
-
-                    Policy newPolicy = new Policy()
-                    {
-                        valid_date = DateTime.Now,
-                        file_id = fl.file_id,
-                        account_id = acc.account_id,
-                        policy_type_id = 2
-                    };
-                    db.Policies.Add(newPolicy);
-                    db.SaveChanges();
-
-                    foreach (var item in list)
-                    {
-                        item.policy_id = newPolicy.policy_id;
-                        db.PaperCriterias.Add(item);
-                    }
-                    db.SaveChanges();
-
-                    dbc.Commit();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return false;
-                }
-        }
-
-        public string DeletePaperCriteria(string cri_id)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    int criteria_id = Int32.Parse(cri_id);
-                    PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id && x.Policy.policy_type_id == 2 && x.Policy.expired_date == null).FirstOrDefault();
-                    db.Entry(pc).State = EntityState.Modified;
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
-        }
-
-        public List<PaperCriteria> getPaperCriteria()
-        {
-            List<PaperCriteria> list = new List<PaperCriteria>();
             string sql = @"select pc.*
                             from SM_ScientificProduct.PaperCriteria pc join
 	                            (select MAX(policy_id) as 'policy_id'
 	                            from SM_ScientificProduct.PaperCriteria) as a on pc.policy_id = a.policy_id";
-            list = db.Database.SqlQuery<PaperCriteria>(sql).ToList();
+            List<PaperCriteria> list = db.Database.SqlQuery<PaperCriteria>(sql).ToList();
             return list;
         }
 
-        public AuthorPaper getMonry(AddAuthor item, int paper_id)
+        public AuthorPaper GetMonry(AddAuthor item, int paper_id)
         {
             AuthorPaper ap = db.AuthorPapers
                 .Where(x => x.paper_id == paper_id)
@@ -320,7 +228,7 @@ namespace BLL.ScienceManagement.MasterData
             return ap;
         }
 
-        public List<Office> getOffice()
+        public List<Office> GetOffice()
         {
             List<Office> list = db.Offices.ToList();
             return list;
@@ -332,51 +240,50 @@ namespace BLL.ScienceManagement.MasterData
             return list;
         }
 
-        public List<TitleWithName> getTitle(string lang)
+        public List<TitleWithName> GetTitle(string lang)
         {
-            List<TitleWithName> list = new List<TitleWithName>();
+            if (lang == null) lang = "";
             string sql = @"select tl.name, t.*
                             from [SM_MasterData].Title t join [Localization].TitleLanguage tl on t.title_id = tl.title_id
 	                            join [Localization].Language l on l.language_id = tl.language_id
                             where l.language_name = @lang";
-            list = db.Database.SqlQuery<TitleWithName>(sql, new SqlParameter("lang", lang)).ToList();
+            List<TitleWithName> list = db.Database.SqlQuery<TitleWithName>(sql, new SqlParameter("lang", lang)).ToList();
             return list;
         }
 
-        public List<ContractType> getContract()
+        public List<ContractType> GetContract()
         {
             List<ContractType> list = db.ContractTypes.ToList();
             return list;
         }
 
-        public List<AddAuthor> getListPeopleFE()
+        public List<AddAuthor> GetListPeopleFE()
         {
-            List<AddAuthor> list = new List<AddAuthor>();
             string sql = @"select distinct po.mssv_msnv
                             from SM_ScientificProduct.Author po 
 	                            join [General].Office ofi on po.office_id = ofi.office_id";
-            list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
+            List<AddAuthor> list = db.Database.SqlQuery<AddAuthor>(sql).ToList();
             return list;
         }
 
-        public AddAuthor getAuthor(string ms)
+        public AddAuthor GetAuthor(string ms)
         {
-            AddAuthor item = new AddAuthor();
+            if (ms == null) ms = "";
             string sql = @"select ah.*, o.office_abbreviation
                             from SM_ScientificProduct.Author ah join General.Office o on ah.office_id = o.office_id
                             where ah.mssv_msnv = @ms
                             order by ah.people_id desc";
-            item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
+            AddAuthor item = db.Database.SqlQuery<AddAuthor>(sql, new SqlParameter("ms", ms)).FirstOrDefault();
             return item;
         }
 
-        public List<PaperType> getPaperType()
+        public List<PaperType> GetPaperType()
         {
             List<PaperType> list = db.PaperTypes.ToList();
             return list;
         }
 
-        public ENTITIES.File addFile(ENTITIES.File file)
+        public ENTITIES.File AddFile(ENTITIES.File file)
         {
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
                 try
@@ -395,35 +302,7 @@ namespace BLL.ScienceManagement.MasterData
                 }
         }
 
-        public string GetPaperCriteria(string id)
-        {
-            int criteria_id = Int32.Parse(id);
-            string name = (from a in db.PaperCriterias where a.criteria_id == criteria_id select a.name).FirstOrDefault();
-            return name;
-        }
-
-        public string UpdatePaperCriteria(string id, string name)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    int criteria_id = Int32.Parse(id);
-                    PaperCriteria pc = db.PaperCriterias.Where(x => x.criteria_id == criteria_id).FirstOrDefault();
-                    pc.name = name;
-                    db.Entry(pc).State = EntityState.Modified;
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
-        }
-
-        public List<Title2Name> getListTitle_2Lang()
+        public List<Title2Name> GetListTitle_2Lang()
         {
             string sql = @"select t.title_id, tv.name as 'tv', ta.name as 'ta'
                             from [SM_MasterData].Title t left join
@@ -453,7 +332,7 @@ namespace BLL.ScienceManagement.MasterData
             return t;
         }
 
-        public string updateTitle(int id, string tv, string ta)
+        public string UpdateTitle(int id, string tv, string ta)
         {
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
                 try
@@ -505,12 +384,12 @@ namespace BLL.ScienceManagement.MasterData
                 }
         }
 
-        public int addTitle(string tv, string ta)
+        public int AddTitle(string tv, string ta)
         {
             TitleLanguage ck1 = db.TitleLanguages.Where(x => x.language_id == 1).Where(x => x.name == tv).FirstOrDefault();
             TitleLanguage ck2 = db.TitleLanguages.Where(x => x.language_id == 2).Where(x => x.name == ta).FirstOrDefault();
             if (ck1 != null || ck2 != null) return -1;
-
+            if (tv == null || ta == null || tv.Trim() == "" || ta.Trim() == "") return 0;
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
                 try
                 {
@@ -545,7 +424,7 @@ namespace BLL.ScienceManagement.MasterData
                 }
         }
 
-        public string deleteTitle(int id)
+        public string DeleteTitle(int id)
         {
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
                 try
