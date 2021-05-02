@@ -66,10 +66,11 @@
                                 data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                             <span class="svg-icon svg-icon-md">
-                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                                                 width="24px" height="24px" viewBox="0 0 24 24"
-                                                                                                                 version="1.1">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none"
                                        fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24" />
@@ -154,7 +155,7 @@
                     <th>STT</th>
                     <th>Ngày Hiệu lực</th>
                     <th>Số Quyết Định</th>
-                    <th>Tác giả</th>
+                    <th>Tên tác giả</th>
                     <th>Tên Bài Báo</th>
                     <th>Tên Tạp Chí</th>
                     <th>Xếp loại</th>
@@ -173,8 +174,7 @@
                 var table = $('#kt_datatable').DataTable({
                     responsive: true,
                     // DOM Layout settings
-                    dom: `<'row'<'col-sm-12'tr>>
-                                                                                <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+                    dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
                     lengthMenu: [5, 10, 25, 50],
                     bInfo: false,
                     pageLength: 10,
@@ -192,7 +192,7 @@
                     ],
                     ajax: {
                         type: "POST",
-                        url: "/Reports/getAwardMoneyInoutCountry",
+                        url: "/Reports/GetAwardMoneyInoutCountry",
                         datatype: "json",
                         data: function (d) {
                             d.name = $("#search_name").val();
@@ -202,7 +202,10 @@
                         },
                         cache: false,
                         dataSrc: function (json) {
-                            $("#total_money").text(AddComma(json.total) + " VND")
+                            if (json.total == "")
+                                $("#total_money").text("0 VND");
+                            else
+                                $("#total_money").text(AddComma(json.total) + " VND")
                             return json.data;
                         }
                     },
