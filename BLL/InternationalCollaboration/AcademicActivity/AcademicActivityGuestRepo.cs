@@ -43,7 +43,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 if (search != null)
                 {
                     sql += @" AND av.version_title LIKE ISNULL(@search, '')";
-                } 
+                }
                 if (year != null)
                 {
                     sql += @" AND YEAR(aa.activity_date_start) = @year
@@ -52,13 +52,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
                     new SqlParameter("language", language), new SqlParameter("search", "%" + search + "%"),
                     new SqlParameter("year", year)).ToList();
-                } else
+                }
+                else
                 {
                     sql += @" ORDER BY[from] DESC
                           OFFSET @count * 6 ROWS FETCH NEXT 6 ROWS ONLY";
                     obj = db.Database.SqlQuery<baseAA>(sql, new SqlParameter("count", count),
                     new SqlParameter("language", language), new SqlParameter("search", "%" + search + "%")).ToList();
-                }                    
+                }
                 foreach (baseAA a in obj)
                 {
                     a.from = changeFormatDate(a.from);
