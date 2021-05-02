@@ -312,7 +312,6 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
         {
             try
             {
-
                 bool is_duplicated = false;
                 string new_code = "";
 
