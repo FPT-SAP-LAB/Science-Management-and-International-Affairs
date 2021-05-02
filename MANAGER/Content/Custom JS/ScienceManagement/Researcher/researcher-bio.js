@@ -24,13 +24,6 @@ var table1 = $('#acad_history_table').DataTable({
     // Order settings
     order: [[1, 'desc']],
     serverSide: true,
-    columnDefs: [
-        { width: "10%", targets: 0 },
-        { width: "30%", targets: 1 },
-        { width: "30%", targets: 2 },
-        { width: "20%", targets: 3 },
-        { width: "10%", targets: 4 }
-    ],
     ajax: {
         url: "/Researchers/getAcadList?id=" + people_id,
         datatype: "json",
@@ -39,8 +32,8 @@ var table1 = $('#acad_history_table').DataTable({
     columns: [
         { data: "rownum", name: "rownum", orderable: false },
         {
-            data: "acad_id", name: "degree", render: function (data, type, row, meta) {
-                return "<span class='acad-degree' data-id='" + row.acad_id + "'>" + row.degree + "</span>"
+            data: {}, name: "degree", render: function (data) {
+                return "<span class='acad-degree' data-id='" + data.acad_id + "'>" + data.degree + "</span>"
             }
         },
         {
@@ -54,12 +47,12 @@ var table1 = $('#acad_history_table').DataTable({
             }
         },
         {
-            data: "acad_id", render: function (data, type, row, meta) {
-                return "<a data-id='" + row.people_id + "-" + row.acad_id + "' data-toggle='modal' data-target='#modal_suatieusu_hoctap' class='btn btn-sm btn-clean btn-icon edit-acad' title='Edit'> <i class='far fa-edit'></i> </a>"
+            data: {}, render: function (data) {
+                return "<a data-id='" + data.people_id + "-" + data.acad_id + "' data-toggle='modal' data-target='#modal_suatieusu_hoctap' class='btn btn-sm btn-clean btn-icon edit-acad' title='Edit'> <i class='far fa-edit'></i> </a>"
             }
         },
     ],
-    initComplete: function (settings, json) {
+    initComplete: function () {
         $("#loader_panel").hide()
     }
 });
@@ -83,13 +76,6 @@ var table2 = $('#work_history_table').DataTable({
         'lengthMenu': 'Display _MENU_',
         "zeroRecords": "Chưa có thông tin"
     },
-    columnDefs: [
-        { width: "10%", targets: 0 },
-        { width: "30%", targets: 1 },
-        { width: "30%", targets: 2 },
-        { width: "20%", targets: 3 },
-        { width: "10%", targets: 4 }
-    ],
     // Order settings
     order: [[1, 'desc']],
     serverSide: true,
@@ -111,8 +97,8 @@ var table2 = $('#work_history_table').DataTable({
             }
         },
         {
-            data: "index", render: function (data, type, row, meta) {
-                return "<span class='work_time'>" + row.start_year + "-" + row.end_year + "</span>"
+            data: {}, render: function (data) {
+                return "<span class='work_time'>" + data.start_year + "-" + data.end_year + "</span>"
             }
         },
         {
@@ -121,7 +107,7 @@ var table2 = $('#work_history_table').DataTable({
             }
         },
     ],
-    initComplete: function (settings, json) {
+    initComplete: function () {
         $("#loader_panel").hide()
     }
 });
@@ -175,7 +161,7 @@ var table3 = $('#award_history_table').DataTable({
             }
         },
     ],
-    initComplete: function (settings, json) {
+    initComplete: function () {
         $("#loader_panel").hide()
     }
 });
@@ -300,7 +286,7 @@ class WorkEvent {
         this.end = end;
     }
 }
-$('.modal').on('hidden.bs.modal', function (e) {
+$('.modal').on('hidden.bs.modal', function () {
     $(".modal").find('input').val('')
 })
 function resetAndCloseModals(success) {
