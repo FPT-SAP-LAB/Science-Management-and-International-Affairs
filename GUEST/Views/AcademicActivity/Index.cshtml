@@ -69,7 +69,18 @@
                                 </div>
                             </div>
                              }
-                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 float-left">
+                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-left">
+                            <div class="d-flex align-items-center col-xl-12 col-lg-12 px-0">
+                                <select class="form-control text-center" id="search_year" name="param" style="width:100% !important">
+                                    <option label="Label"></option>
+                                    @for (var i = ViewBag.YearSearching.year_from; i <= ViewBag.YearSearching.year_to; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-left">
                                 <div class="input-icon">
                                     <input id="search" type="text" class="form-control" placeholder="@rm.GetString("Search")" />
                                     <span><i class="flaticon2-search-1 text-muted"></i></span>
@@ -150,12 +161,62 @@
         $(document).ready(function () {
             var count = 0;
             var type = [];
+            $('#search_year').select2({
+                placeholder: '@rm.GetString("Year")',
+                allowClear: true,
+                tags: true,
+            });
+            $('#search_year').on('change', function (e) {
+                count = 0;
+                var year = $('#search_year').val();
+                var search = $('#search').val();
+                $.ajax({
+                    url: "@Url.Action("LoadMoreList", "AcademicActivity")",
+                    method: "POST",
+                    datatype: "json",
+                    cache: false,
+                    data: {
+                        count: count,
+                        type: type,
+                        search: search,
+                        year: year
+                    },
+                    success: function (data) {
+                        var temp = "";
+                        $(data).each(function (i, item) {
+                            temp += `<div class="col-sm-4 col-md-4 col-lg-4 col-xl-4 min-h-200px">
+            <div class="card card-custom gutter-b card-stretch">
+                <div class="card-body d-flex flex-column rounded bg-light justify-content-between border-side-`+ item.activity_type_id +`">
+                    <div class="font-content">
+                        <h4 class="font-size-h4">
+                            <a href="javascript:;" onclick="goDetail(`+ item.activity_id +`)" class="text-dark-75 font-weight-bolder">`+ item.activity_name + `</a>
+                        </h4>
+                        <div class="">
+                            Thời gian: `+ item.from + ` - ` + item.to + `
+                        </div>
+                        <div class="">
+                            Địa điểm: `+ item.location + `
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    </div>`
+                        });
+                        $('#content-control').html(temp);
+                        if ($(data).length < 6) {
+                            $('#load-more').hide();
+                        }
+                    }
+                })
+            });
             $('#list-type').children().eq($('#list-type').children().length - 2).children().removeClass("mt-3");
             $('#search').keypress(function (e) {
+                count = 0;
                 var key = e.which;
                 if (key == 13)  // the enter key code
                 {
                     var search = $('#search').val();
+                    var year = $('#search_year').val();
                     $.ajax({
                     url: "@Url.Action("LoadMoreList", "AcademicActivity")",
                     method: "POST",
@@ -164,7 +225,8 @@
                     data: {
                         count: count,
                         type: type,
-                        search: search
+                        search: search,
+                        year: year
                     },
                     success: function (data) {
                         var temp = "";
