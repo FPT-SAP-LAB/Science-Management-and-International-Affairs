@@ -1,9 +1,10 @@
-﻿
+﻿@using ENTITIES;
+@using ENTITIES.CustomModels.ScienceManagement.Report;
 @{
     ViewBag.Title = "THỐNG KÊ TIỀN THƯỞNG THEO TÁC GIẢ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ReportByAuthorAward> informations = ViewBag.informations;
 }
-@using ENTITIES;
 <div class="card card-custom gutter-b">
     <div class="card-body">
         <!--begin: Search Form-->
@@ -65,10 +66,11 @@
                                 data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                             <span class="svg-icon svg-icon-md">
-                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                                                 width="24px" height="24px" viewBox="0 0 24 24"
-                                                                                                                 version="1.1">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none"
                                        fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24" />
@@ -136,8 +138,15 @@
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center">
-
+            <div class="row align-items-center" style="margin-bottom:-2rem">
+                <div class="col-md-3 my-2 my-md-0">
+                    <div class="d-flex align-items-center" style="margin-top: 3rem">
+                        <label class="mr-3 mb-0 d-none d-md-block text-muted">Tổng thưởng: </label>
+                        <span class="label label-xl label-danger label-pill label-inline mr-2 text font-weight-bolder" id="total_money">
+                            @String.Format("{0:n0}", informations.Sum(x => x.Total)) VND
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <!--end::Search Form-->
@@ -157,7 +166,7 @@
             </thead>
 
             <tbody>
-                @foreach (ENTITIES.CustomModels.ScienceManagement.Report.ReportByAuthorAward item in ViewBag.informations)
+                @foreach (ReportByAuthorAward item in informations)
                 {
                     <tr>
                         <td>@item.name</td>
