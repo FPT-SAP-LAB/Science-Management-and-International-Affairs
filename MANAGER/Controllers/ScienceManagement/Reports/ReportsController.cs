@@ -164,7 +164,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                Tuple<BaseServerSideData<IntellectualPropertyReport>, String> output = rewardsReportRepo.GetIntellectualPropertyReport(datatable, searchs);
+                Tuple<BaseServerSideData<IntellectualPropertyReport>, string> output = rewardsReportRepo.GetIntellectualPropertyReport(datatable, searchs);
 
                 return Json(new { success = true, total = output.Item2, data = output.Item1.Data, draw = Request["draw"], recordsTotal = output.Item1.RecordsTotal, recordsFiltered = output.Item1.RecordsTotal });
             }
@@ -187,16 +187,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 };
                 rewardsReportRepo = new RewardsReportRepo();
                 BaseDatatable datatable = new BaseDatatable(Request);
-                BaseServerSideData<CitationByAuthorReport> data = rewardsReportRepo.GetCitationByAuthorReport(datatable, searchs).Item1;
-                for (int i = 0; i < data.Data.Count; i++)
-                {
-                    data.Data[i].scopus_citation = data.Data[i].scopus_citation == null ? 0 : data.Data[i].scopus_citation;
-                    data.Data[i].gscholar_citation = data.Data[i].gscholar_citation == null ? 0 : data.Data[i].gscholar_citation;
-                    data.Data[i].total_reward = data.Data[i].total_reward == null ? 0 : data.Data[i].total_reward;
-                    data.Data[i].valid_date_string = data.Data[i].valid_date.ToString("dd/MM/yyyy");
-                    data.Data[i].rownum = datatable.Start + 1 + i;
-                }
-                return Json(new { success = true, data = data.Data, draw = Request["draw"], recordsTotal = data.RecordsTotal, recordsFiltered = data.RecordsTotal }, JsonRequestBehavior.AllowGet);
+                Tuple<BaseServerSideData<CitationByAuthorReport>, long> data = rewardsReportRepo.GetCitationByAuthorReport(datatable, searchs);
+                return Json(new { success = true, total = data.Item2, data = data.Item1.Data, draw = Request["draw"], recordsTotal = data.Item1.RecordsTotal, recordsFiltered = data.Item1.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
