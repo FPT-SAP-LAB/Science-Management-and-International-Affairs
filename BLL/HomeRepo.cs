@@ -8,6 +8,8 @@ using BLL.InternationalCollaboration.Collaboration.PartnerRepo;
 using BLL.ModelDAL;
 using Newtonsoft.Json;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.ScienceManagement.ArticlePolicy;
+using BLL.ScienceManagement.ArticlePolicy;
 
 namespace BLL
 {
@@ -25,7 +27,7 @@ namespace BLL
             this.db = db;
         }
 
-        public HomeData GetHomeData()
+        public HomeData GetHomeData(int language_id)
         {
             try
             {
@@ -36,8 +38,16 @@ namespace BLL
                                        join b in db.Files on x.file_id equals b.file_id
                                        where x.is_active && !x.is_wallpaper
                                        select b.file_drive_id).ToList();
+                int invention = (from a in db.Inventions
+                                 join b in db.RequestInventions on a.invention_id equals b.invention_id
+                                 where b.status_id == 2
+                                 select a.invention_id).Count();
+                int scopusISI = db.Papers.Where(x => x.is_verified == true).Count();
+                int researcher = db.Profiles.Where(x => x.profile_page_active).Count();
 
-                return new HomeData(partner, images);
+                ArticlePolicyIndexRepo policyRepo = new ArticlePolicyIndexRepo(db);
+                List<ArticlePolicyIndex> articlePolicies = policyRepo.List(language_id);
+                return new HomeData(partner, images, invention, scopusISI, researcher, articlePolicies);
             }
             catch (Exception e)
             {

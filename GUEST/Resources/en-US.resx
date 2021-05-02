@@ -147,6 +147,9 @@
   <data name="Area" xml:space="preserve">
     <value>Area</value>
   </data>
+  <data name="ArticlePolicies" xml:space="preserve">
+    <value>Article Policies</value>
+  </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
   </data>
@@ -443,9 +446,6 @@
   </data>
   <data name="Quality" xml:space="preserve">
     <value>Quality</value>
-  </data>
-  <data name="QuickStatistics" xml:space="preserve">
-    <value>Quick Statistics</value>
   </data>
   <data name="Record" xml:space="preserve">
     <value>record</value>
