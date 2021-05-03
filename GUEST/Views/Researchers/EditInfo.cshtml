@@ -70,8 +70,8 @@
                                             </span>
 
                                             @*<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Remove avatar">
-                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>*@
+                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                    </span>*@
                                         </div>
                                         <span class="form-text text-muted">Allowed file types:  png, jpg, jpeg.</span>
                                     </div>
@@ -80,6 +80,12 @@
                                     <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">Họ tên</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_name" disabled type="text" value="@ViewBag.profile.name" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">MSNV/MSSV</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_msnv" disabled type="text" value="@ViewBag.profile.name" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -158,6 +164,21 @@
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
                                             <input type="text" class="form-control form-control-lg form-control-solid" id="researcher_email" disabled value="@ViewBag.profile.email" placeholder="Email" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Đơn vị</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
+
+                                            <select class="form-control select2  researcher_infomation" disabled id="office_select" name="param">
+                                                @foreach (SelectField a in ViewBag.profile.offices_fields)
+                                                {
+                                                    <option value="@a.id" @(a.selected == 1 ? "selected" : "")>@a.name</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -787,6 +808,10 @@
                 });
                 $('#interested_fields_select').select2({
                     placeholder: 'Chọn lĩnh vực quan tâm',
+                    tags: true
+                });
+                $('#office_select').select2({
+                    placeholder: 'Chọn đơn vị',
                     tags: true
                 });
             }
