@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using static ENTITIES.CustomModels.ScienceManagement.Report.ArticlesInoutCountryReports;
-using static ENTITIES.CustomModels.ScienceManagement.Report.IntellectualPropertyReport;
 
 namespace BLL.ScienceManagement.Report
 {
@@ -22,6 +21,7 @@ namespace BLL.ScienceManagement.Report
                         join d in db.RequestPapers on c.request_id equals d.request_id
                         join e in db.Papers on d.paper_id equals e.paper_id
                         where d.type == paperType && e.is_verified == true
+                        && d.total_reward != null && d.status_id == 2
                         select new ArticlesInoutCountryReports
                         {
                             decision_number = a.decision_number,
@@ -239,7 +239,7 @@ namespace BLL.ScienceManagement.Report
                         join c in db.BaseRequests on b.request_id equals c.request_id
                         join d in db.RequestInventions on c.request_id equals d.request_id
                         join e in db.Inventions on d.invention_id equals e.invention_id
-                        where d.status_id == 2 && e.is_verified == true
+                        where d.status_id == 2 && e.is_verified == true && d.total_reward != null
                         select new IntellectualPropertyReport
                         {
                             valid_date = a.valid_date,
@@ -255,7 +255,7 @@ namespace BLL.ScienceManagement.Report
                                     where e.type_id == m.invention_type_id
                                     select m.name).FirstOrDefault(),
                             invention_number = e.no,
-                            total_reward = d.total_reward,
+                            total_reward = d.total_reward.Value,
                         });
             if (search.name != null)
             {
@@ -276,10 +276,7 @@ namespace BLL.ScienceManagement.Report
             for (int i = 0; i < res.Count; i++)
             {
                 var item = res[i];
-                if (item.total_reward != null && item.total_reward.Trim() != "")
-                {
-                    total += long.Parse(item.total_reward);
-                }
+                total += item.total_reward;
                 item.date_string = item.date.Value.ToString("dd/MM/yyyy");
                 item.rownum = baseDatatable.Start + 1 + i;
                 item.valid_date_string = item.valid_date.ToString("dd/MM/yyyy");

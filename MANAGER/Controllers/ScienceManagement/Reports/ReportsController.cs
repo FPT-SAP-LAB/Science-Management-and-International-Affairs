@@ -13,7 +13,8 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
 {
     public class ReportsController : Controller
     {
-        RewardsReportRepo rewardsReportRepo;
+        private RewardsReportRepo rewardsReportRepo;
+        private ReportRepo reportRepo;
         //[Auther(RightID = "24")]
         public ActionResult PapersReportsByWorkplace()
         {
@@ -86,8 +87,10 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         {
             return View();
         }
-        public ActionResult TotalBonusByYear()
+        public ActionResult TotalBonusByYear(int? year)
         {
+            reportRepo = new ReportRepo();
+            ViewBag.data = reportRepo.GetBonusByYearItems(year);
             return View();
         }
         public ActionResult Dashboard()

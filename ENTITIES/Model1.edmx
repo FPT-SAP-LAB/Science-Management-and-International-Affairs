@@ -140,7 +140,7 @@
           <Property Name="bank_branch" Type="nvarchar" MaxLength="50" />
           <Property Name="tax_code" Type="nvarchar" MaxLength="50" />
           <Property Name="identification_number" Type="nvarchar" MaxLength="50" />
-          <Property Name="identification_file_id" Type="int" />
+          <Property Name="identification_link" Type="nvarchar" MaxLength="250" />
           <Property Name="mssv_msnv" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="account_id" Type="int" />
           <Property Name="profile_page_active" Type="bit" Nullable="false" />
@@ -1163,7 +1163,7 @@
           </Key>
           <Property Name="request_id" Type="int" Nullable="false" />
           <Property Name="status_id" Type="int" />
-          <Property Name="total_reward" Type="nvarchar" MaxLength="150" />
+          <Property Name="total_reward" Type="int" />
           <Property Name="invention_id" Type="int" Nullable="false" />
           <Property Name="reward_type" Type="nvarchar" MaxLength="150" />
         </EntityType>
@@ -3289,18 +3289,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Profile__identif__789EE131">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="identification_file_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Profile__people___3335971A">
           <End Role="People" Type="Self.People" Multiplicity="1" />
           <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
@@ -5026,10 +5014,6 @@
             <End Role="AcademicDegree" EntitySet="AcademicDegree" />
             <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profile__identif__789EE131" Association="Self.FK__Profile__identif__789EE131">
-            <End Role="File" EntitySet="File" />
-            <End Role="Profile" EntitySet="Profile" />
-          </AssociationSet>
           <AssociationSet Name="FK__Profile__people___3335971A" Association="Self.FK__Profile__people___3335971A">
             <End Role="People" EntitySet="People" />
             <End Role="Profile" EntitySet="Profile" />
@@ -5458,7 +5442,6 @@
           <NavigationProperty Name="Papers" Relationship="Self.FK__Paper__file_id__37FA4C37" FromRole="File" ToRole="Paper" />
           <NavigationProperty Name="Policies" Relationship="Self.FK__Policy__file_id__4B2D1C3C" FromRole="File" ToRole="Policy" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="File" ToRole="Profile" />
-          <NavigationProperty Name="Profiles1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="File" ToRole="Profile" />
           <NavigationProperty Name="AcademicActivities" Relationship="Self.FK_AcademicActivity_File" FromRole="File" ToRole="AcademicActivity" />
           <NavigationProperty Name="ActivityExpenseDetails" Relationship="Self.FK_ActivityExpenseDetail_File" FromRole="File" ToRole="ActivityExpenseDetail" />
           <NavigationProperty Name="ActivityPartners" Relationship="Self.FK_ActivityPartner_File" FromRole="File" ToRole="ActivityPartner" />
@@ -5545,7 +5528,7 @@
           <Property Name="bank_branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="tax_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="identification_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="identification_file_id" Type="Int32" />
+          <Property Name="identification_link" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="mssv_msnv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="account_id" Type="Int32" />
           <Property Name="profile_page_active" Type="Boolean" Nullable="false" />
@@ -5554,7 +5537,6 @@
           <NavigationProperty Name="Account" Relationship="Self.FK__Profile__account__0BB1B5A5" FromRole="Profile" ToRole="Account" />
           <NavigationProperty Name="Country" Relationship="Self.FK__Profile__country__70FDBF69" FromRole="Profile" ToRole="Country" />
           <NavigationProperty Name="File" Relationship="Self.FK__Profile__avatar___1881A0DE" FromRole="Profile" ToRole="File" />
-          <NavigationProperty Name="File1" Relationship="Self.FK__Profile__identif__789EE131" FromRole="Profile" ToRole="File" />
           <NavigationProperty Name="Person" Relationship="Self.FK__Profile__people___3335971A" FromRole="Profile" ToRole="People" />
           <NavigationProperty Name="Awards" Relationship="Self.FK__Award__people_id__2AA05119" FromRole="Profile" ToRole="Award" />
           <NavigationProperty Name="CustomProfiles" Relationship="Self.FK__CustomPro__peopl__2B947552" FromRole="Profile" ToRole="CustomProfile" />
@@ -6856,7 +6838,7 @@
           </Key>
           <Property Name="request_id" Type="Int32" Nullable="false" />
           <Property Name="status_id" Type="Int32" />
-          <Property Name="total_reward" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="total_reward" Type="Int32" />
           <Property Name="invention_id" Type="Int32" Nullable="false" />
           <Property Name="reward_type" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BaseRequest" Relationship="Self.FK__RequestIn__reque__3CBF0154" FromRole="RequestInvention" ToRole="BaseRequest" />
@@ -7636,18 +7618,6 @@
             </Principal>
             <Dependent Role="Profile">
               <PropertyRef Name="avatar_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Profile__identif__789EE131">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="File">
-              <PropertyRef Name="file_id" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="identification_file_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10194,10 +10164,6 @@
             <End Role="File" EntitySet="Files" />
             <End Role="Profile" EntitySet="Profiles" />
           </AssociationSet>
-          <AssociationSet Name="FK__Profile__identif__789EE131" Association="Self.FK__Profile__identif__789EE131">
-            <End Role="File" EntitySet="Files" />
-            <End Role="Profile" EntitySet="Profiles" />
-          </AssociationSet>
           <AssociationSet Name="FK_AcademicActivity_File" Association="Self.FK_AcademicActivity_File">
             <End Role="File" EntitySet="Files" />
             <End Role="AcademicActivity" EntitySet="AcademicActivities" />
@@ -11096,7 +11062,7 @@
                 <ScalarProperty Name="bank_branch" ColumnName="bank_branch" />
                 <ScalarProperty Name="tax_code" ColumnName="tax_code" />
                 <ScalarProperty Name="identification_number" ColumnName="identification_number" />
-                <ScalarProperty Name="identification_file_id" ColumnName="identification_file_id" />
+                <ScalarProperty Name="identification_link" ColumnName="identification_link" />
                 <ScalarProperty Name="mssv_msnv" ColumnName="mssv_msnv" />
                 <ScalarProperty Name="account_id" ColumnName="account_id" />
                 <ScalarProperty Name="profile_page_active" ColumnName="profile_page_active" />
