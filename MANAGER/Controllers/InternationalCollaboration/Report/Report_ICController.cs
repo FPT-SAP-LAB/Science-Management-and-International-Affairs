@@ -1,4 +1,5 @@
-﻿using BLL.InternationalCollaboration.Dashboard;
+﻿using BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding;
+using BLL.InternationalCollaboration.Dashboard;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Dashboard;
@@ -30,6 +31,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
                 year_select.Add(this_year - i);
             }
             ViewBag.year_select = year_select;
+
+            //update noti for mou.
+            new MOURepo().getNoti();
             return View();
         }
 
