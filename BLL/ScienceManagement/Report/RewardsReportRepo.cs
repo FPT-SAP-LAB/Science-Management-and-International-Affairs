@@ -21,6 +21,7 @@ namespace BLL.ScienceManagement.Report
                         join d in db.RequestPapers on c.request_id equals d.request_id
                         join e in db.Papers on d.paper_id equals e.paper_id
                         where d.type == paperType && e.is_verified == true
+                        && d.total_reward != null && d.status_id == 2
                         select new ArticlesInoutCountryReports
                         {
                             decision_number = a.decision_number,
