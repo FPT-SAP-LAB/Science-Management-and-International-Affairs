@@ -543,8 +543,21 @@ namespace BLL.ScienceManagement.Paper
 
         public string GetAuthorReceived(string id)
         {
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int paper_id = 0;
+            try
+            {
+                paper_id = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-            int paper_id = Int32.Parse(id);
+            //int paper_id = Int32.Parse(id);
             string ms = (from a in db.RequestPapers
                          join b in db.Authors on a.author_received_reward equals b.people_id
                          where a.paper_id == paper_id
@@ -1267,6 +1280,19 @@ namespace BLL.ScienceManagement.Paper
 
         public List<WaitDecisionPaper> GetListWwaitDecision(string type, int reseacher)
         {
+            if (type == null) return null;
+            type = type.Trim();
+            if (type == "") return null;
+            int ty = 0;
+            try
+            {
+                ty = Int32.Parse(type);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             //    string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
             //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -1281,7 +1307,7 @@ namespace BLL.ScienceManagement.Paper
             //		from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
             //		group by p.paper_id) as a on p.paper_id = a.paper_id
             //                    where rp.status_id in (4, 6) and rp.type = @type and ah.is_reseacher = @reseacher";
-            int ty = Int32.Parse(type);
+            //int ty = Int32.Parse(type);
             bool is_r = reseacher != 0;
             var data = (from a in db.BaseRequests
                         join b in db.Profiles on a.account_id equals b.account_id
@@ -1311,6 +1337,19 @@ namespace BLL.ScienceManagement.Paper
 
         public List<WaitDecisionPaper> GetListWwaitDecision2(string type, int reseacher)
         {
+            if (type == null) return null;
+            type = type.Trim();
+            if (type == "") return null;
+            int ty = 0;
+            try
+            {
+                ty = Int32.Parse(type);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             //string sql = @"select p.name, p.journal_name, po.name as 'author_name', pro.mssv_msnv, o.office_abbreviation, a.note, rp.request_id, p.paper_id
             //                    from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -1325,7 +1364,7 @@ namespace BLL.ScienceManagement.Paper
             //		from SM_ScientificProduct.Paper p join SM_ScientificProduct.AuthorPaper ap on p.paper_id = ap.paper_id
             //		group by p.paper_id) as a on p.paper_id = a.paper_id
             //                    where rp.status_id in (4, 7) and rp.type = @type and ah.is_reseacher = @reseacher";
-            int ty = Int32.Parse(type);
+            //int ty = Int32.Parse(type);
             bool is_r = reseacher != 0;
             var data = (from a in db.BaseRequests
                         join b in db.Profiles on a.account_id equals b.account_id
@@ -1355,6 +1394,8 @@ namespace BLL.ScienceManagement.Paper
 
         public List<Paper_Appendix_1> GetListAppendix1_2(string type, int reseacher)
         {
+            if (type == null) type = "";
+            type = type.Trim();
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.name as 'author_name', ah.mssv_msnv, o.office_abbreviation, p.name, p.journal_name, a.sum, b.sumFE, p.paper_id
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
@@ -1376,6 +1417,8 @@ namespace BLL.ScienceManagement.Paper
 
         public List<Paper_Apendix_3> GetListAppendix3_4(string type, int reseacher)
         {
+            if (type == null) type = "";
+            type = type.Trim();
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, case when sum(ap.money_reward_in_decision) is null then 0 else sum(ap.money_reward_in_decision) end as 'sum_money', ah.identification_file_link
                             from [SM_ScientificProduct].Paper p join [SM_ScientificProduct].AuthorPaper ap on p.paper_id = ap.paper_id
