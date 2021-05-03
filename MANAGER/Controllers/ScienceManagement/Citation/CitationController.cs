@@ -5,6 +5,7 @@ using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using MANAGER.Models;
 using MANAGER.Support;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
@@ -37,12 +38,9 @@ namespace MANAGER.Controllers
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
             ViewBag.total_reward = rc.total_reward;
-
-            List<TitleWithName> listTitle = mrd.GetTitle("vi-VN");
-            ViewBag.ctitle = listTitle;
-
-            int status = rc.citation_status_id;
-            ViewBag.status = status;
+            ProfileExtend profile = cr.GetProfile(id);
+            ViewBag.profile = profile;
+            ViewBag.status = rc.citation_status_id;
 
             ViewBag.acc = CurrentAccount.Account(Session);
 
