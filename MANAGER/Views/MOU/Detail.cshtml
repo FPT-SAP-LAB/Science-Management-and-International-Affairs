@@ -918,7 +918,23 @@
             loadListExMOU();
             pushDataToList();
             getFullScopes();
+            getMOACode();
         });
+
+        function getMOACode(){
+            $.ajax({
+                url: "@Url.Action("GetNewMOACode", "MOU")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (data) {
+                    $('#moa_code').val(data);
+                },
+                error: function () {
+                }
+            });
+        }
 
         function getListOffice(){
             $.ajax({
@@ -2770,6 +2786,7 @@
                 resetTableMOA();
                 reloadMOATable();
                 listTempPartnerMOAAdd = [];
+                getMOACode();
             },
             error: function () {
                 //alert("fail");
