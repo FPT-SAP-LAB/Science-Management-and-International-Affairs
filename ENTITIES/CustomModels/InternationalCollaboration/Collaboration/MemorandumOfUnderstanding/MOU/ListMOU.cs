@@ -19,6 +19,7 @@ namespace ENTITIES.CustomModels.InternationalCollaboration.Collaboration.Memoran
         public string contact_point_name { get; set; }
         public string contact_point_email { get; set; }
         public string contact_point_phone { get; set; }
+        public string link { get; set; }
         public string evidence { get; set; }
         public DateTime mou_start_date { get; set; }
         public DateTime mou_end_date { get; set; }
