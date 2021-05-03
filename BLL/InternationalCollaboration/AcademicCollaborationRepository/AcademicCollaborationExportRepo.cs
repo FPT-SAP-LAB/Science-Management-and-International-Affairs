@@ -21,11 +21,12 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 if (direction == 1)
                 {
                     filename = "AC_Going.xlsx";
-                }else
+                }
+                else
                 {
                     filename = "AC_Coming.xlsx";
                 }
-                    System.IO.FileInfo file = new System.IO.FileInfo(path + filename);
+                System.IO.FileInfo file = new System.IO.FileInfo(path + filename);
                 List<AcademicCollaboration_Ext> AC_List = AC_ListToExportExcel(direction, collab_type_id, obj_searching);
 
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -34,7 +35,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                     ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                     int startRow = 3;
-                    if(direction==1)
+                    if (direction == 1)
                     {
                         for (int i = 0; i < AC_List.Count; i++)
                         {
