@@ -49,6 +49,33 @@ namespace BLL.ScienceManagement.Citation
             return rc;
         }
 
+        public ProfileExtend GetProfile(string id)
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            int.TryParse(id, out int request_id);
+            var temp = (from a in db.BaseRequests
+                        join b in db.Profiles on a.account_id equals b.account_id
+                        join c in db.People on b.people_id equals c.people_id
+                        join d in db.Offices on c.office_id equals d.office_id
+                        join e in db.TitleLanguages on b.title_id equals e.title_id
+                        where a.request_id == request_id && e.language_id == 1
+                        select new ProfileExtend
+                        {
+                            FullName = c.name,
+                            OfficeName = d.office_name,
+                            Email = c.email,
+                            mssv_msnv = b.mssv_msnv,
+                            TitleName = e.name,
+                            is_reseacher = b.is_reseacher,
+                            identification_number = b.identification_number,
+                            identification_link = b.identification_link,
+                            tax_code = b.tax_code,
+                            bank_branch = b.bank_branch,
+                            bank_number = b.bank_number,
+                        }).FirstOrDefault();
+            return temp;
+        }
+
         public string DeleteRequest(int request_id)
         {
             if (request_id <= 0 || request_id == int.MaxValue)
