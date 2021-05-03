@@ -60,7 +60,14 @@
                 <div class="d-flex justify-content-between flex-wrap mt-1">
                     <div class="d-flex mr-3">
                         <a href="#" class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3">@ViewBag.profile.name</a>
-                        <a href="#"><i class="flaticon2-correct text-success font-size-h5"></i></a>
+                        @{
+                            if (ViewBag.profile.profile_page_active != null && ViewBag.profile.profile_page_active)
+                            {
+                                <a href="#">
+                                    <i class="flaticon2-correct text-success font-size-h5"></i>
+                                </a>
+                            }
+                        }
                     </div>
                     @if (CurrentAccount.GetProfile(Session) != null && CurrentAccount.GetProfile(Session).people_id == ViewBag.profile.id)
                     {
@@ -198,7 +205,7 @@
             <div class="col-12">
                 <div class="card card-custom card-stretch gutter-b" style="padding-bottom:2rem">
                     <!--begin::Header-->
-                    <h3 class="card-label font-weight-bolder text-dark"><i class="la text-success la-navicon icon-md"></i> Công trình khoa học</h3>
+                    <h3 class="card-label font-weight-bolder text-dark">Công trình khoa học</h3>
                     <hr />
                     <!--end::Header-->
                     <!--begin::Body-->
@@ -292,7 +299,7 @@
                         data: "paper_name", name: "paper_name", render: function (data, type, row, meta) {
                             return `
                                 <div class='card card-custom paper_items' style='padding-bottom:2rem'>
-                                <div class='card-body pt-3 pb-0'><a href='` + row.link + `'>` + row.paper_name + `</a>`
+                                <div class='card-body pt-3 pb-0'><a href='` + row.link + `'><i class="flaticon-add-label-button icon-md text-success"></i>  ` + row.paper_name + `</a>`
                                 + "     <span class='text-muted'>" + (String(row.year) != "" ? "(" + String(row.year) +")" : "") + "</span>"
                                 + "     <span class='text-muted navi-text font-italic'> - " + String(row.co_author).replace(",",", ")+ "</span>"
                                 +`

@@ -246,6 +246,7 @@
     <Compile Include="CustomModels\Datatable\BaseDatatable.cs" />
     <Compile Include="CustomModels\Datatable\BaseServerSideData.cs" />
     <Compile Include="CustomModels\GoogleDriveService.cs" />
+    <Compile Include="CustomModels\HomeData.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicActivity\ActivityPartner_Ext.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicActivity\SaveActivityPartner.cs" />
     <Compile Include="CustomModels\InternationalCollaboration\AcademicCollaborationEntities\AcademicCollaborationPartner_Ext.cs" />
@@ -321,11 +322,10 @@
     <Compile Include="CustomModels\Notification.cs" />
     <Compile Include="CustomModels\Datatable\ResultDatatable.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\CustomCitation.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Report\TotalBonusByYearItem.cs" />
     <Compile Include="CustomModels\SubscribeLanguage.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyEdit.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyIndex.cs" />
-    <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_1.cs" />
-    <Compile Include="CustomModels\ScienceManagement\Citation\Citation_Appendix_2.cs" />
     <Compile Include="CustomModels\ScienceManagement\Conference\ConferenceSearch.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\CustomCountry.cs" />
     <Compile Include="CustomModels\ScienceManagement\Invention\Invention_Appendix_1.cs" />
@@ -403,6 +403,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="FormalityLanguage.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImageHomePage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="InternalUnit.cs">

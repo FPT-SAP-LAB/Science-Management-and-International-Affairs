@@ -12,6 +12,8 @@ namespace BLL.ScienceManagement.DecisionHistory
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<Decision> GetListDecision(string search)
         {
+            if (search == null) search = "";
+            search = search.Trim();
             string sql = @"select d.*
                             from SM_Request.Decision d join SM_Request.RequestDecision rd on d.decision_id = rd.decision_id
                             join SM_ScientificProduct.RequestPaper rp on rd.request_id = rp.request_id

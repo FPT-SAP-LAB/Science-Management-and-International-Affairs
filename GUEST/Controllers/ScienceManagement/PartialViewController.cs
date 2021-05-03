@@ -17,7 +17,7 @@ namespace GUEST.Controllers.ScienceManagement
         [ChildActionOnly]
         public ActionResult AddAuthor()
         {
-            List<Office> listOff = md.getOffice();
+            List<Office> listOff = md.GetOffice();
             ViewBag.office = listOff;
 
             List<Area> listArea = md.GetAreas();
@@ -28,13 +28,13 @@ namespace GUEST.Controllers.ScienceManagement
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<TitleWithName> listTitle = md.getTitle(lang);
+            List<TitleWithName> listTitle = md.GetTitle(lang);
             ViewBag.title = listTitle;
 
-            List<ContractType> listContract = md.getContract();
+            List<ContractType> listContract = md.GetContract();
             ViewBag.contract = listContract;
 
-            List<AddAuthor> listPeople = md.getListPeopleFE();
+            List<AddAuthor> listPeople = md.GetListPeopleFE();
             ViewBag.people = listPeople;
 
             return PartialView();
@@ -43,15 +43,15 @@ namespace GUEST.Controllers.ScienceManagement
         [HttpPost]
         public JsonResult fillData(AddAuthor item, int paper_id)
         {
-            AddAuthor result = md.getAuthor(item.mssv_msnv);
-            AuthorPaper ap = md.getMonry(item, paper_id);
+            AddAuthor result = md.GetAuthor(item.mssv_msnv);
+            AuthorPaper ap = md.GetMonry(item, paper_id);
             return Json(new { author = result, money = ap.money_reward }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult fillDataAdd(AddAuthor item)
         {
-            AddAuthor result = md.getAuthor(item.mssv_msnv);
+            AddAuthor result = md.GetAuthor(item.mssv_msnv);
             string mess = "ss";
             if (result == null) mess = "ff";
             return Json(new { author = result, mess = mess }, JsonRequestBehavior.AllowGet);
@@ -60,7 +60,7 @@ namespace GUEST.Controllers.ScienceManagement
         [ChildActionOnly]
         public ActionResult EditAuthor()
         {
-            List<Office> listOff = md.getOffice();
+            List<Office> listOff = md.GetOffice();
             ViewBag.office = listOff;
 
             List<Area> listArea = md.GetAreas();
@@ -71,13 +71,13 @@ namespace GUEST.Controllers.ScienceManagement
             {
                 lang = Request.Cookies["language_name"].Value;
             }
-            List<TitleWithName> listTitle = md.getTitle(lang);
+            List<TitleWithName> listTitle = md.GetTitle(lang);
             ViewBag.title = listTitle;
 
-            List<ContractType> listContract = md.getContract();
+            List<ContractType> listContract = md.GetContract();
             ViewBag.contract = listContract;
 
-            List<AddAuthor> listPeople = md.getListPeopleFE();
+            List<AddAuthor> listPeople = md.GetListPeopleFE();
             ViewBag.people = listPeople;
 
             return PartialView();

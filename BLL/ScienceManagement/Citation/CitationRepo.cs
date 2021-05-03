@@ -1,16 +1,15 @@
 ﻿using BLL.ModelDAL;
-using BLL.Support;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
-using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Web;
 
 namespace BLL.ScienceManagement.Citation
 {
@@ -41,53 +40,12 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public int GetStatus(string id)
-        {
-            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
-                return 0;
-            try
-            {
-                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                return rc.citation_status_id;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return 0;
-            }
-        }
-
-        public AuthorInfo GetAuthor(string id)
-        {
-            if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
-                return null;
-
-            string sql = @"select ah.name, ah.email, o.office_abbreviation, ah.contract_id, ah.title_id, rc.total_reward, ah.bank_branch, ah.bank_number, ah.mssv_msnv, ah.tax_code, ah.identification_number, ct.name as 'contract_name', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ah.identification_file_link, ah.people_id
-                            from [SM_Citation].Citation c
-	                            join [SM_Citation].RequestCitation rc on c.request_id = rc.request_id
-	                            join [SM_ScientificProduct].Author ah on rc.people_id = ah.people_id
-	                            join [General].Office o on o.office_id = ah.office_id
-	                            join [SM_MasterData].ContractType ct on ah.contract_id = ct.contract_id
-                            where rc.request_id = @id";
-            AuthorInfo item = db.Database.SqlQuery<AuthorInfo>(sql, new SqlParameter("id", request_id)).FirstOrDefault();
-            return item;
-        }
-
-        public List<string> GetAuthorEmail()
-        {
-            string sql = @"select distinct ah.email
-                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-                            where rc.citation_status_id in (4, 6, 7)";
-            List<string> list = db.Database.SqlQuery<string>(sql).ToList();
-            return list;
-        }
-
         public RequestCitation GetRequestCitation(string id)
         {
             if (!int.TryParse(id, out int request_id) || request_id <= 0 || request_id == int.MaxValue)
                 return null;
-
-            RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+            db.Configuration.LazyLoadingEnabled = false;
+            RequestCitation rc = db.RequestCitations.Find(request_id);
             return rc;
         }
 
@@ -96,22 +54,17 @@ namespace BLL.ScienceManagement.Citation
             if (request_id <= 0 || request_id == int.MaxValue)
                 return "ff";
 
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    RequestCitation rp = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                    rp.citation_status_id = 1;
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
+                RequestCitation rp = db.RequestCitations.Find(request_id);
+                rp.citation_status_id = 1;
+                db.SaveChanges();
+                return "ss";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "ff";
             }
         }
 
@@ -156,145 +109,6 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public Author EditAuthor(List<AddAuthor> people)
-        {
-            if (people == null || people.Count == 0)
-                return null;
-            AddAuthor temp = people[0];
-            SupportClass.TrimProperties(temp);
-            if (temp.name == null || temp.email == null)
-                return null;
-
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    Author author = db.Authors.Where(x => x.people_id == temp.people_id).FirstOrDefault();
-                    author.name = temp.name;
-                    author.email = temp.email;
-                    if (temp.office_id == 0 || temp.office_id == null)
-                    {
-                        author.office_id = null;
-                    }
-                    else
-                    {
-                        author.office_id = temp.office_id;
-                        author.bank_number = temp.bank_number;
-                        author.bank_branch = temp.bank_branch;
-                        author.tax_code = temp.tax_code;
-                        author.identification_number = temp.identification_number;
-                        author.mssv_msnv = temp.mssv_msnv;
-                        author.is_reseacher = temp.is_reseacher;
-                        author.title_id = temp.title_id;
-                        author.contract_id = 1;
-                        author.identification_file_link = temp.identification_file_link;
-                    }
-                    db.Entry(author).State = EntityState.Modified;
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return author;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return null;
-                }
-            }
-        }
-
-        public string AddCitaion(List<ENTITIES.Citation> citation)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    foreach (var item in citation)
-                    {
-                        db.Citations.Add(item);
-                    }
-                    db.SaveChanges();
-                    dbc.Commit();
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
-        }
-
-        //public string AddRequestHasCitation(List<ENTITIES.Citation> citation, BaseRequest br)
-        //{
-        //    using (DbContextTransaction dbc = db.Database.BeginTransaction())
-        //        try
-        //        {
-        //            string sql = "";
-        //            List<SqlParameter> listParam = new List<SqlParameter>();
-        //            for (int i = 0; i < citation.Count; i++)
-        //            {
-        //                sql += "insert into [SM_Citation].RequestHasCitation values (@request, @citation" + i + ") \n";
-        //                SqlParameter param = new SqlParameter("@citation" + i, citation[i].citation_id);
-        //                listParam.Add(param);
-        //            }
-        //            SqlParameter param2 = new SqlParameter("@request", br.request_id);
-        //            listParam.Add(param2);
-        //            db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
-        //            dbc.Commit();
-        //            return "ss";
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Console.WriteLine(e.Message);
-        //            dbc.Rollback();
-        //            return "ff";
-        //        }
-        //}
-
-        public string EditCitation(List<CustomCitation> citation, List<ENTITIES.Citation> newcitation, string request_id, Author author)
-        {
-            try
-            {
-                string sql = "";
-                List<SqlParameter> listParam = new List<SqlParameter>();
-                int id = int.Parse(request_id);
-                BaseRequest br = db.BaseRequests.Where(x => x.request_id == id).FirstOrDefault();
-                //for (int i = 0; i < citation.Count; i++)
-                //{
-                //    sql += "delete from [SM_Citation].RequestHasCitation where citation_id = @citation" + i + " and request_id = @request \n";
-                //    SqlParameter param = new SqlParameter("@citation" + i, citation[i].citation_id);
-                //    listParam.Add(param);
-                //}
-                //SqlParameter param2 = new SqlParameter("@request", br.request_id);
-                //listParam.Add(param2);
-                //db.Database.ExecuteSqlCommand(sql, listParam.ToArray());
-
-                foreach (var item in citation)
-                {
-                    db.Citations.Remove(db.Citations.Single(s => s.citation_id == item.citation_id));
-                }
-                db.SaveChanges();
-
-                foreach (var item in newcitation)
-                {
-                    item.request_id = Int32.Parse(request_id);
-                }
-                AddCitaion(newcitation);
-                //AddRequestHasCitation(newcitation, br);
-                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == br.request_id).FirstOrDefault();
-                rc.people_id = author.people_id;
-                rc.citation_status_id = 3;
-
-                db.SaveChanges();
-                return "ss";
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return "ff";
-            }
-        }
-
         public List<PendingCitation_manager> GetListPending()
         {
             string sql = @"select acc.email, br.created_date, br.request_id, rc.citation_status_id
@@ -305,35 +119,30 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public int? GetTotalReward(string id)
+        public AlertModal<string> UpdateReward(string id, string total)
         {
-            int request_id = int.Parse(id);
-            RequestCitation item = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-            return item.total_reward;
-        }
+            if (total == null)
+                return new AlertModal<string>(false, "Số tiền không hợp lệ");
+            try
+            {
+                int request_id = int.Parse(id);
+                string temp = total.Replace(",", "");
+                int.TryParse(temp, out int reward);
+                if (reward <= 0)
+                    return new AlertModal<string>(false, "Số tiền không hợp lệ");
 
-        public string UpdateReward(string id, string total)
-        {
-            using (DbContextTransaction dbc = db.Database.BeginTransaction())
-                try
-                {
-                    int request_id = int.Parse(id);
-                    string temp = total.Replace(",", "");
-                    int reward = int.Parse(temp);
-                    RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
-                    rc.total_reward = reward;
-                    rc.citation_status_id = 4;
-                    db.SaveChanges();
-                    dbc.Commit();
+                RequestCitation rc = db.RequestCitations.Where(x => x.request_id == request_id).FirstOrDefault();
+                rc.total_reward = reward;
+                rc.citation_status_id = 4;
+                db.SaveChanges();
 
-                    return "ss";
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    dbc.Rollback();
-                    return "ff";
-                }
+                return new AlertModal<string>(true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new AlertModal<string>(false);
+            }
         }
 
         public List<WaitDecisionCitation> GetListWait()
@@ -351,83 +160,80 @@ namespace BLL.ScienceManagement.Citation
             return list;
         }
 
-        public string UploadDecision(DateTime date, int file_id, string number, string file_drive_id)
+        public AlertModal<string> UploadDecision(HttpPostedFileBase file, string number, string date)
         {
+            string file_drive_id = null;
+            DateTime finish = DateTime.Now;
+
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
+            {
                 try
                 {
+                    if (!DateTime.TryParseExact(date, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime valid_date))
+                        return new AlertModal<string>(false, "Ngày có hiệu lực không hợp lệ");
+
+                    string name = "QD_" + number + "_" + date;
+
+                    List<int> acceptedStatusIds = new List<int>() { 4, 6, 7 };
+
+                    var requests = (from a in db.RequestCitations
+                                    join b in db.BaseRequests on a.request_id equals b.request_id
+                                    join c in db.Accounts on b.account_id equals c.account_id
+                                    where acceptedStatusIds.Contains(a.citation_status_id)
+                                    select new
+                                    {
+                                        a.request_id,
+                                        RequestCitation = a,
+                                        BaseRequest = b,
+                                        c.email
+                                    }).ToList();
+
+                    if (requests.Count == 0)
+                        return new AlertModal<string>(false, "Chưa có đề nghị nào để cập nhật quyết định");
+
+                    List<string> listE = requests.Select(x => x.email).Distinct().ToList();
+
+                    Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
+                    file_drive_id = f.Id;
+
                     Decision decision = new Decision
                     {
-                        valid_date = date,
-                        file_id = file_id,
+                        valid_date = valid_date,
+                        File = new File
+                        {
+                            link = f.WebViewLink,
+                            file_drive_id = f.Id,
+                            name = name
+                        },
                         decision_number = number
                     };
                     db.Decisions.Add(decision);
                     db.SaveChanges();
 
-                    List<WaitDecisionCitation> wait = GetListWait();
-                    foreach (var item in wait)
+                    foreach (var item in requests)
                     {
-                        RequestDecision request = new RequestDecision
+                        db.RequestDecisions.Add(new RequestDecision
                         {
                             request_id = item.request_id,
                             decision_id = decision.decision_id
-                        };
-                        db.RequestDecisions.Add(request);
-                        RequestCitation rc = db.RequestCitations.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                        rc.citation_status_id = 2;
-                    }
-
-                    foreach (var item in wait)
-                    {
-                        BaseRequest br = db.BaseRequests.Where(x => x.request_id == item.request_id).FirstOrDefault();
-                        br.finished_date = DateTime.Now;
-                        db.Entry(br).State = EntityState.Modified;
+                        });
+                        item.RequestCitation.citation_status_id = 2;
+                        item.BaseRequest.finished_date = finish;
                     }
 
                     db.SaveChanges();
                     dbc.Commit();
-                    return "ss";
+                    return new AlertModal<string>(true);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     dbc.Rollback();
-                    GoogleDriveService.DeleteFile(file_drive_id);
-                    return "ff";
+                    if (file_drive_id != null)
+                        GoogleDriveService.DeleteFile(file_drive_id);
+                    return new AlertModal<string>(false);
                 }
-        }
-
-        public List<Citation_Appendix_1> GetListAppendix1()
-        {
-            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, a.sum_scopus, b.sum_scholar
-                            from SM_ScientificProduct.Author ah
-	                            join(select ah.people_id, sum(c.count) as 'sum_scopus'
-	                            from SM_Citation.Citation c 
-		                            join SM_Citation.RequestCitation rc on c.request_id = rc.request_id
-		                            join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-	                            where rc.citation_status_id = 4 and c.citation_type_id = 2
-	                            group by ah.people_id) as a on ah.people_id = a.people_id
-	                            join(select ah.people_id, sum(c.count) as 'sum_scholar'
-	                            from SM_Citation.Citation c 
-		                            join SM_Citation.RequestCitation rc on c.request_id = rc.request_id
-		                            join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-	                            where (rc.citation_status_id = 4) and (c.citation_type_id = 1)
-	                            group by ah.people_id) as b on ah.people_id = b.people_id
-	                            join General.Office o on ah.office_id = o.office_id
-                            order by ah.name";
-            List<Citation_Appendix_1> list = db.Database.SqlQuery<Citation_Appendix_1>(sql).ToList();
-            return list;
-        }
-
-        public List<Citation_Appendix_2> GetListAppendix2()
-        {
-            string sql = @"select ah.name, ah.mssv_msnv, o.office_abbreviation, rc.total_reward
-                            from SM_Citation.RequestCitation rc join SM_ScientificProduct.Author ah on rc.people_id = ah.people_id
-	                            join General.Office o on o.office_id = ah.office_id
-                            where rc.citation_status_id = 4";
-            List<Citation_Appendix_2> list = db.Database.SqlQuery<Citation_Appendix_2>(sql).ToList();
-            return list;
+            }
         }
     }
 }

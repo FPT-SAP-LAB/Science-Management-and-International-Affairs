@@ -23,7 +23,7 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<Scopu> baseServerSideData = MasterDataRepo.getListAllScopus(baseDatatable, name_search);
+                BaseServerSideData<Scopu> baseServerSideData = MasterDataRepo.GetListAllScopus(baseDatatable, name_search);
                 return Json(new
                 {
                     success = true,
@@ -46,7 +46,7 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<CustomISI> baseServerSideData = MasterDataRepo.getListAllISI(baseDatatable, name_search);
+                BaseServerSideData<CustomISI> baseServerSideData = MasterDataRepo.GetListAllISI(baseDatatable, name_search);
                 return Json(new
                 {
                     success = true,
@@ -64,10 +64,10 @@ namespace MANAGER.Controllers.ScienceManagement.MasterData
         }
 
         [HttpPost]
-        public ActionResult uploadJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
+        public ActionResult UploadJournal(HttpPostedFileBase file_scopus, HttpPostedFileBase file_SCIE, HttpPostedFileBase file_SSCI)
         {
             MasterDataRepo md = new MasterDataRepo();
-            bool mess = md.updateJournal(file_scopus, file_SCIE, file_SSCI);
+            bool mess = md.UpdateJournal(file_scopus, file_SCIE, file_SSCI);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
     }

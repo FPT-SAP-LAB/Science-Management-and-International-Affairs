@@ -17,7 +17,6 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Author()
         {
-            this.RequestCitations = new HashSet<RequestCitation>();
             this.AuthorInventions = new HashSet<AuthorInvention>();
             this.AuthorPapers = new HashSet<AuthorPaper>();
             this.RequestPapers = new HashSet<RequestPaper>();
@@ -38,8 +37,6 @@ namespace ENTITIES
         public string identification_file_link { get; set; }
     
         public virtual Office Office { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestCitation> RequestCitations { get; set; }
         public virtual ContractType ContractType { get; set; }
         public virtual Title Title { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

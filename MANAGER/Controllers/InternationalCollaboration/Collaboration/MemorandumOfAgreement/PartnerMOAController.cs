@@ -41,6 +41,27 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        public ActionResult isLastPartnerMOA()
+        {
+            try
+            {
+                if (Session["moa_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["moa_detail_id"].ToString();
+                    bool isLastPartner = moa.checkLastPartnerMOA(int.Parse(id));
+                    return Json(isLastPartner);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
         public ActionResult Get_MOA_History(string moa_partner_id)
         {
             try

@@ -15,7 +15,7 @@
                         <div class="col-md-3 my-2 my-md-0">
                             <div class="input-icon">
                                 <input type="text" class="form-control"
-                                       placeholder="Tên..."
+                                       placeholder="Tên sáng chế/GPHI"
                                        id="search_name" />
                                 <span>
                                     <i class="flaticon2-search-1 text-muted"></i>
@@ -25,8 +25,7 @@
                         <div class="col-md-3 my-2 my-md-0">
                             <div class="d-flex align-items-center">
                                 <label class="mr-3 mb-0 d-none d-md-block">Năm:</label>
-                                <select class="form-control"
-                                        id="search_nam">
+                                <select class="form-control" id="search_nam">
                                     <option label="Label"></option>
                                     @foreach (var year in ViewBag.years)
                                     {
@@ -35,11 +34,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4 my-2 my-md-0">
+                        @*<div class="col-md-4 my-2 my-md-0">
                             <div class="d-flex align-items-center">
                                 <label class="mr-3 mb-0 d-none d-md-block">CS:</label>
-                                <select class="form-control"
-                                        id="search_coso">
+                                <select class="form-control" id="search_coso">
                                     <option label="Label"></option>
                                     @foreach (Office o in ViewBag.listOffices)
                                     {
@@ -47,7 +45,7 @@
                                     }
                                 </select>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-lg-2 col-xl-2 mt-5 mt-lg-0">
                             <a href="#"
                                class="btn btn-light-primary px-6 font-weight-bold" id="search_btn">
@@ -65,10 +63,11 @@
                                 data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                             <span class="svg-icon svg-icon-md">
-                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                                                 width="24px" height="24px" viewBox="0 0 24 24"
-                                                                                                                 version="1.1">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="24px" height="24px" viewBox="0 0 24 24"
+                                     version="1.1">
                                     <g stroke="none" stroke-width="1" fill="none"
                                        fill-rule="evenodd">
                                         <rect x="0" y="0" width="24" height="24" />
@@ -151,11 +150,13 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Ngày cấp</th>
+                    <th>Ngày hiệu lực</th>
+                    <th>Số quyết định</th>
                     <th>Tên tác giả</th>
+                    <th>Tên sáng chế/GPHI</th>
+                    <th>Ngày cấp</th>
                     <th>Phân loại</th>
                     <th>Số</th>
-                    <th>Tên sáng chế/GPHI</th>
                     <th>Tiền Thưởng</th>
                 </tr>
             </thead>
@@ -173,34 +174,35 @@
             responsive: true,
 
             // DOM Layout settings
-            dom: `<'row'<'col-sm-12'tr>>
-                                                            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            dom: `<'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
 
             lengthMenu: [5, 10, 25, 50],
             bInfo: false,
             pageLength: 10,
             serverSide: true,
-            columnDefs: [
-                { width: "5%", targets: 0 },
-                { width: "15%", targets: 1 },
-                { width: "20%", targets: 2 },
-                { width: "15%", targets: 3 },
-                { width: "10%", targets: 4 },
-                { width: "20%", targets: 5 },
-            ],
+            //columnDefs: [
+            //    { width: "5%", targets: 0 },
+            //    { width: "15%", targets: 1 },
+            //    { width: "20%", targets: 2 },
+            //    { width: "15%", targets: 3 },
+            //    { width: "10%", targets: 4 },
+            //    { width: "20%", targets: 5 },
+            //],
             ajax: {
-                url: "/Reports/getIntellectualPropertyReport",
+                url: "/Reports/GetIntellectualPropertyReport",
                 datatype: "json",
                 type: "POST",
                 data: function (d) {
                     d.name = $("#search_name").val();
                     d.year = $("#search_nam").val()
-                    d.coso = $("#search_coso").val()
-                    d.type = 1
+                    d.office_id = $("#search_coso").val()
                 },
                 cache: false,
                 dataSrc: function (json) {
-                    $("#total_money").text(AddComma(json.total) + " VND")
+                    if (json.total == "")
+                        $("#total_money").text("0 VND");
+                    else
+                        $("#total_money").text(AddComma(json.total) + " VND")
                     return json.data;
                 }
             },
@@ -213,15 +215,13 @@
 
             columns: [
                 { data: "rownum", name: "rownum", orderable: false },
-                {
-                    data: "date", name: "date", orderable: true, render: function (data, type, row, meta) {
-                        return row.date_string
-                    }
-                },
-                { data: "authors", name: "authors", orderable: false },
-                { data: "kind", name: "kind", orderable: false },
-                { data: "invention_number", name: "invention_number", orderable: false },
-                { data: "invention_name", name: "invention_name", orderable: false },
+                { data: "valid_date_string", name: "valid_date" },
+                { data: "decision_number", name: "decision_number" },
+                { data: "authors", name: "name", orderable: false },
+                { data: "invention_name", name: "invention_name" },
+                { data: "date_string", name: "date" },
+                { data: "kind", name: "kind" },
+                { data: "invention_number", name: "invention_number" },
                 {
                     data: "total_reward", name: "total_reward", render: function (data) {
                         return AddComma(data)
@@ -234,9 +234,8 @@
         });
         //////////////////////////////////////START SELECT TAG/////////////////////////////////////////////
         list_select = {
-            "search_nam": "Chọn năm",
+            "search_nam": "Chọn năm cấp",
             "search_coso": "Chọn cơ sở",
-            "search_loai": "Chọn loại SHTT"
         }
         for (let i in list_select) {
             $('#' + i).select2({
