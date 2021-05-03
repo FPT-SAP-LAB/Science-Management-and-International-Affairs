@@ -26,6 +26,7 @@ var collab_coming_table = $('#collab_coming_table').DataTable({
     },
     searching: false,
     lengthChange: false,
+    pageLength: 5,
     serverSide: true,
     columns: [
         {

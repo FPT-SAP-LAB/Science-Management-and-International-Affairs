@@ -16,32 +16,39 @@ namespace BLL.InternationalCollaboration.Dashboard
             db = new ScienceAndInternationalAffairsEntities();
             try
             {
-                string query = @"SELECT top(5) p2.[year], CASE WHEN p1.signed IS NULL THEN 0 ELSE p1.signed END 'signed', p2.total, CASE WHEN p1.signed IS NULL THEN p2.total ELSE (p2.total - p1.signed) END as 'not_sign_yet' FROM
-                        (SELECT b.[year], COUNT(b.partner_id) 'signed' FROM
-                        (SELECT DISTINCT a.[year], p.partner_id
-                        FROM (SELECT DISTINCT YEAR(mou_start_date) 'year' FROM IA_Collaboration.MOUPartner 
-                        ) a 
-                        JOIN IA_Collaboration.MOUPartner mp
-                        ON a.[year] >= YEAR(mou_start_date) JOIN IA_Collaboration.[Partner] p
-                        ON mp.partner_id = p.partner_id JOIN IA_Collaboration.MOU mou
-                        ON mou.mou_id = mp.mou_id 
-                        JOIN IA_Collaboration.PartnerScope ps ON ps.partner_id = p.partner_id 
-                        LEFT JOIN IA_Collaboration.MOUBonus mb ON mou.mou_id = mb.mou_id
-                        AND ((a.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) OR(a.[year] BETWEEN YEAR(mp.mou_start_date) 
-                        AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL))
-                        LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap
-                        ON ps.partner_scope_id = ap.partner_scope_id AND YEAR(ap.cooperation_date_start) = a.[year]
-                        AND ap.cooperation_date_start BETWEEN mp.mou_start_date AND mou.mou_end_date
-                        LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = ps.partner_scope_id
-                        AND YEAR(ac.plan_study_start_date) = a.[year] AND ac.plan_study_start_date BETWEEN mp.mou_start_date AND mou.mou_end_date
-                        WHERE (ap.activity_partner_id IS NOT NULL) OR (ac.collab_id IS NOT NULL))b
-                        GROUP BY b.[year]) p1 RIGHT JOIN 
-                        (SELECT YEAR(mp.mou_start_date) 'year', COUNT(mp.mou_partner_id) 'total' 
-                        FROM IA_Collaboration.MOUPartner mp
-                        where YEAR(mou_start_date) <= {0}
-                        GROUP BY YEAR(mp.mou_start_date)
-                        ) p2 ON p1.[year] = p2.[year]
-                        order by p2.year desc ";
+                string query = @"WITH c AS (
+                                SELECT [year] FROM
+                                (SELECT ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) + 2014 AS 'year'
+                                FROM (VALUES(0),(0),(0),(0),(0),(0),(0),(0),(0),(0)) a(n)
+                                CROSS JOIN (VALUES(0),(0),(0),(0),(0),(0),(0),(0),(0),(0)) b(n)
+                                ) AS a
+                                WHERE [year] <= {0})
+                                SELECT top(5) p2.[year], CASE WHEN p1.signed IS NULL THEN 0 ELSE p1.signed END 'signed', p2.total, CASE WHEN p1.signed IS NULL THEN p2.total ELSE (p2.total - p1.signed) END as 'not_sign_yet' FROM
+                                (SELECT b.[year], COUNT(b.partner_id) 'signed' FROM
+                                (SELECT DISTINCT c.[year], p.partner_id
+                                FROM IA_Collaboration.MOUPartner mp JOIN IA_Collaboration.[Partner] p
+                                ON mp.partner_id = p.partner_id JOIN IA_Collaboration.MOU mou
+                                ON mou.mou_id = mp.mou_id
+                                JOIN IA_Collaboration.PartnerScope ps ON ps.partner_id = p.partner_id 
+                                LEFT JOIN IA_Collaboration.MOUBonus mb ON mou.mou_id = mb.mou_id JOIN c
+                                ON ((c.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) OR (c.[year] BETWEEN YEAR(mp.mou_start_date) 
+                                AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL)) JOIN IA_Collaboration.MOUPartnerScope mps ON mps.mou_id = mou.mou_id
+                                LEFT JOIN SMIA_AcademicActivity.ActivityPartner ap
+                                ON ps.partner_scope_id = ap.partner_scope_id AND YEAR(ap.cooperation_date_start) = c.[year]
+                                AND ap.cooperation_date_start BETWEEN mp.mou_start_date AND mou.mou_end_date AND ap.partner_scope_id = mps.partner_scope_id
+                                LEFT JOIN IA_AcademicCollaboration.AcademicCollaboration ac ON ac.partner_scope_id = ps.partner_scope_id
+                                AND YEAR(ac.plan_study_start_date) = c.[year] AND ac.plan_study_start_date BETWEEN mp.mou_start_date AND mou.mou_end_date
+                                AND ac.partner_scope_id = mps.partner_scope_id
+                                WHERE ((ap.activity_partner_id IS NOT NULL) OR (ac.collab_id IS NOT NULL)))b
+                                GROUP BY b.[year]) p1 RIGHT JOIN 
+                                (SELECT d.[year], COUNT(d.partner_id) 'total' FROM(SELECT DISTINCT c.[year], mp.partner_id
+                                FROM IA_Collaboration.MOUPartner mp JOIN IA_Collaboration.MOU mou
+                                ON mp.mou_id = mou.mou_id LEFT JOIN IA_Collaboration.MOUBonus mb ON mb.mou_id = mou.mou_id JOIN c
+                                ON ((c.[year] BETWEEN YEAR(mp.mou_start_date) AND YEAR(mb.mou_bonus_end_date)) OR (c.[year] BETWEEN YEAR(mp.mou_start_date) 
+                                AND YEAR(mou.mou_end_date) AND mb.mou_bonus_end_date IS NULL))
+                                ) d GROUP BY d.[year]) p2 ON p1.[year] = p2.[year]
+                                ORDER BY p2.[year] DESC
+ ";
 
                 if (year is null)
                 {
