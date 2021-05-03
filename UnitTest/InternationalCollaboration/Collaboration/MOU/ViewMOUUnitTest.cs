@@ -127,21 +127,21 @@ namespace UnitTest.InternationalCollaboration.Collaboration
             }
             Assert.Pass();
         }
-        [TestCase]
-        public void TestListMOUToExportExcel()
-        {
-            //Check list count
-            MOURepo mou = new MOURepo();
-            BaseDatatable baseDatatable = new BaseDatatable
-            {
-                SortColumnName = "mou_partner_id",
-                SortDirection = "desc",
-                Start = 0,
-                Length = 100
-            };
-            List<ListMOU> listTest1 = mou.listAllMOU(baseDatatable, "", "", "").Data;
-            List<ListMOU> listTest2 = mou.listAllMOUToExportExcel();
-            Assert.AreEqual(listTest1.Count, listTest2.Count);
-        }
+        //[TestCase]
+        //public void TestListMOUToExportExcel()
+        //{
+        //    //Check list count
+        //    MOURepo mou = new MOURepo();
+        //    BaseDatatable baseDatatable = new BaseDatatable
+        //    {
+        //        SortColumnName = "mou_partner_id",
+        //        SortDirection = "desc",
+        //        Start = 0,
+        //        Length = 100
+        //    };
+        //    List<ListMOU> listTest1 = mou.listAllMOU(baseDatatable, "", "", "").Data;
+        //    List<ListMOU> listTest2 = mou.listAllMOUToExportExcel();
+        //    Assert.AreEqual(listTest1.Count, listTest2.Count);
+        //}
     }
 }
