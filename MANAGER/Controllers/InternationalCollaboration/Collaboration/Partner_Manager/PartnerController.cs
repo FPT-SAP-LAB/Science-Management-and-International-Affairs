@@ -202,7 +202,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
 
         public ActionResult Preview()
         {
-            ViewBag.title = "Xem trước";
+            ViewBag.title = "XEM TRƯỚC";
             ViewBag.content = Session["content"];
             ViewBag.address = Session["address"];
             ViewBag.website = Session["website"];

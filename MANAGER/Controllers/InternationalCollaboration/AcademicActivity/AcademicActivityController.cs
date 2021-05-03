@@ -16,7 +16,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult List()
         {
             repo = new AcademicActivityRepo();
-            ViewBag.pageTitle = "Danh sách hoạt động học thuật trong năm";
+            ViewBag.pageTitle = "DANH SÁCH HOẠT ĐỘNG HỌC THUẬT TRONG NĂM";
             ViewBag.AAType = repo.getType(1);
             return View();
         }

@@ -25,7 +25,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             repo = new DetailOfAcademicActivityRepo();
             phaseRepo = new AcademicActivityPhaseRepo();
-            ViewBag.Title = "Thông tin hoạt động học thuật";
+            ViewBag.Title = "THÔNG TIN HOẠT ĐỘNG HỌC THUẬT";
             ViewBag.activity_id = id;
             ViewBag.types = repo.getType(1);
             ViewBag.unit = repo.getUnits();

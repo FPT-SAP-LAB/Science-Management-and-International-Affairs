@@ -88,6 +88,21 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
+        public bool checkLastPartnerMOA(int moa_id)
+        {
+            using (DbContextTransaction transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    return db.MOAPartners.Where(x => x.moa_id == moa_id).Count() == 1 ? true : false;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
         public void handlingPartnerListData(List<ListMOAPartner> moaList)
         {
             //spe_name
