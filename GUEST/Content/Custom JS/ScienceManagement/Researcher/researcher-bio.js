@@ -291,6 +291,7 @@ function resetAndCloseModals(success) {
     $('.modal').modal('hide');
     submit_new_work.stopLoading()
     submit_new_acad.stopLoading()
+    submit_new_award.stopLoading()
     submit_edit_acad.stopLoading()
     submit_edit_work.stopLoading()
     delete_acad.stopLoading()

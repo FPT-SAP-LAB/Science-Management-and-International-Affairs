@@ -299,7 +299,7 @@
                         data: "paper_name", name: "paper_name", render: function (data, type, row, meta) {
                             return `
                                 <div class='card card-custom paper_items' style='padding-bottom:2rem'>
-                                <div class='card-body pt-3 pb-0'><a href='` + row.link + `'>` + row.paper_name + `</a>`
+                                <div class='card-body pt-3 pb-0'><a href='` + row.link + `'><i class="flaticon-add-label-button icon-md text-success"></i>  ` + row.paper_name + `</a>`
                                 + "     <span class='text-muted'>" + (String(row.year) != "" ? "(" + String(row.year) +")" : "") + "</span>"
                                 + "     <span class='text-muted navi-text font-italic'> - " + String(row.co_author).replace(",",", ")+ "</span>"
                                 +`
