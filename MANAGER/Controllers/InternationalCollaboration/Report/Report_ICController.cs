@@ -49,7 +49,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
                 }
                 dashboardRepo = new DashboardRepo();
                 List<ChartDashboard> dashboards = dashboardRepo.GetDashboard(this_year);
-                List<int?> year = new List<int?>();
+                List<long> year = new List<long>();
                 List<int?> signed = new List<int?>();
                 List<int?> not_sign_yet = new List<int?>();
                 foreach (var i in dashboards)
