@@ -6,6 +6,5 @@
         public string Email { get; set; }
         public string OfficeName { get; set; }
         public string TitleName { get; set; }
-
     }
 }
