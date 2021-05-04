@@ -60,6 +60,7 @@ namespace BLL.ScienceManagement.Researcher
                     string website = (string)editInfo["info"]["website"];
                     string googlescholar = (string)editInfo["info"]["googlescholar"];
                     string cv = (string)editInfo["info"]["cv"];
+                    string office = (string)editInfo["info"]["office"][0]["id"];
 
                     if (birthdate == null || birthdate == "")
                     {
@@ -74,6 +75,7 @@ namespace BLL.ScienceManagement.Researcher
                     profile.cv = cv;
                     person.email = email;
                     profile.google_scholar = googlescholar;
+                    profile.Person.office_id = Int32.Parse(office);
                     db.SaveChanges();
                     ///////////////////////////////////////////////////////
                     List<int> field_ids = new List<int>();

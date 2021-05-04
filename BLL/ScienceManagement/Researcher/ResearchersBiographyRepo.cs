@@ -194,6 +194,18 @@ namespace BLL.ScienceManagement.Researcher
                         }).ToList();
             return data;
         }
+
+        public List<SelectField> GetOffices(int language_id)
+        {
+            var data = (from a in db.Offices
+                        select new SelectField
+                        {
+                            id = a.office_id,
+                            name = a.office_abbreviation,
+                            selected = 0
+                        }).ToList();
+            return data;
+        }
         public int AddNewWorkEvent(string data)
         {
             using (DbContextTransaction trans = db.Database.BeginTransaction())
