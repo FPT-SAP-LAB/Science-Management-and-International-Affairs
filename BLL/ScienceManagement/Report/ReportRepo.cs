@@ -39,12 +39,12 @@ namespace BLL.ScienceManagement.Report
                                                 {
                                                     Vietnam = (from e in db.AuthorPapers
                                                                join f in db.Authors on e.people_id equals f.people_id
-                                                               where d.type == 1 && f.is_reseacher == false
+                                                               where d.type == 1 && (f.is_reseacher == null || f.is_reseacher == false)
                                                                && e.money_reward != null && e.paper_id == d.paper_id
                                                                select e.money_reward.Value).ToList(),
                                                     International = (from e in db.AuthorPapers
                                                                      join f in db.Authors on e.people_id equals f.people_id
-                                                                     where d.type == 2 && f.is_reseacher == false
+                                                                     where d.type == 2 && (f.is_reseacher == null || f.is_reseacher == false)
                                                                      && e.money_reward != null && e.paper_id == d.paper_id
                                                                      select e.money_reward.Value).ToList(),
                                                     FromResearchers = (from e in db.AuthorPapers
@@ -89,7 +89,7 @@ namespace BLL.ScienceManagement.Report
             {
                 Console.WriteLine(e.ToString());
             }
-            return null;
+            return new Dictionary<int, TotalBonusByYearItem>();
         }
     }
 }
