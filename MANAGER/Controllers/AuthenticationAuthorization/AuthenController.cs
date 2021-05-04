@@ -24,7 +24,7 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
                     name = userClaims?.FindFirst("name")?.Value,
                 };
                 List<int> roleAccept = new List<int>() { 2, 3 };
-                LoginRepo.User u = repo.getAccount(user, roleAccept);
+                LoginRepo.User u = repo.GetAccount(user, roleAccept);
                 if (u != null)
                 {
                     Session["User"] = u;
