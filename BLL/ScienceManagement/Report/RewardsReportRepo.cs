@@ -277,7 +277,7 @@ namespace BLL.ScienceManagement.Report
             {
                 var item = res[i];
                 total += item.total_reward;
-                item.date_string = item.date.Value.ToString("dd/MM/yyyy");
+                item.date_string = item.date?.ToString("dd/MM/yyyy");
                 item.rownum = baseDatatable.Start + 1 + i;
                 item.valid_date_string = item.valid_date.ToString("dd/MM/yyyy");
             }
