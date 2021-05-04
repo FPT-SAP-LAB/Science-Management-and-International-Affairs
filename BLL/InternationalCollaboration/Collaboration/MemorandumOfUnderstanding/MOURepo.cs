@@ -975,7 +975,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             string partner_id_para = "";
             foreach (PartnerInfo item in PartnerInfo)
             {
-                partner_id_para += (item.partner_id + ",");
+                if (item.partner_id is null)
+                {
+                    partner_id_para += (0 + ",");
+                } 
+                else
+                {
+                    partner_id_para += (item.partner_id + ",");
+                }
             }
             partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
             partner_id_para = partner_id_para == "" ? "0" : partner_id_para;
