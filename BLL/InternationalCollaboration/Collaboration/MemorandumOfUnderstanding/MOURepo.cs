@@ -978,7 +978,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 if (item.partner_id is null)
                 {
                     partner_id_para += (0 + ",");
-                } 
+                }
                 else
                 {
                     partner_id_para += (item.partner_id + ",");
