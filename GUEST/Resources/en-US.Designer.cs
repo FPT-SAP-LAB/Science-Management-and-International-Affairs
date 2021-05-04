@@ -246,6 +246,10 @@ namespace GUEST.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose a representative to receive the reward.
         /// </summary>
         public static string ChooseRepresentative {
