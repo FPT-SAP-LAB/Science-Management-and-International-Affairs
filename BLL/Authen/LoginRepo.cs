@@ -10,7 +10,7 @@ namespace BLL.Authen
     public class LoginRepo
     {
         ScienceAndInternationalAffairsEntities db;
-        public User getAccount(int people_id, List<int> roleAccept)
+        public User GetAccount(int people_id, List<int> roleAccept)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace BLL.Authen
                 User u = new User
                 {
                     url = r.url,
-                    rights = getPermission(a),
+                    rights = GetPermission(a),
                     account = a,
                     role_name = r.role_name,
                     IsValid = IsValid,
@@ -40,7 +40,7 @@ namespace BLL.Authen
                 return null;
             }
         }
-        public User getAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
+        public User GetAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
         {
             db = new ScienceAndInternationalAffairsEntities();
             try
@@ -70,7 +70,7 @@ namespace BLL.Authen
                 User u = new User
                 {
                     url = r.url,
-                    rights = getPermission(a),
+                    rights = GetPermission(a),
                     account = a,
                     role_name = r.role_name,
                     IsValid = IsValid,
@@ -84,14 +84,14 @@ namespace BLL.Authen
                 return null;
             }
         }
-        public List<int> getPermission(Account a)
+        public List<int> GetPermission(Account a)
         {
             db = new ScienceAndInternationalAffairsEntities();
             try
             {
                 List<int> data = new List<int>();
                 //List<RightByRole> rightRoles = db.RightByRoles.Where(x => x.role_id == a.role_id).ToList();
-                List<baseRight> rightAccount = getRightByAccount(a.account_id);
+                List<baseRight> rightAccount = GetRightByAccount(a.account_id);
                 //foreach (RightByRole r in rightRoles)
                 //{
                 //    data.Add(r.right_id);
@@ -108,7 +108,7 @@ namespace BLL.Authen
                 return new List<int>();
             }
         }
-        public List<baseRight> getRightByAccount(int account_id)
+        public List<baseRight> GetRightByAccount(int account_id)
         {
             db = new ScienceAndInternationalAffairsEntities();
             try
@@ -123,7 +123,7 @@ namespace BLL.Authen
                 return new List<baseRight>();
             }
         }
-        public static Profile getProfileByAccount(Account account)
+        public static Profile GetProfileByAccount(Account account)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             Profile profile = db.Profiles.Where(x => x.account_id == account.account_id).FirstOrDefault();

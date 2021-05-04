@@ -43,6 +43,13 @@
         color: #2196f3 !important;
         cursor: pointer;
     }
+
+    .ac_tittle {
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 
 <div class="card card-custom pb-4" style="background-color: #f0f8ff80">
@@ -209,10 +216,10 @@
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
                                         <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" data-toggle="tooltip" data-theme="dark" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
                                             `+ temp2 + `
-                                           <span>
+                                           <div class="ac_tittle">
                         <i class="flaticon-add-label-button icon-md text-success"></i>
                                                 `+ item.program_name + `
-                                            </span>
+                                            </div>
                                         </a>
                                     </div>`;
                         });
@@ -256,10 +263,10 @@
                             temp += `<div class="col-lg-3 col-md-3 col-sm-3 my-5 py-3">
                                         <a onclick="load_detail.load_program_detail(`+ item.program_id + `)" data-toggle="tooltip" data-theme="dark" class="text-dark font-weight-bolder text-hover-primary font-size-h4">
                                             `+ temp2 + `
-                                           <span>
+                                           <div class="ac_tittle">
                         <i class="flaticon-add-label-button icon-md text-success"></i>
                                                 `+ item.program_name + `
-                                            </span>
+                                            </div>
                                         </a>
                                     </div>`;
                         });

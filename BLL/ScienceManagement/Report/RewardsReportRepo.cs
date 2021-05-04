@@ -21,6 +21,7 @@ namespace BLL.ScienceManagement.Report
                         join d in db.RequestPapers on c.request_id equals d.request_id
                         join e in db.Papers on d.paper_id equals e.paper_id
                         where d.type == paperType && e.is_verified == true
+                        && d.total_reward != null && d.status_id == 2
                         select new ArticlesInoutCountryReports
                         {
                             decision_number = a.decision_number,
@@ -276,7 +277,7 @@ namespace BLL.ScienceManagement.Report
             {
                 var item = res[i];
                 total += item.total_reward;
-                item.date_string = item.date.Value.ToString("dd/MM/yyyy");
+                item.date_string = item.date?.ToString("dd/MM/yyyy");
                 item.rownum = baseDatatable.Start + 1 + i;
                 item.valid_date_string = item.valid_date.ToString("dd/MM/yyyy");
             }

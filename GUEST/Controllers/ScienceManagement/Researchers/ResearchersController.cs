@@ -93,10 +93,10 @@ namespace GUEST.Controllers.ScienceManagement.Researchers
         public ActionResult EditInfo()
         {
             var pagesTree = new List<PageTree>
-           {
+            {
                new PageTree("Trang cá nhân", "/Researchers/ViewInfo"),
                new PageTree("Chỉnh sửa thông tin", "#"),
-           };
+            };
             int languageId = LanguageResource.GetCurrentLanguageID();
             researcherDetailRepo = new ResearchersDetailRepo();
             researcherBiographyRepo = new ResearchersBiographyRepo();

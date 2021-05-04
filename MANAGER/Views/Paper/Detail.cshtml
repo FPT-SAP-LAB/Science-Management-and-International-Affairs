@@ -2,6 +2,7 @@
 @{
     //ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
 }
 <style>
 </style>
@@ -314,27 +315,34 @@
             @{
                 if (ViewBag.paper.status_id == 3 || ViewBag.paper.status_id == 8)
                 {
-                    if (ViewBag.acc.role_id == 2)
+                    if (u.rights.Contains(36))
                     {
                         <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
-                        <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
-                        <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
                     }
-                }
-                else if (ViewBag.paper.status_id == 10)
-                {
-                    if (ViewBag.acc.role_id == 3)
+                    if (u.rights.Contains(35))
                     {
-                        <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn_rewardauthor">Xác nhận thưởng tác giả</button>
-                        <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_rewardauthor">Yêu cầu chỉnh sửa thưởng tác giả</button>
+                        <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+                    }
+                    if (u.rights.Contains(39))
+                    {
+                        <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
                     }
                 }
                 else if (ViewBag.paper.status_id == 4)
                 {
-                    if (ViewBag.acc.role_id == 3)
+                    if (u.rights.Contains(35))
                     {
-                        <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+                        <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
                     }
+                    if (u.rights.Contains(38))
+                    {
+                        <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu xem lại</button>
+                    }
+                }
+                else if (ViewBag.paper.status_id == 10)
+                {
+                    <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn_rewardauthor">Xác nhận thưởng tác giả</button>
+                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_rewardauthor">Yêu cầu chỉnh sửa thưởng tác giả</button>
                 }
             }
         </div>
@@ -419,8 +427,8 @@
                                 foreach (var item in ViewBag.crite)
                                 {
                                     <tr>
-                                        <td><input autocomplete="off" type="text" value="@item.name" readonly class="form-control name_cri"/></td>
-                                        <td><input autocomplete="off" type="text" value="@item.link" class="form-control link_cri"/></td>
+                                        <td><input autocomplete="off" type="text" value="@item.name" readonly class="form-control name_cri" /></td>
+                                        <td><input autocomplete="off" type="text" value="@item.link" class="form-control link_cri" /></td>
                                         <td><a onclick='deleteRow(this)' class='btn btn-sm btn-clean btn-icon' title='Delete'> <i class='la la-trash'></i> </a></td>
                                     </tr>
                                 }
@@ -640,7 +648,7 @@
                     $("#loading").show();
                     var request_id = "@ViewBag.request_id";
                     $.ajax({
-                        url: "@Url.Action("deleteRequest", "Paper")",
+                        url: "@Url.Action("DeleteRequest", "Paper")",
                         type: "POST",
                         data: JSON.stringify({ 'id': request_id }),
                         contentType: "application/json;charset=utf-8",
@@ -679,7 +687,7 @@
                 request_id: request_id
             };
             $.ajax({
-                url: "@Url.Action("changeStatusManager", "Paper")",
+                url: "@Url.Action("RequestReview", "Paper")",
                 type: "POST",
                 data: JSON.stringify({ 'paper': paper }),
                 contentType: "application/json;charset=utf-8",
@@ -783,7 +791,7 @@
                         reward_type: $("#typereward").val()
                     };
                     $.ajax({
-                        url: "@Url.Action("editPaper", "Paper")",
+                        url: "@Url.Action("ApprovePaper", "Paper")",
                         type: "POST",
                         data: JSON.stringify({ 'paper': paper, 'people': people, 'id': people_id }),
                         contentType: "application/json;charset=utf-8",

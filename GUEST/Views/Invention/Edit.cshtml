@@ -32,7 +32,16 @@
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("PatentDate")</label>
-                            <input autocomplete="off" class="form-control form-control-lg edit custom-pickdate" id="patent_date" type="text" value="@ViewBag.item.date.ToString("dd/MM/yyyy")" />
+                            @{ if (ViewBag.item.date != null)
+                                {
+                                    <input autocomplete="off" class="form-control form-control-lg edit custom-pickdate" id="patent_date" type="text" value="@ViewBag.item.date.ToString("dd/MM/yyyy")" />
+                                }
+                                else
+                                {
+
+                                    <input autocomplete="off" class="form-control form-control-lg edit custom-pickdate" id="patent_date" type="text" value="" />
+                                }
+                            }
                         </div>
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("Country")</label>

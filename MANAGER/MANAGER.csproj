@@ -323,6 +323,7 @@
     <Compile Include="Controllers\ScienceManagement\Policy\PolicyTypeController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ConferencesParticipationReportController.cs" />
     <Compile Include="Controllers\ScienceManagement\Reports\ReportsController.cs" />
+    <Compile Include="Controllers\ScienceManagement\Request\RequestController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\BiographyController.cs" />
     <Compile Include="Controllers\ScienceManagement\Researchers\ResearchersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2374,8 +2375,10 @@
     <Content Include="Content\assets\excel\Collaboration\MOU.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Partner.xlsx" />
     <Content Include="Content\assets\excel\Collaboration\Download\Partner.xlsx" />
-    <Content Include="Content\assets\excel\Collaboration\Download\AC.xlsx" />
-    <Content Include="Content\assets\excel\Collaboration\AC.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\AC_Going.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Download\AC_Coming.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\AC_Coming.xlsx" />
+    <Content Include="Content\assets\excel\Collaboration\Download\AC_Going.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Content\Custom JS\InternationalCollaboration\AcademicCollaboration\LongTerm\Going\Officer\Datatable.js" />
@@ -2543,6 +2546,7 @@
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\HomeImageConfiguration\Index.cshtml" />
+    <Content Include="Views\Request\History.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -32,7 +32,7 @@ namespace MANAGER.Controllers
         }
 
         //[HttpPost]
-        [Auther(RightID = "16")]
+        [Auther(RightID = "17")]
         public ActionResult Detail(string id)
         {
             ViewBag.title = "Chi tiết bài báo";
@@ -103,7 +103,9 @@ namespace MANAGER.Controllers
             return Json(new { mess, content }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult editPaper(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
+        [Auther(RightID = "36")]
+        [HttpPost]
+        public JsonResult ApprovePaper(DetailPaper paper, List<AuthorInfoWithNull> people, string id)
         {
             foreach (var item in people)
             {
@@ -269,6 +271,7 @@ namespace MANAGER.Controllers
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
+        [Auther(RightID = "35")]
         [HttpPost]
         public JsonResult changeStatus(DetailPaper paper)
         {
@@ -276,15 +279,17 @@ namespace MANAGER.Controllers
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
+        [Auther(RightID = "38")]
         [HttpPost]
-        public JsonResult changeStatusManager(DetailPaper paper)
+        public JsonResult RequestReview(DetailPaper paper)
         {
             string mess = pr.ChangeStatusManager(paper);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
+        [Auther(RightID = "39")]
         [HttpPost]
-        public JsonResult deleteRequest(int id)
+        public JsonResult DeleteRequest(int id)
         {
             string mess = pr.DeleteRequest(id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);

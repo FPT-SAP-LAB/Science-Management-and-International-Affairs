@@ -1,7 +1,8 @@
-﻿
+﻿@using ENTITIES.CustomModels.ScienceManagement.Citation;
 @{
     ViewBag.Title = "Chi tiết trích dẫn";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ProfileExtend profile = ViewBag.profile;
 }
 <div class="row">
     <div class="col-lg-12">
@@ -31,6 +32,63 @@
                                 }
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin người đề nghị</h3>
+                <div class="row" id="authors-info-container">
+                    <div class="col-lg-4 col-sm-12">
+                        <!--begin::Card-->
+                        <div class="card card-custom gutter-b author-info-card" id="270">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 id="author_name" class="card-label">@profile.mssv_msnv - @profile.FullName</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="mb-7">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Khu Vực:</span>
+                                                <span class="text-muted font-weight-bold">@profile.OfficeName</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@(profile.TitleName + (profile.is_reseacher ? ", Nghiên cứu viên" : ""))</a>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.tax_code</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
+                                                <span class="text-muted font-weight-bold">@profile.Email</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.identification_number</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">CMND link:</span>
+                                                <a href="@profile.identification_link" class="text-muted text-hover-primary">
+                                                    @(string.IsNullOrWhiteSpace(profile.identification_link) ? "" : "Xem thêm")
+                                                </a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.bank_branch</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Số tài khoản: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.bank_number</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Card-->
                     </div>
                 </div>
                 @if (ViewBag.status == 3 || ViewBag.status == 8 || ViewBag.status == 4)

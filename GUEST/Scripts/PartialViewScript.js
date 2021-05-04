@@ -148,10 +148,12 @@ class AuthorInfoView {
 }
 //////////////////////////////////////////////////////////////////
 $("#add_author_save").click(function () {
+    //$("#add_author_reward").val("0");
     if (!validateNonEmptyField(["#ckfe", "#add_author_msnv", "#add_author_name",
-        "#add_author_title", "#add_author_contractType", "#add_author_cmnd",
+        "#add_author_title", "#add_author_cmnd",
         "#add_author_cmnd_link", "#add_author_tax", "#add_author_bank", "#add_author_accno",
-        "#add_author_reward", "#add_author_note", "#add_author_mail","#add_author_mail"])) {
+        "#add_author_mail"])) {
+        console.log("empty");
         return false
     } else {
         for (var i = 0; i < people.length; i++) {

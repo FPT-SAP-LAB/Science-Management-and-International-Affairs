@@ -26,7 +26,7 @@ namespace ADMIN.Controllers
             repo = new LoginRepo();
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
             List<int> roleAccept = new List<int>() { 1 };
-            LoginRepo.User u = repo.getAccount(user, roleAccept);
+            LoginRepo.User u = repo.GetAccount(user, roleAccept);
             if (u == null)
             {
                 return Json(String.Empty);
