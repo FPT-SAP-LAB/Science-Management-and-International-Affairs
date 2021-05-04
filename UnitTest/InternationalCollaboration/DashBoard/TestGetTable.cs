@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BLL.InternationalCollaboration.Dashboard;
 using ENTITIES;
 using ENTITIES.CustomModels;
+using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.InternationalCollaboration.Dashboard;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using BLL.InternationalCollaboration.Dashboard;
-using ENTITIES.CustomModels.InternationalCollaboration.Dashboard;
-using ENTITIES.CustomModels.Datatable;
 
 namespace UnitTest.InternationalCollaboration.DashBoard
 {
@@ -29,7 +29,7 @@ namespace UnitTest.InternationalCollaboration.DashBoard
 
             //Act
             DashboardRepo dashBoardRepo = new DashboardRepo();
-            BaseServerSideData <DashboardDatatable> baseDataTables = dashBoardRepo.GetTable(collab_type_id, year ,baseDataTable);
+            BaseServerSideData<DashboardDatatable> baseDataTables = dashBoardRepo.GetTable(collab_type_id, year, baseDataTable);
 
             //Assert
             Assert.Pass();
