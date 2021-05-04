@@ -145,6 +145,7 @@
     <Compile Include="Lib.cs" />
     <Compile Include="ScienceManagement\Comment\CommentRepoTests.cs" />
     <Compile Include="ScienceManagement\DecisionHistory\DecisionRepoTests.cs" />
+    <Compile Include="ScienceManagement\Invention\InventionRepoTests.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepoTests.cs" />
     <Compile Include="ScienceManagement\Paper\PaperRepoTests.cs" />
     <Compile Include="ScienceManagement\Researchers\ResearcherBiographyTest.cs" />
