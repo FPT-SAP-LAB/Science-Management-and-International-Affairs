@@ -25,7 +25,7 @@ namespace GUEST.Models
         }
         public static Profile GetProfile(HttpSessionStateBase Session)
         {
-            return BLL.Authen.LoginRepo.getProfileByAccount(Account(Session));
+            return BLL.Authen.LoginRepo.GetProfileByAccount(Account(Session));
         }
     }
 }
