@@ -14,7 +14,6 @@ namespace BLL.ScienceManagement.Request
     {
         public static BaseServerSideData<PendingPaper_Manager> GetListHistory(BaseDatatable baseDatatable, string name_search)
         {
-
             try
             {
                 using (ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities())
