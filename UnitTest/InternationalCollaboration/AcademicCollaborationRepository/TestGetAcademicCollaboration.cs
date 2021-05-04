@@ -15,42 +15,34 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
         [TestCase]
         public void TestMethod1()
         {
-
             Assert.Pass();
         }
         public void TestMethod2()
         {
-
             Assert.Pass();
         }
         public void TestMethod3()
         {
-
             Assert.Pass();
         }
         public void TestMethod4()
         {
-
             Assert.Pass();
         }
         public void TestMethod5()
         {
-
             Assert.Pass();
         }
         public void TestMethod6()
         {
-
             Assert.Pass();
         }
         public void TestMethod7()
         {
-
             Assert.Pass();
         }
         public void TestMethod8()
         {
-
             Assert.Pass();
         }
     }

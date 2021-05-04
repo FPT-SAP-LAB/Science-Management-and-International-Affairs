@@ -13,7 +13,6 @@ using static BLL.InternationalCollaboration.AcademicActivity.AcademicActivityGue
 namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
 {
     [TestFixture]
-
     class TestAcademicCollaborations
     {
         [TestCase]
@@ -26,7 +25,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
             int year = 2020;
             string partner_name = "Daekin University";
             string office_name = "";
-
             ObjectSearching_AcademicCollaboration obj_searching = new ObjectSearching_AcademicCollaboration
             {
                 country_name = country_name,
@@ -43,7 +41,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
             };
             //Act
             new AcademicCollaborationRepo().AcademicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
-
             //Assert
             Assert.Pass();
         }
@@ -57,7 +54,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
             int year = 2020;
             string partner_name = "Daekin University";
             string office_name = "";
-
             ObjectSearching_AcademicCollaboration obj_searching = new ObjectSearching_AcademicCollaboration
             {
                 country_name = country_name,
@@ -74,7 +70,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
             };
             //Act
             new AcademicCollaborationRepo().AcademicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
-
             //Assert
             Assert.Pass();
         }
@@ -88,7 +83,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
             int year = 2020;
             string partner_name = "Daekin University";
             string office_name = "";
-
             ObjectSearching_AcademicCollaboration obj_searching = new ObjectSearching_AcademicCollaboration
             {
                 country_name = country_name,
@@ -105,7 +99,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository
             };
             //Act
             new AcademicCollaborationRepo().AcademicCollaborations(direction, collab_type_id, obj_searching, baseDatatable);
-
             //Assert
             Assert.Pass();
         }

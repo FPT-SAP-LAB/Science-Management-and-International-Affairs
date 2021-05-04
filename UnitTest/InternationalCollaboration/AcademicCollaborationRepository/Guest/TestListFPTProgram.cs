@@ -15,7 +15,6 @@ namespace UnitTest.InternationalCollaboration.AcademicCollaborationRepository.Gu
         [TestCase]
         public void TestMethod1()
         {
-
             Assert.Pass();
         }
     }
