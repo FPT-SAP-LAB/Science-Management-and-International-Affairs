@@ -416,7 +416,8 @@
             });
         }
         function saveTempIdCheckin(id) {
-            window.location.href = "/CheckIn/List?id=" + id;
+            window.open("/CheckIn/List?id=" + id, '_blank').focus();
+            //window.location.href = "/CheckIn/List?id=" + id;
         }
         function resetCategory() {
             let temp_category = $('#add_category').val();
@@ -470,7 +471,6 @@
                     document.getElementById('edit_category').value = temp_category;
                 },
                 error: function (data) {
-                    console.log(data);
                 }
             });
         }
@@ -758,7 +758,7 @@
                                 '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">' +
                                 '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdEdit(' + data+')">Sửa</a>' +
                                 '<a href="javascript:;" class="dropdown-item" onclick="showCloneModal('+data+')">Clone</a>' +
-                                '<a href="javascript:;" class="dropdown-item" target="_tab" onclick="saveTempIdCheckin(' + data+')">Checkin</a>' +
+                                '<a href="javascript:;" class="dropdown-item" target="_blank" onclick="saveTempIdCheckin(' + data+')">Checkin</a>' +
                                 '<a href="javascript:;" class="dropdown-item" onclick="saveTempIdDelete(' + data+')">Xóa</a>' +
                                 '</div>' +
                                 '</div>'

@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <a href="/Researchers/List" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                        <h1><b>@ViewBag.researcher</b></h1>
+                                        <h1><b id="ncv">@*@ViewBag.researcher*@</b></h1>
                                     </a>
                                     <div class="text-dark-75">
                                         @rm.GetString("Researchers")
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <a href="/ScientificProducts" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                        <h1><b>@ViewBag.scopusISI</b></h1>
+                                        <h1><b id="isi">@*@ViewBag.scopusISI*@</b></h1>
                                     </a>
                                     <div class="text-dark-75">
                                         @rm.GetString("ISI/SCOPUS")
@@ -163,7 +163,7 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <a href="/ScientificProducts" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                        <h1><b>@ViewBag.invention</b></h1>
+                                        <h1><b id="inven">@*@ViewBag.invention*@</b></h1>
                                     </a>
                                     <div class="text-dark-75">
                                         @rm.GetString("Invention")
@@ -192,7 +192,7 @@
                                 </div>
                                 <div class="d-flex flex-column">
                                     <a href="/Partner/List" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
-                                        <h1><b>@ViewBag.partner</b></h1>
+                                        <h1><b id="inter">@*@ViewBag.partner*@</b></h1>
                                     </a>
                                     <div class="text-dark-75">
                                         @rm.GetString("InternationalPartner")
@@ -479,7 +479,41 @@
                     autoplay: true,
                     autoplayTimeout: 3000,
                     autoplayHoverPause: true
-                })
+                });
+
+                var ncv = parseInt("@ViewBag.researcher");
+                var isi = parseInt("@ViewBag.scopusISI");
+                var inven = parseInt("@ViewBag.invention");
+                var inter = parseInt("@ViewBag.partner");
+                var time = 2000;
+
+                var countncv = 0;
+                var countisi = 0;
+                var countinven = 0;
+                var countinter = 0;
+
+                let ncvinterval = setInterval(function () {
+                    if (countncv <= ncv) $("#ncv").text(countncv);
+                    countncv++;
+                }, time / ncv);
+                let isiinterval = setInterval(function () {
+                    if (countisi <= isi) $("#isi").text(countisi);
+                    countisi++;
+                }, time / isi);
+                let inveninterval = setInterval(function () {
+                    if (countinven <= inven) $("#inven").text(countinven);
+                    countinven++;
+                }, time / inven);
+                let interinterval = setInterval(function () {
+                    if (countinter <= inter) $("#inter").text(countinter);
+                    countinter++;
+                }, time / inter);
+
+                setTimeout(() => { clearInterval(ncvinterval);}, 5000);
+                setTimeout(() => { clearInterval(isiinterval);}, 5000);
+                setTimeout(() => { clearInterval(inveninterval);}, 5000);
+                setTimeout(() => { clearInterval(interinterval);}, 5000);
+
             });
         </script>
     }

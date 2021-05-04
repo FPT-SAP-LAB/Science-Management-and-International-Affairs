@@ -246,6 +246,11 @@ namespace GUEST.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+        ///   Looks up a localized string similar to Chọn đại diện nhận thưởng.
+        /// </summary>
+        public static string ChooseRepresentative {
+            get {
+                return ResourceManager.GetString("ChooseRepresentative", resourceCulture);
             }
         }
         
@@ -1231,6 +1236,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loại ấn phẩm.
+        /// </summary>
+        public static string PublicationType {
+            get {
+                return ResourceManager.GetString("PublicationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày xuất bản.
         /// </summary>
         public static string PublishDate {
@@ -1344,6 +1358,15 @@ namespace GUEST.Resources {
         public static string RequestInfo {
             get {
                 return ResourceManager.GetString("RequestInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách yêu cầu.
+        /// </summary>
+        public static string RequestList {
+            get {
+                return ResourceManager.GetString("RequestList", resourceCulture);
             }
         }
         
@@ -1605,6 +1628,15 @@ namespace GUEST.Resources {
         public static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lựa chọn loại khen thưởng đã được xác nhận bởi tất cả các thành viên trong nhóm.
+        /// </summary>
+        public static string TermCondition {
+            get {
+                return ResourceManager.GetString("TermCondition", resourceCulture);
             }
         }
         

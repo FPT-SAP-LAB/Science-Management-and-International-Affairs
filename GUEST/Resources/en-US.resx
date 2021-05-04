@@ -179,6 +179,8 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  <data name="ChooseRepresentative" xml:space="preserve">
+    <value>Choose a representative to receive the reward</value>
   </data>
   <data name="CitationCount" xml:space="preserve">
     <value>Ciatation count</value>
@@ -507,6 +509,9 @@
   <data name="ProgramStart" xml:space="preserve">
     <value>Start time</value>
   </data>
+  <data name="PublicationType" xml:space="preserve">
+    <value>Publication type</value>
+  </data>
   <data name="PublishDate" xml:space="preserve">
     <value>Publish date</value>
   </data>
@@ -545,6 +550,9 @@
   </data>
   <data name="RequestInfo" xml:space="preserve">
     <value>Request Infomation</value>
+  </data>
+  <data name="RequestList" xml:space="preserve">
+    <value>Request List</value>
   </data>
   <data name="Researchers" xml:space="preserve">
     <value>Researchers</value>
@@ -629,6 +637,9 @@
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Tax code</value>
+  </data>
+  <data name="TermCondition" xml:space="preserve">
+    <value>All team members confirmed the reward type.</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>

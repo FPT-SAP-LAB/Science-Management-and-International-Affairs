@@ -246,6 +246,11 @@ namespace GUEST.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+        ///   Looks up a localized string similar to Choose a representative to receive the reward.
+        /// </summary>
+        public static string ChooseRepresentative {
+            get {
+                return ResourceManager.GetString("ChooseRepresentative", resourceCulture);
             }
         }
         
@@ -1231,6 +1236,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publication type.
+        /// </summary>
+        public static string PublicationType {
+            get {
+                return ResourceManager.GetString("PublicationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publish date.
         /// </summary>
         public static string PublishDate {
@@ -1344,6 +1358,15 @@ namespace GUEST.Resources {
         public static string RequestInfo {
             get {
                 return ResourceManager.GetString("RequestInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request List.
+        /// </summary>
+        public static string RequestList {
+            get {
+                return ResourceManager.GetString("RequestList", resourceCulture);
             }
         }
         
@@ -1596,6 +1619,15 @@ namespace GUEST.Resources {
         public static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All team members confirmed the reward type..
+        /// </summary>
+        public static string TermCondition {
+            get {
+                return ResourceManager.GetString("TermCondition", resourceCulture);
             }
         }
         

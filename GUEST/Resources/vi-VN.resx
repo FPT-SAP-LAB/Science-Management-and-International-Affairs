@@ -179,6 +179,8 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Huỷ</value>
+  <data name="ChooseRepresentative" xml:space="preserve">
+    <value>Chọn đại diện nhận thưởng</value>
   </data>
   <data name="CitationCount" xml:space="preserve">
     <value>Số trích dẫn</value>
@@ -507,6 +509,9 @@
   <data name="ProgramStart" xml:space="preserve">
     <value>Thời gian bắt đầu</value>
   </data>
+  <data name="PublicationType" xml:space="preserve">
+    <value>Loại ấn phẩm</value>
+  </data>
   <data name="PublishDate" xml:space="preserve">
     <value>Ngày xuất bản</value>
   </data>
@@ -545,6 +550,9 @@
   </data>
   <data name="RequestInfo" xml:space="preserve">
     <value>Thông tin yêu cầu</value>
+  </data>
+  <data name="RequestList" xml:space="preserve">
+    <value>Danh sách yêu cầu</value>
   </data>
   <data name="Researchers" xml:space="preserve">
     <value>Nghiên cứu viên</value>
@@ -632,6 +640,9 @@
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Mã số thuế</value>
+  </data>
+  <data name="TermCondition" xml:space="preserve">
+    <value>Lựa chọn loại khen thưởng đã được xác nhận bởi tất cả các thành viên trong nhóm</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Thời gian</value>
