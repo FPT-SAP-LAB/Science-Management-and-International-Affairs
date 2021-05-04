@@ -1,73 +1,13 @@
-﻿
+﻿@using ENTITIES.CustomModels.ScienceManagement.Citation;
 @{
     ViewBag.Title = "Chi tiết trích dẫn";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ProfileExtend profile = ViewBag.profile;
 }
 <div class="row">
     <div class="col-lg-12">
         <div class="card card-custom gutter-b card-stretch bgi-no-repeat">
             <div class="card-body">
-                <h3 class="mb-10 font-weight-bold text-dark">Thông tin yêu cầu</h3>
-                <div class="row">
-                    <div class="col-xl-6 form-group">
-                        <label>Đơn vị</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.office_abbreviation" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>Email</label>
-                        <input class="form-control form-control-lg custom-pickdate" type="text" value="@ViewBag.author.email" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>MSSV/MSNV</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.mssv_msnv" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>Tên</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.name" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>Chức danh</label>
-                        <select disabled class="form-control editfe select-custom edit" id="add_author_title_edit" name="param" style="width: 100% !important">
-                            @{
-                                foreach (var item in ViewBag.ctitle)
-                                {
-                                    <option value="@item.title_id">@item.name</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label class="required-field">Nghiên cứu viên</label>
-                        <label class="checkbox">
-                            <input class="form-control edit" type="checkbox" name="Checkboxes1" id="add_author_isReseacher" @(ViewBag.author.is_reseacher ? "checked" : "") />
-                            <span></span>
-                        </label>
-                    </div>
-                    @*<div class="col-xl-6 form-group">
-                            <label>Loại hợp đồng</label>
-                            <input class="form-control form-control-lg" type="text" value="@ViewBag.author.contract_name" disabled />
-                        </div>*@
-                    <div class="col-xl-6 form-group">
-                        <label>CMND</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.identification_number" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>CMND link</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.identification_file_link" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>Mã số thuế</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.tax_code" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>Ngân hàng</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.bank_branch" disabled />
-                    </div>
-                    <div class="col-xl-6 form-group">
-                        <label>Số tài khoản</label>
-                        <input class="form-control form-control-lg" type="text" value="@ViewBag.author.bank_number" disabled />
-                    </div>
-                </div>
                 <h3 class="mb-10 font-weight-bold text-dark">Thông tin trích dẫn</h3>
                 <div class="row">
                     <div class="col-xl-12">
@@ -94,35 +34,95 @@
                         </table>
                     </div>
                 </div>
-                <h3 class="mb-10 font-weight-bold text-dark">Thông tin thưởng</h3>
-                <div class="row">
-                    <div class="col-xl-3">
-                        <label>Tổng thưởng</label>
-                        <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.author.total_reward" />
+                <h3 class="mb-10 font-weight-bold text-dark mt-10">Thông tin người đề nghị</h3>
+                <div class="row" id="authors-info-container">
+                    <div class="col-lg-4 col-sm-12">
+                        <!--begin::Card-->
+                        <div class="card card-custom gutter-b author-info-card" id="270">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 id="author_name" class="card-label">@profile.mssv_msnv - @profile.FullName</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="mb-7">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Khu Vực:</span>
+                                                <span class="text-muted font-weight-bold">@profile.OfficeName</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Chức danh:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@(profile.TitleName + (profile.is_reseacher ? ", Nghiên cứu viên" : ""))</a>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Mã số thuế: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.tax_code</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Email:</span>
+                                                <span class="text-muted font-weight-bold">@profile.Email</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">CMND số:</span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.identification_number</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">CMND link:</span>
+                                                <a href="@profile.identification_link" class="text-muted text-hover-primary">
+                                                    @(string.IsNullOrWhiteSpace(profile.identification_link) ? "" : "Xem thêm")
+                                                </a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Ngân hàng: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.bank_branch</a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-cente my-1">
+                                                <span class="text-dark-75 font-weight-bolder mr-2">Số tài khoản: </span>
+                                                <a href="#" class="text-muted text-hover-primary">@profile.bank_number</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Card-->
                     </div>
                 </div>
-                <hr />
-                <div class="row justify-content-center">
-                    @{
-                        if (ViewBag.status == 3 || ViewBag.status_id == 8)
-                        {
-                            if (ViewBag.acc.role_id == 2)
+                @if (ViewBag.status == 3 || ViewBag.status == 8 || ViewBag.status == 4)
+                {
+                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin thưởng</h3>
+                    <div class="row">
+                        <div class="col-xl-3">
+                            <label>Tổng thưởng</label>
+                            <input autocomplete="off" oninput="numberWithCommas(this)" id="totalreward" class="form-control form-control-lg" type="text" value="@ViewBag.total_reward" />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row justify-content-center">
+                        @{
+                            if (ViewBag.status == 3 || ViewBag.status == 8)
                             {
-                                <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
-                                <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
-                                <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
+                                if (ViewBag.acc.role_id == 2)
+                                {
+                                    <button class="btn btn-light-success px-6 font-weight-bold mx-1" id="confirmbtn">Xác nhận duyệt</button>
+                                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm">Yêu cầu chỉnh sửa</button>
+                                    <button class="btn btn-light-danger px-6 font-weight-bold mx-1" id="deleteconfirm">Hủy yêu cầu</button>
+                                }
                             }
-                        }
-                        else if (ViewBag.status == 4)
-                        {
-                            if (ViewBag.acc.role_id == 3)
+                            else
                             {
+                                if (ViewBag.acc.role_id == 3)
+                                {
 
-                                <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+                                    <button class="btn btn-light-warning px-6 font-weight-bold mx-1" id="editconfirm_manager">Yêu cầu chỉnh sửa</button>
+                                }
                             }
                         }
-                    }
-                </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -148,8 +148,9 @@
 @section scripts{
     <script src="~/Scripts/inputFilter.js"></script>
     <script>
+        var request_id = "@ViewBag.request_id";
+
         $(document).ready(function () {
-            $("#add_author_title_edit").val("@ViewBag.author.title_id");
             var x = $("#totalreward").val();
             $("#totalreward").val(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         });
@@ -164,32 +165,30 @@
         $(document).on("wheel", "input[type=number]", function (e) {
             $(this).blur();
         });
+
         $("#editconfirm").click(function () {
             $("#loading").show();
-            var request_id = "@ViewBag.request_id";
             $.ajax({
                 url: "@Url.Action("changeStatus", "Citation")",
                 type: "POST",
-                data: JSON.stringify({ 'request_id': request_id }),
-                contentType: "application/json;charset=utf-8",
+                data: { 'request_id': request_id },
                 datatype: "json",
                 cache: false,
                 success: function (response) {
                     if (response.mess != "ff") {
-                        $("#loading").hide();
                         $("#editconfirm").prop("disabled", true);
                         $("#confirmbtn").prop("disabled", true);
                         $("#totalreward").prop("disabled", true);
                         $("#deleteconfirm").prop("disabled", true);
                         hub.server.send(response.mess);
-                        //window.location.href = "/Citation/Pending";
-                        //editRequest();
-                        //alert(response.mess);
                     }
-                    else alert('loi');
+                    else
+                        toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
                 },
                 error: function () {
-                    //alert("fail");
+                    toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
                 }
             });
         });
@@ -206,32 +205,22 @@
             }).then(function (result) {
                 if (result.isConfirmed) {
                     $("#loading").show();
-                    var request_id = "@ViewBag.request_id";
                     $.ajax({
                         url: "@Url.Action("deleteRequest", "Citation")",
                         type: "POST",
-                        data: JSON.stringify({ 'id': request_id }),
-                        contentType: "application/json;charset=utf-8",
+                        data: { 'id': request_id },
                         datatype: "json",
                         cache: false,
                         success: function (response) {
                             $("#loading").hide();
                             if (response.mess == "ss") {
-                                $("#editconfirm").prop("disabled", true);
-                                $("#confirmbtn").prop("disabled", true);
-                                $("#totalreward").prop("disabled", true);
-                                $("#deleteconfirm").prop("disabled", true);
-
-                                toastr.success("Hủy yêu cầu thành công");
-                                //$("#edit_modal_cri_name").val(response.pc);
-                                $("#loading").hide();
+                                location.reload();
                             }
                             else toastr.error("Hủy yêu cầu thất bại");
                         },
                         error: function () {
                             $("#loading").hide();
                             toastr.error("Hủy yêu cầu thất bại");
-                            //alert("fail");
                         }
                     });
                 }
@@ -240,26 +229,22 @@
 
         $("#editconfirm_manager").click(function () {
             $("#loading").show();
-            var request_id = "@ViewBag.request_id";
             $.ajax({
                 url: "@Url.Action("changeStatusManager", "Citation")",
                 type: "POST",
-                data: JSON.stringify({ 'request_id': request_id }),
-                contentType: "application/json;charset=utf-8",
+                data: { 'request_id': request_id },
                 datatype: "json",
                 cache: false,
                 success: function (response) {
                     if (response.mess == "ss") {
-                        $("#loading").hide();
                         $("#editconfirm_manager").prop("disabled", true);
-                        //window.location.href = "/Citation/Pending";
-                        //editRequest();
-                        //alert(response.mess);
                     }
-                    else alert('loi');
+                    else
+                        toastr.error("Có lỗi xảy ra");
+                    $("#loading").hide();
                 },
                 error: function () {
-                    //alert("fail");
+                    toastr.error("Có lỗi xảy ra");
                 }
             });
         });
@@ -269,23 +254,22 @@
             if (temp == "") {
                 toastr.error("Chưa điền thông tin tổng thưởng cho trích dẫn ", "Lỗi");
             } else {
-                var request_id = "@ViewBag.request_id";
                 $.ajax({
-                    url: "@Url.Action("editCitation", "Citation")",
+                    url: "@Url.Action("UpdateReward", "Citation")",
                     type: "POST",
-                    data: JSON.stringify({ 'request_id': request_id, 'total': temp }),
-                    contentType: "application/json;charset=utf-8",
+                    data: { 'request_id': request_id, 'total': temp },
                     datatype: "json",
-                    cache: false,
                     success: function (response) {
-                        if (response.mess == "ss") {
-                            $("#loading").hide();
+                        if (response.success) {
                             window.location.href = "/Citation/Pending";
                         }
-                        else alert('loi');
+                        else
+                            toastr.error(response.content);
+                        $("#loading").hide();
                     },
                     error: function () {
-                        //alert("fail");
+                        $("#loading").hide();
+                        toastr.error("Có lỗi xảy ra");
                     }
                 });
             }

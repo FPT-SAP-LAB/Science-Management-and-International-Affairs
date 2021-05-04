@@ -17,7 +17,15 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
             try
             {
                 string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
-                string filename = "AC.xlsx";
+                string filename = "";
+                if (direction == 1)
+                {
+                    filename = "AC_Going.xlsx";
+                }
+                else
+                {
+                    filename = "AC_Coming.xlsx";
+                }
                 System.IO.FileInfo file = new System.IO.FileInfo(path + filename);
                 List<AcademicCollaboration_Ext> AC_List = AC_ListToExportExcel(direction, collab_type_id, obj_searching);
 
@@ -27,42 +35,79 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                     ExcelWorkbook excelWorkbook = excelPackage.Workbook;
                     ExcelWorksheet excelWorksheet = excelWorkbook.Worksheets.First();
                     int startRow = 3;
-                    for (int i = 0; i < AC_List.Count; i++)
+                    if (direction == 1)
                     {
-                        excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
-                        excelWorksheet.Cells[i + startRow, 2].Value = AC_List.ElementAt(i).people_name;
-                        excelWorksheet.Cells[i + startRow, 3].Value = AC_List.ElementAt(i).email;
-                        excelWorksheet.Cells[i + startRow, 4].Value = AC_List.ElementAt(i).office_name;
-                        excelWorksheet.Cells[i + startRow, 5].Value = AC_List.ElementAt(i).partner_name;
-                        excelWorksheet.Cells[i + startRow, 6].Value = AC_List.ElementAt(i).country_name;
-                        excelWorksheet.Cells[i + startRow, 7].Value = AC_List.ElementAt(i).plan_study_start_date.ToString("dd-MM-yyyy");
-                        excelWorksheet.Cells[i + startRow, 8].Value = AC_List.ElementAt(i).plan_study_end_date.ToString("dd-MM-yyyy");
-                        excelWorksheet.Cells[i + startRow, 9].Value = AC_List.ElementAt(i).collab_status_id;
-                        if (AC_List.ElementAt(i).collab_status_id == 1)
+                        for (int i = 0; i < AC_List.Count; i++)
                         {
-                            excelWorksheet.Cells[i + startRow, 9].Value = "Đề xuất";
+                            excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
+                            excelWorksheet.Cells[i + startRow, 2].Value = AC_List.ElementAt(i).people_name;
+                            excelWorksheet.Cells[i + startRow, 3].Value = AC_List.ElementAt(i).email;
+                            excelWorksheet.Cells[i + startRow, 4].Value = AC_List.ElementAt(i).office_name;
+                            excelWorksheet.Cells[i + startRow, 5].Value = AC_List.ElementAt(i).partner_name;
+                            excelWorksheet.Cells[i + startRow, 6].Value = AC_List.ElementAt(i).country_name;
+                            excelWorksheet.Cells[i + startRow, 7].Value = AC_List.ElementAt(i).plan_study_start_date.ToString("dd-MM-yyyy");
+                            excelWorksheet.Cells[i + startRow, 8].Value = AC_List.ElementAt(i).plan_study_end_date.ToString("dd-MM-yyyy");
+                            if (AC_List.ElementAt(i).collab_status_id == 1)
+                            {
+                                excelWorksheet.Cells[i + startRow, 9].Value = "Đề xuất";
+                            }
+                            else if (AC_List.ElementAt(i).collab_status_id == 2)
+                            {
+                                excelWorksheet.Cells[i + startRow, 9].Value = "Đang thực hiện";
+                            }
+                            else if (AC_List.ElementAt(i).collab_status_id == 3)
+                            {
+                                excelWorksheet.Cells[i + startRow, 9].Value = "Không hoàn thành";
+                            }
+                            else if (AC_List.ElementAt(i).collab_status_id == 4)
+                            {
+                                excelWorksheet.Cells[i + startRow, 9].Value = "Đã hoàn thành";
+                            }
+                            excelWorksheet.Cells[i + startRow, 10].Value =
+                                AC_List.ElementAt(i).is_supported == true ? "Có hỗ trợ" : "Không hỗ trợ";
+                            excelWorksheet.Cells[i + startRow, 11].Value = AC_List.ElementAt(i).note;
                         }
-                        else if (AC_List.ElementAt(i).collab_status_id == 2)
-                        {
-                            excelWorksheet.Cells[i + startRow, 9].Value = "Đang thực hiện";
-                        }
-                        else if (AC_List.ElementAt(i).collab_status_id == 3)
-                        {
-                            excelWorksheet.Cells[i + startRow, 9].Value = "Không hoàn thành";
-                        }
-                        else if (AC_List.ElementAt(i).collab_status_id == 4)
-                        {
-                            excelWorksheet.Cells[i + startRow, 9].Value = "Đã hoàn thành";
-                        }
-                        excelWorksheet.Cells[i + startRow, 10].Value =
-                            AC_List.ElementAt(i).is_supported == true ? "Có hỗ trợ" : "Không hỗ trợ";
-                        excelWorksheet.Cells[i + startRow, 11].Value = AC_List.ElementAt(i).note;
+                        string Flocation = "/Content/assets/excel/Collaboration/Download/AC_Going.xlsx";
+                        string savePath = HostingEnvironment.MapPath(Flocation);
+                        string handle = Guid.NewGuid().ToString();
+                        excelPackage.SaveAs(new System.IO.FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/AC_Going.xlsx")));
                     }
-                    string Flocation = "/Content/assets/excel/Collaboration/Download/AC.xlsx";
-                    string savePath = HostingEnvironment.MapPath(Flocation);
-                    string handle = Guid.NewGuid().ToString();
-                    excelPackage.SaveAs(new System.IO.FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/AC.xlsx")));
-
+                    else
+                    {
+                        for (int i = 0; i < AC_List.Count; i++)
+                        {
+                            excelWorksheet.Cells[i + startRow, 1].Value = i + 1;
+                            excelWorksheet.Cells[i + startRow, 2].Value = AC_List.ElementAt(i).people_name;
+                            excelWorksheet.Cells[i + startRow, 3].Value = AC_List.ElementAt(i).email;
+                            excelWorksheet.Cells[i + startRow, 4].Value = AC_List.ElementAt(i).partner_name;
+                            excelWorksheet.Cells[i + startRow, 5].Value = AC_List.ElementAt(i).country_name;
+                            excelWorksheet.Cells[i + startRow, 6].Value = AC_List.ElementAt(i).plan_study_start_date.ToString("dd-MM-yyyy");
+                            excelWorksheet.Cells[i + startRow, 7].Value = AC_List.ElementAt(i).plan_study_end_date.ToString("dd-MM-yyyy");
+                            if (AC_List.ElementAt(i).collab_status_id == 1)
+                            {
+                                excelWorksheet.Cells[i + startRow, 8].Value = "Đề xuất";
+                            }
+                            else if (AC_List.ElementAt(i).collab_status_id == 2)
+                            {
+                                excelWorksheet.Cells[i + startRow, 8].Value = "Đang thực hiện";
+                            }
+                            else if (AC_List.ElementAt(i).collab_status_id == 3)
+                            {
+                                excelWorksheet.Cells[i + startRow, 8].Value = "Không hoàn thành";
+                            }
+                            else if (AC_List.ElementAt(i).collab_status_id == 4)
+                            {
+                                excelWorksheet.Cells[i + startRow, 8].Value = "Đã hoàn thành";
+                            }
+                            excelWorksheet.Cells[i + startRow, 9].Value =
+                                AC_List.ElementAt(i).is_supported == true ? "Có hỗ trợ" : "Không hỗ trợ";
+                            excelWorksheet.Cells[i + startRow, 10].Value = AC_List.ElementAt(i).note;
+                        }
+                        string Flocation = "/Content/assets/excel/Collaboration/Download/AC_Coming.xlsx";
+                        string savePath = HostingEnvironment.MapPath(Flocation);
+                        string handle = Guid.NewGuid().ToString();
+                        excelPackage.SaveAs(new System.IO.FileInfo(HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/Download/AC_Coming.xlsx")));
+                    }
                     using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
                     {
                         excelPackage.SaveAs(memoryStream);

@@ -19,6 +19,7 @@
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!--begin::Page Vendors Styles(used by this page)-->
+    @RenderSection("Styles", false)
     <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/plugins/custom/uppy/uppy.bundle.css?v=7.0.6" rel="stylesheet" type="text/css" />
     <!--end::Page Vendors Styles-->
@@ -40,7 +41,7 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" style="background-image: url(../Content/assets/media/bg/bg-10.jpg)" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
+<body id="kt_body" style="background-image: url(@("https://drive.google.com/uc?export=view&id=" + GUEST.Startup.BackgroundURL))" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading">
     <div id="loading"></div>
     <!--begin::Main-->
     <!--begin::Header Mobile-->
@@ -275,15 +276,15 @@
                                         <form>
                                             <!--begin::Header-->
                                             <!--<div class="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top" style="background-image: url(../Content/assets/media/misc/bg-1.jpg)">-->
-                                                <!--begin::Title-->
-                                                <!--<h4 class="d-flex flex-center rounded-top">
-                                                    <span class="text-white">User Notifications</span>
-                                                    <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
-                                                        23
-                                                        new
-                                                    </span>
-                                                </h4>-->
-                                                <!--end::Title-->
+                                            <!--begin::Title-->
+                                            <!--<h4 class="d-flex flex-center rounded-top">
+                                                <span class="text-white">User Notifications</span>
+                                                <span class="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">
+                                                    23
+                                                    new
+                                                </span>
+                                            </h4>-->
+                                            <!--end::Title-->
                                             <!--</div>-->
                                             <!--end::Header-->
                                             <!--begin::Content-->
@@ -641,20 +642,34 @@
                 <!--begin::Footer-->
                 <div class="footer bg-white py-4 d-flex flex-lg-column " id="kt_footer">
                     <!--begin::Container-->
-                    <div class=" container  d-flex flex-column flex-md-row align-items-center justify-content-between">
-                        <!--begin::Copyright-->
-                        <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted font-weight-bold mr-2">2021&copy;</span>
-                            <a href="#" target="_blank" class="text-dark-75 text-hover-primary">@rm.GetString("Header")</a>
+                    <div class="container align-items-center justify-content-between">
+                        <div class="row">
+                            <div class="col-lg-2 col-sm-12" style="padding-top: 1.5rem; text-align: center;">
+                                <img alt="Logo" src="/Content/assets/media/logos/logo-letter-1.png" class="logo-sticky max-h-60px">
+                            </div>
+                            <div class="col-lg-10 col-sm-12">
+                                <!--begin::Copyright-->
+                                <div class="text-dark order-2 order-md-1">
+                                    <span class="text-muted font-weight-bold mr-2">2021 &copy;</span>
+                                    <a href="#" class="text-dark-75 text-hover-primary">@rm.GetString("Header")</a>
+                                    <hr />
+                                    <a href="#" class=" text-muted text-hover-primary">
+                                        Hoa Lac High Tech Park, Hanoi, Vietnam
+                                    </a>
+                                    <br />
+                                    <a href="mailto:smia@fe.edu.vn" class=" text-muted text-hover-primary">
+                                        Email: <b>smia@fe.edu.vn</b>
+                                    </a>
+                                    <br /><a href="tel:(+84)2466549806" class=" text-muted text-hover-primary">
+                                        Tel: <b>(+84)2466549806</b>
+                                    </a>
+                                </div>
+                                <!--end::Copyright-->
+                                <!--begin::Nav-->
+
+                                <!--end::Nav-->
+                            </div>
                         </div>
-                        <!--end::Copyright-->
-                        <!--begin::Nav-->
-                        <div class="nav nav-dark order-1 order-md-2">
-                            <a href="#" target="_blank" class="nav-link pr-3 pl-0">About</a>
-                            <a href="#" target="_blank" class="nav-link px-3">Team</a>
-                            <a href="#" target="_blank" class="nav-link pl-3 pr-0">Contact</a>
-                        </div>
-                        <!--end::Nav-->
                     </div>
                     <!--end::Container-->
                 </div>
@@ -761,6 +776,7 @@
     </script>
 
     <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <!--end::Global Config-->
     <!--begin::Global Theme Bundle(used by all pages)-->
     @Scripts.Render("~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6",
@@ -773,18 +789,6 @@
     "~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6",
     "~/Content/assets/plugins/custom/datatables/datatables.bundle.js"
     )
-    @*<script src="~/Content/assets/plugins/global/plugins.bundle.js?v=7.0.6"></script>*@
-    @*<script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js?v=7.0.6"></script>*@
-    @*<script src="~/Content/assets/js/scripts.bundle.js?v=7.0.6"></script>*@
-    <!--end::Global Theme Bundle-->
-    <!--begin::Page Vendors(used by this page)-->
-    @*<script src="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js?v=7.0.6"></script>*@
-    <!--end::Page Vendors-->
-    <!--begin::Page Scripts(used by this page)-->
-    @*<script src="~/Content/assets/js/pages/widgets.js?v=7.0.6"></script>*@
-    <!--end::Page Scripts-->
-    @*<script src="~/Content/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js?v=7.0.6"></script>
-        <script src="~/Content/assets/plugins/custom/uppy/uppy.bundle.js?v=7.0.6"></script>*@
     @RenderSection("scripts")
 
     <script>

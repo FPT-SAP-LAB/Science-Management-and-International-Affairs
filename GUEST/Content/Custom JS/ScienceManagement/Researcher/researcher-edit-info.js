@@ -1,5 +1,5 @@
 ﻿class Researcher {
-    constructor(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields) {
+    constructor(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields, office) {
         this.people_id = people_id,
             this.name = name,
             this.nationality = nationality,
@@ -11,7 +11,8 @@
             this.website = website,
             this.googlescholar = googlescholar,
             this.cv = cv,
-            this.fields = fields
+            this.fields = fields,
+            this.office=office
     }
 }
 function enableEdit() {
@@ -34,7 +35,7 @@ $(function () {
             ////////////////////xử lý ở đây/////////////////////
             var url = new URL(window.location.href);
             people_id = url.searchParams.get("id");
-            name = $("#researcher_name").val()
+            let name = $("#researcher_name").val()
             dob = $("#researcher_dob").val()
             nationality = $("#country_select").select2('data');
             title = $("#title_select").select2('data');
@@ -43,9 +44,10 @@ $(function () {
             email = $("#researcher_email").val()
             website = $("#researcher_website").val()
             googlescholar = $("#researcher_gscholar").val()
+            office = $("#office_select").select2('data');
             cv = $("#researcher_cv").val()
             fields = $("#interested_fields_select").select2('data');
-            let info = new Researcher(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields)
+            let info = new Researcher(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields, office)
             var fd = new FormData();
             console.log(info)
             fd.append('info', JSON.stringify({ info: info }));
@@ -56,7 +58,7 @@ $(function () {
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    if (response.mess == "ss") {
+                    if (response.mess == true) {
                         //editRequest();
                         window.location.reload()
                     }
@@ -79,8 +81,6 @@ $(function () {
         }).then(function (result) {
             if (result.value) {
                 window.location.reload()
-            } else if (result.dismiss === "cancel") {
-
             }
         });
     })

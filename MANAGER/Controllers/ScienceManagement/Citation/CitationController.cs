@@ -1,27 +1,22 @@
-﻿using BLL.Authen;
-using BLL.ScienceManagement.Citation;
+﻿using BLL.ScienceManagement.Citation;
 using BLL.ScienceManagement.MasterData;
 using ENTITIES;
-using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
 using ENTITIES.CustomModels.ScienceManagement.MasterData;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
+using MANAGER.Models;
 using MANAGER.Support;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace MANAGER.Controllers
 {
     public class CitationController : Controller
     {
-        CitationRepo cr = new CitationRepo();
-        MasterDataRepo mrd = new MasterDataRepo();
+        private readonly CitationRepo cr = new CitationRepo();
+        private readonly MasterDataRepo mrd = new MasterDataRepo();
         // GET: Citation
         [Auther(RightID = "16")]
         public ActionResult Pending()
@@ -37,29 +32,17 @@ namespace MANAGER.Controllers
         [Auther(RightID = "16")]
         public ActionResult Detail(string id)
         {
-            ViewBag.title = "Chi tiết trích dẫn";
             List<CustomCitation> listCitation = cr.GetCitation(id);
             ViewBag.citation = listCitation;
 
-            AuthorInfo author = cr.GetAuthor(id);
-            ViewBag.author = author;
-
-            List<TitleWithName> listTitle = mrd.getTitle("vi-VN");
-            ViewBag.ctitle = listTitle;
-
             ViewBag.request_id = id;
+            RequestCitation rc = cr.GetRequestCitation(id);
+            ViewBag.total_reward = rc.total_reward;
+            ProfileExtend profile = cr.GetProfile(id);
+            ViewBag.profile = profile;
+            ViewBag.status = rc.citation_status_id;
 
-            int status = cr.GetStatus(id);
-            ViewBag.status = status;
-
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            ViewBag.acc = acc;
+            ViewBag.acc = CurrentAccount.Account(Session);
 
             return View();
         }
@@ -80,35 +63,15 @@ namespace MANAGER.Controllers
         }
 
         [HttpPost]
-        public JsonResult editCitation(string request_id, string total)
+        public JsonResult UpdateReward(string request_id, string total)
         {
-            string mess = cr.UpdateReward(request_id, total);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(cr.UpdateReward(request_id, total));
         }
 
         [HttpPost]
-        public JsonResult uploadDecision(HttpPostedFileBase file, string number, string date)
+        public JsonResult UploadDecision(HttpPostedFileBase file, string number, string date)
         {
-            string[] arr = date.Split('/');
-            string format = arr[1] + "/" + arr[0] + "/" + arr[2];
-            DateTime date_format = DateTime.Parse(format);
-
-            string name = "QD_" + number + "_" + date;
-
-            List<string> listE = cr.GetAuthorEmail();
-
-            Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadDecisionFile(file, name, listE);
-            ENTITIES.File fl = new ENTITIES.File
-            {
-                link = f.WebViewLink,
-                file_drive_id = f.Id,
-                name = name
-            };
-
-            ENTITIES.File myFile = mrd.addFile(fl);
-            string mess = cr.UploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
-
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(cr.UploadDecision(file, number, date));
         }
 
         [HttpPost]
@@ -125,52 +88,15 @@ namespace MANAGER.Controllers
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult exportExcel()
+        [HttpGet]
+        public ActionResult ExportExcel()
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            string path = HostingEnvironment.MapPath("/Excel_template/");
-            string filename = "Citation.xlsx";
-            FileInfo file = new FileInfo(path + filename);
-            ExcelPackage excelPackage = new ExcelPackage(file);
-            ExcelWorkbook excelWorkbook = excelPackage.Workbook;
-
-            List<Citation_Appendix_1> list1 = cr.GetListAppendix1();
-            ExcelWorksheet excelWorksheet1 = excelWorkbook.Worksheets[0];
-            int i = 2;
-            int count = 1;
-            foreach (var item in list1)
-            {
-                excelWorksheet1.Cells[i, 1].Value = count;
-                excelWorksheet1.Cells[i, 2].Value = item.name;
-                excelWorksheet1.Cells[i, 3].Value = item.mssv_msnv;
-                excelWorksheet1.Cells[i, 4].Value = item.office_abbreviation;
-                excelWorksheet1.Cells[i, 5].Value = item.sum_scopus;
-                excelWorksheet1.Cells[i, 6].Value = item.sum_scholar;
-                count++;
-                i++;
-            }
-
-            List<Citation_Appendix_2> list2 = cr.GetListAppendix2();
-            ExcelWorksheet excelWorksheet2 = excelWorkbook.Worksheets[1];
-            i = 2;
-            count = 1;
-            foreach (var item in list2)
-            {
-                excelWorksheet2.Cells[i, 1].Value = count;
-                excelWorksheet2.Cells[i, 2].Value = item.name;
-                excelWorksheet2.Cells[i, 3].Value = item.mssv_msnv;
-                excelWorksheet2.Cells[i, 4].Value = item.office_abbreviation;
-                excelWorksheet2.Cells[i, 5].Value = item.total_reward;
-                count++;
-                i++;
-            }
-
-            string Flocation = "/Excel_template/download/Citation.xlsx";
-            string savePath = HostingEnvironment.MapPath(Flocation);
-            excelPackage.SaveAs(new FileInfo(HostingEnvironment.MapPath("/Excel_template/download/Citation.xlsx")));
-
-            return Json(new { mess = true, location = Flocation }, JsonRequestBehavior.AllowGet);
+            CitationRequestExportRepo exportRepo = new CitationRequestExportRepo();
+            byte[] Excel = exportRepo.ExportExcel();
+            if (Excel == null)
+                return Redirect("/Citation/WaitDecision");
+            else
+                return File(Excel, "application/vnd.ms-excel", "Danh-sách-chờ quyết định.xlsx");
         }
     }
 }

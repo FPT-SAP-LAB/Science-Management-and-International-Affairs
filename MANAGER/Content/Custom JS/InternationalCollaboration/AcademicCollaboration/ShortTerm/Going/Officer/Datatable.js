@@ -26,6 +26,7 @@ var exchange_going_table = $('#exchange_going_table').DataTable({
     },
     searching: false,
     lengthChange: false,
+    pageLength: 5,
     serverSide: true,
     columns: [
         {

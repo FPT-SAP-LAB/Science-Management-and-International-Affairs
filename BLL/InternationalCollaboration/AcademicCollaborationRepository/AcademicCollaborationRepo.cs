@@ -48,14 +48,40 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         and ISNULL(c.country_name, '') like @country_name
                         and ISNULL(pn.partner_name, '') like @partner_name
                         and ISNULL(offi.office_name, '') like @office_name ";
+
+                var count_sql = @"select count(*)                                                              
+                                from IA_AcademicCollaboration.AcademicCollaboration collab
+                                join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
+                                join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
+                                left join General.Country c on c.country_id = pn.country_id
+                                join General.People pp on collab.people_id = pp.people_id
+                                left join General.[Profile] pf on pf.people_id = pp.people_id
+                                left join General.Office offi on pp.office_id = offi.office_id
+                                join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date
+		                                from
+		                                (select csh1.collab_id, MAX(csh1.change_date) 'change_date'
+			                                from IA_AcademicCollaboration.CollaborationStatusHistory csh1
+			                                group by csh1.collab_id) as csh1
+		                                join
+		                                (select csh2.collab_status_id, csh2.collab_id, csh2.change_date
+			                                from IA_AcademicCollaboration.CollaborationStatusHistory csh2) as csh2
+		                                on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh
+                                on csh.collab_id = collab.collab_id
+                                join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
+                                where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
+                                and ISNULL(c.country_name, '') like @country_name
+                                and ISNULL(pn.partner_name, '') like @partner_name
+                                and ISNULL(offi.office_name, '') like @office_name ";
                 if (obj_searching.year != 0)
                 {
                     sql += @"and @year between YEAR(collab.plan_study_start_date) and YEAR(collab.plan_study_end_date)";
+                    count_sql += @"and @year between YEAR(collab.plan_study_start_date) and YEAR(collab.plan_study_end_date)";
                 }
                 sql += @"ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                         " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
 
                 List<AcademicCollaboration_Ext> academicCollaborations;
+                int recordsTotal;
                 if (obj_searching.year != 0)
                 {
                     academicCollaborations = db.Database.SqlQuery<AcademicCollaboration_Ext>(sql,
@@ -69,6 +95,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                         new SqlParameter("sortDirection", baseDatatable.SortDirection),
                                                         new SqlParameter("start", baseDatatable.Start),
                                                         new SqlParameter("length", baseDatatable.Length)).ToList();
+                    recordsTotal = db.Database.SqlQuery<int>(count_sql,
+                                                                new SqlParameter("direction", direction),
+                                                                new SqlParameter("collab_type_id", collab_type_id),
+                                                                new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
+                                                                new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
+                                                                new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
+                                                                new SqlParameter("year", obj_searching.year)).FirstOrDefault();
                 }
                 else
                 {
@@ -82,37 +115,13 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                                                         new SqlParameter("sortDirection", baseDatatable.SortDirection),
                                                         new SqlParameter("start", baseDatatable.Start),
                                                         new SqlParameter("length", baseDatatable.Length)).ToList();
-                }
-                int recordsTotal = db.Database.SqlQuery<int>(@"select count(*)                                                              
-                                                                from IA_AcademicCollaboration.AcademicCollaboration collab
-                                                                join IA_Collaboration.PartnerScope mpc on collab.partner_scope_id = mpc.partner_scope_id
-                                                                join IA_Collaboration.[Partner] pn on pn.partner_id = mpc.partner_id
-                                                                left join General.Country c on c.country_id = pn.country_id
-                                                                join General.People pp on collab.people_id = pp.people_id
-                                                                left join General.[Profile] pf on pf.people_id = pp.people_id
-                                                                left join General.Office offi on pp.office_id = offi.office_id
-                                                                join (select csh1.collab_id, csh2.collab_status_id, csh1.change_date
-		                                                                from
-		                                                                (select csh1.collab_id, MAX(csh1.change_date) 'change_date'
-			                                                                from IA_AcademicCollaboration.CollaborationStatusHistory csh1
-			                                                                group by csh1.collab_id) as csh1
-		                                                                join
-		                                                                (select csh2.collab_status_id, csh2.collab_id, csh2.change_date
-			                                                                from IA_AcademicCollaboration.CollaborationStatusHistory csh2) as csh2
-		                                                                on csh1.collab_id = csh2.collab_id and csh1.change_date = csh2.change_date) as csh
-                                                                on csh.collab_id = collab.collab_id
-                                                                join IA_AcademicCollaboration.AcademicCollaborationStatus acs on acs.collab_status_id = csh.collab_status_id
-                                                                where collab.direction_id = @direction /*Dài hạn = 2, Ngắn hạn = 1*/ and collab.collab_type_id = @collab_type_id /*Chiều đi = 1, Chiều đến = 2*/
-                                                                and ISNULL(c.country_name, '') like @country_name
-                                                                and ISNULL(pn.partner_name, '') like @partner_name
-                                                                and ISNULL(offi.office_name, '') like @office_name
-                                                                or @year between YEAR(collab.actual_study_start_date) and YEAR(collab.actual_study_end_date)",
+                    recordsTotal = db.Database.SqlQuery<int>(count_sql,
                                                                 new SqlParameter("direction", direction),
                                                                 new SqlParameter("collab_type_id", collab_type_id),
                                                                 new SqlParameter("country_name", obj_searching.country_name == null ? "%%" : "%" + obj_searching.country_name + "%"),
                                                                 new SqlParameter("partner_name", obj_searching.partner_name == null ? "%%" : "%" + obj_searching.partner_name + "%"),
-                                                                new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%"),
-                                                                new SqlParameter("year", obj_searching.year)).FirstOrDefault();
+                                                                new SqlParameter("office_name", obj_searching.office_name == null ? "%%" : "%" + obj_searching.office_name + "%")).FirstOrDefault();
+                }
                 return new BaseServerSideData<AcademicCollaboration_Ext>(academicCollaborations, recordsTotal);
             }
             catch (Exception e)
@@ -366,7 +375,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         //add infor to File
                         evidence_file = SaveFileToFile(f, evidence);
                         //add to Collab Status History
-                        SaveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "edit":
                         //add file to Google Drive
@@ -374,11 +383,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         //add infor to File
                         evidence_file = SaveFileToFile(f, evidence);
                         //add to Collab Status History
-                        SaveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "remove":
                         //add to Collab Status History
-                        SaveCollabStatusHistory(evidence, collab_id, status_id, null, evidence_file, account_id);
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "none":
                         break;
@@ -1077,7 +1086,7 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                             join General.Account a on a.account_id = csh.account_id
                             left join General.[File] f on f.[file_id] = csh.[file_id]
                             where csh.collab_id = @collab_id
-                            ORDER BY csh.change_date " + baseDatatable.SortDirection +
+                            ORDER BY " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection +
                             " OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 List<StatusHistory> statusHistory = db.Database.SqlQuery<StatusHistory>(sql, new SqlParameter("collab_id", collab_id)).ToList();
                 int totalRecords = db.CollaborationStatusHistories.Where(x => x.collab_id == collab_id).Count();

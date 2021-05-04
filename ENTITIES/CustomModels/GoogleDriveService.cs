@@ -23,6 +23,7 @@ namespace ENTITIES.CustomModels
         public static string DecisionDrive;
         public static string PolicyDrive;
         public static string IADrive;
+        public static string HomePageDrive;
         public static DriveService driveService;
         public static void InIt()
         {
@@ -41,10 +42,12 @@ namespace ENTITIES.CustomModels
             using (StreamReader r = new StreamReader(filePath + "/DriveConfig.json"))
             {
                 string json = r.ReadToEnd();
-                PeopleDrive = JObject.Parse(json).Value<string>("PeopleDriveID");
-                DecisionDrive = JObject.Parse(json).Value<string>("DecisionDriveID");
-                PolicyDrive = JObject.Parse(json).Value<string>("PolicyDriveID");
-                IADrive = JObject.Parse(json).Value<string>("IADriveID");
+                JObject driveConfig = JObject.Parse(json);
+                PeopleDrive = driveConfig.Value<string>("PeopleDriveID");
+                DecisionDrive = driveConfig.Value<string>("DecisionDriveID");
+                PolicyDrive = driveConfig.Value<string>("PolicyDriveID");
+                IADrive = driveConfig.Value<string>("IADriveID");
+                HomePageDrive = driveConfig.Value<string>("HomePageDriveID");
             }
         }
 

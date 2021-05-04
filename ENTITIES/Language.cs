@@ -24,10 +24,10 @@ namespace ENTITIES
             this.AcademicDegreeTypeLanguages = new HashSet<AcademicDegreeTypeLanguage>();
             this.CitationStatusLanguages = new HashSet<CitationStatusLanguage>();
             this.ConferenceConditionLanguages = new HashSet<ConferenceConditionLanguage>();
+            this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.FormalityLanguages = new HashSet<FormalityLanguage>();
             this.AcademicActivityLanguages = new HashSet<AcademicActivityLanguage>();
             this.AcademicActivityTypeLanguages = new HashSet<AcademicActivityTypeLanguage>();
-            this.ConferenceStatusLanguages = new HashSet<ConferenceStatusLanguage>();
             this.NotificationTypeLanguages = new HashSet<NotificationTypeLanguage>();
             this.PaperStatusLanguages = new HashSet<PaperStatusLanguage>();
             this.PolicyTypeLanguages = new HashSet<PolicyTypeLanguage>();
@@ -58,13 +58,13 @@ namespace ENTITIES
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConferenceConditionLanguage> ConferenceConditionLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FormalityLanguage> FormalityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityLanguage> AcademicActivityLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AcademicActivityTypeLanguage> AcademicActivityTypeLanguages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConferenceStatusLanguage> ConferenceStatusLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NotificationTypeLanguage> NotificationTypeLanguages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

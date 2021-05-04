@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Danh sách biên bản ghi nhớ";
+    ViewBag.Title = "DANH SÁCH BIÊN BẢN GHI NHỚ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -482,12 +482,15 @@
     </script>
 
     @*general*@
-    <script>
+<script>
     var listTempPartnerMOUAdd = [];
     var listScopes = [];
     var listSpe = [];
     var listPartners = [];
     var mou_table;
+    var partner_name_search = "";
+    var contact_point_name_search = "";
+    var mou_code_search = "";
 
     $(document).ready(function () {
             getSpeListForAdd();
@@ -495,6 +498,7 @@
             getMOUList();
             getSpe();
             getScopes();
+            getMOUCode();
         });
 
     function backToStep() {
@@ -565,6 +569,21 @@
         }
 
     @*add-mou-general*@
+
+    function getMOUCode(){
+        $.ajax({
+            url: "@Url.Action("GetNewMOUCode", "MOU")",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            cache: false,
+            success: function (data) {
+                $('#mou_code_add').val(data);
+            },
+            error: function () {
+            }
+        });
+    }
 
     function MOUCodeIsInvalid(mou_code) {
         var token = mou_code.split("/");
@@ -751,6 +770,7 @@
                     listTempPartnerMOUAdd = [];
                     $('#note_mou').val('');
                     $('#mou_area').val('');
+                    getMOUCode();
                 },
                 error: function () {
                     Swal.fire("Lỗi!", "Đã xảy ra lỗi", "error");
@@ -1344,12 +1364,21 @@
     }
 
     function searchMOU() {
+        partner_name_search = $('#search_partner_name').val();
+        contact_point_name_search = $('#search_contact_point_name').val();
+        mou_code_search = $('#search_mou_code').val();
         mou_table.ajax.reload();
     }
 
     @*another-function*@
     function exportExcel() {
+        var obj = {
+            "partner_name": partner_name_search,
+            "contact_point_name": contact_point_name_search,
+            "mou_code": mou_code_search,
+        };
         $.ajax({
+            data: JSON.stringify(obj),
             url: "@Url.Action("ExportMOUExcel", "MOU")",
             type: "POST",
             contentType: "application/json;charset=utf-8",
@@ -1815,6 +1844,6 @@
                 }
             });
         }
-    </script>
+</script>
 }
 

@@ -96,7 +96,7 @@ namespace MANAGER.Controllers
                 name = name
             };
 
-            ENTITIES.File myFile = mrd.addFile(fl);
+            ENTITIES.File myFile = mrd.AddFile(fl);
             string mess = ir.uploadDecision(date_format, myFile.file_id, number, myFile.file_drive_id);
 
             return Json(new { mess }, JsonRequestBehavior.AllowGet);

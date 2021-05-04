@@ -29,7 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 ViewBag.pageTitle = "DANH SÁCH BIÊN BẢN GHI NHỚ";
                 mou.UpdateStatusMOU();
                 ViewBag.listOffice = mou.GetOffice();
-                ViewBag.newMOUCode = mou.getSuggestedMOUCode();
+                //ViewBag.newMOUCode = mou.getSuggestedMOUCode();
                 ViewBag.listScopes = mou.GetCollaborationScopes();
                 ViewBag.listSpe = mou.GetSpecializations();
                 ViewBag.listCountry = mou.GetCountries();
@@ -49,6 +49,19 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
                 BaseServerSideData<ListMOU> listMOU = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code);
                 return Json(new { success = true, data = listMOU.Data, draw = Request["draw"], recordsTotal = listMOU.RecordsTotal, recordsFiltered = listMOU.RecordsTotal }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        public ActionResult GetNewMOUCode()
+        {
+            try
+            {
+                string new_mou_code = mou.getSuggestedMOUCode();
+                return Json(new_mou_code, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -149,11 +162,11 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             }
         }
         [Auther(RightID = "5")]
-        public ActionResult ExportMOUExcel()
+        public ActionResult ExportMOUExcel(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
-                MemoryStream memoryStream = mou.ExportMOUExcel();
+                MemoryStream memoryStream = mou.ExportMOUExcel(partner_name, contact_point_name, mou_code);
                 string downloadFile = "MOUDownload.xlsx";
                 string handle = Guid.NewGuid().ToString();
                 TempData[handle] = memoryStream.ToArray();
@@ -202,7 +215,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ViewBag.listCountry = mou.GetCountries();
 
                     //MOA
-                    ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
+                    //ViewBag.newMOACode = moa.getSuggestedMOACode(int.Parse(id));
                     ViewBag.listPartnersMOA = moa.GetMOAPartners(int.Parse(id));
                     return View();
                 }
@@ -213,6 +226,28 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return View(new HttpStatusCodeResult(400));
             }
         }
+        public ActionResult GetNewMOACode()
+        {
+            try
+            {
+                if (Session["mou_detail_id"] is null)
+                {
+                    return Redirect("../MOU/List");
+                }
+                else
+                {
+                    string id = Session["mou_detail_id"].ToString();
+                    string new_moa_code = moa.getSuggestedMOACode(int.Parse(id));
+                    return Json(new_moa_code, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return new HttpStatusCodeResult(400);
+            }
+        }
+        //chua ve class diagram
         public ActionResult CheckDuplicatedPartnerInfo(string partner_name, string mou_start_date_string)
         {
             try
@@ -252,5 +287,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 return new HttpStatusCodeResult(400);
             }
         }
+        //chua ve class diagram
     }
 }

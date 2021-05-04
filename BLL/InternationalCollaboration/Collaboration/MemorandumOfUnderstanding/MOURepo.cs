@@ -183,7 +183,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
                         tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
-                        tb4.scope_abbreviation
+                        tb4.scope_abbreviation,tb12.link
                         order by " + baseDatatable.SortColumnName + " " + baseDatatable.SortDirection + " " +
                         "OFFSET " + baseDatatable.Start + " ROWS FETCH NEXT " + baseDatatable.Length + " ROWS ONLY";
                 sql_mouList += sql_BonusQuery;
@@ -203,13 +203,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<ListMOU> listAllMOUToExportExcel()
+        public List<ListMOU> listAllMOUToExportExcel(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
                 string sql_mouList =
                     @"select tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
-                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb12.link,
                         tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, 
                         tb4.scope_abbreviation,
                         STRING_AGG(tb7.specialization_name, ',') 'specialization_name', tb9.mou_status_id,tb1.mou_id
@@ -240,13 +240,31 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         tb10.office_id = tb1.office_id
                         inner join General.Country tb11 on 
                         tb11.country_id = tb3.country_id
+                        left join General.[File] tb12 on
+						tb12.file_id = tb1.evidence
                         where tb1.is_deleted = 0
-                        GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
-                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb1.evidence,
-                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
-                        tb4.scope_abbreviation 
                         ";
-                List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList).ToList();
+                if (partner_name != "")
+                {
+                    sql_mouList += " and partner_name like @partner_name ";
+                }
+                if (contact_point_name != "")
+                {
+                    sql_mouList += " and contact_point_name like @contact_point_name ";
+                }
+                if (mou_code != "")
+                {
+                    sql_mouList += " and mou_code like @mou_code ";
+                }
+                string sql_BonusQuery = @"GROUP BY tb2.mou_partner_id, tb1.mou_code,tb3.partner_id,tb3.partner_name,tb11.country_name,
+                        tb3.website,tb2.contact_point_name,tb2.contact_point_email,tb2.contact_point_phone,tb12.link,
+                        tb2.mou_start_date, tb1.mou_end_date, tb1.mou_note, tb10.office_abbreviation, tb9.mou_status_id,tb1.mou_id,
+                        tb4.scope_abbreviation";
+                sql_mouList += sql_BonusQuery;
+                List<ListMOU> mouList = db.Database.SqlQuery<ListMOU>(sql_mouList,
+                    new SqlParameter("partner_name", '%' + partner_name + '%'),
+                    new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
+                    new SqlParameter("mou_code", '%' + mou_code + '%')).ToList();
                 return mouList;
             }
             catch (Exception ex)
@@ -453,14 +471,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public MemoryStream ExportMOUExcel()
+        public MemoryStream ExportMOUExcel(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
                 string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
                 string filename = "MOU.xlsx";
                 FileInfo file = new FileInfo(path + filename);
-                List<ListMOU> listMOU = listAllMOUToExportExcel();
+                List<ListMOU> listMOU = listAllMOUToExportExcel(partner_name, contact_point_name, mou_code);
 
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -821,12 +839,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         db.SaveChanges();
                         db.NotificationTypeLanguages.Add(new NotificationTypeLanguage
                         {
-                            //notification_type_id = ntAdded2.notification_type_id,
+                            notification_type_id = ntAdded2.notification_type_id,
                             //notification_type_id = 7,
                             language_id = 1,
                             notification_template = "Hiện có " + noti.InactiveNumber + " biên bản ghi nhớ chưa hoạt động.",
                             notification_type_name = "Trạng thái biên bản."
                         });
+                        db.SaveChanges();
                         foreach (int account_id in account_list)
                         {
                             db.NotificationBases.Add(new NotificationBase

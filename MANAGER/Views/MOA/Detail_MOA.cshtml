@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Chi tiết biên bản thỏa thuận";
+    ViewBag.Title = "CHI TIẾT BIÊN BẢN THỎA THUẬN";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -808,7 +808,6 @@
                 var BasicInfo = {
                     moa_code: $('#moa_code').val(),
                     moa_end_date_string: $('#end_date_moa').val(),
-                    office_id: $('#office_moa').val(),
                     reason: $('#moa_reason').val(),
                     moa_note: $('#moa_note').val(),
                     moa_status_id: $('#moa_status').val()
@@ -1755,7 +1754,7 @@
 </script>
 
     @*partner_moa*@
-    <script>
+<script>
         var listSpeMOAPartner = [];
         var listScopeMOAPartner = [];
         var listPartnerMOAPartner = [];
@@ -2272,8 +2271,28 @@
     }
 
     function confirm_delete_partner_moa(id) {
-        MOABonusIsExisted(id);
+        checkLastPartnerMOA(id);
     };
+
+    function checkLastPartnerMOA(id) {
+        $.ajax({
+                url: "@Url.Action("isLastPartnerMOA", "PartnerMOA")",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                cache: false,
+                success: function (isLast) {
+                    if (isLast) {
+                        toastr.error('Một biên bản thỏa thuận phải có ít nhất 1 đối tác');
+                    } else {
+                        MOABonusIsExisted(id);
+                    }
+                },
+                error: function () {
+                    //alert("fail");
+                }
+        });
+    }
 
     function showSwalDelMOAPartner(id) {
         var link = '@Url.Action("deletePartnerMOA", "PartnerMOA")'
@@ -2428,6 +2447,6 @@
             });
     }
 
-    </script>
+</script>
 }
 

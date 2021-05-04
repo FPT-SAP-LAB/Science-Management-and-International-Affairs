@@ -16,13 +16,26 @@ namespace BLL.ScienceManagement.Invention
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public DetailInvention getDetail(string id)
         {
+            if (id == null) return null;
+            id = id.Trim();
+            if (id == "") return null;
+            int id_int = 0;
+            try
+            {
+                id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             DetailInvention item = new DetailInvention();
             string sql = @"select i.*, it.name as 'type_name', ri.reward_type, ri.total_reward, ri.request_id, f.link as 'link_file', it.name as 'type_name', ri.status_id
                            from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].InventionType it on i.type_id = it.invention_type_id
 	                            join [SM_ScientificProduct].RequestInvention ri on i.invention_id = ri.invention_id
 	                            join [General].[File] f on f.file_id = i.file_id
                            where i.invention_id = @id";
-            item = db.Database.SqlQuery<DetailInvention>(sql, new SqlParameter("id", id)).FirstOrDefault();
+            item = db.Database.SqlQuery<DetailInvention>(sql, new SqlParameter("id", id_int)).FirstOrDefault();
             return item;
         }
 
@@ -42,6 +55,19 @@ namespace BLL.ScienceManagement.Invention
 
         public List<AuthorInfoWithNull> getAuthor(string id, string lang)
         {
+            if (id == null || lang == null) return null;
+            id = id.Trim();
+            lang = lang.Trim();
+            if (id == "") return null;
+            try
+            {
+                int id_int = Int32.Parse(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
             List<AuthorInfoWithNull> list = new List<AuthorInfoWithNull>();
             string sql = @"select ah.people_id, ah.name, ah.email,ah.office_id, ah.bank_branch, ah.bank_number,ah.tax_code, ah.identification_number,ah.mssv_msnv, ah.contract_id, title.name as 'title_name', ct.name as 'contract_name', o.office_abbreviation, o.office_id as 'office_id_string', ah.title_id as 'title_id_string', case when ah.is_reseacher is null then cast(0 as bit) else ah.is_reseacher end as 'is_reseacher', ai.money_reward
                             from [SM_ScientificProduct].Invention i join [SM_ScientificProduct].AuthorInvention ai on i.invention_id = ai.invention_id
@@ -257,6 +283,7 @@ namespace BLL.ScienceManagement.Invention
                         db.RequestDecisions.Add(request);
                         RequestInvention rc = db.RequestInventions.Where(x => x.request_id == item.request_id).FirstOrDefault();
                         rc.status_id = 2;
+                        rc.Invention.is_verified = true;
                     }
 
                     foreach (var item in wait)
@@ -296,6 +323,9 @@ namespace BLL.ScienceManagement.Invention
 
         public InventionType addInvenType(string name)
         {
+            if (name == null) return null;
+            name = name.Trim();
+            if (name == "") return null;
             try
             {
                 InventionType ck = db.InventionTypes.Where(x => x.name == name).FirstOrDefault();
@@ -621,9 +651,9 @@ namespace BLL.ScienceManagement.Invention
         public List<CustomCountry> getListCountryEdit(int id)
         {
             string sql = @"select i.invention_id, c.country_id, case when i.invention_id is null then cast(0 as bit) else cast(1 as bit) end as 'selected', c.country_name
-                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.InventionCountry ic on i.invention_id = ic.invention_id
-	                            right join General.Country c on ic.country_id = c.country_id
-                            where i.invention_id = @id or i.invention_id is null";
+                            from General.Country c left join (select i.invention_id, ic.country_id
+					                            from SM_ScientificProduct.Invention i join SM_ScientificProduct.InventionCountry ic on i.invention_id = ic.invention_id
+					                            where i.invention_id = @id) as i on i.country_id = c.country_id";
             List<CustomCountry> list = db.Database.SqlQuery<CustomCountry>(sql, new SqlParameter("id", id)).ToList();
             return list;
         }
