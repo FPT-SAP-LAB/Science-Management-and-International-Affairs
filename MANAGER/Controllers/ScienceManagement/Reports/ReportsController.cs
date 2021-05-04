@@ -5,6 +5,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
 using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -15,11 +16,12 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
     {
         private RewardsReportRepo rewardsReportRepo;
         private ReportRepo reportRepo;
-        //[Auther(RightID = "24")]
+        [Auther(RightID = "24")]
         public ActionResult PapersReportsByWorkplace()
         {
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult InternationalPapersReport()
         {
             OfficeRepo o = new OfficeRepo();
@@ -32,6 +34,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.criterias = criterias;
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult InCountryPapersReport()
         {
             OfficeRepo o = new OfficeRepo();
@@ -42,6 +45,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.years = years;
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult IntellectualPropertyReport()
         {
             OfficeRepo o = new OfficeRepo();
@@ -52,10 +56,12 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.years = years;
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult CitationReport()
         {
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult ConferencesParticipationReport()
         {
             OfficeRepo o = new OfficeRepo();
@@ -68,10 +74,12 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.criterias = criterias;
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult ConferencesParticipationReport_tgtemp()
         {
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult RewardByAuthorReport()
         {
             OfficeRepo o = new OfficeRepo();
@@ -83,20 +91,24 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.informations = rewardsReportRepo.GetAwardReportByAuthor();
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult ListOfIncomePaid()
         {
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult TotalBonusByYear(int? year)
         {
             reportRepo = new ReportRepo();
             ViewBag.data = reportRepo.GetBonusByYearItems(year);
             return View();
         }
+        [Auther(RightID = "24")]
         public ActionResult Dashboard()
         {
             return View();
         }
+        [Auther(RightID = "24")]
         public JsonResult GetAwardMoneyInoutCountry(int? hang, int? type, string year, string name)
         {
             try
@@ -180,6 +192,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 });
             }
         }
+        [Auther(RightID = "24")]
         public JsonResult GetCitationReports()
         {
             try
@@ -202,6 +215,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
                 });
             }
         }
+        [Auther(RightID = "24")]
         public JsonResult GetConferencesReports()
         {
             try

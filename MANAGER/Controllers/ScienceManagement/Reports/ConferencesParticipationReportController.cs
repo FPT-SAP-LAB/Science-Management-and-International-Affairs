@@ -3,6 +3,7 @@ using BLL.ScienceManagement.Report;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Report;
+using MANAGER.Support;
 using System;
 using System.Web.Mvc;
 
@@ -11,10 +12,12 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
     public class ConferencesParticipationReportController : Controller
     {
         // GET: ConferencesParticipationReport
+        [Auther(RightID = "24")]
         public ActionResult Index()
         {
             return View();
         }
+        [Auther(RightID = "24")]
         [HttpPost]
         public JsonResult List()
         {
@@ -28,11 +31,13 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             }
             return Json(new { success = true, data = output.Data, draw = Request["draw"], recordsTotal = output.RecordsTotal, recordsFiltered = output.RecordsTotal }, JsonRequestBehavior.AllowGet);
         }
+        [Auther(RightID = "24")]
         public JsonResult GetPeopleByName(String name)
         {
             PeopleRepo repo = new PeopleRepo();
             return Json(repo.GetPeopleName(name, 10), JsonRequestBehavior.AllowGet);
         }
+        [Auther(RightID = "24")]
         public JsonResult GetOfficeName(String name)
         {
             OfficeRepo repo = new OfficeRepo();
