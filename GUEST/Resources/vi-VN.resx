@@ -120,6 +120,9 @@
   <data name="AcademicActivity" xml:space="preserve">
     <value>Hoạt động học thuật</value>
   </data>
+  <data name="AcadHistory" xml:space="preserve">
+    <value>Tiểu sử học tập</value>
+  </data>
   <data name="AccNo" xml:space="preserve">
     <value>Số tài khoản</value>
   </data>
@@ -129,14 +132,23 @@
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Lịch hoạt động trong năm</value>
   </data>
+  <data name="AddAcadHistory" xml:space="preserve">
+    <value>Thêm tiểu sử học tập</value>
+  </data>
   <data name="AddAu" xml:space="preserve">
     <value>Thêm tác giả</value>
+  </data>
+  <data name="AddAward" xml:space="preserve">
+    <value>Thêm giải thưởng</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Địa chỉ</value>
   </data>
   <data name="AddRow" xml:space="preserve">
     <value>Thêm dòng</value>
+  </data>
+  <data name="AddWorkHistory" xml:space="preserve">
+    <value>Thêm tiểu sử công tác</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>Tất cả</value>
@@ -162,11 +174,20 @@
   <data name="Bank" xml:space="preserve">
     <value>Ngân hàng - Chi nhánh ngân hàng</value>
   </data>
+  <data name="Biography" xml:space="preserve">
+    <value>Tiểu sử</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Huỷ</value>
+  </data>
   <data name="CitationCount" xml:space="preserve">
     <value>Số trích dẫn</value>
   </data>
   <data name="CitationInfo" xml:space="preserve">
     <value>Thông tin trích dẫn</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
   </data>
   <data name="CMND" xml:space="preserve">
     <value>CMND</value>
@@ -174,11 +195,17 @@
   <data name="CmtInfo" xml:space="preserve">
     <value>Thông tin hội thoại</value>
   </data>
+  <data name="Competition" xml:space="preserve">
+    <value>Cuộc thi/Giải thưởng</value>
+  </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Tên hội thảo</value>
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Kỷ yếu hội thảo</value>
+  </data>
+  <data name="ContactInformation" xml:space="preserve">
+    <value>Thông tin liên hệ</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Nội dung</value>
@@ -210,8 +237,14 @@
   <data name="Dec" xml:space="preserve">
     <value>Tháng 12</value>
   </data>
+  <data name="Degree" xml:space="preserve">
+    <value>Học vị</value>
+  </data>
   <data name="DelAu" xml:space="preserve">
     <value>Xóa tác giả</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xoá</value>
   </data>
   <data name="DelRow" xml:space="preserve">
     <value>Xóa dòng</value>
@@ -219,11 +252,23 @@
   <data name="Detail" xml:space="preserve">
     <value>Chi tiết</value>
   </data>
+  <data name="Dob" xml:space="preserve">
+    <value>Ngày sinh</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Trong nước</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
+  </data>
+  <data name="EditAward" xml:space="preserve">
+    <value>Sửa thông tin giải thưởng</value>
+  </data>
+  <data name="EditWorkHistory" xml:space="preserve">
+    <value>Sửa tiểu sử công tác</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="EmptyContentDetail" xml:space="preserve">
     <value>Xin hãy quay về trang chủ</value>
@@ -258,6 +303,9 @@
   <data name="FPTProcedure" xml:space="preserve">
     <value>Thủ tục với FPT</value>
   </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>THÔNG TIN CHUNG</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Tổ chức giáo dục FPT - Khoa học &amp; Hợp tác quốc tế</value>
   </data>
@@ -272,6 +320,9 @@
   </data>
   <data name="Index" xml:space="preserve">
     <value>STT</value>
+  </data>
+  <data name="InterestedArea" xml:space="preserve">
+    <value>Lĩnh vực quan tâm</value>
   </data>
   <data name="International" xml:space="preserve">
     <value>Quốc tế</value>
@@ -351,8 +402,14 @@
   <data name="MSNV" xml:space="preserve">
     <value>MSNV/MSSV</value>
   </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>Trang cá nhân</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Tên tác giả</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Quốc tịch</value>
   </data>
   <data name="NewPublications" xml:space="preserve">
     <value>Công bố mới</value>
@@ -366,6 +423,9 @@
   <data name="Note" xml:space="preserve">
     <value>Ghi chú</value>
   </data>
+  <data name="NotificationSettings" xml:space="preserve">
+    <value>Cài đặt thông báo</value>
+  </data>
   <data name="Nov" xml:space="preserve">
     <value>Tháng 11</value>
   </data>
@@ -374,6 +434,9 @@
   </data>
   <data name="Oct" xml:space="preserve">
     <value>Tháng 10</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Đơn vị</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>Trang</value>
@@ -411,8 +474,14 @@
   <data name="PatentType" xml:space="preserve">
     <value>Loại SHTT</value>
   </data>
+  <data name="Phone" xml:space="preserve">
+    <value>SĐT</value>
+  </data>
   <data name="Policy" xml:space="preserve">
     <value>Chính sách</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Chức vụ</value>
   </data>
   <data name="Pre" xml:space="preserve">
     <value>Trang trước</value>
@@ -422,6 +491,12 @@
   </data>
   <data name="ProcedureTitle" xml:space="preserve">
     <value>Tiêu đề</value>
+  </data>
+  <data name="ProfileName" xml:space="preserve">
+    <value>Họ tên</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Ảnh hồ sơ</value>
   </data>
   <data name="Program" xml:space="preserve">
     <value>Chương trình</value>
@@ -447,6 +522,9 @@
   <data name="Quality" xml:space="preserve">
     <value>Chất lượng</value>
   </data>
+  <data name="Ranking" xml:space="preserve">
+    <value>Thứ hạng</value>
+  </data>
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
   </data>
@@ -471,6 +549,9 @@
   <data name="Researchers" xml:space="preserve">
     <value>Nghiên cứu viên</value>
   </data>
+  <data name="ResearchMajor" xml:space="preserve">
+    <value>Lĩnh vực nghiên cứu</value>
+  </data>
   <data name="Reward" xml:space="preserve">
     <value>Tiền thưởng</value>
   </data>
@@ -488,6 +569,9 @@
   </data>
   <data name="ScientificProducts" xml:space="preserve">
     <value>Sản phẩm khoa học</value>
+  </data>
+  <data name="ScientificPublish" xml:space="preserve">
+    <value>Công trình khoa học</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Tìm kiếm</value>
@@ -519,6 +603,12 @@
   <data name="ShowTB" xml:space="preserve">
     <value>Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi</value>
   </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
+  <data name="SMIAAddress" xml:space="preserve">
+    <value>Khu CNC Hoà Lạc, Hà Nội, Việt Nam</value>
+  </data>
   <data name="Source" xml:space="preserve">
     <value>Nguồn trích dẫn</value>
   </data>
@@ -530,6 +620,15 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Trạng thái</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="STT" xml:space="preserve">
+    <value>STT</value>
+  </data>
+  <data name="StudyPlace" xml:space="preserve">
+    <value>Nơi học tập</value>
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Mã số thuế</value>
@@ -543,11 +642,23 @@
   <data name="TotalReward" xml:space="preserve">
     <value>Tổng thưởng</value>
   </data>
+  <data name="UpdateInformation" xml:space="preserve">
+    <value>Cập nhật thông tin</value>
+  </data>
+  <data name="UpdateResearcherInformation" xml:space="preserve">
+    <value>Cập nhật thông tin cho nghiên cứu viên</value>
+  </data>
   <data name="View" xml:space="preserve">
     <value>Xem chi tiết</value>
   </data>
   <data name="Vol" xml:space="preserve">
     <value>Tập</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Trang web</value>
+  </data>
+  <data name="WorkHistory" xml:space="preserve">
+    <value>Tiểu sử công tác</value>
   </data>
   <data name="WorkUnit" xml:space="preserve">
     <value>Cơ sở</value>

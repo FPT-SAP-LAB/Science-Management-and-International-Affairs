@@ -43,7 +43,7 @@
                                 foreach (string item in ViewBag.images)
                                 {
                                     <div class="item">
-                                        <img style="height:30rem; object-fit: cover" src="@("https://drive.google.com/uc?export=view&id=" + item)" alt="Alternate Text" />
+                                        <img style="height:30rem; object-fit: cover" src="@(item)" alt="Alternate Text" />
                                     </div>
                                 }
                             }
