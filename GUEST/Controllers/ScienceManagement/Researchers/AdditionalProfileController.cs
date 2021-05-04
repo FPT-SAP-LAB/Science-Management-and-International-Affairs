@@ -49,7 +49,7 @@ namespace GUEST.Controllers
             if (result.success)
             {
                 LoginRepo repo = new LoginRepo();
-                LoginRepo.User u = repo.getAccount(result.obj, new List<int> { 0 });
+                LoginRepo.User u = repo.GetAccount(result.obj, new List<int> { 0 });
                 Session["User"] = u;
             }
             return Json(result);
