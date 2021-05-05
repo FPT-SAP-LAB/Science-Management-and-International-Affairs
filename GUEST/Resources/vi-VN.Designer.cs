@@ -97,6 +97,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Số tài khoản.
+        /// </summary>
+        public static string AccountNumber {
+            get {
+                return ResourceManager.GetString("AccountNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lịch hoạt động trong năm.
         /// </summary>
         public static string ActivityNavbar {
@@ -273,6 +282,24 @@ namespace GUEST.Resources {
         public static string Bank {
             get {
                 return ResourceManager.GetString("Bank", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin tài khoản ngân hàng.
+        /// </summary>
+        public static string BankAccountInformation {
+            get {
+                return ResourceManager.GetString("BankAccountInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi nhánh.
+        /// </summary>
+        public static string BankBranch {
+            get {
+                return ResourceManager.GetString("BankBranch", resourceCulture);
             }
         }
         
@@ -1704,6 +1731,15 @@ namespace GUEST.Resources {
         public static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã số thuế.
+        /// </summary>
+        public static string TaxCode {
+            get {
+                return ResourceManager.GetString("TaxCode", resourceCulture);
             }
         }
         

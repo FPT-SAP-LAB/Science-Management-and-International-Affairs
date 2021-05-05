@@ -129,6 +129,9 @@
   <data name="According" xml:space="preserve">
     <value>Theo quy định</value>
   </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Số tài khoản</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Lịch hoạt động trong năm</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Ngân hàng - Chi nhánh ngân hàng</value>
+  </data>
+  <data name="BankAccountInformation" xml:space="preserve">
+    <value>Thông tin tài khoản ngân hàng</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>Chi nhánh</value>
   </data>
   <data name="Biography" xml:space="preserve">
     <value>Tiểu sử</value>
@@ -664,6 +673,9 @@
     <value>Nơi học tập</value>
   </data>
   <data name="Tax" xml:space="preserve">
+    <value>Mã số thuế</value>
+  </data>
+  <data name="TaxCode" xml:space="preserve">
     <value>Mã số thuế</value>
   </data>
   <data name="TermCondition" xml:space="preserve">

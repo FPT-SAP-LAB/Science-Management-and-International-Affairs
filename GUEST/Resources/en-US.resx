@@ -129,6 +129,9 @@
   <data name="According" xml:space="preserve">
     <value>According to the decision</value>
   </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Account Number</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Activities During The Year</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
+  </data>
+  <data name="BankAccountInformation" xml:space="preserve">
+    <value>Bank Account Information</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>Bank Branch</value>
   </data>
   <data name="Biography" xml:space="preserve">
     <value>Biography</value>
@@ -662,6 +671,9 @@
   </data>
   <data name="Tax" xml:space="preserve">
     <value>Tax code</value>
+  </data>
+  <data name="TaxCode" xml:space="preserve">
+    <value>Tax Code</value>
   </data>
   <data name="TermCondition" xml:space="preserve">
     <value>All team members confirmed the reward type.</value>
