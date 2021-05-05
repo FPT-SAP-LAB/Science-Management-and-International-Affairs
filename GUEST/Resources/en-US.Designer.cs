@@ -115,6 +115,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Article reward request.
+        /// </summary>
+        public static string AddArticleRequest {
+            get {
+                return ResourceManager.GetString("AddArticleRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add more author.
         /// </summary>
         public static string AddAu {
@@ -129,6 +138,33 @@ namespace GUEST.Resources {
         public static string AddAward {
             get {
                 return ResourceManager.GetString("AddAward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Citation reward request.
+        /// </summary>
+        public static string AddCitationRequest {
+            get {
+                return ResourceManager.GetString("AddCitationRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Conference participation funding request.
+        /// </summary>
+        public static string AddConferenceRequest {
+            get {
+                return ResourceManager.GetString("AddConferenceRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Invention reward request.
+        /// </summary>
+        public static string AddInventionRequest {
+            get {
+                return ResourceManager.GetString("AddInventionRequest", resourceCulture);
             }
         }
         
@@ -192,6 +228,15 @@ namespace GUEST.Resources {
         public static string ArticlePolicies {
             get {
                 return ResourceManager.GetString("ArticlePolicies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Articles Reward Requests.
+        /// </summary>
+        public static string ArticleReward {
+            get {
+                return ResourceManager.GetString("ArticleReward", resourceCulture);
             }
         }
         
@@ -277,6 +322,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Citations Reward Requests.
+        /// </summary>
+        public static string CitationRewardRequests {
+            get {
+                return ResourceManager.GetString("CitationRewardRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -327,6 +381,15 @@ namespace GUEST.Resources {
         public static string ConferencePaper {
             get {
                 return ResourceManager.GetString("ConferencePaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conference Sponsor Requests.
+        /// </summary>
+        public static string ConferenceSponsorRequests {
+            get {
+                return ResourceManager.GetString("ConferenceSponsorRequests", resourceCulture);
             }
         }
         
@@ -732,6 +795,15 @@ namespace GUEST.Resources {
         public static string Invention {
             get {
                 return ResourceManager.GetString("Invention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invention Reward Requests.
+        /// </summary>
+        public static string InventionRewardRequests {
+            get {
+                return ResourceManager.GetString("InventionRewardRequests", resourceCulture);
             }
         }
         
