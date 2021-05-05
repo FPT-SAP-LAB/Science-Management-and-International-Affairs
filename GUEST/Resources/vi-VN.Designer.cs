@@ -1663,7 +1663,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nguồn trích dẫn.
+        ///   Looks up a localized string similar to Tiêu chí trích dẫn.
         /// </summary>
         public static string Source {
             get {

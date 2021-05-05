@@ -340,7 +340,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Citation info.
+        ///   Looks up a localized string similar to Citation information.
         /// </summary>
         public static string CitationInfo {
             get {
