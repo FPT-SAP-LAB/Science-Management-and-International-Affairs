@@ -2,10 +2,8 @@
 using BLL.ScienceManagement.MasterData;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.Citation;
-using ENTITIES.CustomModels.ScienceManagement.MasterData;
 using MANAGER.Models;
 using MANAGER.Support;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
@@ -37,6 +35,9 @@ namespace MANAGER.Controllers
 
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
+            if (rc == null)
+                return Redirect("/Citation/Pending");
+
             ViewBag.total_reward = rc.total_reward;
             ProfileExtend profile = cr.GetProfile(id);
             ViewBag.profile = profile;
@@ -75,14 +76,14 @@ namespace MANAGER.Controllers
         }
 
         [HttpPost]
-        public JsonResult changeStatus(string request_id)
+        public JsonResult ChangeStatus(string request_id)
         {
             string mess = cr.ChangeStatus(request_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult deleteRequest(int id)
+        public JsonResult DeleteRequest(int id)
         {
             string mess = cr.DeleteRequest(id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);

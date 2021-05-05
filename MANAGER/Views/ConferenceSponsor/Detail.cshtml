@@ -953,6 +953,7 @@
         }
 
         function createAndSubmitForm(url, data, comment) {
+            $("#loading").show();
             var newForm = jQuery('<form>', {
                 'action': url,
                 'method': 'post'
@@ -994,7 +995,7 @@
                 url: "/ConferenceSponsor/RequestEdit",
                 method: "post",
                 data: {
-                    request_id: @ConferenceDetail.RequestID
+                    request_id: @ConferenceDetail.RequestID,
                 },
                 dataType: "json",
                 success: function (data) {
