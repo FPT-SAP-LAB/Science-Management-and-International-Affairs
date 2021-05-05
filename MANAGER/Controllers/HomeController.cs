@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL.ScienceManagement.Dashboard;
+using ENTITIES.CustomModels.ScienceManagement.Dashboard;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -6,7 +8,7 @@ namespace MANAGER.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int? year)
         {
             if (Request.IsAuthenticated && Session["User"] != null)
             {
@@ -23,6 +25,11 @@ namespace MANAGER.Controllers
                     year_select.Add(this_year - i);
                 }
                 ViewBag.year_select = year_select;
+
+                DashboardRepo dashboardRepo = new DashboardRepo();
+                PaperByOffice paperByOffice = dashboardRepo.GetPaperByOffices(new string[] { "Q1", "Q2", "Q3", "Q4" }, year);
+                ViewBag.paperByOffice = paperByOffice;
+
                 return View();
             }
             else
