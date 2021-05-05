@@ -1,8 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "Thêm đề nghị hỗ trợ hội nghị";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("AddConfer");
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ENTITIES.CustomModels.ScienceManagement.Researcher.ProfileResearcher Profile = ViewBag.data.Profile;
 }
 <style>
@@ -128,7 +128,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group fv-plugins-icon-container">
                                             <label>@rm.GetString("PaperName") <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="paper_name" placeholder="Tên bài báo">
+                                            <input type="text" class="form-control" id="paper_name" placeholder="@rm.GetString("PaperName")">
                                         </div>
                                     </div>
                                 </div>
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="pb-5">
-                            <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("ProfileName")</h3>
+                            <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("ExCost")</h3>
                             <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
                             @*<div class="row">
                                     <div class="col-md-3">
@@ -263,21 +263,21 @@
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable2" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>
                                         <tr role="row">
-                                            <th>Nội dung</th>
-                                            <th>Tổ chức tài trợ</th>
-                                            <th>Chi phí</th>
-                                            <th>Tổng cộng</th>
+                                            <th>@rm.GetString("Content")</th>
+                                            <th>@rm.GetString("Sponsor")</th>
+                                            <th>@rm.GetString("Cost")</th>
+                                            <th>@rm.GetString("Total")</th>
                                             <th class="sorting_disabled">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableCost">
                                         <tr role="row" class="odd" id="baseCost">
                                             <td>
-                                                <input type="text" class="form-control" placeholder="Nội dung ">
+                                                <input type="text" class="form-control" placeholder="@rm.GetString("Content") ">
                                             </td>
                                             <td>FPTU</td>
                                             <td>
-                                                <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="Chi phí">
+                                                <input onInput="calculateCost(this)" type="text" class="form-control" placeholder="@rm.GetString("Cost")">
                                             </td>
                                             <td>
                                                 <span class="label label-lg label-light-danger label-inline targetCost">0 đ</span>
@@ -287,7 +287,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">Tổng cộng</th>
+                                            <th scope="row">@rm.GetString("Total")</th>
                                             <td></td>
                                             <td></td>
                                             <td><span id="totalCost" class="label label-lg label-light-danger label-inline">0 đ</span></td>
@@ -308,7 +308,7 @@
                                                     <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path>
                                                 </g>
                                             </svg><!--end::Svg Icon-->
-                                        </span> Thêm
+                                        </span> @rm.GetString("Add")
                                     </a>
                                 </div>
                             </div>
