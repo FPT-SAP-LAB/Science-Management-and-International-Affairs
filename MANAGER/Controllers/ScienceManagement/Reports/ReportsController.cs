@@ -113,6 +113,7 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             if (year == null) year = DateTime.Now.Year;
             DashboardRepo d = new DashboardRepo();
             DashboardNumber item = d.GetHomeData(year.Value);
+            //Request.year = year.ToString();
             ViewBag.homedata = item;
             return PartialView();
         }

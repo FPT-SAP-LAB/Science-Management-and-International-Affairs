@@ -41,8 +41,22 @@ namespace BLL.ScienceManagement.Dashboard
                 int conference = (from a in db.RequestConferences
                                   where a.status_id == 5
                                   select a.request_id).Distinct().Count();
-
                 DashboardNumber item = new DashboardNumber();
+                item.PaperRewardPending = (from a in db.RequestPapers
+                                           where a.status_id == 3
+                                           select a.paper_id).Count();
+                item.ConferenceFundingPending =
+                                          (from a in db.RequestConferences
+                                           where a.status_id == 1 || a.status_id == 2 || a.status_id == 3 || a.status_id == 4
+                                           select a.conference_id).Count();
+                item.InventionRewardPending =
+                                          (from a in db.RequestInventions
+                                           where a.status_id == 3
+                                           select a.invention_id).Count();
+                item.CitationRewardPending =
+                                          (from a in db.RequestCitations
+                                           where a.citation_status_id == 3
+                                           select a.citation_status_id).Count();
                 item.Invention = invention;
                 item.ScopusISI = scopusISI;
                 item.Researcher = researcher;
