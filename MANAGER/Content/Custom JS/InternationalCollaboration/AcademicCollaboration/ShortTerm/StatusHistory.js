@@ -87,7 +87,7 @@ $(document).on('show.bs.modal', '#status_history_modal', function (e) {
                         },
                         4: {
                             'title': 'Đã hoàn thành',
-                            'class': 'label-secondary'
+                            'class': 'label-success'
                         }
                     };
                     if (typeof status[data] === 'undefined') {
