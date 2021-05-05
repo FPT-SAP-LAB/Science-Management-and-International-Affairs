@@ -189,7 +189,7 @@
             var type = $("#search_type option:selected").text();
             var kieuthuong = $("#kieuthuong").val();
             $.ajax({
-                url: "@Url.Action("editInven", "Invention")",
+                url: "@Url.Action("EditInven", "Invention")",
                 type: "POST",
                 data: JSON.stringify({
                     'inven': invention,
@@ -242,7 +242,7 @@
 
             $("#loading").show();
             $.ajax({
-                url: "@Url.Action("listAuthor", "Invention")",
+                url: "@Url.Action("ListAuthor", "Invention")",
                 type: "POST",
                 data: { 'id': invenID},
                 cache: false,

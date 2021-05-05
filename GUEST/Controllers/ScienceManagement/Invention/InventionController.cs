@@ -1,20 +1,18 @@
-﻿using BLL.Authen;
-using BLL.ScienceManagement.Comment;
+﻿using BLL.ScienceManagement.Comment;
 using BLL.ScienceManagement.Invention;
 using BLL.ScienceManagement.MasterData;
 using BLL.ScienceManagement.Paper;
 using ENTITIES;
 using ENTITIES.CustomModels;
-using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Invention;
-using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Models;
 using GUEST.Support;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
+using System.Resources;
 using System.Web;
 using System.Web.Mvc;
 using User.Models;
@@ -26,14 +24,15 @@ namespace GUEST.Controllers
         private readonly InventionRepo ir = new InventionRepo();
         private readonly CommentRepo cr = new CommentRepo();
         private readonly MasterDataRepo md = new MasterDataRepo();
+        private readonly ResourceManager rm = LanguageResource.GetResourceManager();
 
         [Auther(RightID = "28")]
         public ActionResult AddRequest()
         {
-            ViewBag.title = "Đăng ký khen thưởng bằng sáng chế";
+            ViewBag.title = rm.GetString("AddInventionRequest");
             var pagesTree = new List<PageTree>
             {
-                new PageTree("Đăng ký khen thưởng bằng sáng chế","/Invention/AddRequest"),
+                new PageTree(rm.GetString("AddInventionRequest"),"/Invention/AddRequest"),
             };
             ViewBag.pagesTree = pagesTree;
 
@@ -85,7 +84,7 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult listAuthor(string id)
+        public JsonResult ListAuthor(string id)
         {
             string lang = "";
             if (Request.Cookies["language_name"] != null)
@@ -97,15 +96,17 @@ namespace GUEST.Controllers
         }
 
         [HttpPost]
-        public JsonResult addFile(HttpPostedFileBase file, string name, string input, string type, string countries, string people)
+        public JsonResult AddFile(HttpPostedFileBase file, string name, string input, string type, string countries, string people)
         {
             JObject @object = JObject.Parse(input);
             JObject @object_author = JObject.Parse(people);
             JObject @object_copuntry = JObject.Parse(countries);
 
-            Invention inven = new Invention();
-            inven.name = (string)@object["name"];
-            inven.no = (string)@object["no"];
+            Invention inven = new Invention
+            {
+                name = (string)@object["name"],
+                no = (string)@object["no"]
+            };
             DateTime temp_date = DateTime.ParseExact((string)@object["date"], "MM/dd/yyyy", CultureInfo.InvariantCulture);
             inven.date = temp_date;
 
@@ -143,21 +144,15 @@ namespace GUEST.Controllers
                 author.Add(temp);
             }
 
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
+            Account acc = CurrentAccount.Account(Session);
             Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 3, acc.email);
-            ENTITIES.File fl = new ENTITIES.File
+            File fl = new File
             {
                 link = f.WebViewLink,
                 file_drive_id = f.Id,
                 name = name
             };
-            string m = ir.addFile(fl);
+            _ = ir.addFile(fl);
             inven.file_id = fl.file_id;
 
             int id = ir.addInven_refactor(inven, type, listCountry, author, fl, acc);
@@ -171,20 +166,13 @@ namespace GUEST.Controllers
 
             //BaseRequest b = pr.addBaseRequest(acc.account_id);
             //if (mess == "ss") mess = ir.addInvenRequest(b, i);
-            return Json(new { mess = mess, id = id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult addInven(List<AddAuthor> people, Invention inven, string type)
+        public JsonResult AddInven(List<AddAuthor> people, Invention inven, string type)
         {
             PaperRepo pr = new PaperRepo();
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
 
             InventionType ip = ir.addInvenType(type);
             inven.type_id = ip.invention_type_id;
@@ -192,21 +180,21 @@ namespace GUEST.Controllers
 
             string mess = ir.addAuthor(people, i.invention_id);
 
-            BaseRequest b = pr.AddBaseRequest(acc.account_id);
+            BaseRequest b = pr.AddBaseRequest(CurrentAccount.AccountID(Session));
             if (mess == "ss") mess = ir.addInvenRequest(b, i);
 
-            return Json(new { mess = mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id = i.invention_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult addAuthor(List<AddAuthor> people, int invention_id)
+        public JsonResult AddAuthor(List<AddAuthor> people, int invention_id)
         {
             string mess = ir.addAuthor(people, invention_id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult editInven(List<AddAuthor> people, Invention inven, string type, string kieuthuong, string request)
+        public JsonResult EditInven(List<AddAuthor> people, Invention inven, string type, string kieuthuong, string request)
         {
             InventionType ip = ir.addInvenType(type);
             inven.type_id = ip.invention_type_id;
@@ -218,11 +206,11 @@ namespace GUEST.Controllers
                 mess = ir.updateAuthor(inven.invention_id, people);
             }
 
-            return Json(new { mess = mess, id = inven.invention_id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id = inven.invention_id }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult deleteFile(string id)
+        public JsonResult DeleteFile(string id)
         {
             string mess = ir.deleteFileCM(id);
             return Json(new { mess }, JsonRequestBehavior.AllowGet);
