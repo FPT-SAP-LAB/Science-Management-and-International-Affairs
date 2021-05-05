@@ -49,14 +49,19 @@
 
     <script>
         $('#reports_year').datetimepicker({
-            maxDate: new Date(),
             format: 'YYYY',
-            defaultDate: '11/1/@Request["year"]',
+            viewMode: "years",
+            minViewMode: "years",
+            updateViewDate: true,
+            changeYear: true,
+            //defaultViewDate: { year: '@Request["year"]' },
+            //maxDate: new Date(),
+            defaultDate: new Date(@Request["year"], 11, 1),
         });
         $(document).on("change.datetimepicker", "#reports_year", function () {
             location.href = "/Home?year=" + $("#add_work_start").val()
         })
-
+        
         // Class definition
         var KTWidgets = function () {
             // Private properties
