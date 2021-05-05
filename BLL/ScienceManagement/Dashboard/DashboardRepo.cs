@@ -64,7 +64,29 @@ namespace BLL.ScienceManagement.Dashboard
             return paperByUnit;
         }
 
-        //public 
+        public Dictionary<string, int> GetPaperBySpecializations(int? year)
+        {
+            year = year == null ? DateTime.Now.Year : year;
+            var temp = (from d in db.SpecializationLanguages
+                        join e in db.RequestPapers on d.specialization_id equals e.specialization_id
+                        join f in db.RequestDecisions on e.request_id equals f.request_id
+                        join g in db.Decisions on f.decision_id equals g.decision_id
+                        where e.status_id == 2 && g.valid_date.Year == year && d.language_id == 1
+                        select new
+                        {
+                            d.name,
+                            e.paper_id
+                        }).ToList();
+            Dictionary<string, int> specialiNumPaper = new Dictionary<string, int>();
+            foreach (var item in temp)
+            {
+                if (specialiNumPaper.TryGetValue(item.name, out int papers))
+                    specialiNumPaper[item.name] = papers + 1;
+                else
+                    specialiNumPaper.Add(item.name, 1);
+            }
+            return specialiNumPaper;
+        }
 
         private class PaperByOfficeItem
         {
