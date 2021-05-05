@@ -15,6 +15,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
         DashboardRepo dashboardRepo;
 
         [Auther(RightID = "1")]
+        [ChildActionOnly]
         public ActionResult Dashboard()
         {
             dashboardRepo = new DashboardRepo();
@@ -34,7 +35,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
 
             //update noti for mou.
             new MOURepo().getNoti();
-            return View();
+            return PartialView();
         }
 
         [HttpPost]

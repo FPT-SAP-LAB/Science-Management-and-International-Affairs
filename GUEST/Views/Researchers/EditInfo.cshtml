@@ -1,10 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Chỉnh sửa thông tin";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = rm.GetString("UpdateInformation");
 }
 @using ENTITIES.CustomModels.ScienceManagement.Researcher;
 @using System.Globalization;
+
 <style>
     .nav-link {
         font-size: 17px;
@@ -31,16 +33,16 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">THÔNG TIN CHUNG</h3>
-                                <span class="text-muted font-weight-bold font-size-sm mt-1">Cập nhật thông tin cho nghiên cứu viên</span>
+                                <h3 class="card-label font-weight-bolder text-dark">@rm.GetString("GeneralInformation")</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1">@rm.GetString("UpdateResearcherInformation")</span>
                             </div>
                             <div class="card-toolbar">
                                 <div id="edit-control-area" hidden>
-                                    <button type="reset" id="save-btn" class="btn btn-success mr-2">Lưu</button>
-                                    <button type="reset" id="cancel-btn"  class="btn btn-secondary">Huỷ</button>
+                                    <button type="reset" id="save-btn" class="btn btn-success mr-2">@rm.GetString("Save")</button>
+                                    <button type="reset" id="cancel-btn" class="btn btn-secondary">@rm.GetString("Cancel")</button>
                                 </div>
                                 <div id="edit-enable-area">
-                                    <button type="reset" id="edit-enable-btn" class="btn btn-primary mr-2">Chỉnh sửa thông tin</button>
+                                    <button type="reset" id="edit-enable-btn" class="btn btn-primary mr-2">@rm.GetString("UpdateInformation")</button>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +56,7 @@
                             <!--begin::Body-->
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Hình đại diện</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("ProfilePicture")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="image-input image-input-outline" id="kt_image_avatar" style="background-image: url(@(ViewBag.profile.avatar==null?"/Content/assets/media/users/blank.png":ViewBag.profile.avatar))">
                                             <div class="image-input-wrapper" style="background-image: url()"></div>
@@ -77,19 +79,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">Họ tên</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">@rm.GetString("ProfileName")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_name" disabled type="text" value="@ViewBag.profile.name" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">MSNV/MSSV</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">@rm.GetString("MSNV")</label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_msnv" disabled type="text" value="@ViewBag.profile.name" />
+                                        <input class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_msnv" disabled type="text" value="@ViewBag.profile.msnv" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">Ngày sinh</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">@rm.GetString("Dob")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group date" id="kt_datetimepicker_2" data-target-input="nearest">
                                             <input type="text" id="researcher_dob" class="form-control datetimepicker-input researcher_infomation" value="@(ViewBag.profile.dob == null ? "" : ViewBag.profile.dob.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture))" placeholder="Chọn ngày sinh" disabled data-target="#kt_datetimepicker_2" />
@@ -104,7 +106,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">Quốc tịch</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right required-field">@rm.GetString("Nationality")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <select class="form-control select2  researcher_infomation" disabled id="country_select" name="param">
                                             @foreach (SelectField a in ViewBag.profile.countries_fields)
@@ -115,7 +117,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức danh</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("Title")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
@@ -129,7 +131,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Chức vụ</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("Position")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
@@ -145,11 +147,11 @@
                                 <div class="row">
                                     <label class="col-xl-3"></label>
                                     <div class="col-lg-9 col-xl-6">
-                                        <h5 class="font-weight-bold mt-10 mb-6">Thông tin liên hệ</h5>
+                                        <h5 class="font-weight-bold mt-10 mb-6">@rm.GetString("ContactInformation")</h5>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">SĐT</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("Phone")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
@@ -159,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Email</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("Email")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
@@ -168,7 +170,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Đơn vị</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("Office")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
@@ -183,7 +185,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Website</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("Website")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-internet-explorer"></i></span></div>
@@ -210,7 +212,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Lĩnh vực quan tâm</label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("InterestedArea")</label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             @*<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-braille"></i></span></div>*@
@@ -221,6 +223,42 @@
                                                 }
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-xl-3"></label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <h5 class="font-weight-bold mt-10 mb-6">@rm.GetString("BankAccountInformation")</h5>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("AccountNumber")</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-user-check"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_accountNumber" disabled value="@ViewBag.profile.bankAccount" placeholder="@rm.GetString("AccountNumber")" />
+                                        </div>
+                                        @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("BankBranch")</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-bank"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_bankBranch" disabled value="@ViewBag.profile.bankBranch" placeholder="@rm.GetString("BankBranch")" />
+                                        </div>
+                                        @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">@rm.GetString("TaxCode")</label>
+                                    <div class="col-lg-9 col-xl-6">
+                                        <div class="input-group input-group-lg input-group-solid">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-barcode"></i></span></div>
+                                            <input type="text" class="form-control form-control-lg form-control-solid researcher_infomation" id="researcher_taxCode" disabled value="@ViewBag.profile.taxCode" placeholder="@rm.GetString("TaxCode")" />
+                                        </div>
+                                        @*<span class="form-text text-muted">We'll never share your email with anyone else.</span>*@
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +280,7 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">TIẾU SỬ HỌC TẬP</h3>
+                                <h3 class="card-label font-weight-bolder text-dark">@rm.GetString("AcadHistory")</h3>
                                 <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
                             </div>
                         </div>
@@ -253,10 +291,10 @@
                                     <table class="custom-add-table table table-bordered" id="acad_history_table">
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
-                                                <th>Học vị</th>
-                                                <th>Nơi học tập</th>
-                                                <th>Thời gian</th>
+                                                <th>@rm.GetString("STT")</th>
+                                                <th>@rm.GetString("Degree")</th>
+                                                <th>@rm.GetString("AcadHistory")</th>
+                                                <th>@rm.GetString("Time")</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -267,7 +305,7 @@
                                 <div class="col-lg-12 col-xl-12" style="text-align: right">
                                     <button data-toggle="modal" data-target="#modal_themtieusu_hoctap" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
                                         <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                        Thêm tiểu sử học tập
+                                        @rm.GetString("AddAcadHistory")
                                     </button>
                                 </div>
                             </div>
@@ -288,7 +326,7 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">TIẾU SỬ CÔNG TÁC</h3>
+                                <h3 class="card-label font-weight-bolder text-dark">@rm.GetString("WorkHistory")</h3>
                                 <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
                             </div>
                         </div>
@@ -299,10 +337,10 @@
                                     <table class="custom-add-table table table-bordered" id="work_history_table">
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
-                                                <th>Đơn vị công tác</th>
-                                                <th>Chức vụ/ vai trò</th>
-                                                <th>Thời gian</th>
+                                                <th>@rm.GetString("STT")</th>
+                                                <th>@rm.GetString("Office")</th>
+                                                <th>@rm.GetString("Position")</th>
+                                                <th>@rm.GetString("Time")</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -313,7 +351,7 @@
                                 <div class="col-lg-12 col-xl-12" style="text-align: right">
                                     <button data-toggle="modal" data-target="#modal_themtieusu_congtac" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
                                         <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                        Thêm tiểu sử công tác
+                                        @rm.GetString("AddWorkHistory")
                                     </button>
                                 </div>
                             </div>
@@ -333,7 +371,7 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">GIẢI THƯỞNG</h3>
+                                <h3 class="card-label font-weight-bolder text-dark">@rm.GetString("Reward")</h3>
                                 <span class="text-muted font-weight-bold font-size-sm mt-1"></span>
                             </div>
                         </div>
@@ -344,10 +382,10 @@
                                     <table class="custom-add-table table table-bordered" id="award_history_table">
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
-                                                <th>Cuộc thi/giải thưởng</th>
-                                                <th>Thứ hạng</th>
-                                                <th>Thời gian</th>
+                                                <th>@rm.GetString("STT")</th>
+                                                <th>@rm.GetString("Competition")</th>
+                                                <th>@rm.GetString("Ranking")</th>
+                                                <th>@rm.GetString("Time")</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -358,7 +396,7 @@
                                 <div class="col-lg-12 col-xl-12" style="text-align: right">
                                     <button data-toggle="modal" data-target="#modal_them_award" href="#" class="add-btn btn btn-light-success px-6 font-weight-bold">
                                         <i style="color: #1BC5BD; padding-bottom:0.1rem" class="far fa-plus-square"></i>
-                                        Thêm giải thưởng
+                                        @rm.GetString("AddAward")
                                     </button>
                                 </div>
                             </div>
@@ -377,7 +415,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử học tập</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("AddAcadHistory")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -386,8 +424,8 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <select type="text" class="form-control" placeholder="Học vị" id="acad_hocvi">
-                                <option value="" disabled selected>Học vị</option>
+                            <select type="text" class="form-control" placeholder="@rm.GetString("Degree")" id="acad_hocvi">
+                                <option value="" disabled selected>@rm.GetString("Degree")</option>
                                 @foreach (SelectField a in ViewBag.listAcadDegree)
                                 {
                                     <option value="@a.id">@a.name</option>
@@ -400,7 +438,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Nơi học tập" id="acad_location">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("StudyPlace")" id="acad_location">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -441,8 +479,8 @@
                     </div>*@
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_acad">Lưu</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@rm.GetString("Close")</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_acad">@rm.GetString("Save")</button>
             </div>
         </div>
     </div>
@@ -452,7 +490,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thêm tiểu sử công tác</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("AddWorkHistory")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -461,7 +499,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Đơn vị công tác" id="work_location">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Office")" id="work_location">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -469,7 +507,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Chức danh" id="work_title">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Title")" id="work_title">
                             <span><i class="far fa-bookmark"></i></span>
                         </div>
                     </div>
@@ -502,8 +540,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary font-weight-bold" id="submit_new_work">Lưu</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@rm.GetString("Close")</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="submit_new_work">@rm.GetString("Save")</button>
             </div>
         </div>
     </div>
@@ -513,7 +551,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử học tập</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("AddWorkHistory")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -522,7 +560,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <select type="text" class="form-control" placeholder="Học vị" id="acad_suahocvi">
+                            <select type="text" class="form-control" placeholder="@rm.GetString("Degree")" id="acad_suahocvi">
                                 <option value="" disabled selected>Học vị</option>
                                 @foreach (SelectField a in ViewBag.listAcadDegree)
                                 {
@@ -536,7 +574,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Nơi học tập" id="edit_location">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("StudyPlace")" id="edit_location">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -577,9 +615,9 @@
                     </div>*@
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_acad">Lưu</button>
-                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_acad">Xoá</button>
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_acad">@rm.GetString("Save")</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_acad">@rm.GetString("Delete")</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@rm.GetString("Close")</button>
             </div>
         </div>
     </div>
@@ -589,7 +627,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Sửa tiểu sử công tác</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("EditWorkHistory")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -598,7 +636,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Đơn vị công tác" id="edit_work_location">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Office")" id="edit_work_location">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -606,7 +644,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Chức danh" id="edit_work_title">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Title")" id="edit_work_title">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -639,9 +677,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_work">Lưu</button>
-                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_work">Xoá</button>
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_work">@rm.GetString("Save")</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_work">@rm.GetString("Delete")</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@rm.GetString("Close")</button>
             </div>
         </div>
     </div>
@@ -651,7 +689,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thêm giải thưởng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("AddAward")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -660,7 +698,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Tên cuộc thi" id="add_award_name">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Competition")" id="add_award_name">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -668,7 +706,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Thứ hạng" id="add_award_rank">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Ranking")" id="add_award_rank">
                             <span><i class="far fa-hand-rock"></i></span>
                         </div>
                     </div>
@@ -678,7 +716,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-group date" id="date_award" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" id="add_award_date" placeholder="Thời gian" data-target="#date_award" />
+                                    <input type="text" class="form-control datetimepicker-input" id="add_award_date" placeholder="@rm.GetString("Time")" data-target="#date_award" />
                                     <div class="input-group-append" data-target="#date_award" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -691,8 +729,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_award">Lưu</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@rm.GetString("Close")</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_new_award">@rm.GetString("Save")</button>
             </div>
         </div>
     </div>
@@ -702,7 +740,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin giải thưởng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("EditAward")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -711,7 +749,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Tên cuộc thi" id="edit_award_name">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Competition")" id="edit_award_name">
                             <span><i class="fas fa-map-pin"></i></span>
                         </div>
                     </div>
@@ -719,7 +757,7 @@
                 <div class="row form-group">
                     <div class="col-12">
                         <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Thứ hạng" id="edit_award_rank">
+                            <input type="text" class="form-control" placeholder="@rm.GetString("Ranking")" id="edit_award_rank">
                             <span><i class="far fa-hand-rock"></i></span>
                         </div>
                     </div>
@@ -729,7 +767,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="input-group date" id="edit_date_award" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" id="sua_award_date" placeholder="Thời gian" data-target="#edit_date_award" />
+                                    <input type="text" class="form-control datetimepicker-input" id="sua_award_date" placeholder="@rm.GetString("Time")" data-target="#edit_date_award" />
                                     <div class="input-group-append" data-target="#edit_date_award" data-toggle="datetimepicker">
                                         <span class="input-group-text">
                                             <i class="ki ki-calendar"></i>
@@ -742,9 +780,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_award">Lưu</button>
-                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_award">Xoá</button>
-                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-light-success font-weight-bold" id="submit_edit_award">@rm.GetString("Save")</button>
+                <button type="button" class="btn btn-light-danger font-weight-bold" id="delete_award">@rm.GetString("Delete")</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">@rm.GetString("Close")</button>
             </div>
         </div>
     </div>
@@ -755,7 +793,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thay đổi ảnh hồ sơ</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@rm.GetString("ProfilePicture")</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -769,8 +807,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light-primary font-weight-bold" id="delete_avt" data-dismiss="modal">Huỷ</button>
-                <button type="button" class="btn btn-primary font-weight-bold" id="submit_edit_avt">Đồng ý</button>
+                <button type="button" class="btn btn-light-primary font-weight-bold" id="delete_avt" data-dismiss="modal">@rm.GetString("Cancel")</button>
+                <button type="button" class="btn btn-primary font-weight-bold" id="submit_edit_avt">@rm.GetString("Save")</button>
             </div>
         </div>
     </div>

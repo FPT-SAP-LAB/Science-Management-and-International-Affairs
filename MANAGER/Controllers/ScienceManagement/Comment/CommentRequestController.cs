@@ -2,6 +2,7 @@
 using BLL.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using MANAGER.Models;
+using MANAGER.Support;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -19,6 +20,8 @@ namespace MANAGER.Controllers.ScienceManagement.Comment
             ViewBag.IsEnded = requestRepo.IsEnded(request_id);
             return PartialView();
         }
+
+        //[Auther(RightID = "37")]
         [HttpPost]
         public JsonResult Add(int request_id, string content)
         {

@@ -23,7 +23,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
             repo = new LoginRepo();
             ENTITIES.CustomModels.Authen.Gmail user = await GetUserDetailsAsync(idtoken);
             List<int> roleAccept = new List<int>() { 0 };
-            LoginRepo.User u = repo.getAccount(user, roleAccept);
+            LoginRepo.User u = repo.GetAccount(user, roleAccept);
             if (u == null)
             {
                 string EmailDomain = user.email.Split('@').Last();
@@ -44,7 +44,7 @@ namespace GUEST.Controllers.AuthenticationAuthorization
                         email = user.email,
                         role_id = role_id
                     });
-                    u = repo.getAccount(user, roleAccept);
+                    u = repo.GetAccount(user, roleAccept);
                 }
                 else
                     return Json(new { success = false, content = "Tài khoản của bạn không được phép truy cập vào hệ thống" });

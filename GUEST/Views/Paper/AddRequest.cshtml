@@ -35,7 +35,7 @@
                                     <input autocomplete="off" class="form-control " type="text" id="paper_scholar" />
                                 </div>
                                 <div class="col-xl-6 form-group">
-                                    <label class="required-field">Loại ấn phẩm</label>
+                                    <label class="required-field">@rm.GetString("PublicationType")</label>
                                     <select id="paper_type" class="form-control">
                                         <option value="1">@rm.GetString("JournalPaper")</option>
                                         <option value="2">@rm.GetString("ConferencePaper")</option>
@@ -136,10 +136,6 @@
                             <input autocomplete="off" class="form-control" type="text" id="paper_note_domestic" />
                         </div>
                         <div class="col-xl-6 form-group">
-                            <label class="required-field">@rm.GetString("TotalReward")</label>
-                            <input autocomplete="off" class="form-control" readonly type="text" />
-                        </div>
-                        <div class="col-xl-6 form-group">
                             <label class="required-field">@rm.GetString("RewardType")</label>
                             <select id="kieuthuong" class="form-control">
                                 <option value="2">@rm.GetString("According")</option>
@@ -147,9 +143,14 @@
                             </select>
                         </div>
                         <div class="col-xl-6 form-group" id="block_daidien">
-                            <label class="required-field">Chọn đại diện nhận thưởng</label>
+                            <label class="required-field">@rm.GetString("ChooseRepresentative")</label>
                             <select id="daidien" class="form-control">
                             </select>
+                        </div>
+                    </div>
+                    <div id="term-condition" class="row" hidden>
+                        <div class="col-sm-6" style="color: red">
+                            @rm.GetString("TermCondition")
                         </div>
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
@@ -437,8 +438,14 @@
 
             $("#kieuthuong").on("select2:select", function (e) {
                 var temp = $("#kieuthuong").val();
-                if (temp == "2") $("#block_daidien").hide();
-                else $("#block_daidien").show();
+                if (temp == "2") {
+                    $("#block_daidien").hide();
+                    $("#term-condition").prop("hidden", true);
+                }
+                else {
+                    $("#block_daidien").show();
+                    $("#term-condition").prop("hidden", false);
+                }
             });
 
             $("#loaithuong").on("select2:select", function (e) {

@@ -1,9 +1,4 @@
-﻿
-@{
-    ViewBag.Title = "DASHBOARD";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<style>
+﻿<style>
     .card-mycustom {
         border: 0.5px solid #e7e7e7 !important;
         box-shadow: none !important;
@@ -21,481 +16,235 @@
         font-size: 20px;
     }
 </style>
-<div class="card card-custom gutter-b">
-    <div class="card-title my-4">
-        <h1 class="font-weight-bolder text-center">THỐNG KÊ TỔNG QUAN</h1>
-        <div class="row justify-content-center">
-            <div class="col-lg-2 col-md-2 col-4">
-                <select id="year_select" class="form-control text-center" required style="width: 100% !important">
-                    @{
-                        foreach (var i in ViewBag.year_select)
-                        {
-                            <option value="@i">@i</option>
-                        }
+<div class="card-title my-4">
+    <h1 class="font-weight-bolder text-center">THỐNG KÊ TỔNG QUAN</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-2 col-md-2 col-4">
+            <select id="year_select" class="form-control text-center" required style="width: 100% !important">
+                @{
+                    foreach (var i in ViewBag.year_select)
+                    {
+                        <option value="@i">@i</option>
                     }
-                </select>
-            </div>
+                }
+            </select>
         </div>
     </div>
-    <div class="card-body">
-        <!--begin: Search Form-->
-        <!--begin::Search Form-->
-        <div class="mb-7">
-            <!--Begin::Row-->
-            <div class="row report-elements">
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <!--begin::Stats Widget 28-->
-                    <div class="card card-custom bg-light-primary card-stretch gutter-b">
-                        <!--begin::Body-->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 row justify-content-center">
-                                    <div class="svg-icon svg-icon-5x svg-icon-primary mx-4">
-                                        <svg class="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                                             focusable="false" width="1em"
-                                             height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15">
-                                            <g fill="none">
-                                                <path d="M4.5 7H4v1h.5V7zm6 1h.5V7h-.5v1zm-6-4H4v1h.5V4zm2 1H7V4h-.5v1zm4-4.5l.354-.354L10.707 0H10.5v.5zm3 3h.5v-.207l-.146-.147l-.354.354zM8 11l-.354.354L8 11zm-.5.5l.224.447l.04-.02l.036-.027l-.3-.4zM4.5 8h6V7h-6v1zm0-3h2V4h-2v1zm8 9h-10v1h10v-1zM2 13.5v-12H1v12h1zM2.5 1h8V0h-8v1zM13 3.5v10h1v-10h-1zM10.146.854l3 3l.708-.708l-3-3l-.708.708zM2.5 14a.5.5 0 0 1-.5-.5H1A1.5 1.5 0 0 0 2.5 15v-1zm10 1a1.5 1.5 0 0 0 1.5-1.5h-1a.5.5 0 0 1-.5.5v1zM2 1.5a.5.5 0 0 1 .5-.5V0A1.5 1.5 0 0 0 1 1.5h1zm3.474 10.158c.111-.333.427-.642.83-.75c.377-.101.862-.035 1.342.446l.708-.708c-.72-.72-1.569-.903-2.309-.704c-.713.192-1.297.733-1.52 1.4l.95.316zm2.172-.304a.933.933 0 0 1 .079.087l.79-.614a1.945 1.945 0 0 0-.161-.18l-.708.707zm.079.087c.078.1.06.132.063.11c.002-.014.006.009-.054.063a1 1 0 0 1-.29.169a1.781 1.781 0 0 1-.394.108a.848.848 0 0 1-.25.01c-.017-.004.018 0 .07.037a.388.388 0 0 1 .131.43a.209.209 0 0 1-.023.047c-.002.002.015-.02.072-.067c.114-.092.324-.226.674-.4l-.448-.895c-.377.188-.66.36-.854.517a1.375 1.375 0 0 0-.26.267a.705.705 0 0 0-.14.438c.01.216.127.375.255.468c.113.084.238.12.33.139c.187.037.4.027.593-.002c.38-.058.872-.222 1.207-.526c.174-.159.339-.387.374-.686c.036-.306-.074-.593-.267-.84l-.79.613zm.075.459a2.56 2.56 0 0 1 .518-.307l-.397-.918c-.24.104-.48.245-.721.425l.6.8zm.518-.307c.65-.281 1.231-.133 1.826.15c.15.072.296.15.444.23c.144.078.296.161.44.235c.276.139.618.292.972.292v-1c-.094 0-.248-.047-.52-.184c-.128-.066-.262-.14-.416-.223c-.15-.081-.316-.17-.49-.252c-.698-.333-1.611-.616-2.653-.166l.397.918z"
-                                                      fill="#626262" />
-                                            </g>
-                                        </svg><!--end::Svg Icon-->
-                                    </div>
-                                    <div id="widget_mou" class="number_size card-title font-weight-bolder text-dark-75 mb-0 d-block text-center">
-                                    </div>
+</div>
+<div class="card-body">
+    <!--begin: Search Form-->
+    <!--begin::Search Form-->
+    <div class="mb-7">
+        <!--Begin::Row-->
+        <div class="row report-elements">
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                <!--begin::Stats Widget 28-->
+                <div class="card card-custom bg-light-primary card-stretch gutter-b">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 row justify-content-center">
+                                <div class="svg-icon svg-icon-5x svg-icon-primary mx-4">
+                                    <svg class="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                                         focusable="false" width="1em"
+                                         height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15">
+                                        <g fill="none">
+                                            <path d="M4.5 7H4v1h.5V7zm6 1h.5V7h-.5v1zm-6-4H4v1h.5V4zm2 1H7V4h-.5v1zm4-4.5l.354-.354L10.707 0H10.5v.5zm3 3h.5v-.207l-.146-.147l-.354.354zM8 11l-.354.354L8 11zm-.5.5l.224.447l.04-.02l.036-.027l-.3-.4zM4.5 8h6V7h-6v1zm0-3h2V4h-2v1zm8 9h-10v1h10v-1zM2 13.5v-12H1v12h1zM2.5 1h8V0h-8v1zM13 3.5v10h1v-10h-1zM10.146.854l3 3l.708-.708l-3-3l-.708.708zM2.5 14a.5.5 0 0 1-.5-.5H1A1.5 1.5 0 0 0 2.5 15v-1zm10 1a1.5 1.5 0 0 0 1.5-1.5h-1a.5.5 0 0 1-.5.5v1zM2 1.5a.5.5 0 0 1 .5-.5V0A1.5 1.5 0 0 0 1 1.5h1zm3.474 10.158c.111-.333.427-.642.83-.75c.377-.101.862-.035 1.342.446l.708-.708c-.72-.72-1.569-.903-2.309-.704c-.713.192-1.297.733-1.52 1.4l.95.316zm2.172-.304a.933.933 0 0 1 .079.087l.79-.614a1.945 1.945 0 0 0-.161-.18l-.708.707zm.079.087c.078.1.06.132.063.11c.002-.014.006.009-.054.063a1 1 0 0 1-.29.169a1.781 1.781 0 0 1-.394.108a.848.848 0 0 1-.25.01c-.017-.004.018 0 .07.037a.388.388 0 0 1 .131.43a.209.209 0 0 1-.023.047c-.002.002.015-.02.072-.067c.114-.092.324-.226.674-.4l-.448-.895c-.377.188-.66.36-.854.517a1.375 1.375 0 0 0-.26.267a.705.705 0 0 0-.14.438c.01.216.127.375.255.468c.113.084.238.12.33.139c.187.037.4.027.593-.002c.38-.058.872-.222 1.207-.526c.174-.159.339-.387.374-.686c.036-.306-.074-.593-.267-.84l-.79.613zm.075.459a2.56 2.56 0 0 1 .518-.307l-.397-.918c-.24.104-.48.245-.721.425l.6.8zm.518-.307c.65-.281 1.231-.133 1.826.15c.15.072.296.15.444.23c.144.078.296.161.44.235c.276.139.618.292.972.292v-1c-.094 0-.248-.047-.52-.184c-.128-.066-.262-.14-.416-.223c-.15-.081-.316-.17-.49-.252c-.698-.333-1.611-.616-2.653-.166l.397.918z"
+                                                  fill="#626262" />
+                                        </g>
+                                    </svg><!--end::Svg Icon-->
                                 </div>
-                                <div class="col-12">
-                                    <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">THỎA THUẬN HỢP TÁC</div>
+                                <div id="widget_mou" class="number_size card-title font-weight-bolder text-dark-75 mb-0 d-block text-center">
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">THỎA THUẬN HỢP TÁC</div>
+                            </div>
                         </div>
-                        <!--end::Body-->
                     </div>
-                    <!--end::Stat: Widget 28-->
+                    <!--end::Body-->
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <!--begin::Stats Widget 27-->
-                    <div class="card card-custom bg-light-danger card-stretch gutter-b">
-                        <!--begin::Body-->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 row justify-content-center">
-                                    <div class="svg-icon svg-icon-5x svg-icon-danger mx-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                                             focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg);
+                <!--end::Stat: Widget 28-->
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                <!--begin::Stats Widget 27-->
+                <div class="card card-custom bg-light-danger card-stretch gutter-b">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 row justify-content-center">
+                                <div class="svg-icon svg-icon-5x svg-icon-danger mx-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                                         focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg);
                                                 -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
-                                            <g fill="none">
-                                                <path d="M2.001 4.001a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6.13l-1-1.695V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.307l-.04.067c-.168.284-.26.604-.267.932H4a2 2 0 0 1-2-2V4.001z" fill="#626262" />
-                                                <path d="M7.192 11.5l.59-1h-.779a.5.5 0 0 0 0 1h.19z" fill="#626262" />
-                                                <path d="M8.962 8.5l.308-.522a1.96 1.96 0 0 1 .395-.477H7.003a.5.5 0 0 0 0 1h1.959z" fill="#626262" />
-                                                <path d="M5.5 5A.75.75 0 1 1 4 5a.75.75 0 0 1 1.5 0z" fill="#626262" />
-                                                <path d="M4.75 8.752a.75.75 0 1 0 0-1.5a.75.75 0 0 0 0 1.5z" fill="#626262" />
-                                                <path d="M5.5 11A.75.75 0 1 1 4 11a.75.75 0 0 1 1.5 0z" fill="#626262" />
-                                                <path d="M7.003 4.5a.5.5 0 0 0 0 1h4.474a.5.5 0 1 0 0-1H7.003z" fill="#626262" />
-                                                <path d="M10.735 8.035c.25-.066.525-.04.766.095c.155.086.281.21.368.356l3.002 5.09c.134.228.16.483.095.716a.957.957 0 0 1-.462.579c-.152.084-.325.13-.502.13H7.998c-.28 0-.531-.11-.711-.286a.93.93 0 0 1-.158-1.139l3.002-5.09a.988.988 0 0 1 .604-.451zm.765 1.467a.5.5 0 0 0-1 0v1.996a.5.5 0 0 0 1 0V9.502zM11 14.5a.75.75 0 1 0 0-1.5a.75.75 0 0 0 0 1.5z"
-                                                      fill="#626262" />
-                                            </g>
-                                        </svg><!--end::Svg Icon-->
-                                    </div>
-                                    <div id="widget_mou_almost" class="number_size  card-title font-weight-bolder text-dark-75 mb-0 d-block text-center">
-                                    </div>
+                                        <g fill="none">
+                                            <path d="M2.001 4.001a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6.13l-1-1.695V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.307l-.04.067c-.168.284-.26.604-.267.932H4a2 2 0 0 1-2-2V4.001z" fill="#626262" />
+                                            <path d="M7.192 11.5l.59-1h-.779a.5.5 0 0 0 0 1h.19z" fill="#626262" />
+                                            <path d="M8.962 8.5l.308-.522a1.96 1.96 0 0 1 .395-.477H7.003a.5.5 0 0 0 0 1h1.959z" fill="#626262" />
+                                            <path d="M5.5 5A.75.75 0 1 1 4 5a.75.75 0 0 1 1.5 0z" fill="#626262" />
+                                            <path d="M4.75 8.752a.75.75 0 1 0 0-1.5a.75.75 0 0 0 0 1.5z" fill="#626262" />
+                                            <path d="M5.5 11A.75.75 0 1 1 4 11a.75.75 0 0 1 1.5 0z" fill="#626262" />
+                                            <path d="M7.003 4.5a.5.5 0 0 0 0 1h4.474a.5.5 0 1 0 0-1H7.003z" fill="#626262" />
+                                            <path d="M10.735 8.035c.25-.066.525-.04.766.095c.155.086.281.21.368.356l3.002 5.09c.134.228.16.483.095.716a.957.957 0 0 1-.462.579c-.152.084-.325.13-.502.13H7.998c-.28 0-.531-.11-.711-.286a.93.93 0 0 1-.158-1.139l3.002-5.09a.988.988 0 0 1 .604-.451zm.765 1.467a.5.5 0 0 0-1 0v1.996a.5.5 0 0 0 1 0V9.502zM11 14.5a.75.75 0 1 0 0-1.5a.75.75 0 0 0 0 1.5z"
+                                                  fill="#626262" />
+                                        </g>
+                                    </svg><!--end::Svg Icon-->
                                 </div>
-                                <div class="col-12">
-                                    <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">THỎA THUẬN GẦN HẾT HẠN</div>
+                                <div id="widget_mou_almost" class="number_size  card-title font-weight-bolder text-dark-75 mb-0 d-block text-center">
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">THỎA THUẬN GẦN HẾT HẠN</div>
+                            </div>
                         </div>
-                        <!--end::Body-->
                     </div>
-                    <!--end::Stats Widget 27-->
+                    <!--end::Body-->
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <!--begin::Stats Widget 26-->
-                    <div class="card card-custom bg-light-warning card-stretch gutter-b">
-                        <!--begin::ody-->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 row justify-content-center">
-                                    <div class="svg-icon svg-icon-5x svg-icon-warning mx-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
-                                             focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
-                                            <path d="M854.4 800.9c.2-.3.5-.6.7-.9C920.6 722.1 960 621.7 960 512s-39.4-210.1-104.8-288c-.2-.3-.5-.5-.7-.8c-1.1-1.3-2.1-2.5-3.2-3.7c-.4-.5-.8-.9-1.2-1.4l-4.1-4.7l-.1-.1c-1.5-1.7-3.1-3.4-4.6-5.1l-.1-.1c-3.2-3.4-6.4-6.8-9.7-10.1l-.1-.1l-4.8-4.8l-.3-.3c-1.5-1.5-3-2.9-4.5-4.3c-.5-.5-1-1-1.6-1.5c-1-1-2-1.9-3-2.8c-.3-.3-.7-.6-1-1C736.4 109.2 629.5 64 512 64s-224.4 45.2-304.3 119.2c-.3.3-.7.6-1 1c-1 .9-2 1.9-3 2.9c-.5.5-1 1-1.6 1.5c-1.5 1.4-3 2.9-4.5 4.3l-.3.3l-4.8 4.8l-.1.1c-3.3 3.3-6.5 6.7-9.7 10.1l-.1.1c-1.6 1.7-3.1 3.4-4.6 5.1l-.1.1c-1.4 1.5-2.8 3.1-4.1 4.7c-.4.5-.8.9-1.2 1.4c-1.1 1.2-2.1 2.5-3.2 3.7c-.2.3-.5.5-.7.8C103.4 301.9 64 402.3 64 512s39.4 210.1 104.8 288c.2.3.5.6.7.9l3.1 3.7c.4.5.8.9 1.2 1.4l4.1 4.7c0 .1.1.1.1.2c1.5 1.7 3 3.4 4.6 5l.1.1c3.2 3.4 6.4 6.8 9.6 10.1l.1.1c1.6 1.6 3.1 3.2 4.7 4.7l.3.3c3.3 3.3 6.7 6.5 10.1 9.6c80.1 74 187 119.2 304.5 119.2s224.4-45.2 304.3-119.2a300 300 0 0 0 10-9.6l.3-.3c1.6-1.6 3.2-3.1 4.7-4.7l.1-.1c3.3-3.3 6.5-6.7 9.6-10.1l.1-.1c1.5-1.7 3.1-3.3 4.6-5c0-.1.1-.1.1-.2c1.4-1.5 2.8-3.1 4.1-4.7c.4-.5.8-.9 1.2-1.4a99 99 0 0 0 3.3-3.7zm4.1-142.6c-13.8 32.6-32 62.8-54.2 90.2a444.07 444.07 0 0 0-81.5-55.9c11.6-46.9 18.8-98.4 20.7-152.6H887c-3 40.9-12.6 80.6-28.5 118.3zM887 484H743.5c-1.9-54.2-9.1-105.7-20.7-152.6c29.3-15.6 56.6-34.4 81.5-55.9A373.86 373.86 0 0 1 887 484zM658.3 165.5c39.7 16.8 75.8 40 107.6 69.2a394.72 394.72 0 0 1-59.4 41.8c-15.7-45-35.8-84.1-59.2-115.4c3.7 1.4 7.4 2.9 11 4.4zm-90.6 700.6c-9.2 7.2-18.4 12.7-27.7 16.4V697a389.1 389.1 0 0 1 115.7 26.2c-8.3 24.6-17.9 47.3-29 67.8c-17.4 32.4-37.8 58.3-59 75.1zm59-633.1c11 20.6 20.7 43.3 29 67.8A389.1 389.1 0 0 1 540 327V141.6c9.2 3.7 18.5 9.1 27.7 16.4c21.2 16.7 41.6 42.6 59 75zM540 640.9V540h147.5c-1.6 44.2-7.1 87.1-16.3 127.8l-.3 1.2A445.02 445.02 0 0 0 540 640.9zm0-156.9V383.1c45.8-2.8 89.8-12.5 130.9-28.1l.3 1.2c9.2 40.7 14.7 83.5 16.3 127.8H540zm-56 56v100.9c-45.8 2.8-89.8 12.5-130.9 28.1l-.3-1.2c-9.2-40.7-14.7-83.5-16.3-127.8H484zm-147.5-56c1.6-44.2 7.1-87.1 16.3-127.8l.3-1.2c41.1 15.6 85 25.3 130.9 28.1V484H336.5zM484 697v185.4c-9.2-3.7-18.5-9.1-27.7-16.4c-21.2-16.7-41.7-42.7-59.1-75.1c-11-20.6-20.7-43.3-29-67.8c37.2-14.6 75.9-23.3 115.8-26.1zm0-370a389.1 389.1 0 0 1-115.7-26.2c8.3-24.6 17.9-47.3 29-67.8c17.4-32.4 37.8-58.4 59.1-75.1c9.2-7.2 18.4-12.7 27.7-16.4V327zM365.7 165.5c3.7-1.5 7.3-3 11-4.4c-23.4 31.3-43.5 70.4-59.2 115.4c-21-12-40.9-26-59.4-41.8c31.8-29.2 67.9-52.4 107.6-69.2zM165.5 365.7c13.8-32.6 32-62.8 54.2-90.2c24.9 21.5 52.2 40.3 81.5 55.9c-11.6 46.9-18.8 98.4-20.7 152.6H137c3-40.9 12.6-80.6 28.5-118.3zM137 540h143.5c1.9 54.2 9.1 105.7 20.7 152.6a444.07 444.07 0 0 0-81.5 55.9A373.86 373.86 0 0 1 137 540zm228.7 318.5c-39.7-16.8-75.8-40-107.6-69.2c18.5-15.8 38.4-29.7 59.4-41.8c15.7 45 35.8 84.1 59.2 115.4c-3.7-1.4-7.4-2.9-11-4.4zm292.6 0c-3.7 1.5-7.3 3-11 4.4c23.4-31.3 43.5-70.4 59.2-115.4c21 12 40.9 26 59.4 41.8a373.81 373.81 0 0 1-107.6 69.2z" fill="#626262" />
-                                        </svg>
-                                    </div>
-                                    <div id="widget_collab" class="number_size card-title font-weight-bolder text-dark-75 mb-0 d-block text-center"></div>
+                <!--end::Stats Widget 27-->
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                <!--begin::Stats Widget 26-->
+                <div class="card card-custom bg-light-warning card-stretch gutter-b">
+                    <!--begin::ody-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 row justify-content-center">
+                                <div class="svg-icon svg-icon-5x svg-icon-warning mx-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                                         focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024">
+                                        <path d="M854.4 800.9c.2-.3.5-.6.7-.9C920.6 722.1 960 621.7 960 512s-39.4-210.1-104.8-288c-.2-.3-.5-.5-.7-.8c-1.1-1.3-2.1-2.5-3.2-3.7c-.4-.5-.8-.9-1.2-1.4l-4.1-4.7l-.1-.1c-1.5-1.7-3.1-3.4-4.6-5.1l-.1-.1c-3.2-3.4-6.4-6.8-9.7-10.1l-.1-.1l-4.8-4.8l-.3-.3c-1.5-1.5-3-2.9-4.5-4.3c-.5-.5-1-1-1.6-1.5c-1-1-2-1.9-3-2.8c-.3-.3-.7-.6-1-1C736.4 109.2 629.5 64 512 64s-224.4 45.2-304.3 119.2c-.3.3-.7.6-1 1c-1 .9-2 1.9-3 2.9c-.5.5-1 1-1.6 1.5c-1.5 1.4-3 2.9-4.5 4.3l-.3.3l-4.8 4.8l-.1.1c-3.3 3.3-6.5 6.7-9.7 10.1l-.1.1c-1.6 1.7-3.1 3.4-4.6 5.1l-.1.1c-1.4 1.5-2.8 3.1-4.1 4.7c-.4.5-.8.9-1.2 1.4c-1.1 1.2-2.1 2.5-3.2 3.7c-.2.3-.5.5-.7.8C103.4 301.9 64 402.3 64 512s39.4 210.1 104.8 288c.2.3.5.6.7.9l3.1 3.7c.4.5.8.9 1.2 1.4l4.1 4.7c0 .1.1.1.1.2c1.5 1.7 3 3.4 4.6 5l.1.1c3.2 3.4 6.4 6.8 9.6 10.1l.1.1c1.6 1.6 3.1 3.2 4.7 4.7l.3.3c3.3 3.3 6.7 6.5 10.1 9.6c80.1 74 187 119.2 304.5 119.2s224.4-45.2 304.3-119.2a300 300 0 0 0 10-9.6l.3-.3c1.6-1.6 3.2-3.1 4.7-4.7l.1-.1c3.3-3.3 6.5-6.7 9.6-10.1l.1-.1c1.5-1.7 3.1-3.3 4.6-5c0-.1.1-.1.1-.2c1.4-1.5 2.8-3.1 4.1-4.7c.4-.5.8-.9 1.2-1.4a99 99 0 0 0 3.3-3.7zm4.1-142.6c-13.8 32.6-32 62.8-54.2 90.2a444.07 444.07 0 0 0-81.5-55.9c11.6-46.9 18.8-98.4 20.7-152.6H887c-3 40.9-12.6 80.6-28.5 118.3zM887 484H743.5c-1.9-54.2-9.1-105.7-20.7-152.6c29.3-15.6 56.6-34.4 81.5-55.9A373.86 373.86 0 0 1 887 484zM658.3 165.5c39.7 16.8 75.8 40 107.6 69.2a394.72 394.72 0 0 1-59.4 41.8c-15.7-45-35.8-84.1-59.2-115.4c3.7 1.4 7.4 2.9 11 4.4zm-90.6 700.6c-9.2 7.2-18.4 12.7-27.7 16.4V697a389.1 389.1 0 0 1 115.7 26.2c-8.3 24.6-17.9 47.3-29 67.8c-17.4 32.4-37.8 58.3-59 75.1zm59-633.1c11 20.6 20.7 43.3 29 67.8A389.1 389.1 0 0 1 540 327V141.6c9.2 3.7 18.5 9.1 27.7 16.4c21.2 16.7 41.6 42.6 59 75zM540 640.9V540h147.5c-1.6 44.2-7.1 87.1-16.3 127.8l-.3 1.2A445.02 445.02 0 0 0 540 640.9zm0-156.9V383.1c45.8-2.8 89.8-12.5 130.9-28.1l.3 1.2c9.2 40.7 14.7 83.5 16.3 127.8H540zm-56 56v100.9c-45.8 2.8-89.8 12.5-130.9 28.1l-.3-1.2c-9.2-40.7-14.7-83.5-16.3-127.8H484zm-147.5-56c1.6-44.2 7.1-87.1 16.3-127.8l.3-1.2c41.1 15.6 85 25.3 130.9 28.1V484H336.5zM484 697v185.4c-9.2-3.7-18.5-9.1-27.7-16.4c-21.2-16.7-41.7-42.7-59.1-75.1c-11-20.6-20.7-43.3-29-67.8c37.2-14.6 75.9-23.3 115.8-26.1zm0-370a389.1 389.1 0 0 1-115.7-26.2c8.3-24.6 17.9-47.3 29-67.8c17.4-32.4 37.8-58.4 59.1-75.1c9.2-7.2 18.4-12.7 27.7-16.4V327zM365.7 165.5c3.7-1.5 7.3-3 11-4.4c-23.4 31.3-43.5 70.4-59.2 115.4c-21-12-40.9-26-59.4-41.8c31.8-29.2 67.9-52.4 107.6-69.2zM165.5 365.7c13.8-32.6 32-62.8 54.2-90.2c24.9 21.5 52.2 40.3 81.5 55.9c-11.6 46.9-18.8 98.4-20.7 152.6H137c3-40.9 12.6-80.6 28.5-118.3zM137 540h143.5c1.9 54.2 9.1 105.7 20.7 152.6a444.07 444.07 0 0 0-81.5 55.9A373.86 373.86 0 0 1 137 540zm228.7 318.5c-39.7-16.8-75.8-40-107.6-69.2c18.5-15.8 38.4-29.7 59.4-41.8c15.7 45 35.8 84.1 59.2 115.4c-3.7-1.4-7.4-2.9-11-4.4zm292.6 0c-3.7 1.5-7.3 3-11 4.4c23.4-31.3 43.5-70.4 59.2-115.4c21 12 40.9 26 59.4 41.8a373.81 373.81 0 0 1-107.6 69.2z" fill="#626262" />
+                                    </svg>
                                 </div>
-                                <div class="col-12">
-                                    <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">ĐƠN VỊ HỢP TÁC</div>
-                                </div>
+                                <div id="widget_collab" class="number_size card-title font-weight-bolder text-dark-75 mb-0 d-block text-center"></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">ĐƠN VỊ HỢP TÁC</div>
                             </div>
                         </div>
-                        <!--end::Body-->
                     </div>
-                    <!--end::Stats Widget 26-->
+                    <!--end::Body-->
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <!--begin::Stats Widget 27-->
-                    <div class="card card-custom bg-light-success card-stretch gutter-b">
-                        <!--begin::Body-->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 row justify-content-center">
-                                    <div class="svg-icon svg-icon-5x svg-icon-success mx-4">
-                                        <svg class="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                                <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
-                                            </g>
-                                        </svg><!--end::Svg Icon-->
-                                    </div>
-                                    <div id="widget_support" class="number_size  card-title font-weight-bolder text-dark-75 mb-0 d-block text-center"></div>
+                <!--end::Stats Widget 26-->
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                <!--begin::Stats Widget 27-->
+                <div class="card card-custom bg-light-success card-stretch gutter-b">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 row justify-content-center">
+                                <div class="svg-icon svg-icon-5x svg-icon-success mx-4">
+                                    <svg class="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <polygon points="0 0 24 0 24 24 0 24" />
+                                            <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                            <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+                                        </g>
+                                    </svg><!--end::Svg Icon-->
                                 </div>
-                                <div class="col-12">
-                                    <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">CBGV ĐI HỌC ĐƯỢC HỖ TRỢ</div>
-                                </div>
+                                <div id="widget_support" class="number_size  card-title font-weight-bolder text-dark-75 mb-0 d-block text-center"></div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text_size card-title font-weight-bolder text-dark-75  mb-0  d-block text-center">CBGV ĐI HỌC ĐƯỢC HỖ TRỢ</div>
                             </div>
                         </div>
-                        <!--end::Body-->
                     </div>
-                    <!--end::Stats Widget 27-->
+                    <!--end::Body-->
+                </div>
+                <!--end::Stats Widget 27-->
+            </div>
+        </div>
+        <!--End::Row-->
+        <div class="row report-elements align-items-center">
+            <div class="col-lg-12 col-xl-12">
+                <!--begin::Charts Widget 1-->
+                <div class="card card-custom card-mycustom">
+                    <!--begin::Header-->
+                    <div class="card-header h-auto border-0">
+                        <!--begin::Title-->
+                        <div class="card-title py-5">
+                            <h3 class="card-label">
+                                <span class="d-block text-dark font-weight-bolder">Số lượng đối tác</span>
+                                <span class="d-block text-muted mt-2 font-size-sm"></span>
+                            </h3>
+                        </div>
+                        <!--end::Title-->
+                        <!--begin::Toolbar-->
+                        <!--end::Toolbar-->
+                    </div>
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <!--begin::Chart-->
+                        <div id="chart_4"></div>
+                        <!--end::Chart-->
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Charts Widget 1-->
+            </div>
+        </div>
+        <div class="row report-elements align-items-center">
+            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                <!--begin::Charts Widget 1-->
+                <div class="card card-custom card-mycustom">
+                    <!--begin::Header-->
+                    <div class="card-header h-auto border-0">
+                        <!--begin::Title-->
+                        <div class="card-title py-5">
+                            <h3 class="card-label">
+                                <span class="d-block text-dark font-weight-bolder">Đào tạo sau đại học</span>
+                                <span class="d-block text-muted mt-2 font-size-sm"></span>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="dashboard_longterm_table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Đơn vị đào tạo</th>
+                                    <th class="text-center">Đơn vị công tác</th>
+                                    <th class="text-center">Trạng thái</th>
+                                    <th class="text-center">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!--End::Row-->
-            <div class="row report-elements align-items-center">
-                <div class="col-lg-12 col-xl-12">
-                    <!--begin::Charts Widget 1-->
-                    <div class="card card-custom card-mycustom">
-                        <!--begin::Header-->
-                        <div class="card-header h-auto border-0">
-                            <!--begin::Title-->
-                            <div class="card-title py-5">
-                                <h3 class="card-label">
-                                    <span class="d-block text-dark font-weight-bolder">Số lượng đối tác</span>
-                                    <span class="d-block text-muted mt-2 font-size-sm"></span>
-                                </h3>
-                            </div>
-                            <!--end::Title-->
-                            <!--begin::Toolbar-->
-                            <!--end::Toolbar-->
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body">
-                            <!--begin::Chart-->
-                            <div id="chart_4"></div>
-                            <!--end::Chart-->
-                        </div>
-                        <!--end::Body-->
-                    </div>
-                    <!--end::Charts Widget 1-->
-                </div>
-            </div>
-            <div class="row report-elements align-items-center">
-                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                    <!--begin::Charts Widget 1-->
-                    <div class="card card-custom card-mycustom">
-                        <!--begin::Header-->
-                        <div class="card-header h-auto border-0">
-                            <!--begin::Title-->
-                            <div class="card-title py-5">
-                                <h3 class="card-label">
-                                    <span class="d-block text-dark font-weight-bolder">Đào tạo sau đại học</span>
-                                    <span class="d-block text-muted mt-2 font-size-sm"></span>
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-hover" id="dashboard_longterm_table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Đơn vị đào tạo</th>
-                                        <th class="text-center">Đơn vị công tác</th>
-                                        <th class="text-center">Trạng thái</th>
-                                        <th class="text-center">Số lượng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+        </div>
+        <div class="row report-elements align-items-center">
+            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                <!--begin::Charts Widget 1-->
+                <div class="card card-custom card-mycustom">
+                    <!--begin::Header-->
+                    <div class="card-header h-auto border-0">
+                        <!--begin::Title-->
+                        <div class="card-title py-5">
+                            <h3 class="card-label">
+                                <span class="d-block text-dark font-weight-bolder">Hợp tác ngắn hạn học thuật</span>
+                                <span class="d-block text-muted mt-2 font-size-sm"></span>
+                            </h3>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row report-elements align-items-center">
-                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                    <!--begin::Charts Widget 1-->
-                    <div class="card card-custom card-mycustom">
-                        <!--begin::Header-->
-                        <div class="card-header h-auto border-0">
-                            <!--begin::Title-->
-                            <div class="card-title py-5">
-                                <h3 class="card-label">
-                                    <span class="d-block text-dark font-weight-bolder">Hợp tác ngắn hạn học thuật</span>
-                                    <span class="d-block text-muted mt-2 font-size-sm"></span>
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-hover" id="dashboard_shortterm_table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Đơn vị đào tạo</th>
-                                        <th class="text-center">Đơn vị công tác</th>
-                                        <th class="text-center">Trạng thái</th>
-                                        <th class="text-center">Số lượng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="dashboard_shortterm_table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Đơn vị đào tạo</th>
+                                    <th class="text-center">Đơn vị công tác</th>
+                                    <th class="text-center">Trạng thái</th>
+                                    <th class="text-center">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            load_data($('#year_select').val())
-        })
-    </script>
-    <script type="text/javascript">
-        const primary = '#6993FF';
-        const success = '#1BC5BD';
-        const info = '#8950FC';
-        const warning = '#FFA800';
-        const danger = '#F64E60';
-
-        //Class definitio
-        var chart
-        var KTApexChartsDemo = function () {
-            // Private functions
-            var _demo1 = function (year, signed, not_sign_yet) {
-                const apexChart = "#chart_4";
-                var options = {
-                    series: [{
-                        name: 'Đối tác chiến lược',
-                        data: signed
-                    }, {
-                        name: 'Chưa thành đối tác chiến lược',
-                        data: not_sign_yet
-                    }],
-                    chart: {
-                        type: 'bar',
-                        height: 350,
-                        stacked: true,
-                        events: {
-                            mounted: function (chartContext, options) {
-                                $("#loading").hide()
-                            },
-                            dataPointSelection: function (event, chartContext, config) {
-                                //alert(event + ' ' + chartContext + ' ' + config + ' legendClick')
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: true,
-                        },
-                    },
-                    stroke: {
-                        width: 1,
-                        colors: ['#fff']
-                    },
-                    title: {
-                    },
-                    xaxis: {
-                        categories: year,
-                        labels: {
-                            formatter: function (val) {
-                                return val + ""
-                            }
-                        }
-                    },
-                    yaxis: {
-                        labels: {
-                            formatter: function (val) {
-                                return val
-                            }
-                        }
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return val
-                            }
-                        }
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    legend: {
-                        position: 'top',
-                        horizontalAlign: 'left',
-                        offsetX: 40
-                    },
-                    colors: [primary, warning, success, danger, info],
-
-                };
-
-
-
-                chart = new ApexCharts(document.querySelector(apexChart), options);
-                chart.render();
-            }
-
-            return {
-                // public functions
-                init: function (year, signed, not_sign_yet) {
-                    _demo1(year, signed, not_sign_yet);
-                }
-            };
-        }();
-    </script>
-    <script>
-        function load_data(year) {
-            $("#loading").show()
-            $.ajax({
-                url: '/Report_IC/LoadData',
-                type: 'POST',
-                datatype: 'json',
-                data: {
-                    'year_select': year
-                },
-                success: function (data) {
-                    if (data.success) {
-                        $("#widget_mou").text(data.widget_mou.split('/')[0])
-                        $("#widget_mou_almost").text(data.widget_mou.split('/')[1])
-                        $("#widget_collab").text(data.widget_collab)
-                        $("#widget_support").text(data.widget_support)
-                        KTApexChartsDemo.init(data.year, data.signed, data.not_sign_yet);
-                        chart.updateSeries([{
-                            name: 'Đối tác chiến lược',
-                            data: data.signed
-                        }, {
-                            name: 'Chưa thành đối tác chiến lược',
-                            data: data.not_sign_yet
-                        }])
-                    } else {
-                        $("#loading").hide()
-                    }
-                }
-            })
-        }
-
-    </script>
-    <script>
-        $('#year_select').select2({
-            placeholder: 'Năm',
-        }).on("select2:select", function () { //after select partner
-            //check partner
-            load_data($('#year_select').val());
-            $('#dashboard_longterm_table').DataTable().ajax.reload()
-            $('#dashboard_shortterm_table').DataTable().ajax.reload()
-        });
-
-        $('#year_select').val('@ViewBag.year_select[2]').trigger('change')
-    </script>
-
-    <script>
-        $('#dashboard_longterm_table').DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sInfoEmpty: "",
-            },
-            searching: false,
-            lengthChange: false,
-            serverSide: true,
-            ajax: {
-                url: "@Url.Action("LoadTable", "Report_IC")",
-                type: "POST",
-                datatype: "json",
-                data: {
-                    "collab_type_id": 2,
-                    "year": function () { return $('#year_select').val() }
-                },
-                cache: "false"
-            },
-            columns: [
-                {
-                    data: "training",
-                    name: "training",
-                    className: "text-center"
-
-                },
-                {
-                    data: "working",
-                    name: "working",
-                    className: "text-center"
-                },
-                {
-                    data: "collab_status_name",
-                    name: "collab_status_name",
-                    className: "text-center"
-                },
-                {
-                    data: "count",
-                    name: "count",
-                    className: "text-center"
-                },
-            ],
-        })
-
-        $('#dashboard_shortterm_table').DataTable({
-            oLanguage: {
-                oPaginate: {
-                    sPrevious: "Trang trước",
-                    sNext: "Trang sau"
-                },
-                sEmptyTable: "Không có dữ liệu",
-                sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
-                sInfoEmpty: "",
-            },
-            searching: false,
-            lengthChange: false,
-            serverSide: true,
-            ajax: {
-                url: "@Url.Action("LoadTable", "Report_IC")",
-                type: "POST",
-                datatype: "json",
-                data: {
-                    "collab_type_id": 1,
-                    "year": function () { return $('#year_select').val() }
-                },
-                cache: "false"
-            },
-            columns: [
-                {
-                    data: "training",
-                    name: "training",
-                    className: "text-center"
-
-                },
-                {
-                    data: "working",
-                    name: "working",
-                    className: "text-center"
-                },
-                {
-                    data: "collab_status_name",
-                    name: "collab_status_name",
-                    className: "text-center"
-                },
-                {
-                    data: "count",
-                    name: "count",
-                    className: "text-center"
-                },
-            ],
-        })
-    </script>
-    <script src="~/Content/assets/plugins/custom/flot/flot.bundle.js"></script>
-}
-

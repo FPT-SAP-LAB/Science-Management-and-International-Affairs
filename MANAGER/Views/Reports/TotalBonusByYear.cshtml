@@ -61,19 +61,11 @@
                                     Choose an option:
                                 </li>
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="#" onclick="$('.dropdown-menu').removeClass('show'); window.print()" class="navi-link">
                                         <span class="navi-icon">
                                             <i class="la la-print"></i>
                                         </span>
                                         <span class="navi-text">Print</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-copy"></i>
-                                        </span>
-                                        <span class="navi-text">Copy</span>
                                     </a>
                                 </li>
                                 <li class="navi-item">
@@ -82,22 +74,6 @@
                                             <i class="la la-file-excel-o"></i>
                                         </span>
                                         <span class="navi-text">Excel</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-file-text-o"></i>
-                                        </span>
-                                        <span class="navi-text">CSV</span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-icon">
-                                            <i class="la la-file-pdf-o"></i>
-                                        </span>
-                                        <span class="navi-text">PDF</span>
                                     </a>
                                 </li>
                             </ul>
@@ -127,25 +103,25 @@
                 {
                     <tr>
                         <td>Tháng @(i)</td>
-                        <td class="text-right">
+                        <td class="text-right month-value">
                             @(monthRewardsPairs.TryGetValue(i, out TotalBonusByYearItem value) && value.PaperRewards != null
                         ? String.Format("{0:n0}", value.PaperRewards.Vietnam.Sum(x => (long)x)) : "0")
                         </td>
-                        <td class="text-right">
+                        <td class="text-right month-value">
                             @(value != null && value.PaperRewards != null
                         ? String.Format("{0:n0}", value.PaperRewards.International.Sum(x => (long)x)) : "0")
                         </td>
-                        <td class="text-right">
+                        <td class="text-right month-value">
                             @(value != null && value.PaperRewards != null
                         ? String.Format("{0:n0}", value.PaperRewards.FromResearchers.Sum(x => (long)x)) : "0")
                         </td>
-                        <td class="text-right">
+                        <td class="text-right month-value">
                             @(value != null ? String.Format("{0:n0}", value.CitationRewards.Sum(x => (long)x)) : "0")
                         </td>
-                        <td class="text-right">
+                        <td class="text-right month-value">
                             @(value != null ? String.Format("{0:n0}", value.InventionRewards.Sum(x => (long)x)) : "0")
                         </td>
-                        <td class="text-right">
+                        <td class="text-right total">
                         </td>
                     </tr>
                 }
@@ -158,7 +134,7 @@
                         <td class="text-right"></td>
                         <td class="text-right"></td>
                     </tr>*@
-                <tr>
+                <tr id="total-row">
                     <td>Total</td>
                     <td class="text-right"></td>
                     <td class="text-right"></td>
@@ -186,6 +162,37 @@
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
     <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
+    <script>
+        verticalRange = Object.freeze({ start: 2, end: 13 })
+        hozRange = Object.freeze({ start: 2, end: 7 })
+        function sumColumn(index) {
+            var total = 0;
+            $("td:nth-child(" + index + ")").each(function () {
+                total += parseInt($(this).text().replaceAll(",", "").replaceAll(".",""), 10) || 0;
+            });
+            return AddComma(total);
+        }
+        async function calVerTotal() {
+            $("tbody").find(".total").each(function (i) {
+                a = $(this).parent().find(".month-value").text()
+                b = a.replaceAll(".", "").replaceAll(",", "").replaceAll(" ", "").replaceAll("\n\n", "\n").split("\n")
+                console.log(b)
+                b = b.filter(Boolean)
+                sum = b.reduce((x, y) => parseInt(x) + parseInt(y), 0)
+                $(this).text(AddComma(sum))
+            })
+        }
+
+        calVerTotal().then(function () {
+            $("#total-row").find("td").each(function (i) {
+                index = i + 1;
+                if (index >= hozRange.start && index <= hozRange.end) {
+                    $(this).text(sumColumn(index))
+                }
+            })
+        })
+        
+    </script>
 }
 
 

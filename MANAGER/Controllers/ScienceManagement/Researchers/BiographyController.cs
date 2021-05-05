@@ -1,5 +1,6 @@
 ﻿using BLL.ScienceManagement.Researcher;
 using ENTITIES;
+using MANAGER.Support;
 using System;
 using System.Globalization;
 using System.Web.Mvc;
@@ -9,6 +10,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
     public class BiographyController : Controller
     {
         ResearchersBiographyRepo researcherBiographyRepo;
+        [Auther(RightID = "23")]
         public ActionResult AddNewAcadEvent()
         {
             try
@@ -24,6 +26,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult AddWorkEvent()
         {
             try
@@ -39,6 +42,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult EditWorkEvent()
         {
             try
@@ -54,6 +58,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult EditAcadEvent()
         {
             try
@@ -69,6 +74,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult DeleteAcadEvent()
         {
             try
@@ -84,6 +90,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult DeleteWorkEvent()
         {
             try
@@ -99,6 +106,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult AddAward()
         {
             try
@@ -127,6 +135,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult EditAward()
         {
             try
@@ -148,6 +157,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult DeleteAward()
         {
             try

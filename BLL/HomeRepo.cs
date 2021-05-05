@@ -37,7 +37,7 @@ namespace BLL
                 List<string> images = (from x in db.ImageHomePages
                                        join b in db.Files on x.file_id equals b.file_id
                                        where x.is_active && !x.is_wallpaper
-                                       select b.file_drive_id).ToList();
+                                       select b.link).ToList();
                 int invention = (from a in db.Inventions
                                  join b in db.RequestInventions on a.invention_id equals b.invention_id
                                  where b.status_id == 2
