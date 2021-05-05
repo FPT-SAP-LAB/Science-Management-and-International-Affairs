@@ -259,7 +259,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Author&apos;s inormation.
+        ///   Looks up a localized string similar to Author&apos;s information.
         /// </summary>
         public static string AuthorInfo {
             get {
