@@ -19,7 +19,7 @@
                         <!---------------------------------------------------------------------->
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="mb-10 font-weight-bold text-dark">Thông tin hội nghị</h3>
+                                <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("ConferenceInfor")</h3>
                             </div>
                         </div>
                         <div class="row">
@@ -28,7 +28,7 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label for="selectConference">Tên hội nghị <span style='color:red'>*</span>:</label>
+                                            <label for="selectConference">@rm.GetString("ConferName") <span style='color:red'>*</span>:</label>
                                             <select class="form-control" id="selectConference">
                                             </select>
                                         </div>
@@ -37,8 +37,8 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Website hội nghị <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="website" placeholder="Website hội nghị">
+                                            <label>Website @rm.GetString("Confer") <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="website" placeholder="Website @rm.GetString("Confer")">
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -47,16 +47,16 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Đơn vị tổ chức <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="organized_unit" placeholder="Đơn vị tổ chức">
+                                            <label>@rm.GetString("OrganUnit") <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="organized_unit" placeholder="@rm.GetString("OrganUnit")">
                                         </div>
                                         <!--end::Input-->
                                     </div>
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Đơn vị đồng tổ chức :</label>
-                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="Đơn vị đồng tổ chức">
+                                            <label>@rm.GetString("Co-organ") :</label>
+                                            <input type="text" class="form-control" id="co_organized_unit" placeholder="@rm.GetString("Co-organ")">
                                         </div>
                                         <!--end::Input-->
                                     </div>
@@ -65,15 +65,15 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Diễn giả/ Thành viên BTC <span style='color:red'>*</span>:</label>
-                                            <input type="text" class="form-control" id="keynote_speaker" placeholder="Diễn giả/ Thành viên BTC ">
+                                            <label>@rm.GetString("Speaker") <span style='color:red'>*</span>:</label>
+                                            <input type="text" class="form-control" id="keynote_speaker" placeholder="@rm.GetString("Speaker") ">
                                         </div>
                                         <!--end::Input-->
                                     </div>
                                     <div class="col-md-6">
                                         <!--begin::Select-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Thuộc trường đại học top QS 1000 <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("University") top QS 1000 <span style='color:red'>*</span>:</label>
                                             <select class="form-control select2" id="qs_university" name="param">
                                             </select>
                                         </div>
@@ -83,7 +83,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Hình thức <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("Formal") <span style='color:red'>*</span>:</label>
                                             <select id="formality" class="form-control">
                                                 @foreach (var item in ViewBag.FormalityLanguages)
                                                 {
@@ -95,7 +95,7 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Địa điểm tổ chức <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("Venue") <span style='color:red'>*</span>:</label>
                                             <select class="form-control" id="country">
                                                 @foreach (var item in ViewBag.countries)
                                                 {
@@ -110,7 +110,7 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="date form-group fv-plugins-icon-container">
-                                            <label>Thời gian diễn ra <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("TimePlace") <span style='color:red'>*</span>:</label>
                                             <input type="text" class="form-control" readonly="" id="kt_daterangepicker_1">
                                         </div>
                                         <!--end::Input-->
@@ -118,7 +118,7 @@
                                     <div class="col-md-6">
                                         <!--begin::Input-->
                                         <div class="date form-group fv-plugins-icon-container">
-                                            <label>Thời gian tham dự <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("AttenTime") <span style='color:red'>*</span>:</label>
                                             <input type="text" class="form-control" readonly="" id="kt_daterangepicker_2">
                                         </div>
                                         <!--end::Input-->
@@ -127,7 +127,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Tên bài báo <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("PaperName") <span style='color:red'>*</span>:</label>
                                             <input type="text" class="form-control" id="paper_name" placeholder="Tên bài báo">
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group fv-plugins-icon-container">
-                                            <label>Chuyên ngành <span style='color:red'>*</span>:</label>
+                                            <label>@rm.GetString("Specialized") <span style='color:red'>*</span>:</label>
                                             <select id="specialization" class="form-control">
                                                 @foreach (var item in ViewBag.SpecializationLanguages)
                                                 {
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>File bài báo <span style='color:red'>*</span>:</label>
+                                        <label>@rm.GetString("PaperFile") <span style='color:red'>*</span>:</label>
                                         <div class="uppy" id="kt_uppy_1">
                                             <div class="uppy-wrapper"></div>
                                             <div class="uppy-list"></div>
@@ -158,7 +158,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <!--begin::Input-->
-                                        <label>Thư xác nhận <span style='color:red'>*</span>:</label>
+                                        <label>@rm.GetString("Letter") <span style='color:red'>*</span>:</label>
                                         <div class="uppy" id="kt_uppy_2">
                                             <div class="uppy-wrapper"></div>
                                             <div class="uppy-list"></div>
@@ -177,7 +177,7 @@
                                             <i class="fa fa-star text-white"></i>
                                         </div>
                                         <h3 class="card-title">
-                                            Chính sách hiện tại
+                                            @rm.GetString("CurrentPolicy")
                                         </h3>
                                     </div>
                                     <div class="card-body">
@@ -188,22 +188,22 @@
                                             }
                                         </ul>
                                         <br />
-                                        <a href="@ViewBag.Link" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
+                                        <a href="@ViewBag.Link" class="btn btn-light-primary mr-2" target="_blank">@rm.GetString("Detail")</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="pb-5">
-                            <h3 class="mb-10 font-weight-bold text-dark">Danh sách tham dự</h3>
+                            <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("AttenList")</h3>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-checkable dataTable no-footer dtr-inline" id="kt_datatable" style="margin-top: 13px !important" role="grid" aria-describedby="kt_datatable_info">
                                     <thead>
                                         <tr role="row">
-                                            <th>MSNV/MSSV</th>
-                                            <th style="min-width: 140px;">Họ và tên</th>
+                                            <th>@rm.GetString("MSNV")</th>
+                                            <th style="min-width: 140px;">@rm.GetString("ProfileName")</th>
                                             <th style="min-width: 200px;">Email</th>
-                                            <th>Cơ sở</th>
-                                            <th>Chức danh</th>
+                                            <th>@rm.GetString("WorkUnit")</th>
+                                            <th>@rm.GetString("Title")</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tableParticipant">
@@ -214,7 +214,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control inputName" placeholder="Họ và tên" value="@Profile.FullName">
+                                                <input type="text" class="form-control inputName" placeholder="@rm.GetString("ProfileName")" value="@Profile.FullName">
                                             </td>
                                             <td>
                                                 <input type="email" class="form-control inputEmail" placeholder="Email" value="@Profile.Email">
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="pb-5">
-                            <h3 class="mb-10 font-weight-bold text-dark">Chi phí dự kiến</h3>
+                            <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("ProfileName")</h3>
                             <!----CÁI TABLE NÀY ĐANG GÂY RA LỖI RESPONSIVE Ở MÀN NÀY, FIX SAU-->
                             @*<div class="row">
                                     <div class="col-md-3">
