@@ -20,10 +20,10 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 SortColumnName = "mou_partner_id",
                 SortDirection = "desc",
                 Start = 0,
-                Length = 10
+                Length = 1
             };
             List<ListMOU> listTest = mou.listAllMOUDeleted(baseDatatable, "", "", "").Data;
-            Assert.AreEqual(10, listTest.Count);
+            Assert.AreEqual(1, listTest.Count);
         }
         [TestCase]
         public void TestSearchResultsMOUDeleted1()

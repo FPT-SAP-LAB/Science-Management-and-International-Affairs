@@ -70,6 +70,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tiểu sử học tập.
+        /// </summary>
+        public static string AcadHistory {
+            get {
+                return ResourceManager.GetString("AcadHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số tài khoản.
         /// </summary>
         public static string AccNo {
@@ -88,6 +97,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Số tài khoản.
+        /// </summary>
+        public static string AccountNumber {
+            get {
+                return ResourceManager.GetString("AccountNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lịch hoạt động trong năm.
         /// </summary>
         public static string ActivityNavbar {
@@ -97,11 +115,65 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm tiểu sử học tập.
+        /// </summary>
+        public static string AddAcadHistory {
+            get {
+                return ResourceManager.GetString("AddAcadHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đề nghị khen thưởng bài báo.
+        /// </summary>
+        public static string AddArticleRequest {
+            get {
+                return ResourceManager.GetString("AddArticleRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thêm tác giả.
         /// </summary>
         public static string AddAu {
             get {
                 return ResourceManager.GetString("AddAu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thêm giải thưởng.
+        /// </summary>
+        public static string AddAward {
+            get {
+                return ResourceManager.GetString("AddAward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đề nghị khen thưởng trích dẫn.
+        /// </summary>
+        public static string AddCitationRequest {
+            get {
+                return ResourceManager.GetString("AddCitationRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đề nghị hỗ trợ hội nghị.
+        /// </summary>
+        public static string AddConferenceRequest {
+            get {
+                return ResourceManager.GetString("AddConferenceRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đề nghị khen thưởng bằng sáng chế.
+        /// </summary>
+        public static string AddInventionRequest {
+            get {
+                return ResourceManager.GetString("AddInventionRequest", resourceCulture);
             }
         }
         
@@ -120,6 +192,15 @@ namespace GUEST.Resources {
         public static string AddRow {
             get {
                 return ResourceManager.GetString("AddRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thêm tiểu sử công tác.
+        /// </summary>
+        public static string AddWorkHistory {
+            get {
+                return ResourceManager.GetString("AddWorkHistory", resourceCulture);
             }
         }
         
@@ -160,6 +241,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Danh sách đề nghị khen thưởng bài báo.
+        /// </summary>
+        public static string ArticleReward {
+            get {
+                return ResourceManager.GetString("ArticleReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 8.
         /// </summary>
         public static string Aug {
@@ -196,6 +286,51 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thông tin tài khoản ngân hàng.
+        /// </summary>
+        public static string BankAccountInformation {
+            get {
+                return ResourceManager.GetString("BankAccountInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi nhánh.
+        /// </summary>
+        public static string BankBranch {
+            get {
+                return ResourceManager.GetString("BankBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiểu sử.
+        /// </summary>
+        public static string Biography {
+            get {
+                return ResourceManager.GetString("Biography", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Huỷ.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chọn đại diện nhận thưởng.
+        /// </summary>
+        public static string ChooseRepresentative {
+            get {
+                return ResourceManager.GetString("ChooseRepresentative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số trích dẫn.
         /// </summary>
         public static string CitationCount {
@@ -210,6 +345,24 @@ namespace GUEST.Resources {
         public static string CitationInfo {
             get {
                 return ResourceManager.GetString("CitationInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách đề nghị khen thưởng trích dẫn.
+        /// </summary>
+        public static string CitationRewardRequests {
+            get {
+                return ResourceManager.GetString("CitationRewardRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đóng.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -232,6 +385,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cuộc thi/Giải thưởng.
+        /// </summary>
+        public static string Competition {
+            get {
+                return ResourceManager.GetString("Competition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tên hội thảo.
         /// </summary>
         public static string ConferenceName {
@@ -246,6 +408,24 @@ namespace GUEST.Resources {
         public static string ConferencePaper {
             get {
                 return ResourceManager.GetString("ConferencePaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách đề nghị Hỗ trợ hội nghị.
+        /// </summary>
+        public static string ConferenceSponsorRequests {
+            get {
+                return ResourceManager.GetString("ConferenceSponsorRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin liên hệ.
+        /// </summary>
+        public static string ContactInformation {
+            get {
+                return ResourceManager.GetString("ContactInformation", resourceCulture);
             }
         }
         
@@ -340,11 +520,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Học vị.
+        /// </summary>
+        public static string Degree {
+            get {
+                return ResourceManager.GetString("Degree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xóa tác giả.
         /// </summary>
         public static string DelAu {
             get {
                 return ResourceManager.GetString("DelAu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xoá.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
@@ -367,6 +565,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngày sinh.
+        /// </summary>
+        public static string Dob {
+            get {
+                return ResourceManager.GetString("Dob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trong nước.
         /// </summary>
         public static string Domestic {
@@ -381,6 +588,33 @@ namespace GUEST.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sửa thông tin giải thưởng.
+        /// </summary>
+        public static string EditAward {
+            get {
+                return ResourceManager.GetString("EditAward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sửa tiểu sử công tác.
+        /// </summary>
+        public static string EditWorkHistory {
+            get {
+                return ResourceManager.GetString("EditWorkHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
@@ -484,6 +718,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to THÔNG TIN CHUNG.
+        /// </summary>
+        public static string GeneralInformation {
+            get {
+                return ResourceManager.GetString("GeneralInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tổ chức giáo dục FPT - Khoa học &amp; Hợp tác quốc tế.
         /// </summary>
         public static string Header {
@@ -529,6 +772,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lĩnh vực quan tâm.
+        /// </summary>
+        public static string InterestedArea {
+            get {
+                return ResourceManager.GetString("InterestedArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quốc tế.
         /// </summary>
         public static string International {
@@ -570,6 +822,15 @@ namespace GUEST.Resources {
         public static string Invention {
             get {
                 return ResourceManager.GetString("Invention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách đề nhị khen thưởng bằng sáng chế.
+        /// </summary>
+        public static string InventionRewardRequests {
+            get {
+                return ResourceManager.GetString("InventionRewardRequests", resourceCulture);
             }
         }
         
@@ -763,11 +1024,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trang cá nhân.
+        /// </summary>
+        public static string MyProfile {
+            get {
+                return ResourceManager.GetString("MyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tên tác giả.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quốc tịch.
+        /// </summary>
+        public static string Nationality {
+            get {
+                return ResourceManager.GetString("Nationality", resourceCulture);
             }
         }
         
@@ -808,6 +1087,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cài đặt thông báo.
+        /// </summary>
+        public static string NotificationSettings {
+            get {
+                return ResourceManager.GetString("NotificationSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tháng 11.
         /// </summary>
         public static string Nov {
@@ -831,6 +1119,15 @@ namespace GUEST.Resources {
         public static string Oct {
             get {
                 return ResourceManager.GetString("Oct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đơn vị.
+        /// </summary>
+        public static string Office {
+            get {
+                return ResourceManager.GetString("Office", resourceCulture);
             }
         }
         
@@ -943,11 +1240,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SĐT.
+        /// </summary>
+        public static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chính sách.
         /// </summary>
         public static string Policy {
             get {
                 return ResourceManager.GetString("Policy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chức vụ.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
             }
         }
         
@@ -979,6 +1294,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Họ tên.
+        /// </summary>
+        public static string ProfileName {
+            get {
+                return ResourceManager.GetString("ProfileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ảnh hồ sơ.
+        /// </summary>
+        public static string ProfilePicture {
+            get {
+                return ResourceManager.GetString("ProfilePicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chương trình.
         /// </summary>
         public static string Program {
@@ -1002,6 +1335,15 @@ namespace GUEST.Resources {
         public static string ProgramStart {
             get {
                 return ResourceManager.GetString("ProgramStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loại ấn phẩm.
+        /// </summary>
+        public static string PublicationType {
+            get {
+                return ResourceManager.GetString("PublicationType", resourceCulture);
             }
         }
         
@@ -1047,6 +1389,15 @@ namespace GUEST.Resources {
         public static string Quality {
             get {
                 return ResourceManager.GetString("Quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thứ hạng.
+        /// </summary>
+        public static string Ranking {
+            get {
+                return ResourceManager.GetString("Ranking", resourceCulture);
             }
         }
         
@@ -1114,11 +1465,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Danh sách yêu cầu.
+        /// </summary>
+        public static string RequestList {
+            get {
+                return ResourceManager.GetString("RequestList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nghiên cứu viên.
         /// </summary>
         public static string Researchers {
             get {
                 return ResourceManager.GetString("Researchers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lĩnh vực nghiên cứu.
+        /// </summary>
+        public static string ResearchMajor {
+            get {
+                return ResourceManager.GetString("ResearchMajor", resourceCulture);
             }
         }
         
@@ -1173,6 +1542,15 @@ namespace GUEST.Resources {
         public static string ScientificProducts {
             get {
                 return ResourceManager.GetString("ScientificProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Công trình khoa học.
+        /// </summary>
+        public static string ScientificPublish {
+            get {
+                return ResourceManager.GetString("ScientificPublish", resourceCulture);
             }
         }
         
@@ -1267,7 +1645,25 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nguồn trích dẫn.
+        ///   Looks up a localized string similar to Đăng xuất.
+        /// </summary>
+        public static string SignOut {
+            get {
+                return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khu CNC Hoà Lạc, Hà Nội, Việt Nam.
+        /// </summary>
+        public static string SMIAAddress {
+            get {
+                return ResourceManager.GetString("SMIAAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiêu chí trích dẫn.
         /// </summary>
         public static string Source {
             get {
@@ -1303,11 +1699,56 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STT.
+        /// </summary>
+        public static string STT {
+            get {
+                return ResourceManager.GetString("STT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nơi học tập.
+        /// </summary>
+        public static string StudyPlace {
+            get {
+                return ResourceManager.GetString("StudyPlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mã số thuế.
         /// </summary>
         public static string Tax {
             get {
                 return ResourceManager.GetString("Tax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mã số thuế.
+        /// </summary>
+        public static string TaxCode {
+            get {
+                return ResourceManager.GetString("TaxCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lựa chọn loại khen thưởng đã được xác nhận bởi tất cả các thành viên trong nhóm.
+        /// </summary>
+        public static string TermCondition {
+            get {
+                return ResourceManager.GetString("TermCondition", resourceCulture);
             }
         }
         
@@ -1339,6 +1780,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cập nhật thông tin.
+        /// </summary>
+        public static string UpdateInformation {
+            get {
+                return ResourceManager.GetString("UpdateInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cập nhật thông tin cho nghiên cứu viên.
+        /// </summary>
+        public static string UpdateResearcherInformation {
+            get {
+                return ResourceManager.GetString("UpdateResearcherInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xem chi tiết.
         /// </summary>
         public static string View {
@@ -1353,6 +1812,24 @@ namespace GUEST.Resources {
         public static string Vol {
             get {
                 return ResourceManager.GetString("Vol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trang web.
+        /// </summary>
+        public static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tiểu sử công tác.
+        /// </summary>
+        public static string WorkHistory {
+            get {
+                return ResourceManager.GetString("WorkHistory", resourceCulture);
             }
         }
         

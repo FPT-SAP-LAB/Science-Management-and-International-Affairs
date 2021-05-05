@@ -120,23 +120,50 @@
   <data name="AcademicActivity" xml:space="preserve">
     <value>Academic Activity</value>
   </data>
+  <data name="AcadHistory" xml:space="preserve">
+    <value>Study History</value>
+  </data>
   <data name="AccNo" xml:space="preserve">
     <value>Account number</value>
   </data>
   <data name="According" xml:space="preserve">
     <value>According to the decision</value>
   </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Account Number</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Activities During The Year</value>
   </data>
+  <data name="AddAcadHistory" xml:space="preserve">
+    <value>Add Study History</value>
+  </data>
+  <data name="AddArticleRequest" xml:space="preserve">
+    <value>Create Article reward request</value>
+  </data>
   <data name="AddAu" xml:space="preserve">
     <value>Add more author</value>
+  </data>
+  <data name="AddAward" xml:space="preserve">
+    <value>Add award</value>
+  </data>
+  <data name="AddCitationRequest" xml:space="preserve">
+    <value>Create Citation reward request</value>
+  </data>
+  <data name="AddConferenceRequest" xml:space="preserve">
+    <value>Create Conference participation funding request</value>
+  </data>
+  <data name="AddInventionRequest" xml:space="preserve">
+    <value>Create Invention reward request</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
   <data name="AddRow" xml:space="preserve">
     <value>Add more row</value>
+  </data>
+  <data name="AddWorkHistory" xml:space="preserve">
+    <value>Add work history</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
@@ -150,6 +177,9 @@
   <data name="ArticlePolicies" xml:space="preserve">
     <value>Article Policies</value>
   </data>
+  <data name="ArticleReward" xml:space="preserve">
+    <value>Articles Reward Requests</value>
+  </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
   </data>
@@ -162,11 +192,32 @@
   <data name="Bank" xml:space="preserve">
     <value>Bank</value>
   </data>
+  <data name="BankAccountInformation" xml:space="preserve">
+    <value>Bank Account Information</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>Bank Branch</value>
+  </data>
+  <data name="Biography" xml:space="preserve">
+    <value>Biography</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChooseRepresentative" xml:space="preserve">
+    <value>Choose a representative to receive the reward</value>
+  </data>
   <data name="CitationCount" xml:space="preserve">
     <value>Ciatation count</value>
   </data>
   <data name="CitationInfo" xml:space="preserve">
-    <value>Citation info</value>
+    <value>Citation information</value>
+  </data>
+  <data name="CitationRewardRequests" xml:space="preserve">
+    <value>Citations Reward Requests</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="CMND" xml:space="preserve">
     <value>People ID</value>
@@ -174,11 +225,20 @@
   <data name="CmtInfo" xml:space="preserve">
     <value>Conversation</value>
   </data>
+  <data name="Competition" xml:space="preserve">
+    <value>Competition</value>
+  </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Conference's name</value>
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Conference papers</value>
+  </data>
+  <data name="ConferenceSponsorRequests" xml:space="preserve">
+    <value>Conference Sponsor Requests</value>
+  </data>
+  <data name="ContactInformation" xml:space="preserve">
+    <value>Contact Information</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Content</value>
@@ -210,8 +270,14 @@
   <data name="Dec" xml:space="preserve">
     <value>December</value>
   </data>
+  <data name="Degree" xml:space="preserve">
+    <value>Degree</value>
+  </data>
   <data name="DelAu" xml:space="preserve">
     <value>Remove an author</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="DelRow" xml:space="preserve">
     <value>Delete a row</value>
@@ -219,11 +285,23 @@
   <data name="Detail" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="Dob" xml:space="preserve">
+    <value>Date of birth</value>
+  </data>
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EditAward" xml:space="preserve">
+    <value>Edit Award</value>
+  </data>
+  <data name="EditWorkHistory" xml:space="preserve">
+    <value>Edit Work History</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="EmptyContentDetail" xml:space="preserve">
     <value>Please return to the home page</value>
@@ -258,6 +336,9 @@
   <data name="FPTProcedure" xml:space="preserve">
     <value>FPT Procedure</value>
   </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>GENERAL INFORMATION</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>FPT Education - Office of Science Management and International Affairs</value>
   </data>
@@ -273,6 +354,9 @@
   <data name="Index" xml:space="preserve">
     <value>Index</value>
   </data>
+  <data name="InterestedArea" xml:space="preserve">
+    <value>Interested Area</value>
+  </data>
   <data name="International" xml:space="preserve">
     <value>International</value>
   </data>
@@ -287,6 +371,9 @@
   </data>
   <data name="Invention" xml:space="preserve">
     <value>Invention patents</value>
+  </data>
+  <data name="InventionRewardRequests" xml:space="preserve">
+    <value>Invention Reward Requests</value>
   </data>
   <data name="ISI/SCOPUS" xml:space="preserve">
     <value>ISI/SCOPUS Papers</value>
@@ -351,8 +438,14 @@
   <data name="MSNV" xml:space="preserve">
     <value>Employee code</value>
   </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>My Profile</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Nationality</value>
   </data>
   <data name="NewPublications" xml:space="preserve">
     <value>New Publications</value>
@@ -366,6 +459,9 @@
   <data name="Note" xml:space="preserve">
     <value>Note</value>
   </data>
+  <data name="NotificationSettings" xml:space="preserve">
+    <value>Notifications settings</value>
+  </data>
   <data name="Nov" xml:space="preserve">
     <value>November</value>
   </data>
@@ -374,6 +470,9 @@
   </data>
   <data name="Oct" xml:space="preserve">
     <value>October</value>
+  </data>
+  <data name="Office" xml:space="preserve">
+    <value>Office</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
@@ -411,8 +510,14 @@
   <data name="PatentType" xml:space="preserve">
     <value>Patent type</value>
   </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
   <data name="Policy" xml:space="preserve">
     <value>Policy</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
   </data>
   <data name="Pre" xml:space="preserve">
     <value>Previous</value>
@@ -423,6 +528,12 @@
   <data name="ProcedureTitle" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="ProfileName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Profile Picture</value>
+  </data>
   <data name="Program" xml:space="preserve">
     <value>Program</value>
   </data>
@@ -431,6 +542,9 @@
   </data>
   <data name="ProgramStart" xml:space="preserve">
     <value>Start time</value>
+  </data>
+  <data name="PublicationType" xml:space="preserve">
+    <value>Publication type</value>
   </data>
   <data name="PublishDate" xml:space="preserve">
     <value>Publish date</value>
@@ -446,6 +560,9 @@
   </data>
   <data name="Quality" xml:space="preserve">
     <value>Quality</value>
+  </data>
+  <data name="Ranking" xml:space="preserve">
+    <value>Ranking</value>
   </data>
   <data name="Record" xml:space="preserve">
     <value>record</value>
@@ -468,8 +585,14 @@
   <data name="RequestInfo" xml:space="preserve">
     <value>Request Infomation</value>
   </data>
+  <data name="RequestList" xml:space="preserve">
+    <value>Request List</value>
+  </data>
   <data name="Researchers" xml:space="preserve">
     <value>Researchers</value>
+  </data>
+  <data name="ResearchMajor" xml:space="preserve">
+    <value>Research Major</value>
   </data>
   <data name="Reward" xml:space="preserve">
     <value>Reward</value>
@@ -488,6 +611,9 @@
   </data>
   <data name="ScientificProducts" xml:space="preserve">
     <value>Scientific Products</value>
+  </data>
+  <data name="ScientificPublish" xml:space="preserve">
+    <value>Publications</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
@@ -519,6 +645,12 @@
   <data name="ShowTB" xml:space="preserve">
     <value>Show _START_ to _END_ of _TOTAL_ record</value>
   </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="SMIAAddress" xml:space="preserve">
+    <value>Hoa Lac High Tech Park, Hanoi, Vietnam</value>
+  </data>
   <data name="Source" xml:space="preserve">
     <value>Source</value>
   </data>
@@ -531,8 +663,20 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="STT" xml:space="preserve">
+    <value>No.</value>
+  </data>
+  <data name="StudyPlace" xml:space="preserve">
+    <value>Study Place</value>
+  </data>
   <data name="Tax" xml:space="preserve">
     <value>Tax code</value>
+  </data>
+  <data name="TaxCode" xml:space="preserve">
+    <value>Tax Code</value>
+  </data>
+  <data name="TermCondition" xml:space="preserve">
+    <value>All team members confirmed the reward type.</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>
@@ -543,11 +687,23 @@
   <data name="TotalReward" xml:space="preserve">
     <value>Total reward</value>
   </data>
+  <data name="UpdateInformation" xml:space="preserve">
+    <value>Update information</value>
+  </data>
+  <data name="UpdateResearcherInformation" xml:space="preserve">
+    <value>Update information for researcher</value>
+  </data>
   <data name="View" xml:space="preserve">
     <value>View</value>
   </data>
   <data name="Vol" xml:space="preserve">
     <value>Vol</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="WorkHistory" xml:space="preserve">
+    <value>Work History</value>
   </data>
   <data name="WorkUnit" xml:space="preserve">
     <value>Work unit</value>

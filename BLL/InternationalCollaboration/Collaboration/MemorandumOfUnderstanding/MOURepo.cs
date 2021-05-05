@@ -772,13 +772,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         //Warning 1: end_date < next3Months && notiCount = 0
                         //warning 2: end_date < nextMonths && notiCount = 1
                         string sql_inactive_number
-                            = @"select count(*) from IA_Collaboration.MOU tb1 left join 
-                            (
-                            select max([datetime]) as 'maxdate',mou_status_id, mou_id
-                            from IA_Collaboration.MOUStatusHistory 
-                            group by mou_status_id, mou_id) tb2 
-                            on tb1.mou_id = tb2.mou_id
-                            where tb1.is_deleted = 0";
+                            = @"select count(*) from
+                            (select mou.mou_code, mou.mou_id, max(msh.[datetime]) 'datetime'
+                            from IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUStatusHistory msh
+                            ON mou.mou_id = msh.mou_id
+                            WHERE mou.is_deleted = 0
+                            GROUP BY mou.mou_code, mou.mou_id) a join IA_Collaboration.MOUStatusHistory msi
+                            on a.mou_id = msi.mou_id and a.[datetime] = msi.[datetime]
+                            where msi.mou_status_id = 2";
                         string sql_expired
                             = @"select mou_code from IA_Collaboration.MOU
                         where (mou_end_date < @next3Months and mou_end_date > getdate() and noti_count = 0) or 
@@ -975,7 +976,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             string partner_id_para = "";
             foreach (PartnerInfo item in PartnerInfo)
             {
-                partner_id_para += (item.partner_id + ",");
+                if (item.partner_id is null)
+                {
+                    partner_id_para += (0 + ",");
+                }
+                else
+                {
+                    partner_id_para += (item.partner_id + ",");
+                }
             }
             partner_id_para = partner_id_para.Remove(partner_id_para.Length - 1);
             partner_id_para = partner_id_para == "" ? "0" : partner_id_para;
