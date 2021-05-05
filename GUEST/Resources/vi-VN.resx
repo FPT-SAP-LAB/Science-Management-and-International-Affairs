@@ -135,6 +135,9 @@
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Lịch hoạt động trong năm</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
   <data name="AddAcadHistory" xml:space="preserve">
     <value>Thêm tiểu sử học tập</value>
   </data>
@@ -263,6 +266,9 @@
   </data>
   <data name="ContractType" xml:space="preserve">
     <value>Loại hợp đồng</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Chi phí</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>Quốc gia</value>
@@ -696,6 +702,9 @@
   <data name="Specialized" xml:space="preserve">
     <value>Chuyên ngành</value>
   </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Đơn vị tài trợ</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Trạng thái</value>
   </data>
@@ -722,6 +731,9 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Chức danh</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Tổng cộng</value>
   </data>
   <data name="TotalReward" xml:space="preserve">
     <value>Tổng thưởng</value>

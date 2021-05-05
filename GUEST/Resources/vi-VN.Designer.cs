@@ -115,6 +115,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thêm tiểu sử học tập.
         /// </summary>
         public static string AddAcadHistory {
@@ -498,6 +507,15 @@ namespace GUEST.Resources {
         public static string ContractType {
             get {
                 return ResourceManager.GetString("ContractType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi phí.
+        /// </summary>
+        public static string Cost {
+            get {
+                return ResourceManager.GetString("Cost", resourceCulture);
             }
         }
         
@@ -1798,6 +1816,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đơn vị tài trợ.
+        /// </summary>
+        public static string Sponsor {
+            get {
+                return ResourceManager.GetString("Sponsor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trạng thái.
         /// </summary>
         public static string Status {
@@ -1875,6 +1902,15 @@ namespace GUEST.Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tổng cộng.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         
