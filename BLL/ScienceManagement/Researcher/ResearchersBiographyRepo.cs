@@ -80,7 +80,7 @@ namespace BLL.ScienceManagement.Researcher
                              where m.paper_id == a.paper_id
                              select m.Author.name).ToList(),
                             link = a.link_doi,
-                            rank= a.PaperWithCriterias.FirstOrDefault().PaperCriteria.name
+                            rank = a.PaperWithCriterias.FirstOrDefault().PaperCriteria.name
                         }).OrderByDescending(x => x.publish_date).AsEnumerable<ResearcherPublications>().Select((x, index) => new ResearcherPublications
                         {
                             rownum = index + 1,
@@ -90,7 +90,7 @@ namespace BLL.ScienceManagement.Researcher
                             year = x.publish_date == null ? "" : x.publish_date.Value.Year.ToString(),
                             co_author = x.co_author,
                             link = x.link,
-                            rank=x.rank
+                            rank = x.rank
                         }).ToList();
             return data;
         }
