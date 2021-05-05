@@ -255,6 +255,9 @@
   <data name="CriteriaType" xml:space="preserve">
     <value>Criteria type</value>
   </data>
+  <data name="CurrentPolicy" xml:space="preserve">
+    <value>Current policy</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>

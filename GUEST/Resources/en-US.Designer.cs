@@ -475,6 +475,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current policy.
+        /// </summary>
+        public static string CurrentPolicy {
+            get {
+                return ResourceManager.GetString("CurrentPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {

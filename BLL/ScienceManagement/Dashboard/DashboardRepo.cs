@@ -38,11 +38,15 @@ namespace BLL.ScienceManagement.Dashboard
                                  where b.status_id == 2 && d.valid_date.Year == year
                                  select a.paper_id).Count();
                 int researcher = db.Profiles.Where(x => x.profile_page_active).Count();
+                int conference = (from a in db.RequestConferences
+                                  where a.status_id == 5
+                                  select a.request_id).Distinct().Count();
 
                 DashboardNumber item = new DashboardNumber();
                 item.Invention = invention;
                 item.ScopusISI = scopusISI;
                 item.Researcher = researcher;
+                item.Conference = conference;
 
                 return item;
             }
