@@ -18,11 +18,19 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void CheckinParticipantUT_1()
         {
             new AddParticipantToPhase().AddParticipantToPhaseUT_1();
+            Participant p = db.Participants.Last();
+            CheckInRepo repo = new CheckInRepo();
+            bool res = repo.Checkin(p.participant_id);
+            if (res)
+                Assert.Pass();
         }
         [TestCase]
         public void CheckinParticipantUT_2()
         {
-            new AddParticipantToPhase().AddParticipantToPhaseUT_1();
+            CheckInRepo repo = new CheckInRepo();
+            bool res = repo.Checkin(0);
+            if (res)
+                Assert.Pass();
         }
     }
 }
