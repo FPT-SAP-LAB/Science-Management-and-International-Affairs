@@ -153,6 +153,9 @@
   <data name="AddCitationRequest" xml:space="preserve">
     <value>Đề nghị khen thưởng trích dẫn</value>
   </data>
+  <data name="AddConfer" xml:space="preserve">
+    <value>Thêm đề nghị hỗ trợ hội nghị</value>
+  </data>
   <data name="AddConferenceRequest" xml:space="preserve">
     <value>Đề nghị hỗ trợ hội nghị</value>
   </data>
@@ -350,6 +353,9 @@
   </data>
   <data name="ErrorCita" xml:space="preserve">
     <value>Phải có ít nhất 1 dòng</value>
+  </data>
+  <data name="ExCost" xml:space="preserve">
+    <value>Chi phí dự kiến</value>
   </data>
   <data name="Feb" xml:space="preserve">
     <value>Tháng 2</value>
@@ -703,7 +709,7 @@
     <value>Chuyên ngành</value>
   </data>
   <data name="Sponsor" xml:space="preserve">
-    <value>Đơn vị tài trợ</value>
+    <value>Tổ chức tài trợ</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Trạng thái</value>

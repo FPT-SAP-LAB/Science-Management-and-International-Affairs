@@ -169,6 +169,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add conference support request.
+        /// </summary>
+        public static string AddConfer {
+            get {
+                return ResourceManager.GetString("AddConfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Conference participation funding request.
         /// </summary>
         public static string AddConferenceRequest {
@@ -259,7 +268,16 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time to attend the conference.
+        ///   Looks up a localized string similar to Attendance list.
+        /// </summary>
+        public static string AttenList {
+            get {
+                return ResourceManager.GetString("AttenList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attendance time.
         /// </summary>
         public static string AttenTime {
             get {
@@ -754,6 +772,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected cost.
+        /// </summary>
+        public static string ExCost {
+            get {
+                return ResourceManager.GetString("ExCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to February.
         /// </summary>
         public static string Feb {
@@ -988,7 +1015,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invitation to the conference.
+        ///   Looks up a localized string similar to Conference invitation letter.
         /// </summary>
         public static string Letter {
             get {

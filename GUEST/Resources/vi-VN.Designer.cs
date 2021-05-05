@@ -169,6 +169,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm đề nghị hỗ trợ hội nghị.
+        /// </summary>
+        public static string AddConfer {
+            get {
+                return ResourceManager.GetString("AddConfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đề nghị hỗ trợ hội nghị.
         /// </summary>
         public static string AddConferenceRequest {
@@ -759,6 +768,15 @@ namespace GUEST.Resources {
         public static string ErrorCita {
             get {
                 return ResourceManager.GetString("ErrorCita", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chi phí dự kiến.
+        /// </summary>
+        public static string ExCost {
+            get {
+                return ResourceManager.GetString("ExCost", resourceCulture);
             }
         }
         

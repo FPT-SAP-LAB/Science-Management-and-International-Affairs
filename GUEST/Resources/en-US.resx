@@ -153,6 +153,9 @@
   <data name="AddCitationRequest" xml:space="preserve">
     <value>Create Citation reward request</value>
   </data>
+  <data name="AddConfer" xml:space="preserve">
+    <value>Add conference support request</value>
+  </data>
   <data name="AddConferenceRequest" xml:space="preserve">
     <value>Create Conference participation funding request</value>
   </data>
@@ -183,8 +186,11 @@
   <data name="ArticleReward" xml:space="preserve">
     <value>Articles Reward Requests</value>
   </data>
+  <data name="AttenList" xml:space="preserve">
+    <value>Attendance list</value>
+  </data>
   <data name="AttenTime" xml:space="preserve">
-    <value>Time to attend the conference</value>
+    <value>Attendance time</value>
   </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
@@ -238,10 +244,10 @@
     <value>Competition</value>
   </data>
   <data name="Confer" xml:space="preserve">
-    <value>Conference</value>
+    <value>conference</value>
   </data>
   <data name="ConferenceInfor" xml:space="preserve">
-    <value>Conference Information</value>
+    <value>Conference's Information</value>
   </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Conference's name</value>
@@ -253,7 +259,7 @@
     <value>Conference Sponsor Requests</value>
   </data>
   <data name="ConferName" xml:space="preserve">
-    <value>Conference name</value>
+    <value>Conference's name</value>
   </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Contact Information</value>
@@ -348,6 +354,9 @@
   <data name="ErrorCita" xml:space="preserve">
     <value>Must have at least 1 row</value>
   </data>
+  <data name="ExCost" xml:space="preserve">
+    <value>Expected cost</value>
+  </data>
   <data name="Feb" xml:space="preserve">
     <value>February</value>
   </data>
@@ -427,7 +436,7 @@
     <value>June</value>
   </data>
   <data name="Letter" xml:space="preserve">
-    <value>Invitation to the conference</value>
+    <value>Conference invitation letter</value>
   </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
@@ -691,7 +700,7 @@
     <value>Source</value>
   </data>
   <data name="Speaker" xml:space="preserve">
-    <value>Speakers</value>
+    <value>Speaker / organizer members</value>
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Specialization</value>
@@ -700,7 +709,7 @@
     <value>Specialized</value>
   </data>
   <data name="Sponsor" xml:space="preserve">
-    <value>Sponsor</value>
+    <value>Sponsors</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
