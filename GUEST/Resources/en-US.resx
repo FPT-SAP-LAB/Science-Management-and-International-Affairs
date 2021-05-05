@@ -135,11 +135,23 @@
   <data name="AddAcadHistory" xml:space="preserve">
     <value>Add Study History</value>
   </data>
+  <data name="AddArticleRequest" xml:space="preserve">
+    <value>Create Article reward request</value>
+  </data>
   <data name="AddAu" xml:space="preserve">
     <value>Add more author</value>
   </data>
   <data name="AddAward" xml:space="preserve">
     <value>Add award</value>
+  </data>
+  <data name="AddCitationRequest" xml:space="preserve">
+    <value>Create Citation reward request</value>
+  </data>
+  <data name="AddConferenceRequest" xml:space="preserve">
+    <value>Create Conference participation funding request</value>
+  </data>
+  <data name="AddInventionRequest" xml:space="preserve">
+    <value>Create Invention reward request</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
@@ -162,6 +174,9 @@
   <data name="ArticlePolicies" xml:space="preserve">
     <value>Article Policies</value>
   </data>
+  <data name="ArticleReward" xml:space="preserve">
+    <value>Articles Reward Requests</value>
+  </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
   </data>
@@ -178,7 +193,8 @@
     <value>Biography</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value></data>
+    <value>Cancel</value>
+  </data>
   <data name="ChooseRepresentative" xml:space="preserve">
     <value>Choose a representative to receive the reward</value>
   </data>
@@ -187,6 +203,9 @@
   </data>
   <data name="CitationInfo" xml:space="preserve">
     <value>Citation info</value>
+  </data>
+  <data name="CitationRewardRequests" xml:space="preserve">
+    <value>Citations Reward Requests</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
@@ -205,6 +224,9 @@
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Conference papers</value>
+  </data>
+  <data name="ConferenceSponsorRequests" xml:space="preserve">
+    <value>Conference Sponsor Requests</value>
   </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Contact Information</value>
@@ -340,6 +362,9 @@
   </data>
   <data name="Invention" xml:space="preserve">
     <value>Invention patents</value>
+  </data>
+  <data name="InventionRewardRequests" xml:space="preserve">
+    <value>Invention Reward Requests</value>
   </data>
   <data name="ISI/SCOPUS" xml:space="preserve">
     <value>ISI/SCOPUS Papers</value>
