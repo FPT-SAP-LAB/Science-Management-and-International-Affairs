@@ -6,6 +6,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Researcher;
 using MANAGER.Models;
+using MANAGER.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
         ResearcherCandidateRepo researcherCandidate;
         // GET: Researchers
 
+        [Auther(RightID = "23")]
         public ActionResult List()
         {
             TitleLanguageRepo ra = new TitleLanguageRepo();
@@ -33,6 +35,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ViewBag.listOffices = listOffices;
             return View();
         }
+        [Auther(RightID = "23")]
         public JsonResult GetList()
         {
             try
@@ -53,6 +56,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false, message = e.Message });
             }
         }
+        [Auther(RightID = "23")]
         public JsonResult GetListCandidate()
         {
             try
@@ -74,6 +78,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false, message = e.Message });
             }
         }
+        [Auther(RightID = "23")]
         public ActionResult ViewInfo()
         {
             researcherDetailRepo = new ResearchersDetailRepo();
@@ -90,6 +95,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             }
             return View();
         }
+        [Auther(RightID = "23")]
 
         public ActionResult Biography()
         {
@@ -110,6 +116,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ViewBag.listWorkHistory = listWorkHistory;
             return View();
         }
+        [Auther(RightID = "23")]
         public ActionResult Publications()
         {
             researcherDetailRepo = new ResearchersDetailRepo();
@@ -125,6 +132,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ViewBag.conferences = conferences;
             return View();
         }
+        [Auther(RightID = "23")]
         public ActionResult Rewards()
         {
             researcherDetailRepo = new ResearchersDetailRepo();
@@ -137,6 +145,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ViewBag.awards = awards;
             return View();
         }
+        [Auther(RightID = "23")]
 
         public ActionResult EditProfilePhoto()
         {
@@ -148,6 +157,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             int res = researcherEditResearcherInfo.EditResearcherProfilePicture(file, people_id);
             return Json(new { res });
         }
+        [Auther(RightID = "23")]
         public ActionResult EditResearcher()
         {
             researcherEditResearcherInfo = new EditResearcherInfoRepo();
@@ -155,6 +165,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             researcherEditResearcherInfo.EditResearcherProfile(data);
             return null;
         }
+        [Auther(RightID = "23")]
         public ActionResult AddResearcher()
         {
             researcherDetailRepo = new ResearchersDetailRepo();
@@ -191,6 +202,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             ViewBag.listWorkHistory = listWorkHistory;
             return View();
         }
+        [Auther(RightID = "23")]
         public JsonResult UpdateProfilePage()
         {
             string data = Request["status"];
@@ -200,6 +212,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             bool update = researcherCandidate.UpdateProfilePage(id, status);
             return Json(new { success = update });
         }
+        [Auther(RightID = "23")]
         public JsonResult GetAwards()
         {
             researcherBiographyRepo = new ResearchersBiographyRepo();
@@ -221,6 +234,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [Auther(RightID = "23")]
         public JsonResult getAcadList()
         {
             try
@@ -236,6 +250,7 @@ namespace MANAGER.Controllers.ScienceManagement.Researchers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+        [Auther(RightID = "23")]
         public JsonResult getWorkList()
         {
             try
