@@ -12,5 +12,9 @@ namespace ENTITIES.CustomModels.ScienceManagement.Dashboard
         public int ScopusISI { get; set; }
         public int Researcher { get; set; }
         public int Conference { get; set; }
+        public int PaperRewardPending { get; set; }
+        public int ConferenceFundingPending { get; set; }
+        public int InventionRewardPending { get; set; }
+        public int CitationRewardPending { get; set; }
     }
 }

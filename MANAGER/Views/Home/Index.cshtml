@@ -56,7 +56,9 @@
             changeYear: true,
             //defaultViewDate: { year: '@Request["year"]' },
             //maxDate: new Date(),
-            defaultDate: new Date(@Request["year"], 11, 1),
+            defaultDate: new Date(@((Request["year"] == ""|| Request["year"] == null) ?
+                                    (DateTime.Now).Year.ToString(): Request["year"]),
+                                    11, 1),
         });
         $(document).on("change.datetimepicker", "#reports_year", function () {
             location.href = "/Home?year=" + $("#add_work_start").val()
