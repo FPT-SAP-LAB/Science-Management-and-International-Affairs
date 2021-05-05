@@ -7,11 +7,37 @@
     .report-elements {
         margin-bottom: 2rem !important;
     }
+    div#select-year-container {
+        height: 5rem;
+        position: relative
+    }
+
+        div#select-year-container #reports_year {
+            margin: 0;
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            margin-right: -50%;
+            width: 30%
+        }
+
 </style>
 <!--begin: Search Form-->
 <!--begin::Search Form-->
 <div class="mb-7">
     <!--Begin::Row-->
+    <div class="row report-elements">
+        <div class="col-12" id="select-year-container">
+            <div class="input-group date" id="reports_year" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" id="add_work_start" placeholder="Năm thống kê" data-target="#reports_year" />
+                <div class="input-group-append" data-target="#reports_year" data-toggle="datetimepicker">
+                    <span class="input-group-text">
+                        <i class="ki ki-calendar"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row report-elements">
         <div class="col-xl-3">
             <!--begin::Stats Widget 25-->
