@@ -1834,7 +1834,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tổ chức tài trợ.
+        ///   Looks up a localized string similar to Đơn vị tài trợ.
         /// </summary>
         public static string Sponsor {
             get {

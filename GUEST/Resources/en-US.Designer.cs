@@ -439,7 +439,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to conference.
+        ///   Looks up a localized string similar to Conference.
         /// </summary>
         public static string Confer {
             get {
@@ -448,7 +448,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conference&apos;s Information.
+        ///   Looks up a localized string similar to Conference Information.
         /// </summary>
         public static string ConferenceInfor {
             get {
@@ -484,7 +484,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conference&apos;s name.
+        ///   Looks up a localized string similar to Conference name.
         /// </summary>
         public static string ConferName {
             get {
@@ -1807,7 +1807,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Speaker / organizer members.
+        ///   Looks up a localized string similar to Speakers.
         /// </summary>
         public static string Speaker {
             get {
@@ -1834,7 +1834,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sponsors.
+        ///   Looks up a localized string similar to Sponsor.
         /// </summary>
         public static string Sponsor {
             get {
