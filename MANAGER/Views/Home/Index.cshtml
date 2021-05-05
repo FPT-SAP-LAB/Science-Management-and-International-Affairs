@@ -375,6 +375,7 @@
                     }
                 };
             }();
+            $('#year_select').val('@ViewBag.year_select[2]').trigger('change')
 
             load_data($('#year_select').val())
 
@@ -387,7 +388,6 @@
                 $('#dashboard_shortterm_table').DataTable().ajax.reload()
             });
 
-            $('#year_select').val('@ViewBag.year_select[2]').trigger('change')
 
             $('#dashboard_longterm_table').DataTable({
                 oLanguage: {
