@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "Trang chủ";
+    ENTITIES.CustomModels.ScienceManagement.Dashboard.PaperByOffice paperByOffice = ViewBag.paperByOffice;
+    Dictionary<string, int> specialiNumPaper = ViewBag.specialiNumPaper;
 }
+@using Newtonsoft.Json;
 
 <div class="card card-custom">
     <div class="card-body">
@@ -45,7 +48,14 @@
     <!-- SM Scripts -->
 
     <script>
-        "use strict";
+        $('#reports_year').datetimepicker({
+            maxDate: new Date(),
+            format: 'YYYY',
+            defaultDate: '11/1/@Request["year"]',
+        });
+        $(document).on("change.datetimepicker", "#reports_year", function () {
+            location.href = "/Home?year=" + $("#add_work_start").val()
+        })
 
         // Class definition
         var KTWidgets = function () {
@@ -59,23 +69,12 @@
                 }
 
                 var options = {
-                    series: [{
-                        name: 'Q1',
-                        data: [44, 55, 57, 56, 61, 80, 80],
-
-                    }, {
-                        name: 'Q2',
-                        data: [76, 85, 101, 98, 87, 80, 80]
-                    }, {
-                        name: 'Q3',
-                        data: [76, 85, 101, 98, 87, 80, 80]
-                    }, {
-                        name: 'Q4',
-                        data: [76, 85, 101, 98, 87, 80, 80]
-                    }, {
-                        name: 'QS500',
-                        data: [76, 85, 101, 98, 15, 10, 50]
-                    }],
+                    series: [
+                        @foreach (var item in paperByOffice.CriteriaValuePairs)
+                        {
+                            @:{ name: '@item.Key', data: @Html.Raw(JsonConvert.SerializeObject(item.Value)) },
+                        }
+                    ],
                     chart: {
                         type: 'bar',
                         height: 350,
@@ -102,7 +101,7 @@
                         colors: ['transparent']
                     },
                     xaxis: {
-                        categories: ['HN', 'HCM', 'ĐN', 'CT', 'FSB', 'FPL', 'KHÁC'],
+                        categories: @Html.Raw(JsonConvert.SerializeObject(paperByOffice.Offices)),
                         axisBorder: {
                             show: false,
                         },
@@ -157,7 +156,7 @@
                         },
                         y: {
                             formatter: function (val) {
-                                return "$" + val + " thousands"
+                                return val + " bài báo"
                             }
                         }
                     },
@@ -178,13 +177,74 @@
                 $("#kt_charts_widget_1_chart").find(".loader_panel").hide()
             }
 
+            var _initChartsWidget2 = function () {
+                var element = document.getElementById("kt_charts_widget_2_chart");
+
+                if (!element) {
+                    return;
+                }
+
+                var options = {
+                    series: [{
+                        name: 'Số bài báo',
+                        data: @Html.Raw(JsonConvert.SerializeObject(specialiNumPaper.Values.ToArray())),
+                    }],
+                    chart: {
+                        height: 350,
+                        type: 'bar',
+                        //events: {
+                        //    click: function (chart, w, e) {
+                        //         console.log(chart, w, e)
+                        //    }
+                        //}
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px',
+                            fontFamily: KTApp.getSettings()['font-family']
+                        },
+                        y: {
+                            formatter: function (val) {
+                                return val
+                            }
+                        }
+                    },
+                    //colors: colors,
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '45%',
+                            distributed: true,
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    legend: {
+                        show: false
+                    },
+                    xaxis: {
+                        categories: @Html.Raw(JsonConvert.SerializeObject(specialiNumPaper.Keys.ToArray())),
+                        labels: {
+                            style: {
+                                //colors: colors,
+                                fontSize: '12px',
+                                fontFamily: KTApp.getSettings()['font-family']
+                            }
+                        }
+                    }
+                };
+
+                var chart = new ApexCharts(element, options);
+                chart.render();
+                $("#kt_charts_widget_2_chart").find(".loader_panel").hide()
+            }
             // Public methods
             return {
                 init: function () {
 
                     // Charts Widgets
                     _initChartsWidget1();
-
+                    _initChartsWidget2();
                 }
             }
         }();
@@ -199,74 +259,6 @@
         });
     </script>
     <script src="~/Content/assets/plugins/custom/flot/flot.bundle.js"></script>
-    <script>
-        "use strict";
-
-        // Class definition
-        var KTFlotchartsDemo = function () {
-
-            var demo6 = function () {
-                // bar chart:
-                var data = GenerateSeries(0);
-
-                function GenerateSeries(added) {
-                    var data = [];
-                    var start = 100 + added;
-                    var end = 200 + added;
-
-                    for (var i = 1; i <= 12; i++) {
-                        var d = Math.floor(Math.random() * (end - start + 1) + start);
-                        data.push([i, d]);
-                        start++;
-                        end++;
-                    }
-
-                    return data;
-                }
-
-                var options = {
-                    colors: [KTApp.getSettings()['colors']['theme']['base']["success"], KTApp.getSettings()['colors']['theme']['base']["primary"]],
-                    series: {
-                        bars: {
-                            show: true
-                        }
-                    },
-                    bars: {
-                        barWidth: 0.8,
-                        lineWidth: 0, // in pixels
-                        shadowSize: 0,
-                        align: 'left'
-                    },
-
-                    grid: {
-                        tickColor: "#eee",
-                        borderColor: "#eee",
-                        borderWidth: 1
-                    }
-                };
-
-                $.plot($("#kt_flotcharts_6"), [{
-                    data: data,
-                    lines: {
-                        lineWidth: 1,
-                    },
-                    shadowSize: 0
-                }], options);
-            }
-
-
-            return {
-                // public functions
-                init: function () {
-                    demo6();
-                }
-            };
-        }();
-
-        jQuery(document).ready(function () {
-            KTFlotchartsDemo.init();
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
     <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
@@ -379,7 +371,6 @@
                 $('#dashboard_longterm_table').DataTable().ajax.reload()
                 $('#dashboard_shortterm_table').DataTable().ajax.reload()
             });
-
 
             $('#dashboard_longterm_table').DataTable({
                 oLanguage: {
