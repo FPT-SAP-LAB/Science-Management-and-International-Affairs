@@ -1,4 +1,5 @@
 ﻿using ENTITIES;
+using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Dashboard;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,38 @@ namespace BLL.ScienceManagement.Dashboard
         public DashboardRepo(ScienceAndInternationalAffairsEntities db)
         {
             this.db = db;
+        }
+
+        public DashboardNumber GetHomeData(int year)
+        {
+            try
+            {
+                int invention = (from a in db.Inventions
+                                 join b in db.RequestInventions on a.invention_id equals b.invention_id
+                                 join c in db.RequestDecisions on b.request_id equals c.request_id
+                                 join d in db.Decisions on c.decision_id equals d.decision_id
+                                 where b.status_id == 2 && d.valid_date.Year == year
+                                 select a.invention_id).Count();
+                int scopusISI = (from a in db.Papers
+                                 join b in db.RequestPapers on a.paper_id equals b.paper_id
+                                 join c in db.RequestDecisions on b.request_id equals c.request_id
+                                 join d in db.Decisions on c.decision_id equals d.decision_id
+                                 where b.status_id == 2 && d.valid_date.Year == year
+                                 select a.paper_id).Count();
+                int researcher = db.Profiles.Where(x => x.profile_page_active).Count();
+
+                DashboardNumber item = new DashboardNumber();
+                item.Invention = invention;
+                item.ScopusISI = scopusISI;
+                item.Researcher = researcher;
+
+                return item;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return null;
         }
 
         public PaperByOffice GetPaperByOffices(string[] criterias, int? year)
@@ -45,7 +78,7 @@ namespace BLL.ScienceManagement.Dashboard
                                                               where e.status_id == 2 && g.valid_date.Year == year
                                                               && b.office_id == c.office_id && j.name == i.name
                                                               select d.paper_id).Distinct().Count()
-                                                }).ToList()
+                                                }).Distinct().ToList()
                         }).ToList();
             int numOffice = temp.Count;
             foreach (var item in criterias)
