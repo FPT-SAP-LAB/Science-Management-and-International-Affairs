@@ -129,17 +129,32 @@
   <data name="According" xml:space="preserve">
     <value>Theo quy định</value>
   </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Số tài khoản</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Lịch hoạt động trong năm</value>
   </data>
   <data name="AddAcadHistory" xml:space="preserve">
     <value>Thêm tiểu sử học tập</value>
   </data>
+  <data name="AddArticleRequest" xml:space="preserve">
+    <value>Đề nghị khen thưởng bài báo</value>
+  </data>
   <data name="AddAu" xml:space="preserve">
     <value>Thêm tác giả</value>
   </data>
   <data name="AddAward" xml:space="preserve">
     <value>Thêm giải thưởng</value>
+  </data>
+  <data name="AddCitationRequest" xml:space="preserve">
+    <value>Đề nghị khen thưởng trích dẫn</value>
+  </data>
+  <data name="AddConferenceRequest" xml:space="preserve">
+    <value>Đề nghị hỗ trợ hội nghị</value>
+  </data>
+  <data name="AddInventionRequest" xml:space="preserve">
+    <value>Đề nghị khen thưởng bằng sáng chế</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Địa chỉ</value>
@@ -162,6 +177,9 @@
   <data name="ArticlePolicies" xml:space="preserve">
     <value>Thông tin chính sách</value>
   </data>
+  <data name="ArticleReward" xml:space="preserve">
+    <value>Danh sách đề nghị khen thưởng bài báo</value>
+  </data>
   <data name="Aug" xml:space="preserve">
     <value>Tháng 8</value>
   </data>
@@ -173,6 +191,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Ngân hàng - Chi nhánh ngân hàng</value>
+  </data>
+  <data name="BankAccountInformation" xml:space="preserve">
+    <value>Thông tin tài khoản ngân hàng</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>Chi nhánh</value>
   </data>
   <data name="Biography" xml:space="preserve">
     <value>Tiểu sử</value>
@@ -188,6 +212,9 @@
   </data>
   <data name="CitationInfo" xml:space="preserve">
     <value>Thông tin trích dẫn</value>
+  </data>
+  <data name="CitationRewardRequests" xml:space="preserve">
+    <value>Danh sách đề nghị khen thưởng trích dẫn</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Đóng</value>
@@ -206,6 +233,9 @@
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Kỷ yếu hội thảo</value>
+  </data>
+  <data name="ConferenceSponsorRequests" xml:space="preserve">
+    <value>Danh sách đề nghị Hỗ trợ hội nghị</value>
   </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Thông tin liên hệ</value>
@@ -341,6 +371,9 @@
   </data>
   <data name="Invention" xml:space="preserve">
     <value>Bằng sáng chế/GPHI</value>
+  </data>
+  <data name="InventionRewardRequests" xml:space="preserve">
+    <value>Danh sách đề nhị khen thưởng bằng sáng chế</value>
   </data>
   <data name="ISI/SCOPUS" xml:space="preserve">
     <value>Bài báo ISI/SCOPUS</value>
@@ -640,6 +673,9 @@
     <value>Nơi học tập</value>
   </data>
   <data name="Tax" xml:space="preserve">
+    <value>Mã số thuế</value>
+  </data>
+  <data name="TaxCode" xml:space="preserve">
     <value>Mã số thuế</value>
   </data>
   <data name="TermCondition" xml:space="preserve">

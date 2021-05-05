@@ -19,6 +19,7 @@ namespace BLL.ScienceManagement.Researcher
                 {
                     id = a.people_id,
                     name = a.name,
+                    msnv = b.mssv_msnv,
                     dob = b.birth_date,
                     email = a.email,
                     phone = a.phone_number,
@@ -31,6 +32,9 @@ namespace BLL.ScienceManagement.Researcher
                     office = (from m in db.Offices where a.office_id == m.office_id select m.office_name).FirstOrDefault(),
                     gscholar = b.google_scholar,
                     cv = b.cv,
+                    bankAccount = b.bank_number,
+                    bankBranch = b.bank_branch,
+                    taxCode = b.tax_code,
                     profile_page_active = b.profile_page_active
                 }).FirstOrDefault();
             if (profile == null)
