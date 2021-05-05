@@ -2,6 +2,7 @@
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Dashboard;
+using ENTITIES.CustomModels.ScienceManagement.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +97,12 @@ namespace BLL.InternationalCollaboration.Dashboard
                 throw e;
             }
         }
+
+        public DashboardNumber GetHomeData()
+        {
+            throw new NotImplementedException();
+        }
+
         public string WidgetMou(int year)
         {
             try
