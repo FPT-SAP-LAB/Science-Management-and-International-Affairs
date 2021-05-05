@@ -54,7 +54,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int language_id = 1;
             AcademicActivityPhaseRepo.basePhase data = new AcademicActivityPhaseRepo.basePhase
             {
-                phase_name = "TestAddPhase2",
+                phase_name = "",
                 from = "31/02/2020",
                 to = "01/01/2021"
             };
@@ -78,9 +78,9 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int language_id = 2;
             AcademicActivityPhaseRepo.basePhase data = new AcademicActivityPhaseRepo.basePhase
             {
-                phase_name = "TestAddPhase3",
-                from = "01/01/2020",
-                to = "01/01/2021"
+                phase_name = "!@#!",
+                from = "01/01/2021",
+                to = "01/01/2020"
             };
             bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (!res)
@@ -99,12 +99,36 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            int language_id = 3;
+            int language_id = 2;
             AcademicActivityPhaseRepo.basePhase data = new AcademicActivityPhaseRepo.basePhase
             {
-                phase_name = "TestAddPhase4",
-                from = "01/01/2020",
-                to = "01/01/2021"
+                phase_name = "abcxyz",
+                from = "05/01/2020",
+                to = "10/01/2021"
+            };
+            bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
+            if (res)
+                Assert.Pass();
+        }
+        [TestCase]
+        public void AddAcademicActivityPhaseUT_5()
+        {
+            AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
+            BLL.Authen.LoginRepo.User user = new BLL.Authen.LoginRepo.User
+            {
+                account = new ENTITIES.Account
+                {
+                    account_id = 16
+                }
+            };
+            new AddAcademicActivityUT().TestAddAcademicActivity_1();
+            ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
+            int language_id = 1;
+            AcademicActivityPhaseRepo.basePhase data = new AcademicActivityPhaseRepo.basePhase
+            {
+                phase_name = "abcxyz",
+                from = "31/02/2020",
+                to = "10/01/2021"
             };
             bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (!res)
