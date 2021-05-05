@@ -76,11 +76,11 @@ namespace BLL.ScienceManagement.Researcher
                             paper_name = a.name,
                             publish_date = a.publish_date,
                             co_author =
-                            (from m in db.Profiles
-                             join n in db.AuthorPapers on m.mssv_msnv equals n.Author.mssv_msnv
-                             where n.paper_id == a.paper_id
-                             select m.Person.name).ToList(),
-                            link = a.link_doi
+                            (from m in db.AuthorPapers
+                             where m.paper_id == a.paper_id
+                             select m.Author.name).ToList(),
+                            link = a.link_doi,
+                            rank= a.PaperWithCriterias.FirstOrDefault().PaperCriteria.name
                         }).OrderByDescending(x => x.publish_date).AsEnumerable<ResearcherPublications>().Select((x, index) => new ResearcherPublications
                         {
                             rownum = index + 1,
@@ -89,7 +89,8 @@ namespace BLL.ScienceManagement.Researcher
                             paper_name = x.paper_name,
                             year = x.publish_date == null ? "" : x.publish_date.Value.Year.ToString(),
                             co_author = x.co_author,
-                            link = x.link
+                            link = x.link,
+                            rank=x.rank
                         }).ToList();
             return data;
         }
