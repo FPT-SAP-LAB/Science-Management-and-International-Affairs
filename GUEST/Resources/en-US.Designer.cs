@@ -115,6 +115,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Study History.
         /// </summary>
         public static string AddAcadHistory {
@@ -156,6 +165,15 @@ namespace GUEST.Resources {
         public static string AddCitationRequest {
             get {
                 return ResourceManager.GetString("AddCitationRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add conference support request.
+        /// </summary>
+        public static string AddConfer {
+            get {
+                return ResourceManager.GetString("AddConfer", resourceCulture);
             }
         }
         
@@ -246,6 +264,24 @@ namespace GUEST.Resources {
         public static string ArticleReward {
             get {
                 return ResourceManager.GetString("ArticleReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attendance list.
+        /// </summary>
+        public static string AttenList {
+            get {
+                return ResourceManager.GetString("AttenList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attendance time.
+        /// </summary>
+        public static string AttenTime {
+            get {
+                return ResourceManager.GetString("AttenTime", resourceCulture);
             }
         }
         
@@ -385,11 +421,38 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Co-organized unit.
+        /// </summary>
+        public static string Co_organ {
+            get {
+                return ResourceManager.GetString("Co-organ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Competition.
         /// </summary>
         public static string Competition {
             get {
                 return ResourceManager.GetString("Competition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to conference.
+        /// </summary>
+        public static string Confer {
+            get {
+                return ResourceManager.GetString("Confer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conference&apos;s Information.
+        /// </summary>
+        public static string ConferenceInfor {
+            get {
+                return ResourceManager.GetString("ConferenceInfor", resourceCulture);
             }
         }
         
@@ -421,6 +484,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conference&apos;s name.
+        /// </summary>
+        public static string ConferName {
+            get {
+                return ResourceManager.GetString("ConferName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact Information.
         /// </summary>
         public static string ContactInformation {
@@ -444,6 +516,15 @@ namespace GUEST.Resources {
         public static string ContractType {
             get {
                 return ResourceManager.GetString("ContractType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cost.
+        /// </summary>
+        public static string Cost {
+            get {
+                return ResourceManager.GetString("Cost", resourceCulture);
             }
         }
         
@@ -691,6 +772,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expected cost.
+        /// </summary>
+        public static string ExCost {
+            get {
+                return ResourceManager.GetString("ExCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to February.
         /// </summary>
         public static string Feb {
@@ -714,6 +804,15 @@ namespace GUEST.Resources {
         public static string FileCMnew {
             get {
                 return ResourceManager.GetString("FileCMnew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formality.
+        /// </summary>
+        public static string Formal {
+            get {
+                return ResourceManager.GetString("Formal", resourceCulture);
             }
         }
         
@@ -912,6 +1011,15 @@ namespace GUEST.Resources {
         public static string Jun {
             get {
                 return ResourceManager.GetString("Jun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conference invitation letter.
+        /// </summary>
+        public static string Letter {
+            get {
+                return ResourceManager.GetString("Letter", resourceCulture);
             }
         }
         
@@ -1141,11 +1249,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organizational units.
+        /// </summary>
+        public static string OrganUnit {
+            get {
+                return ResourceManager.GetString("OrganUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page.
         /// </summary>
         public static string Page {
             get {
                 return ResourceManager.GetString("Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paper file.
+        /// </summary>
+        public static string PaperFile {
+            get {
+                return ResourceManager.GetString("PaperFile", resourceCulture);
             }
         }
         
@@ -1681,6 +1807,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Speaker / organizer members.
+        /// </summary>
+        public static string Speaker {
+            get {
+                return ResourceManager.GetString("Speaker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specialization.
         /// </summary>
         public static string Specialization {
@@ -1695,6 +1830,15 @@ namespace GUEST.Resources {
         public static string Specialized {
             get {
                 return ResourceManager.GetString("Specialized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sponsors.
+        /// </summary>
+        public static string Sponsor {
+            get {
+                return ResourceManager.GetString("Sponsor", resourceCulture);
             }
         }
         
@@ -1762,6 +1906,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time for the conference.
+        /// </summary>
+        public static string TimePlace {
+            get {
+                return ResourceManager.GetString("TimePlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Title {
@@ -1771,11 +1924,29 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total reward.
         /// </summary>
         public static string TotalReward {
             get {
                 return ResourceManager.GetString("TotalReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to University.
+        /// </summary>
+        public static string University {
+            get {
+                return ResourceManager.GetString("University", resourceCulture);
             }
         }
         
@@ -1794,6 +1965,15 @@ namespace GUEST.Resources {
         public static string UpdateResearcherInformation {
             get {
                 return ResourceManager.GetString("UpdateResearcherInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conference venue.
+        /// </summary>
+        public static string Venue {
+            get {
+                return ResourceManager.GetString("Venue", resourceCulture);
             }
         }
         
