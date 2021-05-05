@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Trang chủ";
+    ENTITIES.CustomModels.ScienceManagement.Dashboard.PaperByOffice paperByOffice = ViewBag.paperByOffice;
 }
+@using Newtonsoft.Json;
 
 <div class="card card-custom">
     <div class="card-body">
@@ -45,7 +47,14 @@
     <!-- SM Scripts -->
 
     <script>
-        "use strict";
+        $('#reports_year').datetimepicker({
+            maxDate: new Date(),
+            format: 'YYYY',
+            defaultDate: '11/1/@Request["year"]',
+        });
+        $(document).on("change.datetimepicker", "#reports_year", function () {
+            location.href = "/Home?year=" + $("#add_work_start").val()
+        })
 
         // Class definition
         var KTWidgets = function () {
@@ -59,23 +68,12 @@
                 }
 
                 var options = {
-                    series: [{
-                        name: 'Q1',
-                        data: [44, 55, 57, 56, 61, 80, 80],
-
-                    }, {
-                        name: 'Q2',
-                        data: [76, 85, 101, 98, 87, 80, 80]
-                    }, {
-                        name: 'Q3',
-                        data: [76, 85, 101, 98, 87, 80, 80]
-                    }, {
-                        name: 'Q4',
-                        data: [76, 85, 101, 98, 87, 80, 80]
-                    }, {
-                        name: 'QS500',
-                        data: [76, 85, 101, 98, 15, 10, 50]
-                    }],
+                    series: [
+                        @foreach (var item in paperByOffice.CriteriaValuePairs)
+                        {
+                            @:{ name: '@item.Key', data: @Html.Raw(JsonConvert.SerializeObject(item.Value)) },
+                        }
+                    ],
                     chart: {
                         type: 'bar',
                         height: 350,
@@ -102,7 +100,7 @@
                         colors: ['transparent']
                     },
                     xaxis: {
-                        categories: ['HN', 'HCM', 'ĐN', 'CT', 'FSB', 'FPL', 'KHÁC'],
+                        categories: @Html.Raw(JsonConvert.SerializeObject(paperByOffice.Offices)),
                         axisBorder: {
                             show: false,
                         },
@@ -157,7 +155,7 @@
                         },
                         y: {
                             formatter: function (val) {
-                                return "$" + val + " thousands"
+                                return val + " bài báo"
                             }
                         }
                     },
@@ -380,7 +378,6 @@
                 $('#dashboard_shortterm_table').DataTable().ajax.reload()
             });
 
-
             $('#dashboard_longterm_table').DataTable({
                 oLanguage: {
                     oPaginate: {
@@ -506,12 +503,5 @@
                 }
             })
         }
-    </script>
-    <script>
-        $('#reports_year').datetimepicker({
-            maxDate: new Date(),
-            format: 'YYYY',
-            value: new Date()
-        });
     </script>
 }
