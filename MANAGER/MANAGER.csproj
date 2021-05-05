@@ -2401,8 +2401,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\ConferenceSponsor\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\AcademicActivity\List.cshtml" />
@@ -2432,7 +2430,6 @@
     <Content Include="Views\Reports\ConferencesParticipationReport_tgtemp.cshtml" />
     <Content Include="Views\Reports\RewardByAuthorReport.cshtml" />
     <Content Include="Views\Reports\ListOfIncomePaid.cshtml" />
-    <Content Include="Views\Reports\Dashboard.cshtml" />
     <Content Include="Views\MOA\Detail_MOA.cshtml" />
     <Content Include="Views\Partner\List.cshtml" />
     <Content Include="Views\Partner\Detail.cshtml" />
@@ -2526,7 +2523,6 @@
     <Content Include="Views\AcademicCollaboration\PartialView\Short_Term_Modal_Add_Status_History.cshtml" />
     <Content Include="Views\Shared\_LoaderPanel.cshtml" />
     <Content Include="Views\AcademicCollaboration\PartialView\Modal_Edit_Program_Coming.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Paper\WaitDecision2.cshtml" />
     <Content Include="Views\Title\List.cshtml" />
     <Content Include="Views\QsUniversity\Index.cshtml" />
@@ -2547,6 +2543,7 @@
     <Content Include="Views\Research\Index.cshtml" />
     <Content Include="Views\HomeImageConfiguration\Index.cshtml" />
     <Content Include="Views\Request\History.cshtml" />
+    <Content Include="Views\Reports\Dashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

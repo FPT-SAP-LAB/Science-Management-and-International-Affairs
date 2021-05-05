@@ -103,10 +103,11 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
             ViewBag.data = reportRepo.GetBonusByYearItems(year);
             return View();
         }
-        [Auther(RightID = "24")]
+        //[Auther(RightID = "24")]
+        [ChildActionOnly]
         public ActionResult Dashboard()
         {
-            return View();
+            return PartialView();
         }
         [Auther(RightID = "24")]
         public JsonResult GetAwardMoneyInoutCountry(int? hang, int? type, string year, string name)
