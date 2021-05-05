@@ -21,7 +21,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
             AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
             List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.getParticipantRoleByPhase(activityPhase.phase_id);
-            if(data.Count == 0)
+            if (data.Count == 0)
             {
                 Assert.Pass();
             }

@@ -29,7 +29,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 office_id = 1
             };
             bool res = repo.addParticipant(obj);
-            if(res)
+            if (res)
                 Assert.Pass();
         }
         [TestCase]

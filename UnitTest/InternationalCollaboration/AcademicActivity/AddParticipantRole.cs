@@ -28,7 +28,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             string quantity = "1";
             List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice = new List<AcademicActivityPhaseRepo.basePlanParticipant>();
-            bool res = academicActivityPhaseRepo.addParticipantRole(data,arrOffice,"False",quantity,activityPhase.phase_id);
+            bool res = academicActivityPhaseRepo.addParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
             if (res)
                 Assert.Pass();
         }
