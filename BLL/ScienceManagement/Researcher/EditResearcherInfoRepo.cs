@@ -62,7 +62,7 @@ namespace BLL.ScienceManagement.Researcher
                     string accountNumber = (string)editInfo["info"]["accountNumber"];
                     string bankBranch = (string)editInfo["info"]["bankBranch"];
                     string taxCode = (string)editInfo["info"]["taxCode"];
-                    string msnv= (string)editInfo["info"]["msnv"];
+                    string msnv = (string)editInfo["info"]["msnv"];
                     string cv = (string)editInfo["info"]["cv"];
                     string office = (string)editInfo["info"]["office"][0]["id"];
 
