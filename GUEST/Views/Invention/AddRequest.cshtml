@@ -77,20 +77,6 @@
                         </div>
                     </div>
                 </div>
-                <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
-                <div class="row">
-                    <div class="col-xl-6 form-group">
-                        <label class="required-field">@rm.GetString("TotalReward")</label>
-                        <input autocomplete="off" class="form-control form-control-lg" readonly type="text" />
-                    </div>
-                    <div class="col-xl-6 form-group" style="display:none">
-                        <label class="required-field">@rm.GetString("RewardType")</label>
-                        <select id="kieuthuong" class="form-control form-control-lg">
-                            <option selected value="2">@rm.GetString("According")</option>
-                            <option value="1">@rm.GetString("Repre")</option>
-                        </select>
-                    </div>
-                </div>
                 <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
                 <div class="row" id="authors-info-container">
                 </div>
@@ -176,7 +162,7 @@
 
         function addAuthor() {
             $.ajax({
-                url: "@Url.Action("addAuthor", "Invention")",
+                url: "@Url.Action("AddAuthor", "Invention")",
                 type: "POST",
                 data: JSON.stringify({
                     'people': people,
@@ -213,7 +199,7 @@
                 var type = $("#search_type").val();
                 var kieuthuong = $("#kieuthuong").val();
                 $.ajax({
-                    url: "@Url.Action("addInven", "Invention")",
+                    url: "@Url.Action("AddInven", "Invention")",
                     type: "POST",
                     data: JSON.stringify({
                         'inven': invention,
@@ -234,7 +220,7 @@
                 });
             } catch (err) {
                 $.ajax({
-                    url: "@Url.Action("deleteFile", "Invention")",
+                    url: "@Url.Action("DeleteFile", "Invention")",
                     type: "POST",
                     data: { 'id': fileid },
                     cache: false,
@@ -305,7 +291,7 @@
                 formData.append('people', author_temp);
 
                 $.ajax({
-                    url: "/Invention/addFile",
+                    url: "/Invention/AddFile",
                     method: "post",
                     complete: function (data) {
                         var mess = data.responseJSON.mess;
