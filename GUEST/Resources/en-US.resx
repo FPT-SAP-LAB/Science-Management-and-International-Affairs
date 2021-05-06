@@ -252,6 +252,9 @@
   <data name="CMND" xml:space="preserve">
     <value>People ID</value>
   </data>
+  <data name="Cmt" xml:space="preserve">
+    <value>Comment</value>
+  </data>
   <data name="CmtInfo" xml:space="preserve">
     <value>Conversation</value>
   </data>
@@ -315,6 +318,9 @@
   <data name="DateRangePickerFormat" xml:space="preserve">
     <value>MM/DD/yyyy</value>
   </data>
+  <data name="de-file" xml:space="preserve">
+    <value>Decision drive folder</value>
+  </data>
   <data name="Dec" xml:space="preserve">
     <value>December</value>
   </data>
@@ -339,6 +345,9 @@
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
   </data>
+  <data name="DoR" xml:space="preserve">
+    <value>Date of request</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -359,6 +368,9 @@
   </data>
   <data name="EmptyTB" xml:space="preserve">
     <value>No Record</value>
+  </data>
+  <data name="EoR" xml:space="preserve">
+    <value>Date end of request</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -383,6 +395,9 @@
   </data>
   <data name="FileCMnew" xml:space="preserve">
     <value>Upload new file</value>
+  </data>
+  <data name="FileDe" xml:space="preserve">
+    <value>Decision file</value>
   </data>
   <data name="Formal" xml:space="preserve">
     <value>Formality</value>
@@ -503,6 +518,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>Nationality</value>
+  </data>
+  <data name="NeedEdit" xml:space="preserve">
+    <value>Require Edit</value>
   </data>
   <data name="NewPublications" xml:space="preserve">
     <value>New Publications</value>
@@ -669,6 +687,9 @@
   <data name="RewardType" xml:space="preserve">
     <value>Reward type</value>
   </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -776,6 +797,9 @@
   </data>
   <data name="UpdateResearcherInformation" xml:space="preserve">
     <value>Update information for researcher</value>
+  </data>
+  <data name="Valid-date" xml:space="preserve">
+    <value>Valid date</value>
   </data>
   <data name="Venue" xml:space="preserve">
     <value>Conference venue</value>

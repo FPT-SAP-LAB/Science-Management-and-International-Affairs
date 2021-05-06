@@ -23,7 +23,7 @@
     <div class="card">
         <div class="card-header" id="ConferenceDetailHeading">
             <div class="card-title" data-toggle="collapse" data-target="#ConferenceDetailChild1">
-                <div class="card-label">Thông tin hội nghị</div>
+                <div class="card-label">@rm.GetString("ConferenceInfor")</div>
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -40,67 +40,67 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="font-weight-bolder mr-2">Tên bài báo:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("PaperName"):</span>
                             <span>@ConferenceDetail.PaperName</span>
                         </div>
                         <hr />
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="font-weight-bolder mr-2">Tên hội nghị:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("ConferName"):</span>
                             <span>@ConferenceDetail.ConferenceName</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Website hội nghị:</span>
+                            <span class="font-weight-bolder mr-2">Website @rm.GetString("Confer"):</span>
                             <span>@ConferenceDetail.Website</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Diễn giả/ Thành viên BTC:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("Speaker"):</span>
                             <span>@ConferenceDetail.KeynoteSpeaker</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Thuộc trường đại học top QS 1000:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("University") top QS 1000:</span>
                             <span>@ConferenceDetail.QsUniversity</span>&nbsp;-&nbsp;<span style="color:red">@(ViewBag.ranking == null ? "Không tìm thấy dữ liệu" : "Rank: " + ViewBag.ranking)</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Hình thức:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("Formal"):</span>
                             <span>@ConferenceDetail.FormalityName</span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Chuyên ngành:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("Specialized"):</span>
                             <span>@ConferenceDetail.SpecializationName</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="font-weight-bolder mr-2">Địa điểm tổ chức:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("Venue"):</span>
                             <span>@ConferenceDetail.CountryName</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Đơn vị tổ chức:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("OrganUnit"):</span>
                             <span>@ConferenceDetail.OrganizedUnit</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Đơn vị đồng tổ chức:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("Co-organ"):</span>
                             <span>@ConferenceDetail.Co_organizedUnit</span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="font-weight-bolder mr-2">Thời gian tổ chức:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("TimePlace"):</span>
                             <span>@ConferenceDetail.TimeStart.ToString("dd/MM/yyyy") – @ConferenceDetail.TimeEnd.ToString("dd/MM/yyyy")</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">Thời gian tham dự:</span>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("AttenTime"):</span>
                             <span>@ConferenceDetail.AttendanceStart.ToString("dd/MM/yyyy") – @ConferenceDetail.AttendanceEnd.ToString("dd/MM/yyyy")</span>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-cente my-1">
-                            <span class="font-weight-bolder mr-2">File bài báo:</span>
-                            <a href="@ConferenceDetail.PaperLink">Xem</a>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("PaperFile"):</span>
+                            <a href="@ConferenceDetail.PaperLink">@rm.GetString("View")</a>
                         </div>
                         <div class="d-flex justify-content-lg-start align-items-center">
-                            <span class="font-weight-bolder mr-2">Thư mời hội nghị:</span>
-                            <a href="@ConferenceDetail.InvitationLink">Xem</a>
+                            <span class="font-weight-bolder mr-2">@rm.GetString("Letter"):</span>
+                            <a href="@ConferenceDetail.InvitationLink">@rm.GetString("View")</a>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
     <div class="card">
         <div class="card-header" id="RequestHeading">
             <div class="card-title" data-toggle="collapse" data-target="#RequestChild1">
-                <div class="card-label">Thông tin đề nghị</div>
+                <div class="card-label">@rm.GetString("RequestInfo")</div>
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -131,10 +131,10 @@
                     <div class="col-lg-6 col-sm-12 col-md-6">
                         <div class="mb-7">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Trạng thái:</span>
+                                <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("Status"):</span>
                                 @if (ConferenceDetail.EditAble)
                                 {
-                                    <span class='label label-lg label-warning label-pill label-inline'>Cần chỉnh sửa</span>
+                            <span class='label label-lg label-warning label-pill label-inline'>@rm.GetString("NeddRepair")</span>
                                 }
                                 else
                                 {
@@ -144,36 +144,36 @@
                                 }
                             </div>
                             <div class="d-flex justify-content-between align-items-cente my-1">
-                                <span class="text-dark-75 font-weight-bolder mr-2">Ngày tạo đề nghị:</span>
+                                <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("DoR"):</span>
                                 <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.CreatedDate.ToString(rm.GetString("DateFormat"))</a>
                             </div>
                             @if (ConferenceDetail.FinishedDate != null)
                             {
                                 <div class="d-flex justify-content-between align-items-cente my-1">
-                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày kết thúc đề nghị:</span>
+                                    <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("EoR"):</span>
                                     <a href="#" class="text-muted text-hover-primary">@ConferenceDetail.FinishedDate.Value.ToString("dd/MM/yyyy")</a>
                                 </div>
                             }
                             @if (ConferenceDetail.StatusID > 3 && ConferenceDetail.FormalityID == 2)
                             {
                                 <div class="d-flex justify-content-between align-items-cente my-1">
-                                    <span class="text-dark-75 font-weight-bolder mr-2">File quyết định:</span>
-                                    <a href="@Decision.Link" class="text-muted text-hover-primary">Xem</a>
+                                    <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("FileDe"):</span>
+                                    <a href="@Decision.Link" class="text-muted text-hover-primary">@rm.GetString("View")</a>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-dark-75 font-weight-bolder mr-2">Số quyết định:</span>
+                                    <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("DeNo"):</span>
                                     <span class="text-muted font-weight-bold">@Decision.DecisionNumber</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-cente my-1">
-                                    <span class="text-dark-75 font-weight-bolder mr-2">Ngày ban hành:</span>
+                                    <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("Valid-date"):</span>
                                     <a href="#" class="text-muted text-hover-primary">@Decision.ValidDate.ToString(rm.GetString("DateFormat"))</a>
                                 </div>
                             }
                             @if (ConferenceDetail.FolderLink != null)
                             {
                                 <div class="d-flex justify-content-between align-items-cente my-1">
-                                    <span class="text-dark-75 font-weight-bolder mr-2">Thư mục drive của đề nghị :</span>
-                                    <a href="@ConferenceDetail.FolderLink" target="_blank" class="text-muted text-hover-primary">Xem</a>
+                                    <span class="text-dark-75 font-weight-bolder mr-2">@rm.GetString("de-file") :</span>
+                                    <a href="@ConferenceDetail.FolderLink" target="_blank" class="text-muted text-hover-primary">@rm.GetString("View")</a>
                                 </div>
                             }
                         </div>
@@ -185,7 +185,7 @@
                                     <i class="fa fa-star text-white"></i>
                                 </div>
                                 <h3 class="card-title">
-                                    <a href="@output["Link"]" class="btn btn-light-primary mr-2" target="_blank">Chính sách hiện tại</a>
+                                    <a href="@output["Link"]" class="btn btn-light-primary mr-2" target="_blank">@rm.GetString("CurrentPolicy")</a>
                                 </h3>
                             </div>
                             <div class="card-body">
@@ -214,7 +214,7 @@
     <div class="card">
         <div class="card-header" id="ParticipantsHeading">
             <div class="card-title" data-toggle="collapse" data-target="#ParticipantsChild1">
-                <div class="card-label">Danh sách tham dự</div>
+                <div class="card-label">@rm.GetString("AttenList")</div>
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -231,11 +231,11 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">MSNV/MSSV</th>
-                            <th scope="col">Họ và tên</th>
+                            <th scope="col">@rm.GetString("MSNV")</th>
+                            <th scope="col">@rm.GetString("ProfileName")</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Cơ sở công tác</th>
-                            <th scope="col">Chức danh</th>
+                            <th scope="col">@rm.GetString("WorkUnit")</th>
+                            <th scope="col">@rm.GetString("Title")</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -257,7 +257,7 @@
     <div class="card">
         <div class="card-header" id="ExpectedCostHeading">
             <div class="card-title" data-toggle="collapse" data-target="#ExpectedCostChild1">
-                <div class="card-label">Chi phí dự kiến</div>
+                <div class="card-label">@rm.GetString("ExCost")</div>
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -329,7 +329,7 @@
                 </table>
                 @if (Costs.Any(x => x.editable))
                 {
-                    <button type="button" id="submitCost" onclick="submitCost()" class="btn btn-success float-right mr-2">Gửi đơn</button>
+            <button type="button" id="submitCost" onclick="submitCost()" class="btn btn-success float-right mr-2">@rm.GetString("Send")</button>
                 }
                 @{
                     //Html.RenderAction("CostMenu", new { RequestID = ViewBag.id });
@@ -343,7 +343,7 @@
     <div class="card">
         <div class="card-header" id="ApprovalProcessHeading">
             <div class="card-title" data-toggle="collapse" data-target="#ApprovalProcessChild1">
-                <div class="card-label">Quy trình phê duyệt</div>
+                <div class="card-label">@rm.GetString("AppPro")</div>
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -360,10 +360,10 @@
                 <table class="col-12 table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">Thời gian</th>
-                            <th scope="col">Quyền</th>
-                            <th scope="col">Người duyệt</th>
-                            <th scope="col">Bình luận</th>
+                            <th scope="col">@rm.GetString("Time")</th>
+                            <th scope="col">@rm.GetString("Right")</th>
+                            <th scope="col">@rm.GetString("AppBy")</th>
+                            <th scope="col">@rm.GetString("Cmt")</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -387,7 +387,7 @@
     <div class="card">
         <div class="card-header" id="ConversationInformationHeading">
             <div class="card-title" data-toggle="collapse" data-target="#ConversationInformationChild1">
-                <div class="card-label">Thông tin hội thoại</div>
+                <div class="card-label">@rm.GetString("CmtInfo")</div>
                 <span class="svg-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

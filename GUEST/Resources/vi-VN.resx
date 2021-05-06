@@ -252,6 +252,9 @@
   <data name="CMND" xml:space="preserve">
     <value>CMND</value>
   </data>
+  <data name="Cmt" xml:space="preserve">
+    <value>Bình luận</value>
+  </data>
   <data name="CmtInfo" xml:space="preserve">
     <value>Thông tin hội thoại</value>
   </data>
@@ -315,6 +318,9 @@
   <data name="DateRangePickerFormat" xml:space="preserve">
     <value>DD/MM/yyyy</value>
   </data>
+  <data name="de-file" xml:space="preserve">
+    <value>Thư mục drive của quyết định</value>
+  </data>
   <data name="Dec" xml:space="preserve">
     <value>Tháng 12</value>
   </data>
@@ -330,6 +336,9 @@
   <data name="DelRow" xml:space="preserve">
     <value>Xóa dòng</value>
   </data>
+  <data name="DeNo" xml:space="preserve">
+    <value>Số quyết định</value>
+  </data>
   <data name="Detail" xml:space="preserve">
     <value>Chi tiết</value>
   </data>
@@ -338,6 +347,9 @@
   </data>
   <data name="Domestic" xml:space="preserve">
     <value>Trong nước</value>
+  </data>
+  <data name="DoR" xml:space="preserve">
+    <value>Ngày tạo đề nghị</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
@@ -359,6 +371,9 @@
   </data>
   <data name="EmptyTB" xml:space="preserve">
     <value>Không có dữ liệu</value>
+  </data>
+  <data name="EoR" xml:space="preserve">
+    <value>Ngày kết thúc đề nghị</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Lỗi</value>
@@ -383,6 +398,9 @@
   </data>
   <data name="FileCMnew" xml:space="preserve">
     <value>Upload file mới</value>
+  </data>
+  <data name="FileDe" xml:space="preserve">
+    <value>File đề nghị</value>
   </data>
   <data name="Formal" xml:space="preserve">
     <value>Hình thức</value>
@@ -503,6 +521,9 @@
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>Quốc tịch</value>
+  </data>
+  <data name="NeedEdit" xml:space="preserve">
+    <value>Cần chỉnh sửa</value>
   </data>
   <data name="NewPublications" xml:space="preserve">
     <value>Công bố mới</value>
@@ -649,7 +670,7 @@
     <value>Ngày gửi yêu cầu</value>
   </data>
   <data name="RequestInfo" xml:space="preserve">
-    <value>Thông tin yêu cầu</value>
+    <value>Thông tin đề nghị</value>
   </data>
   <data name="RequestList" xml:space="preserve">
     <value>Danh sách yêu cầu</value>
@@ -668,6 +689,9 @@
   </data>
   <data name="RewardType" xml:space="preserve">
     <value>Loại khen thưởng</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Quyền</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Lưu</value>
@@ -776,6 +800,9 @@
   </data>
   <data name="UpdateResearcherInformation" xml:space="preserve">
     <value>Cập nhật thông tin cho nghiên cứu viên</value>
+  </data>
+  <data name="Valid-date" xml:space="preserve">
+    <value>Ngày ban hành</value>
   </data>
   <data name="Venue" xml:space="preserve">
     <value>Địa điểm tổ chức</value>
