@@ -756,7 +756,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 collab_status_hist.collab_status_id = collab_status_id;
                 collab_status_hist.change_date = DateTime.Now;
                 if (note != null) collab_status_hist.note = note;
-                if (evidence != null || evidence_file.file_id != 0) collab_status_hist.file_id = evidence_file.file_id;
+                if (evidence_file != null && evidence_file.file_id == 0)
+                {
+                    evidence_file = null;
+                }
+                if (evidence != null || evidence_file != null) collab_status_hist.file_id = evidence_file.file_id;
                 collab_status_hist.account_id = account_id;
                 db.CollaborationStatusHistories.Add(collab_status_hist);
                 db.SaveChanges();
