@@ -132,6 +132,9 @@
   <data name="AccountNumber" xml:space="preserve">
     <value>Account Number</value>
   </data>
+  <data name="Accp" xml:space="preserve">
+    <value>Acceptance</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Activities During The Year</value>
   </data>
@@ -174,11 +177,20 @@
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="AllowAtten" xml:space="preserve">
+    <value>Allowed to attend</value>
+  </data>
   <data name="AppBy" xml:space="preserve">
     <value>Approved by</value>
   </data>
   <data name="AppPro" xml:space="preserve">
     <value>Approval process</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="Approving" xml:space="preserve">
+    <value>Approving</value>
   </data>
   <data name="Apr" xml:space="preserve">
     <value>April</value>
@@ -636,6 +648,9 @@
   <data name="Record" xml:space="preserve">
     <value>record</value>
   </data>
+  <data name="Refunded" xml:space="preserve">
+    <value>Refunded</value>
+  </data>
   <data name="Registration" xml:space="preserve">
     <value>Registration</value>
   </data>
@@ -773,6 +788,9 @@
   </data>
   <data name="University" xml:space="preserve">
     <value>University</value>
+  </data>
+  <data name="Unrefunded" xml:space="preserve">
+    <value>Unrefunded</value>
   </data>
   <data name="UpdateInformation" xml:space="preserve">
     <value>Update information</value>
