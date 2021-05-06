@@ -132,6 +132,9 @@
   <data name="AccountNumber" xml:space="preserve">
     <value>Số tài khoản</value>
   </data>
+  <data name="Accp" xml:space="preserve">
+    <value>Chấp thuận</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Lịch hoạt động trong năm</value>
   </data>
@@ -173,6 +176,21 @@
   </data>
   <data name="All" xml:space="preserve">
     <value>Tất cả</value>
+  </data>
+  <data name="AllowAtten" xml:space="preserve">
+    <value>Được tham dự</value>
+  </data>
+  <data name="AppBy" xml:space="preserve">
+    <value>Người duyệt</value>
+  </data>
+  <data name="AppPro" xml:space="preserve">
+    <value>Quy trình phê duyệt</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Đã duyệt</value>
+  </data>
+  <data name="Approving" xml:space="preserve">
+    <value>Đang duyệt</value>
   </data>
   <data name="Apr" xml:space="preserve">
     <value>Tháng 4</value>
@@ -612,6 +630,9 @@
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
   </data>
+  <data name="Refunded" xml:space="preserve">
+    <value>Đã hoàn ứng</value>
+  </data>
   <data name="Registration" xml:space="preserve">
     <value>Đăng ký tham dự</value>
   </data>
@@ -746,6 +767,9 @@
   </data>
   <data name="University" xml:space="preserve">
     <value>Thuôc trường đại học</value>
+  </data>
+  <data name="Unrefunded" xml:space="preserve">
+    <value>Chưa hoàn ứng</value>
   </data>
   <data name="UpdateInformation" xml:space="preserve">
     <value>Cập nhật thông tin</value>
