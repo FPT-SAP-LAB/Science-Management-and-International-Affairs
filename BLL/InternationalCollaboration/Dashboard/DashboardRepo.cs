@@ -2,6 +2,7 @@
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Dashboard;
+using ENTITIES.CustomModels.ScienceManagement.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,6 +97,12 @@ namespace BLL.InternationalCollaboration.Dashboard
                 throw e;
             }
         }
+
+        public DashboardNumber GetHomeData()
+        {
+            throw new NotImplementedException();
+        }
+
         public string WidgetMou(int year)
         {
             try
@@ -105,12 +112,12 @@ namespace BLL.InternationalCollaboration.Dashboard
                                         SELECT DISTINCT mou.mou_id 
                                         FROM IA_Collaboration.MOU mou JOIN IA_Collaboration.MOUPartner mp
                                         ON mou.mou_id = mp.mou_id
-                                        WHERE (YEAR(mp.mou_start_date) <= {0})
+                                        WHERE (YEAR(mp.mou_start_date) <= {0}) AND mou.is_deleted = 0
                                         UNION ALL
                                         SELECT DISTINCT moa.moa_id
                                         FROM IA_Collaboration.MOA moa JOIN IA_Collaboration.MOAPartner mp
                                         ON moa.moa_id = mp.moa_id
-                                        WHERE (YEAR(mp.moa_start_date) <= {0})) a
+                                        WHERE (YEAR(mp.moa_start_date) <= {0}) AND moa.is_deleted = 0) a
 ";
 
                 int total = db.Database.SqlQuery<int>(query_total, year).FirstOrDefault();

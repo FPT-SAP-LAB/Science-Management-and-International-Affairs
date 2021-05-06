@@ -11,6 +11,7 @@
     List<ConferenceApprovalProcess> ApprovalProcesses = output["ApprovalProcesses"].ToObject<List<ConferenceApprovalProcess>>();
     List<ConferenceCriteria> Criterias = output["Criterias"].ToObject<List<ConferenceCriteria>>();
     DecisionDetail Decision = output["DecisionDetail"].ToObject<DecisionDetail>();
+    BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
 }
 <style>
     .chinhsach-container {
@@ -186,7 +187,7 @@
                                 </div>
                             }
                         </div>
-                        @if (ConferenceDetail.StatusID == 3 && ConferenceDetail.FormalityID == 2)
+                        @if (ConferenceDetail.StatusID == 3 && ConferenceDetail.FormalityID == 2 && u.rights.Contains(44))
                         {
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kt_datepicker_modal">
@@ -323,42 +324,52 @@
                             </div>
                         </div>
                     </div>
-                    @if (ConferenceDetail.StatusID == 1 && !ConferenceDetail.EditAble)
+                    @if (ConferenceDetail.StatusID == 1 && !ConferenceDetail.EditAble && (u.rights.Contains(42) || u.rights.Contains(34)))
                     {
                         <div class="col-lg-12 col-xl-12 mt-2" style="text-align: right;">
                             <div class="dropdown dropdown-inline">
                                 <!-- Button trigger modal-->
-                                <button type="button" class="btn btn-light-success" data-toggle="modal" data-target="#exampleModalLong">
-                                    Xác nhận duyệt
-                                </button>
-                                <button class="btn btn-light-warning" onclick="RequestEdit()">Yêu cầu chỉnh sửa</button>
+                                @if (u.rights.Contains(34))
+                                {
+                                    <button type="button" class="btn btn-light-success" data-toggle="modal" data-target="#exampleModalLong">
+                                        Xác nhận duyệt
+                                    </button>
+                                }
+                                @if (u.rights.Contains(42))
+                                {
+                                    <button class="btn btn-light-warning" onclick="RequestEdit()">
+                                        Yêu cầu chỉnh sửa
+                                    </button>
+                                }
                             </div>
                         </div>
-
-                        <!-- Modal-->
-                        <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Xét duyệt điều kiện tham dự</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <i aria-hidden="true" class="ki ki-close"></i>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Bình luận: </label>
-                                            <input type="text" class="form-control" id="comment" placeholder="Bình luận trên quy trình phê duyệt" />
-                                            <span class="form-text text-muted">Không bắt buộc</span>
+                        if (u.rights.Contains(34))
+                        {
+                            <!-- Modal-->
+                            <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Xét duyệt điều kiện tham dự</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <i aria-hidden="true" class="ki ki-close"></i>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy</button>
-                                        <button type="button" onclick="SubmitCriteria()" class="btn btn-primary font-weight-bold">Xác nhận</button>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Bình luận: </label>
+                                                <input type="text" class="form-control" id="comment" placeholder="Bình luận trên quy trình phê duyệt" />
+                                                <span class="form-text text-muted">Không bắt buộc</span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Hủy</button>
+                                            <button type="button" onclick="SubmitCriteria()" class="btn btn-primary font-weight-bold">Xác nhận</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
             </div>
@@ -953,6 +964,7 @@
         }
 
         function createAndSubmitForm(url, data, comment) {
+            $("#loading").show();
             var newForm = jQuery('<form>', {
                 'action': url,
                 'method': 'post'
@@ -994,7 +1006,7 @@
                 url: "/ConferenceSponsor/RequestEdit",
                 method: "post",
                 data: {
-                    request_id: @ConferenceDetail.RequestID
+                    request_id: @ConferenceDetail.RequestID,
                 },
                 dataType: "json",
                 success: function (data) {

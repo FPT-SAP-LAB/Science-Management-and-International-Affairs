@@ -323,6 +323,8 @@
     <Compile Include="CustomModels\Datatable\ResultDatatable.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\CustomCitation.cs" />
     <Compile Include="CustomModels\ScienceManagement\Citation\ProfileExtend.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Dashboard\DashboardNumber.cs" />
+    <Compile Include="CustomModels\ScienceManagement\Dashboard\PaperByOffice.cs" />
     <Compile Include="CustomModels\ScienceManagement\Report\TotalBonusByYearItem.cs" />
     <Compile Include="CustomModels\SubscribeLanguage.cs" />
     <Compile Include="CustomModels\ScienceManagement\ArticlePolicy\ArticlePolicyEdit.cs" />

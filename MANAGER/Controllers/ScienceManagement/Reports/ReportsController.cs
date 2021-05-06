@@ -1,8 +1,11 @@
-﻿using BLL.ModelDAL;
+﻿//using BLL.InternationalCollaboration.Dashboard;
+using BLL.ModelDAL;
+using BLL.ScienceManagement.Dashboard;
 using BLL.ScienceManagement.Report;
 using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
+using ENTITIES.CustomModels.ScienceManagement.Dashboard;
 using ENTITIES.CustomModels.ScienceManagement.Report;
 using ENTITIES.CustomModels.ScienceManagement.SearchFilter;
 using MANAGER.Support;
@@ -105,8 +108,13 @@ namespace MANAGER.Controllers.ScienceManagement.Reports
         }
         //[Auther(RightID = "24")]
         [ChildActionOnly]
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(int? year)
         {
+            if (year == null) year = DateTime.Now.Year;
+            DashboardRepo d = new DashboardRepo();
+            DashboardNumber item = d.GetHomeData(year.Value);
+            //Request.year = year.ToString();
+            ViewBag.homedata = item;
             return PartialView();
         }
         [Auther(RightID = "24")]

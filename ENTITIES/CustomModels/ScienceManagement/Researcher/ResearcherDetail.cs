@@ -7,6 +7,7 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
     {
         public int id { get; set; }
         public string name { get; set; }
+        public string msnv { get; set; }
         public System.DateTime? dob { get; set; }
         public string country { get; set; }
         public int country_id { get; set; }
@@ -20,6 +21,9 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public string avatar { get; set; }
         public string website { get; set; }
         public string gscholar { get; set; }
+        public string bankAccount { get; set; }
+        public string bankBranch { get; set; }
+        public string taxCode { get; set; }
         public string cv { get; set; }
         public List<SelectField> interested_fields { get; set; }
         public List<SelectField> title_fields { get; set; }

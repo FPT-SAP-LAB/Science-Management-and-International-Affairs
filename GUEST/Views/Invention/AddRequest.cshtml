@@ -60,35 +60,22 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-custom " style="box-shadow: 0px 0px 30px 0px rgba(82,63,105,0.17); border: 0; margin-bottom: 2rem;">
-                            <div class="card-header ribbon ribbon-top ribbon-ver">
+                            <div class="card-header ribbon ribbon-top ribbon-ver text-center">
                                 <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
                                     <i class="fa fa-star text-white"></i>
                                 </div>
-                                <h3 class="card-title">
-                                    Chính sách hiện tại
+                                <h3 class="card-title text-center">
+                                    @*@rm.GetString("CurrentPolicy")*@
+                                    <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">@rm.GetString("CurrentPolicy")</a>
                                 </h3>
                             </div>
-                            <div class="card-body">
+                            @*<div class="card-body">
                                 <ul>
                                 </ul>
                                 <br />
-                                <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">Chi tiết</a>
-                            </div>
+                                <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">@rm.GetString("Detail")</a>
+                            </div>*@
                         </div>
-                    </div>
-                </div>
-                <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
-                <div class="row">
-                    <div class="col-xl-6 form-group">
-                        <label class="required-field">@rm.GetString("TotalReward")</label>
-                        <input autocomplete="off" class="form-control form-control-lg" readonly type="text" />
-                    </div>
-                    <div class="col-xl-6 form-group" style="display:none">
-                        <label class="required-field">@rm.GetString("RewardType")</label>
-                        <select id="kieuthuong" class="form-control form-control-lg">
-                            <option selected value="2">@rm.GetString("According")</option>
-                            <option value="1">@rm.GetString("Repre")</option>
-                        </select>
                     </div>
                 </div>
                 <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("AuthorInfo")</h3>
@@ -176,7 +163,7 @@
 
         function addAuthor() {
             $.ajax({
-                url: "@Url.Action("addAuthor", "Invention")",
+                url: "@Url.Action("AddAuthor", "Invention")",
                 type: "POST",
                 data: JSON.stringify({
                     'people': people,
@@ -213,7 +200,7 @@
                 var type = $("#search_type").val();
                 var kieuthuong = $("#kieuthuong").val();
                 $.ajax({
-                    url: "@Url.Action("addInven", "Invention")",
+                    url: "@Url.Action("AddInven", "Invention")",
                     type: "POST",
                     data: JSON.stringify({
                         'inven': invention,
@@ -234,7 +221,7 @@
                 });
             } catch (err) {
                 $.ajax({
-                    url: "@Url.Action("deleteFile", "Invention")",
+                    url: "@Url.Action("DeleteFile", "Invention")",
                     type: "POST",
                     data: { 'id': fileid },
                     cache: false,
@@ -305,7 +292,7 @@
                 formData.append('people', author_temp);
 
                 $.ajax({
-                    url: "/Invention/addFile",
+                    url: "/Invention/AddFile",
                     method: "post",
                     complete: function (data) {
                         var mess = data.responseJSON.mess;

@@ -16,5 +16,6 @@ namespace ENTITIES.CustomModels.ScienceManagement.Researcher
         public List<string> co_author { get; set; }
         public string year { get; set; }
         public string link { get; set; }
+        public string rank { get; set; }
     }
 }

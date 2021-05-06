@@ -59,6 +59,10 @@ namespace BLL.ScienceManagement.Researcher
                     string email = (string)editInfo["info"]["email"];
                     string website = (string)editInfo["info"]["website"];
                     string googlescholar = (string)editInfo["info"]["googlescholar"];
+                    string accountNumber = (string)editInfo["info"]["accountNumber"];
+                    string bankBranch = (string)editInfo["info"]["bankBranch"];
+                    string taxCode = (string)editInfo["info"]["taxCode"];
+                    string msnv = (string)editInfo["info"]["msnv"];
                     string cv = (string)editInfo["info"]["cv"];
                     string office = (string)editInfo["info"]["office"][0]["id"];
 
@@ -70,11 +74,15 @@ namespace BLL.ScienceManagement.Researcher
                     {
                         profile.birth_date = DateTime.ParseExact(birthdate, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                     }
-                    person.phone_number = phone;
-                    profile.website = website;
-                    profile.cv = cv;
-                    person.email = email;
-                    profile.google_scholar = googlescholar;
+                    person.phone_number = phone.Trim();
+                    profile.mssv_msnv = msnv.Trim();
+                    profile.website = website.Trim();
+                    profile.cv = cv.Trim();
+                    person.email = email.Trim();
+                    profile.google_scholar = googlescholar.Trim();
+                    profile.bank_number = accountNumber.Trim();
+                    profile.bank_branch = bankBranch.Trim();
+                    profile.tax_code = taxCode.Trim();
                     profile.Person.office_id = Int32.Parse(office);
                     db.SaveChanges();
                     ///////////////////////////////////////////////////////

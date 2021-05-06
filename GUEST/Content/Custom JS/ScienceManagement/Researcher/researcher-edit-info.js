@@ -1,5 +1,6 @@
 ﻿class Researcher {
-    constructor(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields, office) {
+    constructor(people_id, name, dob, nationality, title, position, phone, email,
+        website, googlescholar, cv, fields, office, msnv, accountNumber, bankBranch, taxCode) {
         this.people_id = people_id,
             this.name = name,
             this.nationality = nationality,
@@ -12,7 +13,11 @@
             this.googlescholar = googlescholar,
             this.cv = cv,
             this.fields = fields,
-            this.office=office
+            this.office = office,
+            this.msnv = msnv,
+        this.accountNumber = accountNumber,
+        this.bankBranch = bankBranch,
+            this.taxCode = taxCode
     }
 }
 function enableEdit() {
@@ -28,7 +33,7 @@ $(function () {
         enableEdit()
     })
     $("#save-btn").click(function () {
-        if (validateNonEmptyField(["#researcher_name", "#researcher_dob"])) {
+        if (validateNonEmptyField(["#researcher_name", "#researcher_dob", "#researcher_msnv"])) {
             save_loader.startLoading()
             $("#progress-bar").show()
             $(".researcher_infomation").attr('disabled', false)
@@ -43,11 +48,16 @@ $(function () {
             phone = $("#researcher_phone").val()
             email = $("#researcher_email").val()
             website = $("#researcher_website").val()
+            accountNumber = $("#researcher_accountNumber").val()
+            bankBranch = $("#researcher_bankBranch").val()
+            taxCode = $("#researcher_taxCode").val()
+            msnv = $("#researcher_msnv").val()
             googlescholar = $("#researcher_gscholar").val()
             office = $("#office_select").select2('data');
             cv = $("#researcher_cv").val()
             fields = $("#interested_fields_select").select2('data');
-            let info = new Researcher(people_id, name, dob, nationality, title, position, phone, email, website, googlescholar, cv, fields, office)
+            let info = new Researcher(people_id, name, dob, nationality, title, position, phone, email, website,
+                googlescholar, cv, fields, office, msnv, accountNumber, bankBranch, taxCode)
             var fd = new FormData();
             console.log(info)
             fd.append('info', JSON.stringify({ info: info }));

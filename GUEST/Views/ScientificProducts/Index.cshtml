@@ -52,7 +52,7 @@
                                         <div class="col-lg-3 col-xl-3 mt-5 mt-lg-0">
                                             <button id="search-btn"
                                                     class="btn btn-light-primary px-6 font-weight-bold">
-                                                Tìm kiếm
+                                                @rm.GetString("Search")
                                             </button>
                                         </div>
 
@@ -211,15 +211,19 @@
         });
     </script>
     <script>
+        function replaceRedSpaces(string) {
+            return string.replace(/  +/g, ' ').trim();
+        }
+
         var table_tapchi;
         $("#search-btn").click(function () {
             $("#table_tapchi").DataTable().clear().draw();
             $("#table_kyyeu").DataTable().clear().draw();
             $("#table_sangche").DataTable().clear().draw();
             var DataSearch = {
-                nameS: $("#name_search").val(),
-                monthS: $("#search_thang").val(),
-                yearS: $("#search_nam").val()
+                nameS: replaceRedSpaces($("#name_search").val()),
+                monthS: replaceRedSpaces($("#search_thang").val()),
+                    yearS: replaceRedSpaces($("#search_nam").val())
             };
             $.ajax({
                 url: "@Url.Action("Search", "ScientificProducts")",

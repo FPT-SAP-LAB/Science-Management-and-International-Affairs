@@ -390,6 +390,10 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                         SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     case "none":
+                        var lastest_status_history = db.CollaborationStatusHistories.Where(x => x.collab_id == collab_id).OrderByDescending(t => t.change_date).FirstOrDefault();
+                        evidence_file = db.Files.Find(lastest_status_history.file_id);
+                        //add to Collab Status History
+                        SaveCollabStatusHistory(evidence, collab_id, status_id, note, evidence_file, account_id);
                         break;
                     default:
                         break;
@@ -752,7 +756,11 @@ namespace BLL.InternationalCollaboration.AcademicCollaborationRepository
                 collab_status_hist.collab_status_id = collab_status_id;
                 collab_status_hist.change_date = DateTime.Now;
                 if (note != null) collab_status_hist.note = note;
-                if (evidence != null) collab_status_hist.file_id = evidence_file.file_id;
+                if (evidence_file != null && evidence_file.file_id == 0)
+                {
+                    evidence_file = null;
+                }
+                if (evidence != null || evidence_file != null) collab_status_hist.file_id = evidence_file.file_id;
                 collab_status_hist.account_id = account_id;
                 db.CollaborationStatusHistories.Add(collab_status_hist);
                 db.SaveChanges();

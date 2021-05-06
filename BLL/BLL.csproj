@@ -208,6 +208,7 @@
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorEditRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorExportRepo.cs" />
     <Compile Include="ScienceManagement\ConferenceSponsor\ConferenceSponsorIndexRepo.cs" />
+    <Compile Include="ScienceManagement\Dashboard\DashboardRepo.cs" />
     <Compile Include="ScienceManagement\DecisionHistory\DecisionRepo.cs" />
     <Compile Include="ScienceManagement\Invention\InventionRepo.cs" />
     <Compile Include="ScienceManagement\MasterData\MasterDataRepo.cs" />

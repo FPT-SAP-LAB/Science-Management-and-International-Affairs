@@ -169,7 +169,7 @@
         $("#editconfirm").click(function () {
             $("#loading").show();
             $.ajax({
-                url: "@Url.Action("changeStatus", "Citation")",
+                url: "@Url.Action("ChangeStatus", "Citation")",
                 type: "POST",
                 data: { 'request_id': request_id },
                 datatype: "json",
@@ -206,7 +206,7 @@
                 if (result.isConfirmed) {
                     $("#loading").show();
                     $.ajax({
-                        url: "@Url.Action("deleteRequest", "Citation")",
+                        url: "@Url.Action("DeleteRequest", "Citation")",
                         type: "POST",
                         data: { 'id': request_id },
                         datatype: "json",

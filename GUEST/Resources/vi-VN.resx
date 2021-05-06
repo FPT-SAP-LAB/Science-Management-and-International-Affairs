@@ -129,17 +129,44 @@
   <data name="According" xml:space="preserve">
     <value>Theo quy định</value>
   </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>Số tài khoản</value>
+  </data>
+  <data name="Accp" xml:space="preserve">
+    <value>Chấp thuận</value>
+  </data>
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Lịch hoạt động trong năm</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
   <data name="AddAcadHistory" xml:space="preserve">
     <value>Thêm tiểu sử học tập</value>
+  </data>
+  <data name="AddArticleRequest" xml:space="preserve">
+    <value>Đề nghị khen thưởng bài báo</value>
   </data>
   <data name="AddAu" xml:space="preserve">
     <value>Thêm tác giả</value>
   </data>
   <data name="AddAward" xml:space="preserve">
     <value>Thêm giải thưởng</value>
+  </data>
+  <data name="AddCitationRequest" xml:space="preserve">
+    <value>Đề nghị khen thưởng trích dẫn</value>
+  </data>
+  <data name="AddConfer" xml:space="preserve">
+    <value>Thêm đề nghị hỗ trợ hội nghị</value>
+  </data>
+  <data name="AddConferenceRequest" xml:space="preserve">
+    <value>Đề nghị hỗ trợ hội nghị</value>
+  </data>
+  <data name="AddInventionRequest" xml:space="preserve">
+    <value>Đề nghị khen thưởng bằng sáng chế</value>
+  </data>
+  <data name="AddPaper" xml:space="preserve">
+    <value>Đăng ký khen thưởng bài báo</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Địa chỉ</value>
@@ -153,6 +180,21 @@
   <data name="All" xml:space="preserve">
     <value>Tất cả</value>
   </data>
+  <data name="AllowAtten" xml:space="preserve">
+    <value>Được tham dự</value>
+  </data>
+  <data name="AppBy" xml:space="preserve">
+    <value>Người duyệt</value>
+  </data>
+  <data name="AppPro" xml:space="preserve">
+    <value>Quy trình phê duyệt</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Đã duyệt</value>
+  </data>
+  <data name="Approving" xml:space="preserve">
+    <value>Đang duyệt</value>
+  </data>
   <data name="Apr" xml:space="preserve">
     <value>Tháng 4</value>
   </data>
@@ -161,6 +203,15 @@
   </data>
   <data name="ArticlePolicies" xml:space="preserve">
     <value>Thông tin chính sách</value>
+  </data>
+  <data name="ArticleReward" xml:space="preserve">
+    <value>Danh sách đề nghị khen thưởng bài báo</value>
+  </data>
+  <data name="AttenList" xml:space="preserve">
+    <value>Danh sách tham dự</value>
+  </data>
+  <data name="AttenTime" xml:space="preserve">
+    <value>Thời gian tham dự</value>
   </data>
   <data name="Aug" xml:space="preserve">
     <value>Tháng 8</value>
@@ -173,6 +224,12 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>Ngân hàng - Chi nhánh ngân hàng</value>
+  </data>
+  <data name="BankAccountInformation" xml:space="preserve">
+    <value>Thông tin tài khoản ngân hàng</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>Chi nhánh</value>
   </data>
   <data name="Biography" xml:space="preserve">
     <value>Tiểu sử</value>
@@ -189,23 +246,47 @@
   <data name="CitationInfo" xml:space="preserve">
     <value>Thông tin trích dẫn</value>
   </data>
+  <data name="CitationRewardRequests" xml:space="preserve">
+    <value>Danh sách đề nghị khen thưởng trích dẫn</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Đóng</value>
   </data>
   <data name="CMND" xml:space="preserve">
     <value>CMND</value>
   </data>
+  <data name="Cmt" xml:space="preserve">
+    <value>Bình luận</value>
+  </data>
   <data name="CmtInfo" xml:space="preserve">
     <value>Thông tin hội thoại</value>
   </data>
+  <data name="Co-organ" xml:space="preserve">
+    <value>Đơn vị đồng tổ chức</value>
+  </data>
   <data name="Competition" xml:space="preserve">
     <value>Cuộc thi/Giải thưởng</value>
+  </data>
+  <data name="Confer" xml:space="preserve">
+    <value>Hội nghị</value>
+  </data>
+  <data name="ConferenceInfor" xml:space="preserve">
+    <value>Thông tin hội nghị</value>
   </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Tên hội thảo</value>
   </data>
   <data name="ConferencePaper" xml:space="preserve">
     <value>Kỷ yếu hội thảo</value>
+  </data>
+  <data name="ConferenceSponsorRequests" xml:space="preserve">
+    <value>Danh sách đề nghị Hỗ trợ hội nghị</value>
+  </data>
+  <data name="ConferName" xml:space="preserve">
+    <value>Tên hội nghị</value>
+  </data>
+  <data name="ConfirmAuthor" xml:space="preserve">
+    <value>Xác nhận thưởng cho tác giả</value>
   </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Thông tin liên hệ</value>
@@ -216,6 +297,9 @@
   <data name="ContractType" xml:space="preserve">
     <value>Loại hợp đồng</value>
   </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Chi phí</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>Quốc gia</value>
   </data>
@@ -224,6 +308,9 @@
   </data>
   <data name="CriteriaType" xml:space="preserve">
     <value>Loại tiêu chí</value>
+  </data>
+  <data name="CurrentPolicy" xml:space="preserve">
+    <value>Chính sách hiện tại</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Ngày</value>
@@ -236,6 +323,9 @@
   </data>
   <data name="DateRangePickerFormat" xml:space="preserve">
     <value>DD/MM/yyyy</value>
+  </data>
+  <data name="de-file" xml:space="preserve">
+    <value>Thư mục drive của quyết định</value>
   </data>
   <data name="Dec" xml:space="preserve">
     <value>Tháng 12</value>
@@ -252,8 +342,14 @@
   <data name="DelRow" xml:space="preserve">
     <value>Xóa dòng</value>
   </data>
+  <data name="DeNo" xml:space="preserve">
+    <value>Số quyết định</value>
+  </data>
   <data name="Detail" xml:space="preserve">
     <value>Chi tiết</value>
+  </data>
+  <data name="DetailPaper" xml:space="preserve">
+    <value>Chi tiết bài báo</value>
   </data>
   <data name="Dob" xml:space="preserve">
     <value>Ngày sinh</value>
@@ -261,8 +357,14 @@
   <data name="Domestic" xml:space="preserve">
     <value>Trong nước</value>
   </data>
+  <data name="DoR" xml:space="preserve">
+    <value>Ngày tạo đề nghị</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
+  </data>
+  <data name="EditAu" xml:space="preserve">
+    <value>Chỉnh sửa thông tin tác giả</value>
   </data>
   <data name="EditAward" xml:space="preserve">
     <value>Sửa thông tin giải thưởng</value>
@@ -282,6 +384,9 @@
   <data name="EmptyTB" xml:space="preserve">
     <value>Không có dữ liệu</value>
   </data>
+  <data name="EoR" xml:space="preserve">
+    <value>Ngày kết thúc đề nghị</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Lỗi</value>
   </data>
@@ -294,6 +399,9 @@
   <data name="ErrorCita" xml:space="preserve">
     <value>Phải có ít nhất 1 dòng</value>
   </data>
+  <data name="ExCost" xml:space="preserve">
+    <value>Chi phí dự kiến</value>
+  </data>
   <data name="Feb" xml:space="preserve">
     <value>Tháng 2</value>
   </data>
@@ -302,6 +410,12 @@
   </data>
   <data name="FileCMnew" xml:space="preserve">
     <value>Upload file mới</value>
+  </data>
+  <data name="FileDe" xml:space="preserve">
+    <value>File đề nghị</value>
+  </data>
+  <data name="Formal" xml:space="preserve">
+    <value>Hình thức</value>
   </data>
   <data name="FPTProcedure" xml:space="preserve">
     <value>Thủ tục với FPT</value>
@@ -342,6 +456,9 @@
   <data name="Invention" xml:space="preserve">
     <value>Bằng sáng chế/GPHI</value>
   </data>
+  <data name="InventionRewardRequests" xml:space="preserve">
+    <value>Danh sách đề nhị khen thưởng bằng sáng chế</value>
+  </data>
   <data name="ISI/SCOPUS" xml:space="preserve">
     <value>Bài báo ISI/SCOPUS</value>
   </data>
@@ -365,6 +482,9 @@
   </data>
   <data name="Jun" xml:space="preserve">
     <value>Tháng 6</value>
+  </data>
+  <data name="Letter" xml:space="preserve">
+    <value>Thư tham dự</value>
   </data>
   <data name="Link" xml:space="preserve">
     <value>Link xác minh</value>
@@ -414,6 +534,9 @@
   <data name="Nationality" xml:space="preserve">
     <value>Quốc tịch</value>
   </data>
+  <data name="NeedEdit" xml:space="preserve">
+    <value>Cần chỉnh sửa</value>
+  </data>
   <data name="NewPublications" xml:space="preserve">
     <value>Công bố mới</value>
   </data>
@@ -441,8 +564,14 @@
   <data name="Office" xml:space="preserve">
     <value>Đơn vị</value>
   </data>
+  <data name="OrganUnit" xml:space="preserve">
+    <value>Đơn vị tổ chức</value>
+  </data>
   <data name="Page" xml:space="preserve">
     <value>Trang</value>
+  </data>
+  <data name="PaperFile" xml:space="preserve">
+    <value>File bài báo</value>
   </data>
   <data name="PaperInfo" xml:space="preserve">
     <value>Thông tin bài báo</value>
@@ -496,7 +625,7 @@
     <value>Tiêu đề</value>
   </data>
   <data name="ProfileName" xml:space="preserve">
-    <value>Họ tên</value>
+    <value>Họ và tên</value>
   </data>
   <data name="ProfilePicture" xml:space="preserve">
     <value>Ảnh hồ sơ</value>
@@ -534,6 +663,9 @@
   <data name="Record" xml:space="preserve">
     <value>Bản ghi</value>
   </data>
+  <data name="Refunded" xml:space="preserve">
+    <value>Đã hoàn ứng</value>
+  </data>
   <data name="Registration" xml:space="preserve">
     <value>Đăng ký tham dự</value>
   </data>
@@ -550,7 +682,7 @@
     <value>Ngày gửi yêu cầu</value>
   </data>
   <data name="RequestInfo" xml:space="preserve">
-    <value>Thông tin yêu cầu</value>
+    <value>Thông tin đề nghị</value>
   </data>
   <data name="RequestList" xml:space="preserve">
     <value>Danh sách yêu cầu</value>
@@ -569,6 +701,9 @@
   </data>
   <data name="RewardType" xml:space="preserve">
     <value>Loại khen thưởng</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Quyền</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Lưu</value>
@@ -619,7 +754,10 @@
     <value>Khu CNC Hoà Lạc, Hà Nội, Việt Nam</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>Nguồn trích dẫn</value>
+    <value>Tiêu chí trích dẫn</value>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>Diễn giả/ Thành viên BTC</value>
   </data>
   <data name="Specialization" xml:space="preserve">
     <value>Lĩnh vực</value>
@@ -627,11 +765,11 @@
   <data name="Specialized" xml:space="preserve">
     <value>Chuyên ngành</value>
   </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Tổ chức tài trợ</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Trạng thái</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
   <data name="STT" xml:space="preserve">
     <value>STT</value>
@@ -642,23 +780,44 @@
   <data name="Tax" xml:space="preserve">
     <value>Mã số thuế</value>
   </data>
+  <data name="TaxCode" xml:space="preserve">
+    <value>Mã số thuế</value>
+  </data>
   <data name="TermCondition" xml:space="preserve">
     <value>Lựa chọn loại khen thưởng đã được xác nhận bởi tất cả các thành viên trong nhóm</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Thời gian</value>
   </data>
+  <data name="TimePlace" xml:space="preserve">
+    <value>Thời gian diễn ra</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Chức danh</value>
   </data>
+  <data name="Total" xml:space="preserve">
+    <value>Tổng cộng</value>
+  </data>
   <data name="TotalReward" xml:space="preserve">
     <value>Tổng thưởng</value>
+  </data>
+  <data name="University" xml:space="preserve">
+    <value>Thuôc trường đại học</value>
+  </data>
+  <data name="Unrefunded" xml:space="preserve">
+    <value>Chưa hoàn ứng</value>
   </data>
   <data name="UpdateInformation" xml:space="preserve">
     <value>Cập nhật thông tin</value>
   </data>
   <data name="UpdateResearcherInformation" xml:space="preserve">
     <value>Cập nhật thông tin cho nghiên cứu viên</value>
+  </data>
+  <data name="Valid-date" xml:space="preserve">
+    <value>Ngày ban hành</value>
+  </data>
+  <data name="Venue" xml:space="preserve">
+    <value>Địa điểm tổ chức</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>Xem chi tiết</value>

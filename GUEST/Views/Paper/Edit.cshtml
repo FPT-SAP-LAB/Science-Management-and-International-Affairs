@@ -1,8 +1,8 @@
 ﻿
 @{
-    //ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = @rm.GetString("DetailPaper");
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="card card-custom">
@@ -76,7 +76,7 @@
                             <input autocomplete="off" id="paper_publish_name" class="form-control form-control-lg edit" type="text" value="@ViewBag.Paper.company" />
                         </div>
                     </div>
-                    <h3 class="mb-10 font-weight-bold text-dark">Thông tin xét thưởng</h3>
+                    <h3 class="mb-10 font-weight-bold text-dark">@rm.GetString("RewardInfo")</h3>
                     <div class="row" id="thuong">
                         <div class="col-xl-6 form-group">
                             <label>@rm.GetString("CriteriaType")</label>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <button class="btn btn-light-success px-6 font-weight-bold edit" id="edit_submit">@rm.GetString("Send")</button>
-                        <button class="btn btn-light-success px-6 font-weight-bold ml-1" id="edit_submit_reward">Xác nhận thưởng cho tác giả</button>
+                        <button class="btn btn-light-success px-6 font-weight-bold ml-1" id="edit_submit_reward">@rm.GetString("ConfirmAuthor")</button>
                         @*<button class="btn btn-light-success px-6 font-weight-bold ml-1" id="view_decision">Xem quyết định thưởng của bài báo</button>*@
                     </div>
                     <h3 class="mb-10 font-weight-bold text-dark mt-10">@rm.GetString("CmtInfo")</h3>
@@ -181,7 +181,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
+                <h3 class="modal-title font-weight-bolder">@rm.GetString("AddAu")</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
@@ -198,7 +198,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title font-weight-bolder">Chỉnh sửa thông tin tác giả</h3>
+                <h3 class="modal-title font-weight-bolder">@rm.GetString("EditAu")</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
