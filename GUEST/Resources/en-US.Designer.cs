@@ -232,6 +232,24 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Approved by.
+        /// </summary>
+        public static string AppBy {
+            get {
+                return ResourceManager.GetString("AppBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approval process.
+        /// </summary>
+        public static string AppPro {
+            get {
+                return ResourceManager.GetString("AppPro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to April.
         /// </summary>
         public static string Apr {
@@ -412,6 +430,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        public static string Cmt {
+            get {
+                return ResourceManager.GetString("Cmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conversation.
         /// </summary>
         public static string CmtInfo {
@@ -439,7 +466,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conference.
+        ///   Looks up a localized string similar to conference.
         /// </summary>
         public static string Confer {
             get {
@@ -448,7 +475,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conference Information.
+        ///   Looks up a localized string similar to Conference&apos;s Information.
         /// </summary>
         public static string ConferenceInfor {
             get {
@@ -484,7 +511,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Conference name.
+        ///   Looks up a localized string similar to Conference&apos;s name.
         /// </summary>
         public static string ConferName {
             get {
@@ -601,6 +628,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decision drive folder.
+        /// </summary>
+        public static string de_file {
+            get {
+                return ResourceManager.GetString("de-file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to December.
         /// </summary>
         public static string Dec {
@@ -673,6 +709,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of request.
+        /// </summary>
+        public static string DoR {
+            get {
+                return ResourceManager.GetString("DoR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -732,6 +777,15 @@ namespace GUEST.Resources {
         public static string EmptyTB {
             get {
                 return ResourceManager.GetString("EmptyTB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date end of request.
+        /// </summary>
+        public static string EoR {
+            get {
+                return ResourceManager.GetString("EoR", resourceCulture);
             }
         }
         
@@ -804,6 +858,15 @@ namespace GUEST.Resources {
         public static string FileCMnew {
             get {
                 return ResourceManager.GetString("FileCMnew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decision file.
+        /// </summary>
+        public static string FileDe {
+            get {
+                return ResourceManager.GetString("FileDe", resourceCulture);
             }
         }
         
@@ -1164,6 +1227,15 @@ namespace GUEST.Resources {
         public static string Nationality {
             get {
                 return ResourceManager.GetString("Nationality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Require Edit.
+        /// </summary>
+        public static string NeedEdit {
+            get {
+                return ResourceManager.GetString("NeedEdit", resourceCulture);
             }
         }
         
@@ -1654,6 +1726,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string Right {
+            get {
+                return ResourceManager.GetString("Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -1807,7 +1888,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Speakers.
+        ///   Looks up a localized string similar to Speaker / organizer members.
         /// </summary>
         public static string Speaker {
             get {
@@ -1834,7 +1915,7 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sponsor.
+        ///   Looks up a localized string similar to Sponsors.
         /// </summary>
         public static string Sponsor {
             get {
@@ -1965,6 +2046,15 @@ namespace GUEST.Resources {
         public static string UpdateResearcherInformation {
             get {
                 return ResourceManager.GetString("UpdateResearcherInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid date.
+        /// </summary>
+        public static string Valid_date {
+            get {
+                return ResourceManager.GetString("Valid-date", resourceCulture);
             }
         }
         
