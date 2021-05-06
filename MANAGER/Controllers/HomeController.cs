@@ -8,6 +8,7 @@ namespace MANAGER.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly string[] Criterias = new string[] { "Q1", "Q2", "Q3", "Q4" };
         public ActionResult Index(int? year)
         {
             if (Request.IsAuthenticated && Session["User"] != null)
@@ -27,8 +28,10 @@ namespace MANAGER.Controllers
                 ViewBag.year_select = year_select;
 
                 DashboardRepo dashboardRepo = new DashboardRepo();
-                PaperByOffice paperByOffice = dashboardRepo.GetPaperByOffices(new string[] { "Q1", "Q2", "Q3", "Q4" }, year);
+                PaperByOffice paperByOffice = dashboardRepo.GetPaperByOffices(Criterias, year);
+                Dictionary<string, int> specialiNumPaper = dashboardRepo.GetPaperBySpecializations(year);
                 ViewBag.paperByOffice = paperByOffice;
+                ViewBag.specialiNumPaper = specialiNumPaper;
 
                 return View();
             }

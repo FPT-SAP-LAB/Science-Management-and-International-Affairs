@@ -305,7 +305,9 @@
                                 <div class='card card-custom paper_items' style='padding-bottom:2rem'>
                                 <div class='card-body pt-3 pb-0'><a href='` + row.link + `'><i class="flaticon-add-label-button icon-md text-success"></i>  ` + row.paper_name + `</a>`
                                 + "     <span class='text-muted'>" + (String(row.year) != "" ? "(" + String(row.year) +")" : "") + "</span>"
-                                + "     <span class='text-muted navi-text font-italic'> - " + String(row.co_author).replace(",",", ")+ "</span>"
+                                + "     <span class='text-muted'> - " + (String(row.journal_or_cfr_name) != "" ? "" + String(row.journal_or_cfr_name) +"" : "") + "</span>"
+                                + "     <span class='text-muted'> - " + (String(row.rank) != "" ? "" + String(row.rank) +"" : "") + "</span>"
+                                + "     <span class='text-muted navi-text '> - " + String(row.co_author).replace(",",", ")+ "</span>"
                                 +`
                                 </div>
                             </div>

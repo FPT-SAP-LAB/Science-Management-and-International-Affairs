@@ -66,6 +66,9 @@ namespace User.Controllers
 
             ViewBag.request_id = id;
             RequestCitation rc = cr.GetRequestCitation(id);
+            if (rc == null)
+                return Redirect("/Citation/Pending");
+
             ViewBag.total_reward = rc.total_reward;
 
             ViewBag.ckEdit = rc.citation_status_id;

@@ -135,6 +135,9 @@
   <data name="ActivityNavbar" xml:space="preserve">
     <value>Activities During The Year</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="AddAcadHistory" xml:space="preserve">
     <value>Add Study History</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="AddCitationRequest" xml:space="preserve">
     <value>Create Citation reward request</value>
+  </data>
+  <data name="AddConfer" xml:space="preserve">
+    <value>Add conference support request</value>
   </data>
   <data name="AddConferenceRequest" xml:space="preserve">
     <value>Create Conference participation funding request</value>
@@ -168,6 +174,12 @@
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="AppBy" xml:space="preserve">
+    <value>Approved by</value>
+  </data>
+  <data name="AppPro" xml:space="preserve">
+    <value>Approval process</value>
+  </data>
   <data name="Apr" xml:space="preserve">
     <value>April</value>
   </data>
@@ -180,11 +192,17 @@
   <data name="ArticleReward" xml:space="preserve">
     <value>Articles Reward Requests</value>
   </data>
+  <data name="AttenList" xml:space="preserve">
+    <value>Attendance list</value>
+  </data>
+  <data name="AttenTime" xml:space="preserve">
+    <value>Attendance time</value>
+  </data>
   <data name="Aug" xml:space="preserve">
     <value>August</value>
   </data>
   <data name="AuthorInfo" xml:space="preserve">
-    <value>Author's inormation</value>
+    <value>Author's information</value>
   </data>
   <data name="AuthorName" xml:space="preserve">
     <value>Author's name</value>
@@ -222,11 +240,23 @@
   <data name="CMND" xml:space="preserve">
     <value>People ID</value>
   </data>
+  <data name="Cmt" xml:space="preserve">
+    <value>Comment</value>
+  </data>
   <data name="CmtInfo" xml:space="preserve">
     <value>Conversation</value>
   </data>
+  <data name="Co-organ" xml:space="preserve">
+    <value>Co-organized unit</value>
+  </data>
   <data name="Competition" xml:space="preserve">
     <value>Competition</value>
+  </data>
+  <data name="Confer" xml:space="preserve">
+    <value>conference</value>
+  </data>
+  <data name="ConferenceInfor" xml:space="preserve">
+    <value>Conference's Information</value>
   </data>
   <data name="ConferenceName" xml:space="preserve">
     <value>Conference's name</value>
@@ -237,6 +267,9 @@
   <data name="ConferenceSponsorRequests" xml:space="preserve">
     <value>Conference Sponsor Requests</value>
   </data>
+  <data name="ConferName" xml:space="preserve">
+    <value>Conference's name</value>
+  </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Contact Information</value>
   </data>
@@ -246,6 +279,9 @@
   <data name="ContractType" xml:space="preserve">
     <value>Contract type</value>
   </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>Country</value>
   </data>
@@ -254,6 +290,9 @@
   </data>
   <data name="CriteriaType" xml:space="preserve">
     <value>Criteria type</value>
+  </data>
+  <data name="CurrentPolicy" xml:space="preserve">
+    <value>Current policy</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -266,6 +305,9 @@
   </data>
   <data name="DateRangePickerFormat" xml:space="preserve">
     <value>MM/DD/yyyy</value>
+  </data>
+  <data name="de-file" xml:space="preserve">
+    <value>Decision drive folder</value>
   </data>
   <data name="Dec" xml:space="preserve">
     <value>December</value>
@@ -291,6 +333,9 @@
   <data name="Domestic" xml:space="preserve">
     <value>Domestic</value>
   </data>
+  <data name="DoR" xml:space="preserve">
+    <value>Date of request</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -312,6 +357,9 @@
   <data name="EmptyTB" xml:space="preserve">
     <value>No Record</value>
   </data>
+  <data name="EoR" xml:space="preserve">
+    <value>Date end of request</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -324,6 +372,9 @@
   <data name="ErrorCita" xml:space="preserve">
     <value>Must have at least 1 row</value>
   </data>
+  <data name="ExCost" xml:space="preserve">
+    <value>Expected cost</value>
+  </data>
   <data name="Feb" xml:space="preserve">
     <value>February</value>
   </data>
@@ -332,6 +383,12 @@
   </data>
   <data name="FileCMnew" xml:space="preserve">
     <value>Upload new file</value>
+  </data>
+  <data name="FileDe" xml:space="preserve">
+    <value>Decision file</value>
+  </data>
+  <data name="Formal" xml:space="preserve">
+    <value>Formality</value>
   </data>
   <data name="FPTProcedure" xml:space="preserve">
     <value>FPT Procedure</value>
@@ -399,6 +456,9 @@
   <data name="Jun" xml:space="preserve">
     <value>June</value>
   </data>
+  <data name="Letter" xml:space="preserve">
+    <value>Conference invitation letter</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
   </data>
@@ -447,6 +507,9 @@
   <data name="Nationality" xml:space="preserve">
     <value>Nationality</value>
   </data>
+  <data name="NeedEdit" xml:space="preserve">
+    <value>Require Edit</value>
+  </data>
   <data name="NewPublications" xml:space="preserve">
     <value>New Publications</value>
   </data>
@@ -474,8 +537,14 @@
   <data name="Office" xml:space="preserve">
     <value>Office</value>
   </data>
+  <data name="OrganUnit" xml:space="preserve">
+    <value>Organizational units</value>
+  </data>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
+  </data>
+  <data name="PaperFile" xml:space="preserve">
+    <value>Paper file</value>
   </data>
   <data name="PaperInfo" xml:space="preserve">
     <value>Paper's information</value>
@@ -603,6 +672,9 @@
   <data name="RewardType" xml:space="preserve">
     <value>Reward type</value>
   </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -654,11 +726,17 @@
   <data name="Source" xml:space="preserve">
     <value>Source</value>
   </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>Speaker / organizer members</value>
+  </data>
   <data name="Specialization" xml:space="preserve">
     <value>Specialization</value>
   </data>
   <data name="Specialized" xml:space="preserve">
     <value>Specialized</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsors</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
@@ -681,17 +759,32 @@
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="TimePlace" xml:space="preserve">
+    <value>Time for the conference</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
   <data name="TotalReward" xml:space="preserve">
     <value>Total reward</value>
+  </data>
+  <data name="University" xml:space="preserve">
+    <value>University</value>
   </data>
   <data name="UpdateInformation" xml:space="preserve">
     <value>Update information</value>
   </data>
   <data name="UpdateResearcherInformation" xml:space="preserve">
     <value>Update information for researcher</value>
+  </data>
+  <data name="Valid-date" xml:space="preserve">
+    <value>Valid date</value>
+  </data>
+  <data name="Venue" xml:space="preserve">
+    <value>Conference venue</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>View</value>
