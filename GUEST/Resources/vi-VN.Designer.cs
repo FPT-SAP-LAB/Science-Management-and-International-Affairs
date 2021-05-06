@@ -205,6 +205,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đăng ký khen thưởng bài báo.
+        /// </summary>
+        public static string AddPaper {
+            get {
+                return ResourceManager.GetString("AddPaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Địa chỉ.
         /// </summary>
         public static string Address {
@@ -556,6 +565,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Xác nhận thưởng cho tác giả.
+        /// </summary>
+        public static string ConfirmAuthor {
+            get {
+                return ResourceManager.GetString("ConfirmAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thông tin liên hệ.
         /// </summary>
         public static string ContactInformation {
@@ -736,6 +754,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chi tiết bài báo.
+        /// </summary>
+        public static string DetailPaper {
+            get {
+                return ResourceManager.GetString("DetailPaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ngày sinh.
         /// </summary>
         public static string Dob {
@@ -768,6 +795,15 @@ namespace GUEST.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chỉnh sửa thông tin tác giả.
+        /// </summary>
+        public static string EditAu {
+            get {
+                return ResourceManager.GetString("EditAu", resourceCulture);
             }
         }
         

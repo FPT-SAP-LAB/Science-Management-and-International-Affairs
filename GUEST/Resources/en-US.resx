@@ -165,6 +165,9 @@
   <data name="AddInventionRequest" xml:space="preserve">
     <value>Create Invention reward request</value>
   </data>
+  <data name="AddPaper" xml:space="preserve">
+    <value>Add new request reward articles</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
@@ -282,6 +285,9 @@
   <data name="ConferName" xml:space="preserve">
     <value>Conference's name</value>
   </data>
+  <data name="ConfirmAuthor" xml:space="preserve">
+    <value>Confirm reward for author</value>
+  </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Contact Information</value>
   </data>
@@ -339,6 +345,9 @@
   <data name="Detail" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="DetailPaper" xml:space="preserve">
+    <value>Detail paper</value>
+  </data>
   <data name="Dob" xml:space="preserve">
     <value>Date of birth</value>
   </data>
@@ -350,6 +359,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EditAu" xml:space="preserve">
+    <value>Edit author's information</value>
   </data>
   <data name="EditAward" xml:space="preserve">
     <value>Edit Award</value>
