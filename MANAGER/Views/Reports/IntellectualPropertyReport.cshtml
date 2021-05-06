@@ -11,7 +11,7 @@
         <div class="mb-7">
             <div class="row align-items-center">
                 <div class="col-lg-10 col-xl-8">
-                    @*<div class="row align-items-center">
+                    <div class="row align-items-center">
                         <div class="col-md-3 my-2 my-md-0">
                             <div class="input-icon">
                                 <input type="text" class="form-control"
@@ -27,7 +27,7 @@
                                 <label class="mr-3 mb-0 d-none d-md-block">năm:</label>
                                 <select class="form-control" id="search_nam">
                                     <option label="label"></option>
-                                    @foreach (var year in viewbag.years)
+                                    @foreach (var year in ViewBag.years)
                                     {
                                         <option value="@year">@year</option>
                                     }
@@ -39,7 +39,7 @@
                                 <label class="mr-3 mb-0 d-none d-md-block">cs:</label>
                                 <select class="form-control" id="search_coso">
                                     <option label="label"></option>
-                                    @foreach (office o in viewbag.listoffices)
+                                    @foreach (Office o in ViewBag.listoffices)
                                     {
                                         <option value="@o.office_id">@o.office_name</option>
                                     }
@@ -53,7 +53,7 @@
                             </a>
                         </div>
 
-                    </div>*@
+                    </div>
 
                 </div>
                 <div class="col-lg-2 col-xl-4 mt-5 mt-lg-0" style="text-align: right;">
