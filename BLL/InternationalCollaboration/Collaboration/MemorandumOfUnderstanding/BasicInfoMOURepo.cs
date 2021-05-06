@@ -317,7 +317,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime? end_date = null;
-                    if (input.ExBasicInfo.ex_mou_end_date != null)
+                    if (input.ExBasicInfo.ex_mou_end_date != "")
                     {
                         end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
@@ -455,7 +455,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     DateTime sign_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_sign_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     DateTime? end_date = null;
-                    if (input.ExBasicInfo.ex_mou_end_date != null)
+                    if (input.ExBasicInfo.ex_mou_end_date != "")
                     {
                         end_date = DateTime.ParseExact(input.ExBasicInfo.ex_mou_end_date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
