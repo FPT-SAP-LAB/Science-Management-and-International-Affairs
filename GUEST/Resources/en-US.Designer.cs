@@ -106,6 +106,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acceptance.
+        /// </summary>
+        public static string Accp {
+            get {
+                return ResourceManager.GetString("Accp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activities During The Year.
         /// </summary>
         public static string ActivityNavbar {
@@ -241,6 +250,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allowed to attend.
+        /// </summary>
+        public static string AllowAtten {
+            get {
+                return ResourceManager.GetString("AllowAtten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Approved by.
         /// </summary>
         public static string AppBy {
@@ -255,6 +273,24 @@ namespace GUEST.Resources {
         public static string AppPro {
             get {
                 return ResourceManager.GetString("AppPro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approved.
+        /// </summary>
+        public static string Approved {
+            get {
+                return ResourceManager.GetString("Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Approving.
+        /// </summary>
+        public static string Approving {
+            get {
+                return ResourceManager.GetString("Approving", resourceCulture);
             }
         }
         
@@ -1654,6 +1690,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refunded.
+        /// </summary>
+        public static string Refunded {
+            get {
+                return ResourceManager.GetString("Refunded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration.
         /// </summary>
         public static string Registration {
@@ -2064,6 +2109,15 @@ namespace GUEST.Resources {
         public static string University {
             get {
                 return ResourceManager.GetString("University", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrefunded.
+        /// </summary>
+        public static string Unrefunded {
+            get {
+                return ResourceManager.GetString("Unrefunded", resourceCulture);
             }
         }
         
