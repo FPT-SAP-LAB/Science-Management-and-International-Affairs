@@ -165,6 +165,9 @@
   <data name="AddInventionRequest" xml:space="preserve">
     <value>Đề nghị khen thưởng bằng sáng chế</value>
   </data>
+  <data name="AddPaper" xml:space="preserve">
+    <value>Đăng ký khen thưởng bài báo</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Địa chỉ</value>
   </data>
@@ -282,6 +285,9 @@
   <data name="ConferName" xml:space="preserve">
     <value>Tên hội nghị</value>
   </data>
+  <data name="ConfirmAuthor" xml:space="preserve">
+    <value>Xác nhận thưởng cho tác giả</value>
+  </data>
   <data name="ContactInformation" xml:space="preserve">
     <value>Thông tin liên hệ</value>
   </data>
@@ -342,6 +348,9 @@
   <data name="Detail" xml:space="preserve">
     <value>Chi tiết</value>
   </data>
+  <data name="DetailPaper" xml:space="preserve">
+    <value>Chi tiết bài báo</value>
+  </data>
   <data name="Dob" xml:space="preserve">
     <value>Ngày sinh</value>
   </data>
@@ -353,6 +362,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
+  </data>
+  <data name="EditAu" xml:space="preserve">
+    <value>Chỉnh sửa thông tin tác giả</value>
   </data>
   <data name="EditAward" xml:space="preserve">
     <value>Sửa thông tin giải thưởng</value>

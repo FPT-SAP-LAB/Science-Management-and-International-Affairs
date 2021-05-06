@@ -79,10 +79,13 @@
             var date = day + "/" + month + "/" + year;
             return date;
         }
+        function replaceRedSpaces(string) {
+            return string.replace(/  +/g, ' ').trim();
+        }
         $("#search-btn").click(function () {
             $("#pending_table").DataTable().clear().draw();
             var DataSearch = {
-                nameS: $("#name_search").val(),
+                nameS: replaceRedSpaces($("#name_search").val()),
                 monthS: "@ViewBag.type"
             };
             $.ajax({

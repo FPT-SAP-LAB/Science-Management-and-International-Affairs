@@ -1,8 +1,8 @@
 ﻿
 @{
-    //ViewBag.Title = "AddRequest";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
+    ViewBag.Title = @rm.GetString("AddPaper");
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
     .author-info-card {
@@ -183,7 +183,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title font-weight-bolder">Thêm tác giả</h3>
+                    <h3 class="modal-title font-weight-bolder">@rm.GetString("AddAu")</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
@@ -200,7 +200,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title font-weight-bolder">Chỉnh sửa thông tin tác giả</h3>
+                    <h3 class="modal-title font-weight-bolder">@rm.GetString("EditAu")</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>

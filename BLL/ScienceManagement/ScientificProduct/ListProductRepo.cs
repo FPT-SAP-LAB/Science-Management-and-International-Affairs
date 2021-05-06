@@ -32,6 +32,11 @@ namespace BLL.ScienceManagement.ScientificProduct
                 , new SqlParameter("name", "%" + item.nameS + "%")
                 , new SqlParameter("month", item.monthS)
                 , new SqlParameter("year", item.yearS)).ToList();
+            foreach (var temp in list)
+            {
+                if (temp.vol == null) temp.vol = "";
+                if (temp.page == null) temp.page = "";
+            }
             return list;
         }
 
@@ -58,6 +63,11 @@ namespace BLL.ScienceManagement.ScientificProduct
                 , new SqlParameter("name", "%" + item.nameS + "%")
                 , new SqlParameter("month", item.monthS)
                 , new SqlParameter("year", item.yearS)).ToList();
+            foreach (var temp in list)
+            {
+                if (temp.vol == null) temp.vol = "";
+                if (temp.page == null) temp.page = "";
+            }
             return list;
         }
 

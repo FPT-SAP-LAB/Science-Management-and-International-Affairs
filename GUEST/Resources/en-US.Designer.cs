@@ -205,6 +205,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new request reward articles.
+        /// </summary>
+        public static string AddPaper {
+            get {
+                return ResourceManager.GetString("AddPaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Address.
         /// </summary>
         public static string Address {
@@ -556,6 +565,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm reward for author.
+        /// </summary>
+        public static string ConfirmAuthor {
+            get {
+                return ResourceManager.GetString("ConfirmAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact Information.
         /// </summary>
         public static string ContactInformation {
@@ -727,6 +745,15 @@ namespace GUEST.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detail paper.
+        /// </summary>
+        public static string DetailPaper {
+            get {
+                return ResourceManager.GetString("DetailPaper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Dob {
@@ -759,6 +786,15 @@ namespace GUEST.Resources {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit author&apos;s information.
+        /// </summary>
+        public static string EditAu {
+            get {
+                return ResourceManager.GetString("EditAu", resourceCulture);
             }
         }
         
