@@ -4,6 +4,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.ScienceManagement.Conference;
 using MANAGER.Models;
+using MANAGER.Support;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Web;
@@ -15,17 +16,22 @@ namespace MANAGER.Controllers
     {
         ConferenceSponsorIndexRepo IndexRepos;
         ConferenceSponsorDetailRepo DetailRepos;
+
+        [Auther(RightID = "22")]
         public ActionResult Index()
         {
             ViewBag.title = "DANH SÁCH ĐỀ NGHỊ ĐANG XỬ LÝ";
             return View();
         }
+
+        [Auther(RightID = "41")]
         public ActionResult History()
         {
             ViewBag.title = "LỊCH SỬ ĐỀ NGHỊ";
             return View();
         }
 
+        [Auther(RightID = "22,41")]
         [AjaxOnly, HttpPost]
         public JsonResult List(ConferenceSearch search)
         {
@@ -40,6 +46,7 @@ namespace MANAGER.Controllers
             return Json(new ResultDatatable<ConferenceIndex>(output, Request));
         }
 
+        [Auther(RightID = "40")]
         public ActionResult Detail(int id)
         {
             QsUniversityRepo qsUniversityRepo = new QsUniversityRepo();
@@ -54,6 +61,8 @@ namespace MANAGER.Controllers
             ViewBag.ranking = qsUniversityRepo.GetRanking(university);
             return View();
         }
+
+        [Auther(RightID = "34")]
         [HttpPost]
         public ActionResult UpdateCriterias(string data, int request_id, string comment)
         {
@@ -61,12 +70,16 @@ namespace MANAGER.Controllers
             DetailRepos.UpdateCriterias(data, request_id, CurrentAccount.AccountID(Session), comment);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
+
+        [Auther(RightID = "42")]
         [HttpPost]
         public JsonResult RequestEdit(int request_id)
         {
             DetailRepos = new ConferenceSponsorDetailRepo();
             return Json(DetailRepos.RequestEdit(request_id));
         }
+
+        [Auther(RightID = "43")]
         [HttpPost]
         public ActionResult UpdateCosts(string data, int request_id, string comment)
         {
@@ -74,6 +87,8 @@ namespace MANAGER.Controllers
             DetailRepos.UpdateCosts(data, request_id, CurrentAccount.AccountID(Session), comment);
             return Redirect("/ConferenceSponsor/Detail?id=" + request_id);
         }
+
+        [Auther(RightID = "44")]
         [HttpPost]
         public JsonResult SubmitPolicy(HttpPostedFileBase decision_file, string valid_date, string decision_number, int request_id)
         {
