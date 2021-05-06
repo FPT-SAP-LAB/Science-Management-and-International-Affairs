@@ -28,7 +28,7 @@ namespace MANAGER.Controllers.AuthenticationAuthorization
                 if (u != null)
                 {
                     Session["User"] = u;
-                    return Redirect(u.url);
+                    return Redirect("/Home");
                 }
                 else
                 {

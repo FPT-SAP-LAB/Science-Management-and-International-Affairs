@@ -1,7 +1,518 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang chủ";
 }
 
-@section scripts{
+<div class="card card-custom">
+    <div class="card-header flex-wrap py-5">
+        <div class="card-title">
+            <h3 class="card-label">
+                Phân hệ
+                <!-- <div class="text-muted pt-2 font-size-sm">TABLE TOOLBAR + TABLE</div> -->
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item">
+                        <a data-homepage="SM" class="homepage-tab nav-link @(Request.Cookies["HomePage"] == null || Request.Cookies["HomePage"].Value == "SM" ? "active" : "" )" data-toggle="tab" href="#kt_tab_pane_1">Quản lý khoa học</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-homepage="IA" class="homepage-tab nav-link @(Request.Cookies["HomePage"] != null && Request.Cookies["HomePage"].Value == "IA" ? "active" : "" )" data-toggle="tab" href="#kt_tab_pane_2">Hợp tác quốc tế</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-5" id="myTabContent">
+                    <div class="tab-pane fade @(Request.Cookies["HomePage"] == null || Request.Cookies["HomePage"].Value == "SM" ? "show active" : "" )" id="kt_tab_pane_1" role="tabpanel" aria-labelledby="kt_tab_pane_1">
+                        @{
+                            Html.RenderAction("Dashboard", "Reports");
+                        }
+                    </div>
+                    <div class="tab-pane fade @(Request.Cookies["HomePage"] != null && Request.Cookies["HomePage"].Value == "IA" ? "show active" : "" )" id="kt_tab_pane_2" role="tabpanel" aria-labelledby="kt_tab_pane_2">
+                        @{
+                            Html.RenderAction("Dashboard", "Report_IC");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script>
+        if (Cookies.get('HomePage') == undefined) {
+            Cookies.set('HomePage', 'SM', { expires: 365 })
+        }
+        $(document).on("click", ".homepage-tab", function () {
+            Cookies.set('HomePage', $(this).data("homepage"), { expires: 365 })
+        })
+    </script>
+
+    <!-- SM Scripts -->
+
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTWidgets = function () {
+            // Private properties
+            // Charts widgets
+            var _initChartsWidget1 = function () {
+                var element = document.getElementById("kt_charts_widget_1_chart");
+
+                if (!element) {
+                    return;
+                }
+
+                var options = {
+                    series: [{
+                        name: 'Q1',
+                        data: [44, 55, 57, 56, 61, 80, 80],
+
+                    }, {
+                        name: 'Q2',
+                        data: [76, 85, 101, 98, 87, 80, 80]
+                    }, {
+                        name: 'Q3',
+                        data: [76, 85, 101, 98, 87, 80, 80]
+                    }, {
+                        name: 'Q4',
+                        data: [76, 85, 101, 98, 87, 80, 80]
+                    }, {
+                        name: 'QS500',
+                        data: [76, 85, 101, 98, 15, 10, 50]
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: ['50%'],
+                            endingShape: 'rounded'
+                        },
+                    },
+                    legend: {
+                        show: true
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: ['HN', 'HCM', 'ĐN', 'CT', 'FSB', 'FPL', 'KHÁC'],
+                        axisBorder: {
+                            show: false,
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        labels: {
+                            style: {
+                                colors: KTApp.getSettings()['colors']['gray']['gray-500'],
+                                fontSize: '12px',
+                                fontFamily: KTApp.getSettings()['font-family']
+                            }
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                colors: KTApp.getSettings()['colors']['gray']['gray-500'],
+                                fontSize: '12px',
+                                fontFamily: KTApp.getSettings()['font-family']
+                            }
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    states: {
+                        normal: {
+                            filter: {
+                                type: 'none',
+                                value: 0
+                            }
+                        },
+                        hover: {
+                            filter: {
+                                type: 'none',
+                                value: 0
+                            }
+                        },
+                        active: {
+                            allowMultipleDataPointsSelection: false,
+                            filter: {
+                                type: 'none',
+                                value: 0
+                            }
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px',
+                            fontFamily: KTApp.getSettings()['font-family']
+                        },
+                        y: {
+                            formatter: function (val) {
+                                return "$" + val + " thousands"
+                            }
+                        }
+                    },
+                    colors: ['#4BB5B1', '#F1808D', '#A479F7', '#FFD786', '#027FFF'],
+                    grid: {
+                        borderColor: KTApp.getSettings()['colors']['gray']['gray-200'],
+                        strokeDashArray: 4,
+                        yaxis: {
+                            lines: {
+                                show: true
+                            }
+                        }
+                    }
+                };
+
+                var chart = new ApexCharts(element, options);
+                chart.render();
+                $("#kt_charts_widget_1_chart").find(".loader_panel").hide()
+            }
+
+            // Public methods
+            return {
+                init: function () {
+
+                    // Charts Widgets
+                    _initChartsWidget1();
+
+                }
+            }
+        }();
+
+        // Webpack support
+        if (typeof module !== 'undefined') {
+            module.exports = KTWidgets;
+        }
+
+        jQuery(document).ready(function () {
+            KTWidgets.init();
+        });
+    </script>
+    <script src="~/Content/assets/plugins/custom/flot/flot.bundle.js"></script>
+    <script>
+        "use strict";
+
+        // Class definition
+        var KTFlotchartsDemo = function () {
+
+            var demo6 = function () {
+                // bar chart:
+                var data = GenerateSeries(0);
+
+                function GenerateSeries(added) {
+                    var data = [];
+                    var start = 100 + added;
+                    var end = 200 + added;
+
+                    for (var i = 1; i <= 12; i++) {
+                        var d = Math.floor(Math.random() * (end - start + 1) + start);
+                        data.push([i, d]);
+                        start++;
+                        end++;
+                    }
+
+                    return data;
+                }
+
+                var options = {
+                    colors: [KTApp.getSettings()['colors']['theme']['base']["success"], KTApp.getSettings()['colors']['theme']['base']["primary"]],
+                    series: {
+                        bars: {
+                            show: true
+                        }
+                    },
+                    bars: {
+                        barWidth: 0.8,
+                        lineWidth: 0, // in pixels
+                        shadowSize: 0,
+                        align: 'left'
+                    },
+
+                    grid: {
+                        tickColor: "#eee",
+                        borderColor: "#eee",
+                        borderWidth: 1
+                    }
+                };
+
+                $.plot($("#kt_flotcharts_6"), [{
+                    data: data,
+                    lines: {
+                        lineWidth: 1,
+                    },
+                    shadowSize: 0
+                }], options);
+            }
+
+
+            return {
+                // public functions
+                init: function () {
+                    demo6();
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            KTFlotchartsDemo.init();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+    <script src="~/Content/Custom JS/ScienceManagement/Reports/excelDownload.js"></script>
+
+    <!-- IA Scripts -->
+
+    <script>
+        var KTApexChartsDemo;
+        var chart
+        $(document).ready(function () {
+            const primary = '#6993FF';
+            const success = '#1BC5BD';
+            const info = '#8950FC';
+            const warning = '#FFA800';
+            const danger = '#F64E60';
+
+            //Class definitio
+            KTApexChartsDemo = function () {
+                // Private functions
+                var _demo1 = function (year, signed, not_sign_yet) {
+                    const apexChart = "#chart_4";
+                    var options = {
+                        series: [{
+                            name: 'Đối tác chiến lược',
+                            data: signed
+                        }, {
+                            name: 'Chưa thành đối tác chiến lược',
+                            data: not_sign_yet
+                        }],
+                        chart: {
+                            type: 'bar',
+                            height: 350,
+                            stacked: true,
+                            events: {
+                                mounted: function (chartContext, options) {
+                                    $("#loading").hide()
+                                },
+                                dataPointSelection: function (event, chartContext, config) {
+                                    //alert(event + ' ' + chartContext + ' ' + config + ' legendClick')
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                            },
+                        },
+                        stroke: {
+                            width: 1,
+                            colors: ['#fff']
+                        },
+                        title: {
+                        },
+                        xaxis: {
+                            categories: year,
+                            labels: {
+                                formatter: function (val) {
+                                    return val + ""
+                                }
+                            }
+                        },
+                        yaxis: {
+                            labels: {
+                                formatter: function (val) {
+                                    return val
+                                }
+                            }
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return val
+                                }
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'left',
+                            offsetX: 40
+                        },
+                        colors: [primary, warning, success, danger, info],
+
+                    };
+
+
+
+                    chart = new ApexCharts(document.querySelector(apexChart), options);
+                    chart.render();
+                }
+
+                return {
+                    // public functions
+                    init: function (year, signed, not_sign_yet) {
+                        _demo1(year, signed, not_sign_yet);
+                    }
+                };
+            }();
+
+            load_data($('#year_select').val())
+
+            $('#year_select').select2({
+                placeholder: 'Năm',
+            }).on("select2:select", function () { //after select partner
+                //check partner
+                load_data($('#year_select').val());
+                $('#dashboard_longterm_table').DataTable().ajax.reload()
+                $('#dashboard_shortterm_table').DataTable().ajax.reload()
+            });
+
+            $('#year_select').val('@ViewBag.year_select[2]').trigger('change')
+
+            $('#dashboard_longterm_table').DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sInfoEmpty: "",
+                },
+                searching: false,
+                lengthChange: false,
+                serverSide: true,
+                ajax: {
+                    url: "@Url.Action("LoadTable", "Report_IC")",
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "collab_type_id": 2,
+                        "year": function () { return $('#year_select').val() }
+                    },
+                    cache: "false"
+                },
+                columns: [
+                    {
+                        data: "training",
+                        name: "training",
+                        className: "text-center"
+
+                    },
+                    {
+                        data: "working",
+                        name: "working",
+                        className: "text-center"
+                    },
+                    {
+                        data: "collab_status_name",
+                        name: "collab_status_name",
+                        className: "text-center"
+                    },
+                    {
+                        data: "count",
+                        name: "count",
+                        className: "text-center"
+                    },
+                ],
+            })
+
+            $('#dashboard_shortterm_table').DataTable({
+                oLanguage: {
+                    oPaginate: {
+                        sPrevious: "Trang trước",
+                        sNext: "Trang sau"
+                    },
+                    sEmptyTable: "Không có dữ liệu",
+                    sInfo: "Đang hiển thị từ _START_ đến _END_ của _TOTAL_ bản ghi",
+                    sInfoEmpty: "",
+                },
+                searching: false,
+                lengthChange: false,
+                serverSide: true,
+                ajax: {
+                    url: "@Url.Action("LoadTable", "Report_IC")",
+                    type: "POST",
+                    datatype: "json",
+                    data: {
+                        "collab_type_id": 1,
+                        "year": function () { return $('#year_select').val() }
+                    },
+                    cache: "false"
+                },
+                columns: [
+                    {
+                        data: "training",
+                        name: "training",
+                        className: "text-center"
+
+                    },
+                    {
+                        data: "working",
+                        name: "working",
+                        className: "text-center"
+                    },
+                    {
+                        data: "collab_status_name",
+                        name: "collab_status_name",
+                        className: "text-center"
+                    },
+                    {
+                        data: "count",
+                        name: "count",
+                        className: "text-center"
+                    },
+                ],
+            })
+        })
+
+        function load_data(year) {
+            $("#loading").show()
+            $.ajax({
+                url: '/Report_IC/LoadData',
+                type: 'POST',
+                datatype: 'json',
+                data: {
+                    'year_select': year
+                },
+                success: function (data) {
+                    if (data.success) {
+                        $("#widget_mou").text(data.widget_mou.split('/')[0])
+                        $("#widget_mou_almost").text(data.widget_mou.split('/')[1])
+                        $("#widget_collab").text(data.widget_collab)
+                        $("#widget_support").text(data.widget_support)
+                        KTApexChartsDemo.init(data.year, data.signed, data.not_sign_yet);
+                        chart.updateSeries([{
+                            name: 'Đối tác chiến lược',
+                            data: data.signed
+                        }, {
+                            name: 'Chưa thành đối tác chiến lược',
+                            data: data.not_sign_yet
+                        }])
+                    }
+                    $("#loading").hide()
+                }
+            })
+        }
+    </script>
 }

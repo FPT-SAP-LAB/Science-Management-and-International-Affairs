@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Thông tin nghiên cứu viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
 }
 @using ENTITIES;
 @using ENTITIES.CustomModels.ScienceManagement.Researcher;
@@ -29,9 +30,11 @@
         .social-link i {
             padding-right: 0rem !important;
         }
-    #table_tapchi tr td{
+
+    #table_tapchi tr td {
         border: 0;
     }
+
     .paper_items {
         box-shadow: none !important;
         border: 0.5px solid #e5e5e5 !important;
@@ -72,7 +75,7 @@
                     @if (CurrentAccount.GetProfile(Session) != null && CurrentAccount.GetProfile(Session).people_id == ViewBag.profile.id)
                     {
                         <div class="my-lg-0 my-3">
-                            <a href="/Researchers/EditInfo?id=@CurrentAccount.GetProfile(Session).people_id" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Cập nhật thông tin</a>
+                            <a href="/Researchers/EditInfo?id=@CurrentAccount.GetProfile(Session).people_id" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">@rm.GetString("UpdateInformation")</a>
                         </div>
                     }
                 </div>
@@ -139,7 +142,7 @@
                 <div class="card card-custom card-stretch gutter-b">
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
-                        <h3 class="card-title font-weight-bolder ">Tiểu sử</h3>
+                        <h3 class="card-title font-weight-bolder ">@rm.GetString("Biography")</h3>
                     </div>
                     <div class="card-body">
                         <div class="timeline timeline-1">
@@ -167,7 +170,7 @@
                 <div class="card card-custom card-stretch gutter-b">
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
-                        <h3 class="card-title font-weight-bolder ">Lĩnh vực nghiên cứu</h3>
+                        <h3 class="card-title font-weight-bolder ">@rm.GetString("ResearchMajor")</h3>
                     </div>
                     <div class="card-body">
                         @foreach (SelectField s in ViewBag.profile.interested_fields)
@@ -205,7 +208,7 @@
             <div class="col-12">
                 <div class="card card-custom card-stretch gutter-b" style="padding-bottom:2rem">
                     <!--begin::Header-->
-                    <h3 class="card-label font-weight-bolder text-dark">Công trình khoa học</h3>
+                    <h3 class="card-label font-weight-bolder text-dark">@rm.GetString("ScientificPublish")</h3>
                     <hr />
                     <!--end::Header-->
                     <!--begin::Body-->
@@ -226,37 +229,38 @@
                 </div>
                 <!--end::Advance Table Widget 2-->
             </div>
-            
+
         </div>
-        @if (ViewBag.profile.awards.Count > 0) {
-        <div class="row">
-            <div class="col-12">
-                <div class="card card-custom card-stretch gutter-b">
-                    <h3 class="card-label font-weight-bolder text-dark"><i class="text-success la la-navicon icon-md"></i> Giải thưởng</h3>
-                    <hr />
-                    <!--end::Header-->
-                    <!--begin::Body-->
-                    <div class="card-body pt-5 pb-0">
-                        <!--begin::Table-->
-                        <div class="timeline timeline-2" id="rewards_list">
-                            <div class="timeline-bar"></div>
-                            @foreach (BaseRecord<Award> award in ViewBag.profile.awards)
-                            {
-                                <div class="timeline-item ">
-                                    <span class=" timeline-badge bg-success"></span>
-                                    <div class="timeline-content d-flex align-items-center justify-content-between">
-                                        <span class="mr-3">
-                                            <i class="text-warning la la-diamond icon-md"></i>@award.records.award_time: @award.records.rank - @award.records.competion_name
-                                        </span>
+        @if (ViewBag.profile.awards.Count > 0)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-custom card-stretch gutter-b">
+                        <h3 class="card-label font-weight-bolder text-dark"><i class="text-success la la-navicon icon-md"></i> @rm.GetString("Reward")</h3>
+                        <hr />
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body pt-5 pb-0">
+                            <!--begin::Table-->
+                            <div class="timeline timeline-2" id="rewards_list">
+                                <div class="timeline-bar"></div>
+                                @foreach (BaseRecord<Award> award in ViewBag.profile.awards)
+                                {
+                                    <div class="timeline-item ">
+                                        <span class=" timeline-badge bg-success"></span>
+                                        <div class="timeline-content d-flex align-items-center justify-content-between">
+                                            <span class="mr-3">
+                                                <i class="text-warning la la-diamond icon-md"></i>@award.records.award_time: @award.records.rank - @award.records.competion_name
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
                                 }
+                            </div>
                         </div>
+                        <!--end::Table-->
                     </div>
-                    <!--end::Table-->
                 </div>
             </div>
-        </div>
         }
     </div>
 
