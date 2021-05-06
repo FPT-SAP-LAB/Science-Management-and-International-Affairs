@@ -368,7 +368,7 @@ namespace BLL.ScienceManagement.Report
                         });
             if (search.name != null && search.name.Trim() != "")
             {
-                data = data.Where(x => x.people_name.Contains(search.name));
+                data = data.Where(x => x.conference_name.Contains(search.name));
             }
             if (search.year != null && search.year.Trim() != "")
             {

@@ -1,5 +1,6 @@
 ﻿
 @{
+    System.Resources.ResourceManager rm = GUEST.Models.LanguageResource.GetResourceManager();
     ViewBag.Title = "Đề nghị hỗ trợ hội nghị của tôi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,7 +11,7 @@
             <div class="col-md-3 col-sm-12 form-group">
                 <div class="input-icon">
                     <input type="text" class="form-control"
-                           placeholder="Tên sản phẩm khoa học"
+                           placeholder="@rm.GetString("PaperName")"
                            id="search_paper" />
                     <span>
                         <i class="flaticon2-search-1 text-muted"></i>
@@ -20,7 +21,7 @@
             <div class="col-md-3 col-sm-12 form-group">
                 <div class="input-icon">
                     <input type="text" class="form-control"
-                           placeholder="Tên hội nghị"
+                           placeholder="@rm.GetString("ConferName")"
                            id="search_conference" />
                     <span>
                         <i class="flaticon2-search-1 text-muted"></i>
@@ -30,12 +31,12 @@
             <div class="col-md-2 col-sm-12 form-group">
                 <div>
                     <select class="form-control" id="search_status" name="param">
-                        <option value="0">Tất cả</option>
-                        <option value="1">Đang duyệt</option>
-                        <option value="2">Được tham dự</option>
-                        <option value="3">Đã duyệt</option>
-                        <option value="4">Chưa hoàn ứng</option>
-                        <option value="5">Đã hoàn ứng</option>
+                        <option value="0">@rm.GetString("All")</option>
+                        <option value="1">@rm.GetString("Approving")</option>
+                        <option value="2">@rm.GetString("AllowAtten")</option>
+                        <option value="3">@rm.GetString("Approved")</option>
+                        <option value="4">@rm.GetString("Unrefunded")</option>
+                        <option value="5">@rm.GetString("Refunded")</option>
                     </select>
                 </div>
             </div>
@@ -43,13 +44,13 @@
                 <div class="float-left">
                     <a onclick="ReloadTable()"
                        class="btn btn-light-primary px-6 font-weight-bold">
-                        Tìm kiếm
+                        @rm.GetString("Search")
                     </a>
                 </div>
                 <div class="float-right">
                     <a href="/ConferenceSponsor/Add"
                        class="btn btn-light-success font-weight-bolder">
-                        Thêm đề nghị
+                        @rm.GetString("AddConfer")
                     </a>
                 </div>
             </div>
@@ -57,11 +58,11 @@
                 <table id="mytable" class="table table-bordered table-checkable ">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Sản phẩm khoa học</th>
-                            <th>Tên hội nghị</th>
-                            <th>Ngày&nbsp;tạo</th>
-                            <th>Trạng thái</th>
+                            <th>@rm.GetString("STT")</th>
+                            <th>@rm.GetString("PaperName")</th>
+                            <th>@rm.GetString("ConferName")</th>
+                            <th>@rm.GetString("DoR")</th>
+                            <th>@rm.GetString("Status")</th>
                             <th></th>
                         </tr>
                     </thead>
