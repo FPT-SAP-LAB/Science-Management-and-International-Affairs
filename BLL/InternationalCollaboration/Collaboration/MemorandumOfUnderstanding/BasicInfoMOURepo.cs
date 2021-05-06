@@ -424,7 +424,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
                     else if (old_file_number == 1)
                     {
-                        int file_id = (int)db.MOUs.Find(mou_id).evidence;
+                        //int file_id = (int)db.MOUs.Find(mou_id).evidence;
+                        int file_id = (int)db.MOUBonus.Where(x => x.mou_id == mou_id).First().evidence;
                         string old_file_drive_id = db.Files.Find(file_id).file_drive_id;
 
                         if (new_file_number == 0)

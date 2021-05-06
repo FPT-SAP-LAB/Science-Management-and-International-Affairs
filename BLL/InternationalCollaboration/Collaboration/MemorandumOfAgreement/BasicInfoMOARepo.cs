@@ -403,7 +403,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     }
                     else if (old_file_number == 1)
                     {
-                        int file_id = (int)db.MOAs.Find(moa_id).evidence;
+                        //int file_id = (int)db.MOAs.Find(moa_id).evidence;
+                        int file_id = (int)db.MOABonus.Where(x => x.moa_id == moa_id).First().evidence;
                         string old_file_drive_id = db.Files.Find(file_id).file_drive_id;
 
                         if (new_file_number == 0)
