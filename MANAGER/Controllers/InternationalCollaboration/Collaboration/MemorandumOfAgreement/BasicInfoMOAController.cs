@@ -174,7 +174,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     JObject inputObj = JObject.Parse(input);
                     ExMOAAdd obj = inputObj.ToObject<ExMOAAdd>();
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
-                    string id = Session["mou_detail_id"].ToString();
+                    string id = Session["moa_detail_id"].ToString();
                     moa.editExtraMOA(obj, user, old_file_number_ex_moa, new_file_number_ex_moa, evidence, int.Parse(id));
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
