@@ -60,20 +60,21 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="card card-custom " style="box-shadow: 0px 0px 30px 0px rgba(82,63,105,0.17); border: 0; margin-bottom: 2rem;">
-                            <div class="card-header ribbon ribbon-top ribbon-ver">
+                            <div class="card-header ribbon ribbon-top ribbon-ver text-center">
                                 <div class="ribbon-target bg-danger" style="top: -2px; right: 20px;">
                                     <i class="fa fa-star text-white"></i>
                                 </div>
-                                <h3 class="card-title">
-                                    @rm.GetString("CurrentPolicy")
+                                <h3 class="card-title text-center">
+                                    @*@rm.GetString("CurrentPolicy")*@
+                                    <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">@rm.GetString("CurrentPolicy")</a>
                                 </h3>
                             </div>
-                            <div class="card-body">
+                            @*<div class="card-body">
                                 <ul>
                                 </ul>
                                 <br />
                                 <a href="@Html.Raw(ViewBag.link)" class="btn btn-light-primary mr-2" target="_blank">@rm.GetString("Detail")</a>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
