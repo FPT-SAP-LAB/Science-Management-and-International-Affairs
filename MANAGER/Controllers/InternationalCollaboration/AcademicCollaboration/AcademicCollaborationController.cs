@@ -521,20 +521,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     string label = "image_" + i;
                     files_request.Add(Request.Files[label]);
                 }
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
-                if (acc.account_id == 0)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id == 0)
                 {
                     AlertModal<string> json_false = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài");
                     return Json(new { json_false.success, json_false.content });
                 }
                 AlertModal<string> json = acShortRepo.AddProcedure(files_request, procedure_title, direction,
-                    content, numberOfImage, partner_language_type, acc.account_id);
+                    content, numberOfImage, partner_language_type, account_id);
                 return Json(new { json.success, json.content });
             }
             catch (Exception e)
@@ -589,13 +583,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 acShortRepo = new AcademicCollaborationShortRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
 
                 ProcedureInfoManager procedureInfoManager = new ProcedureInfoManager
                 {
@@ -611,7 +598,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     string label = "image_" + i;
                     files_request.Add(Request.Files[label]);
                 }
-                if (acc.account_id == 0)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id == 0)
                 {
                     return Json(new
                     {
@@ -620,7 +608,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 }
                 else
                 {
-                    AlertModal<string> json = acShortRepo.SaveEditProcedure(files_request, procedureInfoManager, numberOfImage, acc.account_id);
+                    AlertModal<string> json = acShortRepo.SaveEditProcedure(files_request, procedureInfoManager, numberOfImage, account_id);
                     return Json(new { json.success, json.content });
                 }
             }
@@ -692,20 +680,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     string label = "image_" + i;
                     files_request.Add(Request.Files[label]);
                 }
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
-                if (acc.account_id == 0)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id == 0)
                 {
                     AlertModal<string> json_false = new AlertModal<string>(false, "Chưa đăng nhập không thể thêm bài");
                     return Json(new { json_false.success, json_false.content });
                 }
                 AlertModal<string> json = acProgramRepo.AddProgram(files_request, program_title, Int32.Parse(collab_type), direction,
-                    content, numberOfImage, program_language, acc.account_id, program_partner, add_program_start_date, add_program_end_date, note);
+                    content, numberOfImage, program_language, account_id, program_partner, add_program_start_date, add_program_end_date, note);
                 return Json(new { json.success, json.content });
             }
             catch (Exception e)
@@ -758,13 +740,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
             try
             {
                 acProgramRepo = new AcademicCollaborationProgramRepo();
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
 
                 List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
                 for (int i = 0; i < numberOfImage; i++)
@@ -772,7 +747,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                     string label = "image_" + i;
                     files_request.Add(Request.Files[label]);
                 }
-                if (acc.account_id == 0)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id == 0)
                 {
                     return Json(new
                     {
@@ -782,7 +758,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicCollaboration
                 else
                 {
                     AlertModal<string> json = acProgramRepo.SaveEditProgram(files_request, Int32.Parse(program_id), program_title, content, numberOfImage, program_language,
-                        program_partner, edit_program_start_date, edit_program_end_date, note, Int32.Parse(direction), acc.account_id);
+                        program_partner, edit_program_start_date, edit_program_end_date, note, Int32.Parse(direction), account_id);
                     return Json(new { json.success, json.content });
                 }
             }

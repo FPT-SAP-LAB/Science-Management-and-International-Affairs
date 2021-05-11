@@ -20,7 +20,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
     public class MOURepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public BaseServerSideData<ListMOU> listAllMOU(BaseDatatable baseDatatable, string partner_name, string contact_point_name, string mou_code)
+        public BaseServerSideData<ListMOU> ListAllMOU(BaseDatatable baseDatatable, string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).First();
-                handlingMOUListData(mouList, baseDatatable.Start);
+                HandlingMOUListData(mouList, baseDatatable.Start);
                 return new BaseServerSideData<ListMOU>(mouList, recordsTotal);
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public BaseServerSideData<ListMOU> listAllMOUDeleted(BaseDatatable baseDatatable, string partner_name, string contact_point_name, string mou_code)
+        public BaseServerSideData<ListMOU> ListAllMOUDeleted(BaseDatatable baseDatatable, string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
@@ -195,7 +195,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("contact_point_name", '%' + contact_point_name + '%'),
                     new SqlParameter("mou_code", '%' + mou_code + '%')).First();
-                handlingMOUListData(mouList, baseDatatable.Start);
+                HandlingMOUListData(mouList, baseDatatable.Start);
                 return new BaseServerSideData<ListMOU>(mouList, recordsTotal);
             }
             catch (Exception ex)
@@ -203,7 +203,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<ListMOU> listAllMOUToExportExcel(string partner_name, string contact_point_name, string mou_code)
+        public List<ListMOU> ListAllMOUToExportExcel(string partner_name, string contact_point_name, string mou_code)
         {
             try
             {
@@ -273,7 +273,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public File saveFile(Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence)
+        public File SaveFile(Google.Apis.Drive.v3.Data.File f, HttpPostedFileBase evidence)
         {
             File evidence_file = new File();
             try
@@ -295,7 +295,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             return evidence_file;
         }
 
-        public void addMOU(MOUAdd input, BLL.Authen.LoginRepo.User user,
+        public void AddMOU(MOUAdd input, BLL.Authen.LoginRepo.User user,
             Google.Apis.Drive.v3.Data.File file, HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -311,7 +311,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     //add MOUPartnerScope
                     //add MOUPartnerSpecialization
                     //add MOUStatusHistory
-                    File evidence_file = saveFile(file, evidence);
+                    File evidence_file = SaveFile(file, evidence);
                     List<PartnerScope> totalRelatedPS = new List<PartnerScope>();
                     int? evidence_value;
                     if (evidence_file.file_id == 0)
@@ -341,7 +341,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     MOU objMOU = db.MOUs.Where(x => x.mou_code == input.BasicInfo.mou_code).First();
 
                     //Add MOUStatusHistory
-                    db.MOUStatusHistories.Add(new ENTITIES.MOUStatusHistory
+                    db.MOUStatusHistories.Add(new MOUStatusHistory
                     {
                         datetime = DateTime.Now,
                         reason = input.BasicInfo.reason,
@@ -371,7 +371,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 article_id = a.article_id,
                                 language_id = 1
                             });
-                            db.Partners.Add(new ENTITIES.Partner
+                            db.Partners.Add(new Partner
                             {
                                 partner_name = item.partnername_add,
                                 website = item.website_add,
@@ -381,7 +381,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             });
                             //checkpoint 2
                             db.SaveChanges();
-                            ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == item.partnername_add).First();
+                            Partner objPartner = db.Partners.Where(x => x.partner_name == item.partnername_add).First();
                             partner_id_item = objPartner.partner_id;
                         }
                         else //old partner
@@ -389,7 +389,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             partner_id_item = (int)item.partner_id;
                         }
                         //add to MOUPartner via each partner of MOU
-                        db.MOUPartners.Add(new ENTITIES.MOUPartner
+                        db.MOUPartners.Add(new MOUPartner
                         {
                             mou_id = objMOU.mou_id,
                             partner_id = partner_id_item,
@@ -478,7 +478,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 string path = HostingEnvironment.MapPath("/Content/assets/excel/Collaboration/");
                 string filename = "MOU.xlsx";
                 FileInfo file = new FileInfo(path + filename);
-                List<ListMOU> listMOU = listAllMOUToExportExcel(partner_name, contact_point_name, mou_code);
+                List<ListMOU> listMOU = ListAllMOUToExportExcel(partner_name, contact_point_name, mou_code);
 
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -522,7 +522,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public void deleteMOU(int mou_id)
+        public void DeleteMOU(int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -627,7 +627,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public string getSuggestedMOUCode()
+        public string GetSuggestedMOUCode()
         {
             try
             {
@@ -643,7 +643,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     countInYear++;
                     newCode = DateTime.Now.Year + "/" + countInYear;
                     isDuplicated = db.Database.SqlQuery<int>(sql_checkDup,
-                        new SqlParameter("newCode", newCode)).First() == 1 ? true : false;
+                        new SqlParameter("newCode", newCode)).First() == 1;
                 } while (isDuplicated);
                 return newCode;
             }
@@ -665,11 +665,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<ENTITIES.Partner> GetPartners()
+        public List<Partner> GetPartners()
         {
             try
             {
-                List<ENTITIES.Partner> partnerList = db.Partners.ToList();
+                List<Partner> partnerList = db.Partners.ToList();
                 return partnerList;
             }
             catch (Exception ex)
@@ -731,7 +731,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        private void handlingMOUListData(List<ListMOU> mouList, int start)
+        private void HandlingMOUListData(List<ListMOU> mouList, int start)
         {
             //handling spe and scope data.
             //handling calender display
@@ -742,14 +742,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 item.RowNumber = ++start;
             }
         }
-        public int getDuration()
+        public int GetDuration()
         {
             DateTime today = DateTime.Today;
             DateTime end_date = new DateTime(2021, 05, 20);
             TimeSpan value = end_date.Subtract(today);
             return value.Duration().Days;
         }
-        public void getNoti()
+        public void GetNoti()
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -788,7 +788,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         noti.ExpiredMOUCode = db.Database.SqlQuery<string>(sql_expired,
                             new SqlParameter("@next3Months", next3Months),
                             new SqlParameter("@nextMonth", nextMonth)).ToList();
-                        updateNotiCount(noti);
+                        UpdateNotiCount(noti);
 
                         //get Account
                         var list_role = new int[] { 2, 3 };
@@ -869,7 +869,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        private void updateNotiCount(NotificationInfo noti)
+        private void UpdateNotiCount(NotificationInfo noti)
         {
             try
             {
@@ -909,11 +909,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     {
                         foreach (int id in mouIdList)
                         {
-                            MOUStatusHistory mou = new MOUStatusHistory();
-                            mou.mou_id = id;
-                            mou.mou_status_id = 2;
-                            mou.datetime = DateTime.Now;
-                            mou.reason = "Quá hạn";
+                            MOUStatusHistory mou = new MOUStatusHistory
+                            {
+                                mou_id = id,
+                                mou_status_id = 2,
+                                datetime = DateTime.Now,
+                                reason = "Quá hạn"
+                            };
                             db.MOUStatusHistories.Add(mou);
                             db.SaveChanges();
                         }
@@ -927,7 +929,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public DuplicatePartnerInfo partnerInfoIsDuplicated(string partner_name, string mou_start_date_string)
+        public DuplicatePartnerInfo PartnerInfoIsDuplicated(string partner_name, string mou_start_date_string)
         {
             try
             {
@@ -959,19 +961,19 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public bool getMOUCodeCheck(string mou_code)
+        public bool GetMOUCodeCheck(string mou_code)
         {
             try
             {
                 MOU obj = db.MOUs.Where(x => x.mou_code == mou_code && !x.is_deleted).FirstOrDefault();
-                return obj == null ? false : true;
+                return obj != null;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public IntersectPeriodMOUDate checkIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date, int office_id)
+        public IntersectPeriodMOUDate CheckIntersectPeriodMOUDate(List<PartnerInfo> PartnerInfo, string start_date, string end_date, int office_id)
         {
             string partner_id_para = "";
             foreach (PartnerInfo item in PartnerInfo)
@@ -1076,7 +1078,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public Google.Apis.Drive.v3.Data.File uploadEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        public Google.Apis.Drive.v3.Data.File UploadEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
         {
             string file_id = "";
             try
@@ -1095,7 +1097,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public Google.Apis.Drive.v3.Data.File updateEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
+        public Google.Apis.Drive.v3.Data.File UpdateEvidenceFile(HttpPostedFileBase InputFile, string FolderName, int TypeFolder, bool isFolder)
         {
             string file_id = "";
             try

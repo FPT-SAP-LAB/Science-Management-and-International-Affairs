@@ -23,7 +23,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
             string mou_start_date = "20/05/2020";
 
             //Act
-            DuplicatePartnerInfo item = mou.partnerInfoIsDuplicated(partner_name, mou_start_date);
+            DuplicatePartnerInfo item = mou.PartnerInfoIsDuplicated(partner_name, mou_start_date);
 
             //Assert
             Assert.IsNotNull(item);

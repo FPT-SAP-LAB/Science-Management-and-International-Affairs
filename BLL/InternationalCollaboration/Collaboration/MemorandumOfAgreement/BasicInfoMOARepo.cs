@@ -8,8 +8,6 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
@@ -17,7 +15,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
     public class BasicInfoMOARepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public MOABasicInfo getBasicInfoMOA(int moa_id)
+        public MOABasicInfo GetBasicInfoMOA(int moa_id)
         {
             try
             {
@@ -57,7 +55,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
 							t4.file_id = moa.evidence ";
                 List<MOABasicInfo> basicInfo = db.Database.SqlQuery<MOABasicInfo>(sql_moaBasicInfo,
                         new SqlParameter("moa_id", moa_id)).ToList();
-                handlingMOAData(basicInfo);
+                HandlingMOAData(basicInfo);
                 return basicInfo[0];
             }
             catch (Exception ex)
@@ -65,7 +63,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<ExtraMOA> listAllExtraMOA(int moa_id)
+        public List<ExtraMOA> ListAllExtraMOA(int moa_id)
         {
             try
             {
@@ -82,7 +80,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         where moab.moa_id = @moa_id";
                 List<ExtraMOA> moaExList = db.Database.SqlQuery<ExtraMOA>(sql_moaExList,
                     new SqlParameter("moa_id", moa_id)).ToList();
-                handlingExMOAListData(moaExList);
+                HandlingExMOAListData(moaExList);
                 return moaExList;
             }
             catch (Exception ex)
@@ -90,7 +88,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        private void handlingExMOAListData(List<ExtraMOA> moaExList)
+        private void HandlingExMOAListData(List<ExtraMOA> moaExList)
         {
             ExtraMOA previousItem = null;
             foreach (ExtraMOA item in moaExList.ToList())
@@ -121,7 +119,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        private void handlingMOAData(List<MOABasicInfo> basicInfo)
+        private void HandlingMOAData(List<MOABasicInfo> basicInfo)
         {
             MOABasicInfo previousItem = null;
             foreach (MOABasicInfo item in basicInfo.ToList())
@@ -152,7 +150,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void editMOABasicInfo(int moa_id, MOABasicInfo newBasicInfo, HttpPostedFileBase evidence,
+        public void EditMOABasicInfo(int moa_id, MOABasicInfo newBasicInfo, HttpPostedFileBase evidence,
             int old_file_number, int new_file_number)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -167,8 +165,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         if (new_file_number == 1)
                         {
                             //Add new file
-                            f = new MOURepo().uploadEvidenceFile(evidence, newBasicInfo.moa_code, 3, false);
-                            evidence_file = new MOURepo().saveFile(f, evidence);
+                            f = new MOURepo().UploadEvidenceFile(evidence, newBasicInfo.moa_code, 3, false);
+                            evidence_file = new MOURepo().SaveFile(f, evidence);
                         }
                     }
                     else if (old_file_number == 1)
@@ -190,7 +188,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 //Update new file
                                 f = GoogleDriveService.UpdateFile(evidence.FileName, evidence.InputStream, evidence.ContentType, old_file_drive_id);
                                 db.Files.Remove(db.Files.Find(file_id));
-                                evidence_file = new MOURepo().saveFile(f, evidence);
+                                evidence_file = new MOURepo().SaveFile(f, evidence);
                                 db.SaveChanges();
                             }
                             else
@@ -262,7 +260,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<ENTITIES.Partner> getPartnerExMOA(int moa_id)
+        public List<Partner> GetPartnerExMOA(int moa_id)
         {
             try
             {
@@ -270,7 +268,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     from IA_Collaboration.MOAPartner t1 left join 
                     IA_Collaboration.Partner t2 on t2.partner_id = t1.partner_id
                     where t1.moa_id = @moa_id";
-                List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList,
+                List<Partner> partnerList = db.Database.SqlQuery<Partner>(sql_partnerList,
                     new SqlParameter("moa_id", moa_id)).ToList();
                 return partnerList;
             }
@@ -279,7 +277,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public void addExtraMOA(ExMOAAdd input, int moa_id, BLL.Authen.LoginRepo.User user,
+        public void AddExtraMOA(ExMOAAdd input, int moa_id, BLL.Authen.LoginRepo.User user,
             HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -290,9 +288,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
                     if (evidence != null)
                     {
-                        f = new MOURepo().uploadEvidenceFile(evidence, db.MOAs.Find(moa_id).moa_code, 3, false);
+                        f = new MOURepo().UploadEvidenceFile(evidence, db.MOAs.Find(moa_id).moa_code, 3, false);
                     }
-                    File evidence_file = new MOURepo().saveFile(f, evidence);
+                    File evidence_file = new MOURepo().SaveFile(f, evidence);
                     int? evidence_value;
                     if (evidence_file.file_id == 0)
                     {
@@ -381,7 +379,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void editExtraMOA(ExMOAAdd input, BLL.Authen.LoginRepo.User user,
+        public void EditExtraMOA(ExMOAAdd input, Authen.LoginRepo.User user,
             int old_file_number, int new_file_number,
             HttpPostedFileBase evidence, int moa_id)
         {
@@ -397,8 +395,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                         if (new_file_number == 1)
                         {
                             //Add new file
-                            f = new MOURepo().uploadEvidenceFile(evidence, db.MOAs.Find(moa_id).moa_code, 4, false);
-                            evidence_file = new MOURepo().saveFile(f, evidence);
+                            f = new MOURepo().UploadEvidenceFile(evidence, db.MOAs.Find(moa_id).moa_code, 4, false);
+                            evidence_file = new MOURepo().SaveFile(f, evidence);
                         }
                     }
                     else if (old_file_number == 1)
@@ -421,7 +419,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                                 //Update new file
                                 f = GoogleDriveService.UpdateFile(evidence.FileName, evidence.InputStream, evidence.ContentType, old_file_drive_id);
                                 db.Files.Remove(db.Files.Find(file_id));
-                                evidence_file = new MOURepo().saveFile(f, evidence);
+                                evidence_file = new MOURepo().SaveFile(f, evidence);
                                 db.SaveChanges();
                             }
                             else
@@ -532,7 +530,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void deleteExtraMOA(int moa_bonus_id)
+        public void DeleteExtraMOA(int moa_bonus_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -574,7 +572,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public string getNewExMOACode(int moa_id)
+        public string GetNewExMOACode(int moa_id)
         {
             try
             {
@@ -588,7 +586,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 {
                     countInMOA++;
                     newCode = baseMOACode + "_BS/" + countInMOA;
-                    isDuplicated = db.MOABonus.Where(x => x.moa_bonus_code.Equals(newCode)).FirstOrDefault() is null ? false : true;
+                    isDuplicated = !(db.MOABonus.Where(x => x.moa_bonus_code.Equals(newCode)).FirstOrDefault() is null);
                 } while (isDuplicated);
                 return newCode;
             }
@@ -597,7 +595,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public ExMOAAdd getExtraMOADetail(int moa_id, int moa_bonus_id, int mou_id)
+        public ExMOAAdd GetExtraMOADetail(int moa_id, int moa_bonus_id, int mou_id)
         {
             try
             {
@@ -618,7 +616,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 List<ExtraMOA> moaExList = db.Database.SqlQuery<ExtraMOA>(sql_moaEx
                     , new SqlParameter("moa_id", moa_id)
                     , new SqlParameter("moa_bonus_id", moa_bonus_id)).ToList();
-                ExMOAAdd moaEx = handlingExMOADetailData(moaExList);
+                ExMOAAdd moaEx = HandlingExMOADetailData(moaExList);
                 if (moaEx.PartnerScopeInfoMOA != null)
                 {
                     foreach (PartnerScopeInfoMOA item in moaEx.PartnerScopeInfoMOA.ToList())
@@ -634,13 +632,15 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        private ExMOAAdd handlingExMOADetailData(List<ExtraMOA> mouExList)
+        private ExMOAAdd HandlingExMOADetailData(List<ExtraMOA> mouExList)
         {
-            ExMOAAdd newObj = new ExMOAAdd();
-            newObj.file_drive_id = mouExList[0].file_drive_id;
-            newObj.file_name = mouExList[0].file_name;
-            newObj.ExMOABasicInfo = new ExMOABasicInfo();
-            newObj.PartnerScopeInfoMOA = new List<PartnerScopeInfoMOA>();
+            ExMOAAdd newObj = new ExMOAAdd
+            {
+                file_drive_id = mouExList[0].file_drive_id,
+                file_name = mouExList[0].file_name,
+                ExMOABasicInfo = new ExMOABasicInfo(),
+                PartnerScopeInfoMOA = new List<PartnerScopeInfoMOA>()
+            };
             //Partner
             foreach (ExtraMOA item in mouExList.ToList())
             {
@@ -650,12 +650,16 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 PartnerScopeInfoMOA p = newObj.PartnerScopeInfoMOA.Find(x => x.partner_id == item.partner_id);
                 if (p == null)
                 {
-                    PartnerScopeInfoMOA obj = new PartnerScopeInfoMOA();
-                    obj.partner_id = item.partner_id;
-                    obj.scopes_id = new List<int>();
-                    obj.scopes_id.Add(item.scope_id);
-                    obj.scopes_name = item.scope_abbreviation;
-                    obj.partner_name = item.partner_name;
+                    PartnerScopeInfoMOA obj = new PartnerScopeInfoMOA
+                    {
+                        partner_id = item.partner_id,
+                        scopes_id = new List<int>
+                        {
+                            item.scope_id
+                        },
+                        scopes_name = item.scope_abbreviation,
+                        partner_name = item.partner_name
+                    };
                     newObj.PartnerScopeInfoMOA.Add(obj);
                 }
                 else

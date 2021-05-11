@@ -31,7 +31,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
             else
             {
                 //Act
-                mou.deleteMOU(mou_id);
+                mou.DeleteMOU(mou_id);
 
                 //Assert
                 Assert.Pass();

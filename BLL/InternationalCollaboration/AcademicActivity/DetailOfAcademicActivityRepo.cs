@@ -13,8 +13,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class DetailOfAcademicActivityRepo
     {
-        ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public baseDetail getDetail(int language_id, int activity_id)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public baseDetail GetDetail(int language_id, int activity_id)
         {
             try
             {
@@ -29,8 +29,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                                                         new SqlParameter("activity_id", activity_id)).FirstOrDefault();
                 if (data != null)
                 {
-                    data.from = changeFormatDate(data.from);
-                    data.to = changeFormatDate(data.to);
+                    data.from = ChangeFormatDate(data.from);
+                    data.to = ChangeFormatDate(data.to);
                 }
                 return data;
             }
@@ -40,7 +40,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new baseDetail();
             }
         }
-        public baseDetail getDetailFirst(int language_id, int activity_id)
+        public baseDetail GetDetailFirst(int language_id, int activity_id)
         {
             try
             {
@@ -58,8 +58,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                                                         new SqlParameter("activity_id", activity_id)).FirstOrDefault();
                 if (data != null)
                 {
-                    data.from = changeFormatDate(data.from);
-                    data.to = changeFormatDate(data.to);
+                    data.from = ChangeFormatDate(data.from);
+                    data.to = ChangeFormatDate(data.to);
                     return data;
                 }
                 else
@@ -67,8 +67,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     int temp_language = language_id == 1 ? 2 : 1;
                     data = db.Database.SqlQuery<baseDetail>(sql, new SqlParameter("language_id", temp_language),
                                                                         new SqlParameter("activity_id", activity_id)).FirstOrDefault();
-                    data.from = changeFormatDate(data.from);
-                    data.to = changeFormatDate(data.to);
+                    data.from = ChangeFormatDate(data.from);
+                    data.to = ChangeFormatDate(data.to);
                     return data;
                 }
             }
@@ -78,12 +78,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new baseDetail();
             }
         }
-        public string changeFormatDate(string date)
+        public string ChangeFormatDate(string date)
         {
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
-        public List<subContent> getSubContents(int language_id, int activity_id)
+        public List<subContent> GetSubContents(int language_id, int activity_id)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<subContent>();
             }
         }
-        public List<AcademicActivityTypeLanguage> getType(int language_id)
+        public List<AcademicActivityTypeLanguage> GetType(int language_id)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<AcademicActivityTypeLanguage>();
             }
         }
-        public bool updateDetail(InfoSumDetail data, Authen.LoginRepo.User u, List<HttpPostedFileBase> list_image_main,
+        public bool UpdateDetail(InfoSumDetail data, Authen.LoginRepo.User u, List<HttpPostedFileBase> list_image_main,
             List<List<HttpPostedFileBase>> list_image_sub)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -240,13 +240,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     else
                     {
-                        bool res = aaRepo.updateBaseAA(detail.activity_id, detail.activity_type_id, detail.activity_name, detail.location, detail.from, detail.to, detail.language_id);
+                        bool res = aaRepo.UpdateBaseAA(detail.activity_id, detail.activity_type_id, detail.activity_name, detail.location, detail.from, detail.to, detail.language_id);
                         ActivityInfo ai = db.ActivityInfoes.Where(x => x.activity_id == detail.activity_id && x.main_article == true).FirstOrDefault();
                         ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == ai.article_id && x.language_id == detail.language_id).FirstOrDefault();
                         av.article_content = detail.article_content;
                         db.Entry(av).State = EntityState.Modified;
                         db.SaveChanges();
-                        updateListSubContent(data.subContent, detail.language_id, detail.activity_id, u, detail.article_status_id);
+                        UpdateListSubContent(data.subContent, detail.language_id, detail.activity_id, u, detail.article_status_id);
                         db.SaveChanges();
                     }
                     transaction.Commit();
@@ -260,9 +260,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void updateListSubContent(List<subContent> data, int language_id, int activity_id, Authen.LoginRepo.User u, int article_status_id)
+        public void UpdateListSubContent(List<subContent> data, int language_id, int activity_id, Authen.LoginRepo.User u, int article_status_id)
         {
-            List<subContent> old = getSubContents(language_id, activity_id);
+            List<subContent> old = GetSubContents(language_id, activity_id);
             List<int> old_id = old.Select(x => x.article_id).ToList();
             if (data != null)
             {
@@ -270,11 +270,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     if (!old_id.Contains(x.article_id))
                     {
-                        insertSubContent(x, activity_id, language_id, u, article_status_id);
+                        InsertSubContent(x, activity_id, language_id, u, article_status_id);
                     }
                     else
                     {
-                        updateSubContent(x, language_id);
+                        UpdateSubContent(x, language_id);
                     }
                     old_id.Remove(x.article_id);
                 }
@@ -290,14 +290,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.SaveChanges();
             }
         }
-        public void updateSubContent(subContent data, int language_id)
+        public void UpdateSubContent(subContent data, int language_id)
         {
             ArticleVersion av = db.ArticleVersions.Where(x => x.article_id == data.article_id && x.language_id == language_id).FirstOrDefault();
             av.version_title = data.version_title;
             av.article_content = data.article_content;
             db.Entry(av).State = EntityState.Modified;
         }
-        public void insertSubContent(subContent data, int activity_id, int language_id, Authen.LoginRepo.User u, int article_status_id)
+        public void InsertSubContent(subContent data, int activity_id, int language_id, Authen.LoginRepo.User u, int article_status_id)
         {
             Article a = db.Articles.Add(new Article
             {
@@ -321,7 +321,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 account_id = u.account.account_id
             });
         }
-        public bool changeStatusAA(int activity_id, int status)
+        public bool ChangeStatusAA(int activity_id, int status)
         {
             try
             {
@@ -341,7 +341,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return false;
             }
         }
-        public List<basePartner> getDatatableDTC(int activity_id)
+        public List<basePartner> GetDatatableDTC(int activity_id)
         {
             try
             {
@@ -361,7 +361,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<basePartner>();
             }
         }
-        public List<InternalUnit> getUnits()
+        public List<InternalUnit> GetUnits()
         {
             try
             {
@@ -374,7 +374,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<InternalUnit>();
             }
         }
-        public ContactInfo getContact(int activity_partner_id)
+        public ContactInfo GetContact(int activity_partner_id)
         {
             try
             {
@@ -390,13 +390,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new ContactInfo();
             }
         }
-        public AlertModal<string> saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner)
+        public AlertModal<string> SaveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
                 try
                 {
-                    if (checkDuplicatePartnerScope(activityPartner))
+                    if (CheckDuplicatePartnerScope(activityPartner))
                     {
                         AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                         //upload file if exist
@@ -415,9 +415,9 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         }
 
                         //update to PartnerScope
-                        PartnerScope partnerScope = updatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
+                        PartnerScope partnerScope = UpdatePartnerScope(activityPartner.partner_id, activityPartner.scope_id, academicCollaborationRepo);
 
-                        saveActivityPartner(file, partnerScope, activityPartner);
+                        SaveActivityPartner(file, partnerScope, activityPartner);
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Thêm đối tác đồng tổ chức thành công.");
                     }
@@ -434,7 +434,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public PartnerScope updatePartnerScope(int partner_id, int scope_id, AcademicCollaborationRepo academicCollaborationRepo)
+        public PartnerScope UpdatePartnerScope(int partner_id, int scope_id, AcademicCollaborationRepo academicCollaborationRepo)
         {
             PartnerScope partnerScope;
             try
@@ -455,12 +455,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return partnerScope;
         }
-        public void saveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner)
+        public void SaveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner)
         {
             try
             {
-                ActivityPartner ap = new ActivityPartner();
-                ap.sponsor = activityPartner.sponsor;
+                ActivityPartner ap = new ActivityPartner
+                {
+                    sponsor = activityPartner.sponsor
+                };
                 if (activityPartner.contact_point_name != null) ap.contact_point_name = activityPartner.contact_point_name;
                 if (activityPartner.contact_point_email != null) ap.contact_point_email = activityPartner.contact_point_email;
                 if (activityPartner.contact_point_phone != null) ap.contact_point_phone = activityPartner.contact_point_phone;
@@ -477,7 +479,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<ActivityPartner_Ext> getActivityPartner(int activity_partner_id)
+        public AlertModal<ActivityPartner_Ext> GetActivityPartner(int activity_partner_id)
         {
             try
             {
@@ -512,13 +514,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner saveActivityPartner)
+        public AlertModal<string> UpdateActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner saveActivityPartner)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
                 try
                 {
-                    if (checkDuplicatePartnerScope(saveActivityPartner))
+                    if (CheckDuplicatePartnerScope(saveActivityPartner))
                     {
                         //update file
                         ActivityPartner activityPartner = db.ActivityPartners.Find(saveActivityPartner.activity_partner_id);
@@ -548,11 +550,11 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                 //delete corressponding in gg drive
                                 GoogleDriveService.DeleteFile(old_file.file_drive_id);
                                 //delete corressponding from File
-                                new_file = removeFile(old_file);
+                                new_file = RemoveFile(old_file);
                             }
                         }
                         //update file_id null in coress ActivityPartner
-                        updateActivityPartner(activityPartner, saveActivityPartner, new_file);
+                        UpdateActivityPartner(activityPartner, saveActivityPartner, new_file);
                         dbContext.Commit();
                         return new AlertModal<string>(null, true, "Thành công", "Chỉnh sửa thông tin đơn vị đồng tổ chức thành công.");
                     }
@@ -568,7 +570,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public File removeFile(File file)
+        public File RemoveFile(File file)
         {
             try
             {
@@ -581,16 +583,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-        public void updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file)
+        public void UpdateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file)
         {
             try
             {
                 AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                 //update PartnerScope
-                PartnerScope partnerScope = updatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
+                PartnerScope partnerScope = UpdatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
 
-                ActivityPartner ap = new ActivityPartner();
-                ap.sponsor = saveActivityPartner.sponsor;
+                ActivityPartner ap = new ActivityPartner
+                {
+                    sponsor = saveActivityPartner.sponsor
+                };
                 if (saveActivityPartner.contact_point_name != null) ap.contact_point_name = saveActivityPartner.contact_point_name;
                 if (saveActivityPartner.contact_point_email != null) ap.contact_point_email = saveActivityPartner.contact_point_email;
                 if (saveActivityPartner.contact_point_phone != null) ap.contact_point_phone = saveActivityPartner.contact_point_phone;
@@ -627,7 +631,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<string> deleteActivityPartner(int activity_partner_id)
+        public AlertModal<string> DeleteActivityPartner(int activity_partner_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
@@ -666,7 +670,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool checkDuplicatePartnerScope(SaveActivityPartner activityPartner)
+        public bool CheckDuplicatePartnerScope(SaveActivityPartner activityPartner)
         {
             try
             {

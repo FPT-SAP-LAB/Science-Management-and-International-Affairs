@@ -13,7 +13,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     public class AcademicActivityRepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListAA> listAllAA(int year)
+        public List<ListAA> ListAllAA(int year)
         {
             try
             {
@@ -60,26 +60,26 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         activity_date_end = DateTime.ParseExact(obj.to, "dd/MM/yyyy", CultureInfo.InvariantCulture)
                     });
                     db.SaveChanges();
-                    db.AcademicActivityLanguages.Add(new ENTITIES.AcademicActivityLanguage
+                    db.AcademicActivityLanguages.Add(new AcademicActivityLanguage
                     {
                         language_id = language_id,
                         activity_id = aa.activity_id,
                         location = obj.location
                     });
-                    ENTITIES.Article ar = db.Articles.Add(new ENTITIES.Article
+                    Article ar = db.Articles.Add(new Article
                     {
                         account_id = u.account.account_id,
                         article_status_id = 1,
                         need_approved = false
                     });
                     db.SaveChanges();
-                    db.ActivityInfoes.Add(new ENTITIES.ActivityInfo
+                    db.ActivityInfoes.Add(new ActivityInfo
                     {
                         activity_id = aa.activity_id,
                         article_id = ar.article_id,
                         main_article = true
                     });
-                    db.ArticleVersions.Add(new ENTITIES.ArticleVersion
+                    db.ArticleVersions.Add(new ArticleVersion
                     {
                         article_id = ar.article_id,
                         publish_time = DateTime.Now,
@@ -134,8 +134,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             new SqlParameter("activity_id", id)).FirstOrDefault();
                 if (obj != null)
                 {
-                    obj.from = changeFormatDate(obj.from);
-                    obj.to = changeFormatDate(obj.to);
+                    obj.from = ChangeFormatDate(obj.from);
+                    obj.to = ChangeFormatDate(obj.to);
                 }
                 return obj;
             }
@@ -170,12 +170,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new baseAA();
             }
         }
-        public string changeFormatDate(string date)
+        public string ChangeFormatDate(string date)
         {
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
-        public bool updateBaseAAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, HttpPostedFileBase img, Authen.LoginRepo.User u)
+        public bool UpdateBaseAAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, HttpPostedFileBase img, Authen.LoginRepo.User u)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -187,14 +187,16 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     aa.activity_type_id = activity_type_id;
                     db.Entry(aa).State = EntityState.Modified;
                     db.SaveChanges();
-                    updateOrInsertBaseAA(id, activity_type_id, activity_name, location, from, to, language_id, u);
+                    UpdateOrInsertBaseAA(id, activity_type_id, activity_name, location, from, to, language_id, u);
                     if (aa.file_id == null)
                     {
                         Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Banner - " + activity_name, 5, false);
-                        File file = new File();
-                        file.name = img.FileName;
-                        file.link = f.WebViewLink;
-                        file.file_drive_id = f.Id;
+                        File file = new File
+                        {
+                            name = img.FileName,
+                            link = f.WebViewLink,
+                            file_drive_id = f.Id
+                        };
                         File ff = db.Files.Add(file);
                         db.SaveChanges();
                         aa.file_id = ff.file_id;
@@ -219,7 +221,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void updateOrInsertBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, Authen.LoginRepo.User u)
+        public void UpdateOrInsertBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id, Authen.LoginRepo.User u)
         {
             AcademicActivityLanguage al = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == language_id).FirstOrDefault();
             if (al == null)
@@ -231,26 +233,26 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.Articles.Remove(a_del);
                 AcademicActivityLanguage aal_del = db.AcademicActivityLanguages.Where(x => x.activity_id == id && x.language_id == temp_language).FirstOrDefault();
                 db.AcademicActivityLanguages.Remove(aal_del);
-                db.AcademicActivityLanguages.Add(new ENTITIES.AcademicActivityLanguage
+                db.AcademicActivityLanguages.Add(new AcademicActivityLanguage
                 {
                     language_id = language_id,
                     activity_id = id,
                     location = location
                 });
-                ENTITIES.Article ar = db.Articles.Add(new ENTITIES.Article
+                Article ar = db.Articles.Add(new Article
                 {
                     account_id = u.account.account_id,
                     article_status_id = 1,
                     need_approved = false
                 });
                 db.SaveChanges();
-                db.ActivityInfoes.Add(new ENTITIES.ActivityInfo
+                db.ActivityInfoes.Add(new ActivityInfo
                 {
                     activity_id = id,
                     article_id = ar.article_id,
                     main_article = true
                 });
-                db.ArticleVersions.Add(new ENTITIES.ArticleVersion
+                db.ArticleVersions.Add(new ArticleVersion
                 {
                     article_id = ar.article_id,
                     publish_time = DateTime.Now,
@@ -273,7 +275,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.SaveChanges();
             }
         }
-        public bool updateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id)
+        public bool UpdateBaseAA(int id, int activity_type_id, string activity_name, string location, string from, string to, int language_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -304,7 +306,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool deleteAA(int id)
+        public bool DeleteAA(int id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -317,7 +319,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         db.Articles.Remove(a);
                     }
                     db.SaveChanges();
-                    deleteFileInActivity(id);
+                    DeleteFileInActivity(id);
                     ENTITIES.AcademicActivity aa = db.AcademicActivities.Find(id);
                     if (aa.file_id != null)
                     {
@@ -341,7 +343,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void deleteFileInActivity(int activity_id)
+        public void DeleteFileInActivity(int activity_id)
         {
             List<ActivityOffice> aos = db.ActivityOffices.Where(x => x.activity_id == activity_id).ToList();
             foreach (ActivityOffice ao in aos)
@@ -373,7 +375,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             db.SaveChanges();
         }
-        public bool clone(cloneBase obj, int account_id)
+        public bool Clone(cloneBase obj, int account_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -386,26 +388,26 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         activity_date_end = DateTime.ParseExact(obj.to, "dd/MM/yyyy", CultureInfo.InvariantCulture)
                     });
                     db.SaveChanges();
-                    db.AcademicActivityLanguages.Add(new ENTITIES.AcademicActivityLanguage
+                    db.AcademicActivityLanguages.Add(new AcademicActivityLanguage
                     {
                         language_id = 1,
                         activity_id = aa.activity_id,
                         location = obj.location
                     });
-                    Article ar = db.Articles.Add(new ENTITIES.Article
+                    Article ar = db.Articles.Add(new Article
                     {
                         account_id = account_id,
                         article_status_id = 1,
                         need_approved = false
                     });
                     db.SaveChanges();
-                    db.ActivityInfoes.Add(new ENTITIES.ActivityInfo
+                    db.ActivityInfoes.Add(new ActivityInfo
                     {
                         activity_id = aa.activity_id,
                         article_id = ar.article_id,
                         main_article = true
                     });
-                    ArticleVersion av_new = db.ArticleVersions.Add(new ENTITIES.ArticleVersion
+                    ArticleVersion av_new = db.ArticleVersions.Add(new ArticleVersion
                     {
                         article_id = ar.article_id,
                         publish_time = DateTime.Now,
@@ -416,7 +418,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     });
                     db.SaveChanges();
                     int activity_id = aa.activity_id;
-                    cloneContent(obj, av_new, activity_id, account_id);
+                    CloneContent(obj, av_new, activity_id, account_id);
                     transaction.Commit();
                     return true;
                 }
@@ -428,17 +430,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneContent(cloneBase obj, ArticleVersion av_new, int activity_id, int account_id)
+        public void CloneContent(cloneBase obj, ArticleVersion av_new, int activity_id, int account_id)
         {
             if (obj.content != null)
             {
-                cloneKP(obj, obj.content.Contains("KP"), activity_id);
-                cloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
-                cloneND(obj, obj.content.Contains("ND"), activity_id, av_new, account_id);
-                cloneTD(obj, obj.content.Contains("TD"), activity_id, account_id);
+                CloneKP(obj, obj.content.Contains("KP"), activity_id);
+                CloneDTC(obj, obj.content.Contains("DTC"), activity_id, account_id);
+                CloneND(obj, obj.content.Contains("ND"), activity_id, av_new, account_id);
+                CloneTD(obj, obj.content.Contains("TD"), activity_id, account_id);
             }
         }
-        public void cloneKP(cloneBase obj, bool start, int activity_id)
+        public void CloneKP(cloneBase obj, bool start, int activity_id)
         {
             if (start)
             {
@@ -476,7 +478,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneTD(cloneBase obj, bool start, int activity_id, int account_id)
+        public void CloneTD(cloneBase obj, bool start, int activity_id, int account_id)
         {
             if (start)
             {
@@ -562,7 +564,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void cloneDTC(cloneBase obj, bool start, int activity_id, int account_id)
+        public void CloneDTC(cloneBase obj, bool start, int activity_id, int account_id)
         {
             if (start)
             {
@@ -580,7 +582,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.SaveChanges();
             }
         }
-        public void cloneND(cloneBase obj, bool start, int activity_id, ArticleVersion av_new, int account_id)
+        public void CloneND(cloneBase obj, bool start, int activity_id, ArticleVersion av_new, int account_id)
         {
             if (start)
             {

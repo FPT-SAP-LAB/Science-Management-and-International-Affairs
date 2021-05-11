@@ -28,8 +28,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 string moa_id = Session["moa_detail_id"].ToString();
                 string mou_id = Session["mou_detail_id"].ToString();
                 //ViewBag.scopeList = moa_detail.GetScopesExMOA(int.Parse(moa_id), int.Parse(mou_id));
-                ViewBag.partnerList = moa_detail.getPartnerExMOA(int.Parse(moa_id));
-                ViewBag.newExMOACode = moa_detail.getNewExMOACode(int.Parse(moa_id));
+                ViewBag.partnerList = moa_detail.GetPartnerExMOA(int.Parse(moa_id));
+                ViewBag.newExMOACode = moa_detail.GetNewExMOACode(int.Parse(moa_id));
 
                 ////MOA Partner
                 ViewBag.listScopesMOAPartner = moa_partner.getPartnerMOAScope(int.Parse(moa_id), int.Parse(mou_id));
@@ -48,7 +48,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 else
                 {
                     string mou_id = Session["mou_detail_id"].ToString();
-                    List<ListMOA> listMOA = moa.listAllMOA(partner_name, moa_code, mou_id);
+                    List<ListMOA> listMOA = moa.ListAllMOA(partner_name, moa_code, mou_id);
                     return Json(new { success = true, data = listMOA }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -89,7 +89,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 else
                 {
                     string mou_id = Session["mou_detail_id"].ToString();
-                    List<CustomScopesMOA> scopeList = moa.getMOAScope(int.Parse(mou_id), partner_id);
+                    List<CustomScopesMOA> scopeList = moa.GetMOAScope(int.Parse(mou_id), partner_id);
                     return Json(scopeList);
                 }
             }
@@ -104,7 +104,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         {
             try
             {
-                moa.deleteMOA(moa_id);
+                moa.DeleteMOA(moa_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -129,7 +129,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string mou_id = Session["mou_detail_id"].ToString();
 
-                    moa.addMOA(obj, int.Parse(mou_id), user, evidence);
+                    moa.AddMOA(obj, int.Parse(mou_id), user, evidence);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -143,7 +143,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
         {
             try
             {
-                bool isDup = moa.getMOACodeCheck(moa_code);
+                bool isDup = moa.GetMOACodeCheck(moa_code);
                 return Json(isDup);
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.MOA
                 else
                 {
                     string mou_id = Session["mou_detail_id"].ToString();
-                    bool isDup = moa.checkDuplicatePartnersMOA(MOAPartnerInfo, int.Parse(mou_id));
+                    bool isDup = moa.CheckDuplicatePartnersMOA(MOAPartnerInfo, int.Parse(mou_id));
                     return Json(isDup);
                 }
             }

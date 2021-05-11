@@ -7,6 +7,7 @@ using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.ScienceManagement.Comment;
 using ENTITIES.CustomModels.ScienceManagement.Paper;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Models;
 using GUEST.Support;
 using Newtonsoft.Json.Linq;
 using System;
@@ -55,22 +56,16 @@ namespace GUEST.Controllers
         [HttpPost]
         public JsonResult addFile(HttpPostedFileBase file, string name, DetailPaper paper)
         {
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
+            Account acc = CurrentAccount.Account(Session);
             Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 2, acc.email);
-            ENTITIES.File fl = new ENTITIES.File
+            File fl = new File
             {
                 link = f.WebViewLink,
                 file_drive_id = f.Id,
                 name = name
             };
             string mess = pr.AddFile(fl);
-            return Json(new { mess = mess, id = fl.file_id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id = fl.file_id });
         }
 
         [HttpPost]
@@ -98,15 +93,9 @@ namespace GUEST.Controllers
 
             if (file != null)
             {
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
+                Account acc = CurrentAccount.Account(Session);
                 Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, name, 2, acc.email);
-                ENTITIES.File fl = new ENTITIES.File
+                File fl = new File
                 {
                     link = f.WebViewLink,
                     file_drive_id = f.Id,
@@ -118,36 +107,30 @@ namespace GUEST.Controllers
             paper.publish_date = DateTime.ParseExact(paper.date_string, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Paper p = pr.AddPaper(paper);
             if (p != null) return Json(new { id = p.paper_id, mess = "ss" }, JsonRequestBehavior.AllowGet);
-            else return Json(new { mess = "ff" }, JsonRequestBehavior.AllowGet);
+            else return Json(new { mess = "ff" });
         }
 
         [HttpPost]
         public JsonResult AddRequest(RequestPaper request, string daidien)
         {
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            BaseRequest b = pr.AddBaseRequest(acc.account_id);
+            int account_id = CurrentAccount.AccountID(Session);
+            BaseRequest b = pr.AddBaseRequest(account_id);
             string mess = pr.AddRequestPaper(b.request_id, request, daidien);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess });
         }
 
         [HttpPost]
         public JsonResult AddAuthor(List<AddAuthor> people, string paper_id)
         {
             string mess = pr.AddAuthor(people, paper_id);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess });
         }
 
         [HttpPost]
         public JsonResult AddCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             string mess = pr.AddCriteria(criteria, paper_id);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess });
         }
 
         //[HttpPost]
@@ -192,28 +175,28 @@ namespace GUEST.Controllers
         public JsonResult editPaper(string paper_id, Paper paper)
         {
             string mess = pr.UpdatePaper(paper_id, paper);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess });
         }
 
         [HttpPost]
         public JsonResult editRequest(RequestPaper item, string daidien)
         {
             string mess = pr.UpdateRequest(item, daidien);
-            return Json(new { mess = mess, id = item.paper_id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id = item.paper_id });
         }
 
         [HttpPost]
         public JsonResult editCriteria(List<CustomCriteria> criteria, string paper_id)
         {
             string mess = pr.UpdateCriteria(criteria, paper_id);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess });
         }
 
         [HttpPost]
         public JsonResult editAuthor(List<AddAuthor> people, string paper_id)
         {
             string mess = pr.UpdateAuthor(people, paper_id);
-            return Json(new { mess = mess, id = paper_id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id = paper_id });
         }
 
         [HttpPost]
@@ -227,21 +210,21 @@ namespace GUEST.Controllers
             List<AuthorInfoWithNull> listAuthor = pr.GetAuthorPaper(id, lang);
             string ms = pr.GetAuthorReceived(id);
             if (ms == null) ms = "";
-            return Json(new { author = listAuthor, ms = ms }, JsonRequestBehavior.AllowGet);
+            return Json(new { author = listAuthor, ms });
         }
 
         [HttpPost]
         public JsonResult editPaperAuthorReward(List<AddAuthor> people, int paper_id)
         {
             string mess = pr.UpdateRewardAuthorAfterDecision(people, paper_id);
-            return Json(new { mess }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess });
         }
 
         [HttpPost]
         public JsonResult getDecision(int id)
         {
             List<string> link = pr.GetDecisionLink(id);
-            return Json(new { link = link }, JsonRequestBehavior.AllowGet);
+            return Json(new { link }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -314,15 +297,8 @@ namespace GUEST.Controllers
                 reward_type = Int32.Parse((string)object_request["reward_type"]),
             };
 
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-
-            ENTITIES.File fl = new ENTITIES.File();
+            File fl = new File();
+            Account acc = CurrentAccount.Account(Session);
             if (file != null)
             {
                 Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadResearcherFile(file, paper.name, 2, acc.email);
@@ -339,11 +315,11 @@ namespace GUEST.Controllers
                 if (m == "ss") paper.file_id = fl.file_id;
             }
 
-            int id = pr.AddPaper_Refactor(paper, criteria, author, request, acc, fl, daidien);
+            int id = pr.AddPaper_Refactor(paper, criteria, author, request, acc.account_id, fl, daidien);
             bool mess = true;
             if (id == 0) mess = false;
 
-            return Json(new { mess = mess, id = id }, JsonRequestBehavior.AllowGet);
+            return Json(new { mess, id }, JsonRequestBehavior.AllowGet);
         }
     }
 }

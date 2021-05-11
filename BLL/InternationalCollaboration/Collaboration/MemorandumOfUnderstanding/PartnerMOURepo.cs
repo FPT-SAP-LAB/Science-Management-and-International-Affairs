@@ -94,7 +94,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public void addMOUPartner(PartnerInfo input, int mou_id, BLL.Authen.LoginRepo.User user)
+        public void AddMOUPartner(PartnerInfo input, int mou_id, Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -121,7 +121,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             article_id = a.article_id,
                             language_id = 1
                         });
-                        db.Partners.Add(new ENTITIES.Partner
+                        db.Partners.Add(new Partner
                         {
                             partner_name = input.partnername_add,
                             website = input.website_add,
@@ -131,7 +131,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         });
                         //checkpoint 2
                         db.SaveChanges();
-                        ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == input.partnername_add).First();
+                        Partner objPartner = db.Partners.Where(x => x.partner_name == input.partnername_add).First();
                         partner_id_item = objPartner.partner_id;
                     }
                     else //old partner
@@ -139,7 +139,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         partner_id_item = (int)input.partner_id;
                     }
                     //add to MOUPartner via each partner of MOU
-                    db.MOUPartners.Add(new ENTITIES.MOUPartner
+                    db.MOUPartners.Add(new MOUPartner
                     {
                         mou_id = mou_id,
                         partner_id = partner_id_item,
@@ -219,7 +219,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public void editMOUPartner(PartnerInfo input, int mou_id, int mou_partner_id, BLL.Authen.LoginRepo.User user)
+        public void EditMOUPartner(PartnerInfo input, int mou_id, int mou_partner_id, Authen.LoginRepo.User user)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -248,7 +248,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                             article_id = a.article_id,
                             language_id = 1
                         });
-                        db.Partners.Add(new ENTITIES.Partner
+                        db.Partners.Add(new Partner
                         {
                             partner_name = input.partnername_add,
                             website = input.website_add,
@@ -258,7 +258,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         });
                         //checkpoint 2
                         db.SaveChanges();
-                        ENTITIES.Partner objPartner = db.Partners.Where(x => x.partner_name == input.partnername_add).First();
+                        Partner objPartner = db.Partners.Where(x => x.partner_name == input.partnername_add).First();
                         partner_id_item = objPartner.partner_id;
                     }
                     else //old partner
@@ -267,7 +267,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     }
 
                     //edit MOUPartner
-                    ENTITIES.MOUPartner moup = db.MOUPartners.Where(x => x.mou_partner_id == mou_partner_id).First();
+                    MOUPartner moup = db.MOUPartners.Where(x => x.mou_partner_id == mou_partner_id).First();
                     moup.mou_id = mou_id;
                     moup.partner_id = partner_id_item;
                     moup.mou_start_date = DateTime.ParseExact(input.sign_date_mou_add, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -379,7 +379,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void deleteMOUPartner(int mou_id, int mou_partner_id)
+        public void DeleteMOUPartner(int mou_id, int mou_partner_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -440,13 +440,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
         }
 
-        public bool checkLastPartner(int mou_id)
+        public bool CheckLastPartner(int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    return db.MOUPartners.Where(x => x.mou_id == mou_id).Count() == 1 ? true : false;
+                    return db.MOUPartners.Where(x => x.mou_id == mou_id).Count() == 1;
                 }
                 catch (Exception ex)
                 {
@@ -469,7 +469,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         where mou_partner_id = @mou_partner_id and t1.is_deleted = 0";
                     List<MOUPartner> listExisted = db.Database.SqlQuery<MOUPartner>(sql_check,
                         new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
-                    return listExisted.Count() > 0 ? true : false;
+                    return listExisted.Count() > 0;
                 }
                 catch (Exception ex)
                 {
@@ -492,14 +492,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     where mou_partner_id = @mou_partner_id";
                 List<MOUBonu> exMOUList = db.Database.SqlQuery<MOUBonu>(sql_check,
                     new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
-                return exMOUList.Count == 0 ? false : true;
+                return exMOUList.Count != 0;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public List<PartnerHistory> listMOUPartnerHistory(int mou_partner_id)
+        public List<PartnerHistory> ListMOUPartnerHistory(int mou_partner_id)
         {
             string sql_history =
                     @"WITH b AS(
@@ -565,7 +565,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 new SqlParameter("mou_partner_id", mou_partner_id)).ToList();
             return historyList;
         }
-        public List<ENTITIES.Partner> GetPartners(int mou_id)
+        public List<Partner> GetPartners(int mou_id)
         {
             try
             {
@@ -573,7 +573,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     where partner_id not in (
                     select partner_id from IA_Collaboration.MOUPartner
                     where mou_id = @mou_id)";
-                List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList
+                List<Partner> partnerList = db.Database.SqlQuery<Partner>(sql_partnerList
                     , new SqlParameter("mou_id", mou_id)).ToList();
                 return partnerList;
             }
@@ -582,7 +582,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<Specialization> getPartnerMOUSpe()
+        public List<Specialization> GetPartnerMOUSpe()
         {
             try
             {
@@ -595,7 +595,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<CollaborationScope> getPartnerMOUScope(int mou_id)
+        public List<CollaborationScope> GetPartnerMOUScope(int mou_id)
         {
             try
             {
@@ -614,7 +614,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public ListMOUPartner getMOUPartnerDetail(int mou_partner_id)
+        public ListMOUPartner GetMOUPartnerDetail(int mou_partner_id)
         {
             try
             {

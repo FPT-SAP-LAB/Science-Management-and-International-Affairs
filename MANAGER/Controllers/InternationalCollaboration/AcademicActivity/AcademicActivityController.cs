@@ -24,7 +24,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatable(int year)
         {
             repo = new AcademicActivityRepo();
-            List<AcademicActivityRepo.ListAA> data = repo.listAllAA(year);
+            List<AcademicActivityRepo.ListAA> data = repo.ListAllAA(year);
             return Json(new { success = true, data = data });
         }
         [HttpPost]
@@ -36,7 +36,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo.AAtypes data = new AcademicActivityRepo.AAtypes
             {
                 baseAA = baseAA,
-                types = detailRepo.getType(baseAA.language_id)
+                types = detailRepo.GetType(baseAA.language_id)
             };
             return Json(data);
         }
@@ -49,14 +49,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo.AAtypes data = new AcademicActivityRepo.AAtypes
             {
                 baseAA = baseAA == null ? new AcademicActivityRepo.baseAA() : baseAA,
-                types = detailRepo.getType(language_id)
+                types = detailRepo.GetType(language_id)
             };
             return Json(data);
         }
         public JsonResult resetCategory(int language_id)
         {
             detailRepo = new DetailOfAcademicActivityRepo();
-            List<ENTITIES.AcademicActivityTypeLanguage> data = detailRepo.getType(language_id);
+            List<ENTITIES.AcademicActivityTypeLanguage> data = detailRepo.GetType(language_id);
             return Json(data);
         }
         [Auther(RightID = "2")]
@@ -64,7 +64,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult delete_AcademicActivity(int id)
         {
             repo = new AcademicActivityRepo();
-            bool res = repo.deleteAA(id);
+            bool res = repo.DeleteAA(id);
             if (res)
             {
                 return Json("Đã xóa thành công", JsonRequestBehavior.AllowGet);
@@ -98,7 +98,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             repo = new AcademicActivityRepo();
             BLL.Authen.LoginRepo.User u = (BLL.Authen.LoginRepo.User)Session["User"];
-            bool res = repo.updateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img, u);
+            bool res = repo.UpdateBaseAAA(id, activity_type_id, activity_name, location, from, to, language_id, img, u);
             if (res)
             {
                 return Json("Đã chỉnh sửa thành công", JsonRequestBehavior.AllowGet);
@@ -110,7 +110,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             repo = new AcademicActivityRepo();
             int account_id = CurrentAccount.AccountID(Session);
-            bool res = repo.clone(obj, account_id);
+            bool res = repo.Clone(obj, account_id);
             if (res)
             {
                 return Json("Đã sao chép thành công", JsonRequestBehavior.AllowGet);

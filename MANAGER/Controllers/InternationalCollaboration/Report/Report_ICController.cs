@@ -34,7 +34,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Report
             ViewBag.year_select = year_select;
 
             //update noti for mou.
-            new MOURepo().getNoti();
+            new MOURepo().GetNoti();
             return PartialView();
         }
 
