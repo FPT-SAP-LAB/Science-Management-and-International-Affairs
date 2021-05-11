@@ -22,7 +22,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 Start = 0,
                 Length = 10
             };
-            List<ListMOU> listTest = mou.listAllMOU(baseDatatable, "", "", "").Data;
+            List<ListMOU> listTest = mou.ListAllMOU(baseDatatable, "", "", "").Data;
             Assert.AreEqual(10, listTest.Count);
         }
         [TestCase]
@@ -40,7 +40,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 Start = 0,
                 Length = 20
             };
-            List<ListMOU> listTest = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
+            List<ListMOU> listTest = mou.ListAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
             foreach (ListMOU item in listTest)
             {
                 if (!item.partner_name.Contains(partner_name))
@@ -65,7 +65,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 Start = 0,
                 Length = 20
             };
-            List<ListMOU> listTest = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
+            List<ListMOU> listTest = mou.ListAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
             foreach (ListMOU item in listTest)
             {
                 if (!(item.partner_name.Contains(partner_name) && item.contact_point_name.Contains(contact_point_name)))
@@ -90,7 +90,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 Start = 0,
                 Length = 20
             };
-            List<ListMOU> listTest = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
+            List<ListMOU> listTest = mou.ListAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
             foreach (ListMOU item in listTest)
             {
                 if (!(item.partner_name.Contains(partner_name) && item.contact_point_name.Contains(contact_point_name)
@@ -116,7 +116,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration
                 Start = 0,
                 Length = 20
             };
-            List<ListMOU> listTest = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
+            List<ListMOU> listTest = mou.ListAllMOU(baseDatatable, partner_name, contact_point_name, mou_code).Data;
             foreach (ListMOU item in listTest)
             {
                 if (!(item.partner_name.Contains(partner_name) && item.contact_point_name.Contains(contact_point_name)

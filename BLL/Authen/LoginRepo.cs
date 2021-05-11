@@ -15,7 +15,11 @@ namespace BLL.Authen
             try
             {
                 db = new ScienceAndInternationalAffairsEntities();
-                Account a = db.Profiles.Find(people_id).Account;
+                db.Configuration.LazyLoadingEnabled = false;    //Prevent open connection
+                Account a = (from c in db.Profiles
+                             join b in db.Accounts on c.account_id equals b.account_id
+                             where c.people_id == people_id
+                             select b).FirstOrDefault();
                 Role r = db.Roles.Find(a.role_id);
                 if (!roleAccept.Contains(r.role_id) && !roleAccept.Contains(0))
                 {
@@ -43,6 +47,7 @@ namespace BLL.Authen
         public User GetAccount(ENTITIES.CustomModels.Authen.Gmail user, List<int> roleAccept)
         {
             db = new ScienceAndInternationalAffairsEntities();
+            db.Configuration.LazyLoadingEnabled = false;
             try
             {
                 Account a = db.Accounts.Where(x => x.email.Equals(user.email)).FirstOrDefault();

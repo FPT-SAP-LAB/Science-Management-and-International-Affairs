@@ -24,10 +24,10 @@ namespace BLL.ScienceManagement.Paper
             if (id == null) return null;
             id = id.Trim();
             if (id == "") return null;
-            int id_int = 0;
+            int id_int;
             try
             {
-                id_int = Int32.Parse(id);
+                id_int = int.Parse(id);
             }
             catch (Exception e)
             {
@@ -63,10 +63,9 @@ namespace BLL.ScienceManagement.Paper
             if (id == null) return null;
             id = id.Trim();
             if (id == "") return null;
-            int id_int = 0;
             try
             {
-                id_int = Int32.Parse(id);
+                int id_int = Int32.Parse(id);
             }
             catch (Exception e)
             {
@@ -1446,7 +1445,7 @@ namespace BLL.ScienceManagement.Paper
             return list;
         }
 
-        public int AddPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, Account acc, ENTITIES.File fl, string daidien)
+        public int AddPaper_Refactor(DetailPaper paper, List<CustomCriteria> criteria, List<AddAuthor> author, RequestPaper request, int account_id, ENTITIES.File fl, string daidien)
         {
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
             using (DbContextTransaction dbc = db.Database.BeginTransaction())
@@ -1579,7 +1578,7 @@ namespace BLL.ScienceManagement.Paper
 
                     BaseRequest b = new BaseRequest
                     {
-                        account_id = acc.account_id,
+                        account_id = account_id,
                         created_date = DateTime.Today
                     };
                     db.BaseRequests.Add(b);

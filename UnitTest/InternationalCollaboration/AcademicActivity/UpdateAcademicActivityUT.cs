@@ -39,7 +39,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "",
                 file_name = ""
             };
-            bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
+            bool res = activityRepo.UpdateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
             if (res)
@@ -71,7 +71,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "",
                 file_name = ""
             };
-            bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
+            bool res = activityRepo.UpdateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
             if (res)
@@ -103,7 +103,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "https://drive.google.com/file/d/1BrSpGL63zR_qtp3yGbkzJnvRb01LnH4G/view?usp=drivesdk",
                 file_name = "IS1307_SSC101_Assignment 1_Nguyenttthe130020.pdf"
             };
-            bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
+            bool res = activityRepo.UpdateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
             if (!res)
@@ -135,7 +135,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "https://drive.google.com/file/d/1BrSpGL63zR_qtp3yGbkzJnvRb01LnH4G/view?usp=drivesdk",
                 file_name = "IS1307_SSC101_Assignment 1_Nguyenttthe130020.pdf"
             };
-            bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
+            bool res = activityRepo.UpdateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
             if (!res)
@@ -167,7 +167,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "",
                 file_name = ""
             };
-            bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
+            bool res = activityRepo.UpdateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
             if (!res)
@@ -199,7 +199,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 file_link = "",
                 file_name = ""
             };
-            bool res = activityRepo.updateBaseAAA(academicActivity.activity_id,
+            bool res = activityRepo.UpdateBaseAAA(academicActivity.activity_id,
                 baseAA.activity_type_id, baseAA.activity_name, baseAA.location,
                 baseAA.from, baseAA.to, baseAA.language_id, null, user);
             if (!res)

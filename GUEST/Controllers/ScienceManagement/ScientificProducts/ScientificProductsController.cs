@@ -2,6 +2,7 @@
 using BLL.ScienceManagement.ScientificProduct;
 using ENTITIES;
 using ENTITIES.CustomModels.ScienceManagement.ScientificProduct;
+using GUEST.Models;
 using GUEST.Support;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace GUEST.Controllers.ScientificProducts
 {
     public class ScientificProductsController : Controller
     {
-        ListProductRepo lpr = new ListProductRepo();
-        ListProductOnePersonRepo lpo = new ListProductOnePersonRepo();
+        private readonly ListProductRepo lpr = new ListProductRepo();
+        private readonly ListProductOnePersonRepo lpo = new ListProductOnePersonRepo();
         // GET: ScientificProducts
         public ActionResult Index()
         {
@@ -48,22 +49,9 @@ namespace GUEST.Controllers.ScientificProducts
         [HttpPost]
         public JsonResult SearchOnePerson(DataSearch item)
         {
-            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            if (item.monthS == "paper")
-            {
-                list = lpo.getList(item, acc.account_id);
-            }
-            else
-            {
-                list = lpo.getListInven(item, acc.account_id);
-            }
+            int account_id = CurrentAccount.AccountID(Session);
+            List<ListProduct_OnePerson> list = item.monthS == "paper"
+                ? lpo.getList(item, account_id) : lpo.getListInven(item, account_id);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].note = list[i].status_id + "_" + list[i].paper_id + "_" + item.monthS;
@@ -80,22 +68,9 @@ namespace GUEST.Controllers.ScientificProducts
                 new PageTree("Sản phẩm khoa học đang chờ phê duyệt","/ScientificProducts/Pending"),
             };
             ViewBag.pagesTree = pagesTree;
-            List<ListProduct_OnePerson> list = new List<ListProduct_OnePerson>();
-            LoginRepo.User u = new LoginRepo.User();
-            Account acc = new Account();
-            if (Session["User"] != null)
-            {
-                u = (LoginRepo.User)Session["User"];
-                acc = u.account;
-            }
-            if (type == "paper")
-            {
-                list = lpo.getList(new DataSearch(), acc.account_id);
-            }
-            else
-            {
-                list = lpo.getListInven(new DataSearch(), acc.account_id);
-            }
+            int account_id = CurrentAccount.AccountID(Session);
+            List<ListProduct_OnePerson> list = type == "paper"
+                ? lpo.getList(new DataSearch(), account_id) : lpo.getListInven(new DataSearch(), account_id);
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].note = list[i].status_id + "_" + list[i].paper_id + "_" + type;

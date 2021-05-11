@@ -19,7 +19,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            bool res = activityRepo.deleteAA(academicActivity.activity_id);
+            bool res = activityRepo.DeleteAA(academicActivity.activity_id);
             if (res)
                 Assert.Pass();
         }
@@ -29,7 +29,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            bool res = activityRepo.deleteAA(academicActivity.activity_id);
+            bool res = activityRepo.DeleteAA(academicActivity.activity_id);
             if (res)
                 Assert.Pass();
         }
@@ -39,7 +39,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            bool res = activityRepo.deleteAA(academicActivity.activity_id);
+            bool res = activityRepo.DeleteAA(academicActivity.activity_id);
             if (!res)
                 Assert.Pass();
         }

@@ -24,7 +24,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
             string mou_code = "2020/104";
 
             //Act
-            bool isExisted = mou.getMOUCodeCheck(mou_code);
+            bool isExisted = mou.GetMOUCodeCheck(mou_code);
 
             //Assert
             Assert.IsTrue(isExisted);
@@ -38,7 +38,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
             string mou_code = "2020/101";
 
             //Act
-            bool isExisted = mou.getMOUCodeCheck(mou_code);
+            bool isExisted = mou.GetMOUCodeCheck(mou_code);
 
             //Assert
             Assert.IsFalse(isExisted);

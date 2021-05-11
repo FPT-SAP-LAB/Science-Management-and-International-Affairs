@@ -5,6 +5,7 @@ using ENTITIES;
 using ENTITIES.CustomModels;
 using ENTITIES.CustomModels.Datatable;
 using ENTITIES.CustomModels.InternationalCollaboration.Collaboration.PartnerEntity;
+using MANAGER.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -143,14 +144,6 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                     partner_language_type = partner_language_type
                 };
 
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
-
                 List<HttpPostedFileBase> files_request = new List<HttpPostedFileBase>();
                 for (int i = 0; i < numberOfImage; i++)
                 {
@@ -161,7 +154,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 {
                     files_request.Add(image);
                 }
-                if (acc.account_id == 0)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id == 0)
                 {
                     return Json(new
                     {
@@ -171,7 +165,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 else
                 {
                     AlertModal<string> json = partnerRePo.AddPartner(files_request, image, content,
-                        partner_article, numberOfImage, acc.account_id);
+                        partner_article, numberOfImage, account_id);
                     return Json(new { json.success, json.content });
                 }
             }
@@ -274,13 +268,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
             try
             {
                 ViewBag.title = "CHI TIẾT ĐỐI TÁC";
-                LoginRepo.User u = new LoginRepo.User();
-                Account acc = new Account();
-                if (Session["User"] != null)
-                {
-                    u = (LoginRepo.User)Session["User"];
-                    acc = u.account;
-                }
+
                 PartnerArticle partner_article = new PartnerArticle
                 {
                     partner_name = partner_name,
@@ -300,7 +288,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 {
                     files_request.Add(image);
                 }
-                if (acc.account_id == 0)
+                int account_id = CurrentAccount.AccountID(Session);
+                if (account_id == 0)
                 {
                     return Json(new
                     {
@@ -310,7 +299,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Partner_Manager
                 else
                 {
                     AlertModal<string> json = partnerRePo.EditPartner(files_request, image, content,
-                            partner_article, numberOfImage, partner_id, acc.account_id);
+                            partner_article, numberOfImage, partner_id, account_id);
                     return Json(new { json.success, json.content });
                 }
             }

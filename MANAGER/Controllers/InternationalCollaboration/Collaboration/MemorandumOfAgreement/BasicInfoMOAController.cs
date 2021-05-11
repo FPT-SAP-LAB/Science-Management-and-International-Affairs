@@ -43,7 +43,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["moa_detail_id"].ToString();
-                    MOABasicInfo data = moa.getBasicInfoMOA(int.Parse(id));
+                    MOABasicInfo data = moa.GetBasicInfoMOA(int.Parse(id));
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -64,7 +64,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["moa_detail_id"].ToString();
-                    List<ExtraMOA> listExMOA = moa.listAllExtraMOA(int.Parse(id));
+                    List<ExtraMOA> listExMOA = moa.ListAllExtraMOA(int.Parse(id));
                     return Json(new { success = true, data = listExMOA }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -89,7 +89,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     string id = Session["moa_detail_id"].ToString();
                     JObject inputObj = JObject.Parse(input);
                     MOABasicInfo obj = inputObj.ToObject<MOABasicInfo>();
-                    moa.editMOABasicInfo(int.Parse(id), obj, evidence, old_file_number, new_file_number);
+                    moa.EditMOABasicInfo(int.Parse(id), obj, evidence, old_file_number, new_file_number);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -104,7 +104,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                moa.deleteExtraMOA(moa_bonus_id);
+                moa.DeleteExtraMOA(moa_bonus_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -125,7 +125,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 {
                     string moa_id = Session["moa_detail_id"].ToString();
                     string mou_id = Session["mou_detail_id"].ToString();
-                    ExMOAAdd mouObj = moa.getExtraMOADetail(int.Parse(moa_id), moa_bonus_id, int.Parse(mou_id));
+                    ExMOAAdd mouObj = moa.GetExtraMOADetail(int.Parse(moa_id), moa_bonus_id, int.Parse(mou_id));
                     return Json(mouObj, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -150,7 +150,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ExMOAAdd obj = inputObj.ToObject<ExMOAAdd>();
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["moa_detail_id"].ToString();
-                    moa.addExtraMOA(obj, int.Parse(id), user, evidence);
+                    moa.AddExtraMOA(obj, int.Parse(id), user, evidence);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -175,7 +175,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ExMOAAdd obj = inputObj.ToObject<ExMOAAdd>();
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["moa_detail_id"].ToString();
-                    moa.editExtraMOA(obj, user, old_file_number_ex_moa, new_file_number_ex_moa, evidence, int.Parse(id));
+                    moa.EditExtraMOA(obj, user, old_file_number_ex_moa, new_file_number_ex_moa, evidence, int.Parse(id));
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }

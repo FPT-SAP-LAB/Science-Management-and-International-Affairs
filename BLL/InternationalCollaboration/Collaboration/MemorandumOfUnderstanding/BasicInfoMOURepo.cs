@@ -16,7 +16,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
     public class BasicInfoMOURepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public MOUBasicInfo getBasicInfoMOU(int mou_id)
+        public MOUBasicInfo GetBasicInfoMOU(int mou_id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     new SqlParameter("mou_id", mou_id)).First();
                 MOUBasicInfo dateAndScopes = db.Database.SqlQuery<MOUBasicInfo>(sql_mouStartDateAndScopes,
                     new SqlParameter("mou_id", mou_id)).First();
-                handlingMOUData(basicInfo, dateAndScopes);
+                HandlingMOUData(basicInfo, dateAndScopes);
                 return basicInfo;
             }
             catch (Exception ex)
@@ -72,14 +72,14 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        private void handlingMOUData(MOUBasicInfo basicInfo, MOUBasicInfo dateAndScopes)
+        private void HandlingMOUData(MOUBasicInfo basicInfo, MOUBasicInfo dateAndScopes)
         {
             //handle date display
             basicInfo.mou_end_date_string = basicInfo.mou_end_date.ToString("dd'/'MM'/'yyyy");
             basicInfo.mou_start_date_string = dateAndScopes.mou_start_date.ToString("dd'/'MM'/'yyyy");
             basicInfo.scopes = dateAndScopes.scopes;
         }
-        public List<ExtraMOU> listAllExtraMOU(int mou_id)
+        public List<ExtraMOU> ListAllExtraMOU(int mou_id)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         order by mou_bonus_id, partner_name";
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouExList,
                     new SqlParameter("mou_id", mou_id)).ToList();
-                handlingExMOUListData(mouExList);
+                HandlingExMOUListData(mouExList);
                 return mouExList;
             }
             catch (Exception ex)
@@ -108,7 +108,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        private void handlingExMOUListData(List<ExtraMOU> mouExList)
+        private void HandlingExMOUListData(List<ExtraMOU> mouExList)
         {
             ExtraMOU previousItem = null;
             foreach (ExtraMOU item in mouExList.ToList())
@@ -140,7 +140,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public void editMOUBasicInfo(int mou_id, MOUBasicInfo newBasicInfo, HttpPostedFileBase evidence,
+        public void EditMOUBasicInfo(int mou_id, MOUBasicInfo newBasicInfo, HttpPostedFileBase evidence,
             int old_file_number, int new_file_number)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -155,8 +155,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         if (new_file_number == 1)
                         {
                             //Add new file
-                            f = new MOURepo().uploadEvidenceFile(evidence, newBasicInfo.mou_code, 1, false);
-                            evidence_file = new MOURepo().saveFile(f, evidence);
+                            f = new MOURepo().UploadEvidenceFile(evidence, newBasicInfo.mou_code, 1, false);
+                            evidence_file = new MOURepo().SaveFile(f, evidence);
                         }
                     }
                     else if (old_file_number == 1)
@@ -178,7 +178,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 //Update new file
                                 f = GoogleDriveService.UpdateFile(evidence.FileName, evidence.InputStream, evidence.ContentType, old_file_drive_id);
                                 db.Files.Remove(db.Files.Find(file_id));
-                                evidence_file = new MOURepo().saveFile(f, evidence);
+                                evidence_file = new MOURepo().SaveFile(f, evidence);
                                 db.SaveChanges();
                             }
                             else
@@ -207,11 +207,13 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     db.SaveChanges();
 
                     //update MOUStatusHistory
-                    MOUStatusHistory m = new MOUStatusHistory();
-                    m.mou_status_id = newBasicInfo.mou_status_id;
-                    m.reason = newBasicInfo.reason;
-                    m.mou_id = mou_id;
-                    m.datetime = DateTime.Now;
+                    MOUStatusHistory m = new MOUStatusHistory
+                    {
+                        mou_status_id = newBasicInfo.mou_status_id,
+                        reason = newBasicInfo.reason,
+                        mou_id = mou_id,
+                        datetime = DateTime.Now
+                    };
                     db.MOUStatusHistories.Add(m);
                     db.SaveChanges();
                     transaction.Commit();
@@ -224,7 +226,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return;
         }
-        public ExMOUAdd getExtraMOUDetail(int mou_bonus_id, int mou_id)
+        public ExMOUAdd GetExtraMOUDetail(int mou_bonus_id, int mou_id)
         {
             try
             {
@@ -246,7 +248,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 List<ExtraMOU> mouExList = db.Database.SqlQuery<ExtraMOU>(sql_mouEx
                     , new SqlParameter("mou_id", mou_id)
                     , new SqlParameter("mou_bonus_id", mou_bonus_id)).ToList();
-                ExMOUAdd mouEx = handlingExMOUDetailData(mouExList);
+                ExMOUAdd mouEx = HandlingExMOUDetailData(mouExList);
                 return mouEx;
             }
             catch (Exception ex)
@@ -254,13 +256,15 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        private ExMOUAdd handlingExMOUDetailData(List<ExtraMOU> mouExList)
+        private ExMOUAdd HandlingExMOUDetailData(List<ExtraMOU> mouExList)
         {
-            ExMOUAdd newObj = new ExMOUAdd();
-            newObj.file_drive_id = mouExList[0].file_drive_id;
-            newObj.file_name = mouExList[0].file_name;
-            newObj.ExBasicInfo = new ExBasicInfo();
-            newObj.PartnerScopeInfo = new List<PartnerScopeInfo>();
+            ExMOUAdd newObj = new ExMOUAdd
+            {
+                file_drive_id = mouExList[0].file_drive_id,
+                file_name = mouExList[0].file_name,
+                ExBasicInfo = new ExBasicInfo(),
+                PartnerScopeInfo = new List<PartnerScopeInfo>()
+            };
             //Partner
             foreach (ExtraMOU item in mouExList.ToList())
             {
@@ -270,9 +274,11 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 PartnerScopeInfo p = newObj.PartnerScopeInfo.Find(x => x.partner_id == item.partner_id);
                 if (p == null)
                 {
-                    PartnerScopeInfo obj = new PartnerScopeInfo();
-                    obj.scopes_id = new List<int>();
-                    obj.partner_id = item.partner_id;
+                    PartnerScopeInfo obj = new PartnerScopeInfo
+                    {
+                        scopes_id = new List<int>(),
+                        partner_id = item.partner_id
+                    };
                     obj.scopes_id.Add(item.scope_id);
                     newObj.PartnerScopeInfo.Add(obj);
                 }
@@ -291,7 +297,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
             }
             return newObj;
         }
-        public void addExtraMOU(ExMOUAdd input, int mou_id, BLL.Authen.LoginRepo.User user, HttpPostedFileBase evidence)
+        public void AddExtraMOU(ExMOUAdd input, int mou_id, BLL.Authen.LoginRepo.User user, HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -301,9 +307,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                     Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
                     if (evidence != null)
                     {
-                        f = new MOURepo().uploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 2, false);
+                        f = new MOURepo().UploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 2, false);
                     }
-                    File evidence_file = new MOURepo().saveFile(f, evidence);
+                    File evidence_file = new MOURepo().SaveFile(f, evidence);
                     int? evidence_value;
                     if (evidence_file.file_id == 0)
                     {
@@ -403,7 +409,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void editExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user, int old_file_number, int new_file_number,
+        public void EditExtraMOU(ExMOUAdd input, BLL.Authen.LoginRepo.User user, int old_file_number, int new_file_number,
             HttpPostedFileBase evidence, int mou_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -418,8 +424,8 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                         if (new_file_number == 1)
                         {
                             //Add new file
-                            f = new MOURepo().uploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 2, false);
-                            evidence_file = new MOURepo().saveFile(f, evidence);
+                            f = new MOURepo().UploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 2, false);
+                            evidence_file = new MOURepo().SaveFile(f, evidence);
                         }
                     }
                     else if (old_file_number == 1)
@@ -442,7 +448,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                                 //Update new file
                                 f = GoogleDriveService.UpdateFile(evidence.FileName, evidence.InputStream, evidence.ContentType, old_file_drive_id);
                                 db.Files.Remove(db.Files.Find(file_id));
-                                evidence_file = new MOURepo().saveFile(f, evidence);
+                                evidence_file = new MOURepo().SaveFile(f, evidence);
                                 db.SaveChanges();
                             }
                             else
@@ -557,7 +563,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public void deleteExtraMOU(int mou_bonus_id)
+        public void DeleteExtraMOU(int mou_bonus_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -598,7 +604,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 }
             }
         }
-        public string getNewExtraMOUCode(int mou_id)
+        public string GetNewExtraMOUCode(int mou_id)
         {
             try
             {
@@ -613,7 +619,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 {
                     count_ex_mou++;
                     newCode = old_mou_code + "_BS/" + count_ex_mou;
-                    isDuplicated = db.MOUBonus.Where(x => x.mou_bonus_code.Equals(newCode)).FirstOrDefault() is null ? false : true;
+                    isDuplicated = !(db.MOUBonus.Where(x => x.mou_bonus_code.Equals(newCode)).FirstOrDefault() is null);
                 } while (isDuplicated);
                 return newCode;
             }
@@ -635,7 +641,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfUnderstanding
                 throw ex;
             }
         }
-        public List<ENTITIES.Partner> getPartnerExMOU(int mou_id)
+        public List<Partner> GetPartnerExMOU(int mou_id)
         {
             try
             {

@@ -17,7 +17,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int year = 2020;
-            List<AcademicActivityRepo.ListAA> data = activityRepo.listAllAA(year);
+            List<AcademicActivityRepo.ListAA> data = activityRepo.ListAllAA(year);
             if (data.Count == 10)
                 Assert.Pass();
         }
@@ -26,7 +26,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int year = 2022;
-            List<AcademicActivityRepo.ListAA> data = activityRepo.listAllAA(year);
+            List<AcademicActivityRepo.ListAA> data = activityRepo.ListAllAA(year);
             if (data.Count >= 0)
                 Assert.Pass();
         }
@@ -35,7 +35,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int year = 0;
-            List<AcademicActivityRepo.ListAA> data = activityRepo.listAllAA(year);
+            List<AcademicActivityRepo.ListAA> data = activityRepo.ListAllAA(year);
             if (data.Count == 0)
                 Assert.Pass();
         }
@@ -44,7 +44,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int year = 2021;
-            List<AcademicActivityRepo.ListAA> data = activityRepo.listAllAA(year);
+            List<AcademicActivityRepo.ListAA> data = activityRepo.ListAllAA(year);
             if (data.Count > 0)
                 Assert.Pass();
         }

@@ -42,7 +42,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    MOUBasicInfo data = mou.getBasicInfoMOU(int.Parse(id));
+                    MOUBasicInfo data = mou.GetBasicInfoMOU(int.Parse(id));
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -63,7 +63,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    List<ExtraMOU> listExMOU = mou.listAllExtraMOU(int.Parse(id));
+                    List<ExtraMOU> listExMOU = mou.ListAllExtraMOU(int.Parse(id));
                     return Json(new { success = true, data = listExMOU }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -101,7 +101,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     JObject inputObj = JObject.Parse(input);
                     MOUBasicInfo obj = inputObj.ToObject<MOUBasicInfo>();
                     string id = Session["mou_detail_id"].ToString();
-                    mou.editMOUBasicInfo(int.Parse(id), obj, evidence, old_file_number, new_file_number);
+                    mou.EditMOUBasicInfo(int.Parse(id), obj, evidence, old_file_number, new_file_number);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -116,7 +116,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                mou.deleteExtraMOU(mou_bonus_id);
+                mou.DeleteExtraMOU(mou_bonus_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -136,7 +136,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string mou_id = Session["mou_detail_id"].ToString();
-                    ExMOUAdd mouObj = mou.getExtraMOUDetail(mou_bonus_id, int.Parse(mou_id));
+                    ExMOUAdd mouObj = mou.GetExtraMOUDetail(mou_bonus_id, int.Parse(mou_id));
                     return Json(mouObj, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -158,7 +158,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    string ExMOUCode = mou.getNewExtraMOUCode(int.Parse(id));
+                    string ExMOUCode = mou.GetNewExtraMOUCode(int.Parse(id));
                     return Json(ExMOUCode);
                 }
             }
@@ -184,7 +184,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     //ExMOUAdd input
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.addExtraMOU(obj, int.Parse(id), user, evidence);
+                    mou.AddExtraMOU(obj, int.Parse(id), user, evidence);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -209,7 +209,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                     ExMOUAdd obj = inputObj.ToObject<ExMOUAdd>();
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.editExtraMOU(obj, user, old_file_number_ex_mou, new_file_number_ex_mou, evidence, int.Parse(id));
+                    mou.EditExtraMOU(obj, user, old_file_number_ex_mou, new_file_number_ex_mou, evidence, int.Parse(id));
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }

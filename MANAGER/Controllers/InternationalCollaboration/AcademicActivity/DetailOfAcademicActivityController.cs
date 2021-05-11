@@ -27,8 +27,8 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             phaseRepo = new AcademicActivityPhaseRepo();
             ViewBag.Title = "THÔNG TIN HOẠT ĐỘNG HỌC THUẬT";
             ViewBag.activity_id = id;
-            ViewBag.types = repo.getType(1);
-            ViewBag.unit = repo.getUnits();
+            ViewBag.types = repo.GetType(1);
+            ViewBag.unit = repo.GetUnits();
             ViewBag.office = phaseRepo.getOffices();
             return View();
         }
@@ -38,9 +38,9 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             repo = new DetailOfAcademicActivityRepo();
             DetailOfAcademicActivityRepo.SumDetail data = new DetailOfAcademicActivityRepo.SumDetail
             {
-                baseDetail = repo.getDetail(language_id, activity_id),
-                subContent = repo.getSubContents(language_id, activity_id),
-                types = repo.getType(language_id)
+                baseDetail = repo.GetDetail(language_id, activity_id),
+                subContent = repo.GetSubContents(language_id, activity_id),
+                types = repo.GetType(language_id)
             };
             return Json(data);
         }
@@ -48,12 +48,12 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getDetailFirst(int language_id, int activity_id)
         {
             repo = new DetailOfAcademicActivityRepo();
-            DetailOfAcademicActivityRepo.baseDetail baseDetail = repo.getDetailFirst(language_id, activity_id);
+            DetailOfAcademicActivityRepo.baseDetail baseDetail = repo.GetDetailFirst(language_id, activity_id);
             DetailOfAcademicActivityRepo.SumDetail data = new DetailOfAcademicActivityRepo.SumDetail
             {
                 baseDetail = baseDetail,
-                subContent = repo.getSubContents(baseDetail.language_id, activity_id),
-                types = repo.getType(baseDetail.language_id)
+                subContent = repo.GetSubContents(baseDetail.language_id, activity_id),
+                types = repo.GetType(baseDetail.language_id)
             };
             return Json(data);
         }
@@ -88,7 +88,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                     }
                 }
 
-                bool res = repo.updateDetail(infoSumDetail, u, list_image_main, list_image_sub);
+                bool res = repo.UpdateDetail(infoSumDetail, u, list_image_main, list_image_sub);
                 if (res)
                 {
                     return Json("Cập nhật thành công");
@@ -107,7 +107,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult changeStatusAA(int activity_id, int status)
         {
             repo = new DetailOfAcademicActivityRepo();
-            bool res = repo.changeStatusAA(activity_id, status);
+            bool res = repo.ChangeStatusAA(activity_id, status);
             if (res)
             {
                 return Json(status == 2 ? "Đăng bài thành công" : "Thu hồi thành công");
@@ -121,14 +121,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatableDTC(int activity_id)
         {
             repo = new DetailOfAcademicActivityRepo();
-            List<DetailOfAcademicActivityRepo.basePartner> data = repo.getDatatableDTC(activity_id);
+            List<DetailOfAcademicActivityRepo.basePartner> data = repo.GetDatatableDTC(activity_id);
             return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult getContent(int activity_partner_id)
         {
             repo = new DetailOfAcademicActivityRepo();
-            DetailOfAcademicActivityRepo.ContactInfo data = repo.getContact(activity_partner_id);
+            DetailOfAcademicActivityRepo.ContactInfo data = repo.GetContact(activity_partner_id);
             return Json(data);
         }
         [HttpPost]

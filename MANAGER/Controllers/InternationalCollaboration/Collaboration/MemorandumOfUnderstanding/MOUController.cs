@@ -47,7 +47,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<ListMOU> listMOU = mou.listAllMOU(baseDatatable, partner_name, contact_point_name, mou_code);
+                BaseServerSideData<ListMOU> listMOU = mou.ListAllMOU(baseDatatable, partner_name, contact_point_name, mou_code);
                 return Json(new { success = true, data = listMOU.Data, draw = Request["draw"], recordsTotal = listMOU.RecordsTotal, recordsFiltered = listMOU.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                string new_mou_code = mou.getSuggestedMOUCode();
+                string new_mou_code = mou.GetSuggestedMOUCode();
                 return Json(new_mou_code, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -87,7 +87,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 BaseDatatable baseDatatable = new BaseDatatable(Request);
-                BaseServerSideData<ListMOU> listMOU = mou.listAllMOUDeleted(baseDatatable, partner_name, contact_point_name, mou_code);
+                BaseServerSideData<ListMOU> listMOU = mou.ListAllMOUDeleted(baseDatatable, partner_name, contact_point_name, mou_code);
                 return Json(new { success = true, data = listMOU.Data, draw = Request["draw"], recordsTotal = listMOU.RecordsTotal, recordsFiltered = listMOU.RecordsTotal }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                mou.deleteMOU(mou_id);
+                mou.DeleteMOU(mou_id);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -122,10 +122,10 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
                 if (evidence != null)
                 {
-                    f = mou.uploadEvidenceFile(evidence, obj.BasicInfo.mou_code, 1, false);
+                    f = mou.UploadEvidenceFile(evidence, obj.BasicInfo.mou_code, 1, false);
                 }
                 //update info in database
-                mou.addMOU(obj, user, f, evidence);
+                mou.AddMOU(obj, user, f, evidence);
                 return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -203,14 +203,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    List<ENTITIES.Partner> partnerList = mou_detail.getPartnerExMOU(int.Parse(id));
+                    List<ENTITIES.Partner> partnerList = mou_detail.GetPartnerExMOU(int.Parse(id));
                     List<CollaborationScope> scopeList = mou_detail.GetScopesExMOU(int.Parse(id));
                     ViewBag.scopeList = scopeList;
                     ViewBag.partnerList = partnerList;
 
                     //MOU Partner
-                    ViewBag.listSpeMOUPartner = mou_partner.getPartnerMOUSpe();
-                    ViewBag.listScopesMOUPartner = mou_partner.getPartnerMOUScope(int.Parse(id));
+                    ViewBag.listSpeMOUPartner = mou_partner.GetPartnerMOUSpe();
+                    ViewBag.listScopesMOUPartner = mou_partner.GetPartnerMOUScope(int.Parse(id));
                     ViewBag.listPartnerMOUPartner = mou_partner.GetPartners(int.Parse(id));
                     ViewBag.listCountry = mou.GetCountries();
 
@@ -237,7 +237,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    string new_moa_code = moa.getSuggestedMOACode(int.Parse(id));
+                    string new_moa_code = moa.GetSuggestedMOACode(int.Parse(id));
                     return Json(new_moa_code, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -252,7 +252,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                DuplicatePartnerInfo obj = mou.partnerInfoIsDuplicated(partner_name, mou_start_date_string);
+                DuplicatePartnerInfo obj = mou.PartnerInfoIsDuplicated(partner_name, mou_start_date_string);
                 return obj == null ? Json("") : Json(obj);
             }
             catch (Exception ex)
@@ -265,7 +265,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                bool isDup = mou.getMOUCodeCheck(mou_code);
+                bool isDup = mou.GetMOUCodeCheck(mou_code);
                 return Json(isDup);
             }
             catch (Exception ex)
@@ -278,7 +278,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                IntersectPeriodMOUDate obj = mou.checkIntersectPeriodMOUDate(PartnerInfo, start_date, end_date, office_id);
+                IntersectPeriodMOUDate obj = mou.CheckIntersectPeriodMOUDate(PartnerInfo, start_date, end_date, office_id);
                 return Json(obj);
             }
             catch (Exception ex)

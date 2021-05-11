@@ -21,7 +21,7 @@ namespace UnitTest.InternationalCollaboration.Collaboration.MOU
             ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
 
             //Act
-            string mou_code = mou.getSuggestedMOUCode();
+            string mou_code = mou.GetSuggestedMOUCode();
             bool isExisted = db.MOUs.Any(x => x.mou_code.Equals(mou_code));
 
             //Assert

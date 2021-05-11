@@ -17,7 +17,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
     public class MOARepo
     {
         readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<ListMOA> listAllMOA(string partner_name, string moa_code, string mou_id)
+        public List<ListMOA> ListAllMOA(string partner_name, string moa_code, string mou_id)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     new SqlParameter("mou_id", mou_id),
                     new SqlParameter("partner_name", '%' + partner_name + '%'),
                     new SqlParameter("moa_code", '%' + moa_code + '%')).ToList();
-                handlingMOAListData(moaList);
+                HandlingMOAListData(moaList);
                 return moaList;
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public void handlingMOAListData(List<ListMOA> moaList)
+        public void HandlingMOAListData(List<ListMOA> moaList)
         {
             ListMOA previousItem = null;
             foreach (ListMOA item in moaList.ToList())
@@ -118,7 +118,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 List<CustomPartnerMOA> pList = db.Database.SqlQuery<CustomPartnerMOA>(sql,
                     new SqlParameter("mou_id", mou_id),
                     new SqlParameter("partner_id", partner_id)).ToList();
-                handlingMOAPartnerData(pList);
+                HandlingMOAPartnerData(pList);
                 return pList[0];
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public void handlingMOAPartnerData(List<CustomPartnerMOA> pList)
+        public void HandlingMOAPartnerData(List<CustomPartnerMOA> pList)
         {
             CustomPartnerMOA previousItem = null;
             foreach (CustomPartnerMOA item in pList.ToList())
@@ -152,7 +152,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             }
             return;
         }
-        public void addMOA(MOAAdd input, int mou_id, BLL.Authen.LoginRepo.User user, HttpPostedFileBase evidence)
+        public void AddMOA(MOAAdd input, int mou_id, BLL.Authen.LoginRepo.User user, HttpPostedFileBase evidence)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -167,9 +167,9 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     Google.Apis.Drive.v3.Data.File f = new Google.Apis.Drive.v3.Data.File();
                     if (evidence != null)
                     {
-                        f = new MOURepo().uploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 3, false);
+                        f = new MOURepo().UploadEvidenceFile(evidence, db.MOUs.Find(mou_id).mou_code, 3, false);
                     }
-                    File evidence_file = new MOURepo().saveFile(f, evidence);
+                    File evidence_file = new MOURepo().SaveFile(f, evidence);
                     int? evidence_value;
                     if (evidence_file.file_id == 0)
                     {
@@ -256,7 +256,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public void deleteMOA(int moa_id)
+        public void DeleteMOA(int moa_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -308,7 +308,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 }
             }
         }
-        public string getSuggestedMOACode(int mou_id)
+        public string GetSuggestedMOACode(int mou_id)
         {
             try
             {
@@ -323,7 +323,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 {
                     count_moa++;
                     new_code = old_mou_code + "_MOA/" + count_moa;
-                    is_duplicated = db.MOAs.Where(x => x.moa_code.Equals(new_code)).FirstOrDefault() is null ? false : true;
+                    is_duplicated = !(db.MOAs.Where(x => x.moa_code.Equals(new_code)).FirstOrDefault() is null);
                 } while (is_duplicated);
                 return new_code;
             }
@@ -332,7 +332,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<CustomScopesMOA> getMOAScope(int mou_id, int partner_id)
+        public List<CustomScopesMOA> GetMOAScope(int mou_id, int partner_id)
         {
             try
             {
@@ -356,7 +356,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public List<ENTITIES.Partner> GetMOAPartners(int mou_id)
+        public List<Partner> GetMOAPartners(int mou_id)
         {
             try
             {
@@ -365,7 +365,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                     on t2.partner_id = t1.partner_id
                     where t1.mou_id = @mou_id
                     order by t2.partner_id";
-                List<ENTITIES.Partner> partnerList = db.Database.SqlQuery<ENTITIES.Partner>(sql_partnerList,
+                List<Partner> partnerList = db.Database.SqlQuery<Partner>(sql_partnerList,
                     new SqlParameter("mou_id", mou_id)).ToList();
                 return partnerList;
             }
@@ -374,19 +374,19 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
                 throw ex;
             }
         }
-        public bool getMOACodeCheck(string moa_code)
+        public bool GetMOACodeCheck(string moa_code)
         {
             try
             {
                 MOA obj = db.MOAs.Where(x => x.moa_code == moa_code && !x.is_deleted).FirstOrDefault();
-                return obj == null ? false : true;
+                return obj != null;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public bool checkDuplicatePartnersMOA(List<MOAPartnerInfo> PartnerInfo, int mou_id)
+        public bool CheckDuplicatePartnersMOA(List<MOAPartnerInfo> PartnerInfo, int mou_id)
         {
             string partner_id_para = "";
             foreach (MOAPartnerInfo item in PartnerInfo)
@@ -404,7 +404,7 @@ namespace BLL.InternationalCollaboration.Collaboration.MemorandumOfAgreement
             List<DuplicatePartnersMOA> obj = db.Database.SqlQuery<DuplicatePartnersMOA>(query,
                     new SqlParameter("partner_count", PartnerInfo.Count),
                     new SqlParameter("mou_id", mou_id)).ToList();
-            return obj.Count() > 0 ? true : false;
+            return obj.Count() > 0;
         }
     }
 }

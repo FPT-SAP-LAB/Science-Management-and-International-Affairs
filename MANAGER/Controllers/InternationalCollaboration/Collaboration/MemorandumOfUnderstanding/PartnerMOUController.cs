@@ -10,7 +10,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
 {
     public class PartnerMOUController : Controller
     {
-        private static PartnerMOURepo mou = new PartnerMOURepo();
+        private static readonly PartnerMOURepo mou = new PartnerMOURepo();
         [Auther(RightID = "6")]
         public ActionResult Index()
         {
@@ -21,7 +21,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
         {
             try
             {
-                List<PartnerHistory> historyList = mou.listMOUPartnerHistory(int.Parse(mou_partner_id));
+                List<PartnerHistory> historyList = mou.ListMOUPartnerHistory(int.Parse(mou_partner_id));
                 return Json(new { success = true, data = historyList }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -34,7 +34,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
             try
             {
                 string result = mou_partner_id;
-                ListMOUPartner mouObj = mou.getMOUPartnerDetail(int.Parse(mou_partner_id));
+                ListMOUPartner mouObj = mou.GetMOUPartnerDetail(int.Parse(mou_partner_id));
                 return Json(mouObj, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 {
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.addMOUPartner(input, int.Parse(id), user);
+                    mou.AddMOUPartner(input, int.Parse(id), user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -101,7 +101,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 {
                     BLL.Authen.LoginRepo.User user = (BLL.Authen.LoginRepo.User)Session["User"];
                     string id = Session["mou_detail_id"].ToString();
-                    mou.editMOUPartner(input, int.Parse(id), input.mou_partner_id, user);
+                    mou.EditMOUPartner(input, int.Parse(id), input.mou_partner_id, user);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -123,7 +123,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    mou.deleteMOUPartner(int.Parse(id), mou_bonus_id);
+                    mou.DeleteMOUPartner(int.Parse(id), mou_bonus_id);
                     return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -144,7 +144,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.Collaboration.Memorandu
                 else
                 {
                     string id = Session["mou_detail_id"].ToString();
-                    bool isLastPartner = mou.checkLastPartner(int.Parse(id));
+                    bool isLastPartner = mou.CheckLastPartner(int.Parse(id));
                     return Json(isLastPartner);
                 }
             }
