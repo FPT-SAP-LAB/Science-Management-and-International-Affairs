@@ -16,7 +16,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void getParticipantByPhaseUT_1()
         {
             CheckInRepo checkInRepo = new CheckInRepo();
-            List<CheckInRepo.dataParticipant> data = checkInRepo.getParticipantByPhase(12);
+            List<CheckInRepo.dataParticipant> data = checkInRepo.GetParticipantByPhase(12);
             Assert.Pass();
         }
     }

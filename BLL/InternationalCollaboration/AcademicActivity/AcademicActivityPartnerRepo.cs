@@ -13,18 +13,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityPartnerRepo
     {
-        ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public AlertModal<string> saveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner, int account_id)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public AlertModal<string> SaveActivityPartner(HttpPostedFileBase evidence_file, string folder_name, SaveActivityPartner activityPartner, int account_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
                 try
                 {
                     AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
-                    if (checkDuplicatePartnerScope(activityPartner))
+                    if (CheckDuplicatePartnerScope(activityPartner))
                     {
                         AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
-                        if (checkDateFromToWithAA(activityPartner))
+                        if (CheckDateFromToWithAA(activityPartner))
                         {
                             //upload file if exist
                             //upload file
@@ -44,14 +44,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             PartnerScope partnerScope = db.PartnerScopes.Where<PartnerScope>(x => x.partner_id == activityPartner.partner_id && x.scope_id == activityPartner.scope_id).FirstOrDefault();
                             if (partnerScope != null)
                             {
-                                saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                                SaveActivityPartner(file, partnerScope, activityPartner, account_id);
                                 academicCollaborationRepo.IncreaseReferenceCountOfPartnerScope(partnerScope);
                             }
                             else
                             {
                                 partnerScope = academicCollaborationRepo.SavePartnerScope(activityPartner.partner_id, activityPartner.scope_id);
                                 db.SaveChanges();
-                                saveActivityPartner(file, partnerScope, activityPartner, account_id);
+                                SaveActivityPartner(file, partnerScope, activityPartner, account_id);
                             }
                             db.SaveChanges();
                             dbContext.Commit();
@@ -60,8 +60,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             {
                                 try
                                 {
-                                    List<int> list_partner_scope_id = new List<int>();
-                                    list_partner_scope_id.Add(partnerScope.partner_scope_id);
+                                    List<int> list_partner_scope_id = new List<int>
+                                    {
+                                        partnerScope.partner_scope_id
+                                    };
                                     autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                                     trans.Commit();
                                 }
@@ -92,7 +94,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public PartnerScope updatePartnerScope(int partner_id, int scope_id, AcademicCollaborationRepo academicCollaborationRepo)
+        public PartnerScope UpdatePartnerScope(int partner_id, int scope_id, AcademicCollaborationRepo academicCollaborationRepo)
         {
             PartnerScope partnerScope = null;
             try
@@ -113,12 +115,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return partnerScope;
         }
-        public void saveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner, int account_id)
+        public void SaveActivityPartner(File file, PartnerScope partnerScope, SaveActivityPartner activityPartner, int account_id)
         {
             try
             {
-                ActivityPartner ap = new ActivityPartner();
-                ap.sponsor = activityPartner.sponsor;
+                ActivityPartner ap = new ActivityPartner
+                {
+                    sponsor = activityPartner.sponsor
+                };
                 if (activityPartner.contact_point_name != null) ap.contact_point_name = activityPartner.contact_point_name;
                 if (activityPartner.contact_point_email != null) ap.contact_point_email = activityPartner.contact_point_email;
                 if (activityPartner.contact_point_phone != null) ap.contact_point_phone = activityPartner.contact_point_phone;
@@ -136,7 +140,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<ActivityPartner_Ext> getActivityPartner(int activity_partner_id)
+        public AlertModal<ActivityPartner_Ext> GetActivityPartner(int activity_partner_id)
         {
             try
             {
@@ -171,18 +175,18 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public AlertModal<string> updateActivityPartner(HttpPostedFileBase evidence_file, string file_action, string folder_name, SaveActivityPartner saveActivityPartner, int account_id)
+        public AlertModal<string> UpdateActivityPartner(HttpPostedFileBase evidence_file, string file_action, string folder_name, SaveActivityPartner saveActivityPartner, int account_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
                 try
                 {
                     AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
-                    if (checkDuplicatePartnerScope(saveActivityPartner))
+                    if (CheckDuplicatePartnerScope(saveActivityPartner))
                     {
                         //update file
                         ActivityPartner activityPartner = db.ActivityPartners.Find(saveActivityPartner.activity_partner_id);
-                        if (checkDateFromToWithAA(saveActivityPartner))
+                        if (CheckDateFromToWithAA(saveActivityPartner))
                         {
                             AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                             Google.Apis.Drive.v3.Data.File f;
@@ -206,7 +210,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     //delete corressponding in gg drive
                                     GoogleDriveService.DeleteFile(old_file.file_drive_id);
                                     //delete corressponding from File
-                                    new_file = removeFile(old_file);
+                                    new_file = RemoveFile(old_file);
                                     break;
                                 case "none":
                                     break;
@@ -214,15 +218,17 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     break;
                             }
                             //update ActivityPartner
-                            activityPartner = updateActivityPartner(activityPartner, saveActivityPartner, new_file, file_action, account_id);
+                            activityPartner = UpdateActivityPartner(activityPartner, saveActivityPartner, new_file, file_action, account_id);
                             dbContext.Commit();
                             //change status MOU/MOA
                             using (DbContextTransaction trans = db.Database.BeginTransaction())
                             {
                                 try
                                 {
-                                    List<int> list_partner_scope_id = new List<int>();
-                                    list_partner_scope_id.Add(activityPartner.partner_scope_id);
+                                    List<int> list_partner_scope_id = new List<int>
+                                    {
+                                        activityPartner.partner_scope_id
+                                    };
                                     autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                                     trans.Commit();
                                 }
@@ -253,7 +259,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool checkDateFromToWithAA(SaveActivityPartner saveActivityPartner)
+        public bool CheckDateFromToWithAA(SaveActivityPartner saveActivityPartner)
         {
             try
             {
@@ -272,7 +278,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 throw e;
             }
         }
-        public File removeFile(File file)
+        public File RemoveFile(File file)
         {
             try
             {
@@ -285,14 +291,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return null;
         }
-        public ActivityPartner updateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, string file_action, int account_id)
+        public ActivityPartner UpdateActivityPartner(ActivityPartner activityPartner, SaveActivityPartner saveActivityPartner, File file, string file_action, int account_id)
         {
             ActivityPartner ap = new ActivityPartner();
             try
             {
                 AcademicCollaborationRepo academicCollaborationRepo = new AcademicCollaborationRepo();
                 //update PartnerScope
-                PartnerScope partnerScope = updatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
+                PartnerScope partnerScope = UpdatePartnerScope(saveActivityPartner.partner_id, saveActivityPartner.scope_id, academicCollaborationRepo);
                 ap.sponsor = saveActivityPartner.sponsor;
                 if (saveActivityPartner.contact_point_name != null) ap.contact_point_name = saveActivityPartner.contact_point_name;
                 if (saveActivityPartner.contact_point_email != null) ap.contact_point_email = saveActivityPartner.contact_point_email;
@@ -342,7 +348,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
             return ap;
         }
-        public AlertModal<string> deleteActivityPartner(int activity_partner_id)
+        public AlertModal<string> DeleteActivityPartner(int activity_partner_id)
         {
             using (DbContextTransaction dbContext = db.Database.BeginTransaction())
             {
@@ -382,8 +388,10 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                         AutoActiveInactive autoActiveInactive = new AutoActiveInactive();
                         try
                         {
-                            List<int> list_partner_scope_id = new List<int>();
-                            list_partner_scope_id.Add(partnerScope.partner_scope_id);
+                            List<int> list_partner_scope_id = new List<int>
+                            {
+                                partnerScope.partner_scope_id
+                            };
                             autoActiveInactive.changeStatusMOUMOA(list_partner_scope_id, db);
                             trans.Commit();
                         }
@@ -403,7 +411,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool checkDuplicatePartnerScope(SaveActivityPartner activityPartner)
+        public bool CheckDuplicatePartnerScope(SaveActivityPartner activityPartner)
         {
             try
             {

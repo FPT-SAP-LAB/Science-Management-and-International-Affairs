@@ -20,7 +20,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int language_id = 1;
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, academicActivity.activity_id);
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.GetPhase(language_id, academicActivity.activity_id);
             if (data.Count >= 0)
                 Assert.Pass();
         }
@@ -31,7 +31,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int language_id = 2;
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, academicActivity.activity_id);
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.GetPhase(language_id, academicActivity.activity_id);
             if (data.Count >= 0)
                 Assert.Pass();
         }
@@ -42,7 +42,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             int language_id = 0;
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             ENTITIES.AcademicActivity academicActivity = db.AcademicActivities.Last();
-            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, academicActivity.activity_id);
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.GetPhase(language_id, academicActivity.activity_id);
             if (data.Count == 0)
                 Assert.Pass();
         }

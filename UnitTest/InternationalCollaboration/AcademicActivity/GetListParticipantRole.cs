@@ -20,7 +20,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             new AddAcademicActivityUT().TestAddAcademicActivity_1();
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
             AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
-            List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.getParticipantRoleByPhase(activityPhase.phase_id);
+            List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.GetParticipantRoleByPhase(activityPhase.phase_id);
             if (data.Count == 0)
             {
                 Assert.Pass();
@@ -30,7 +30,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void GetListParticipantRoleUT_2()
         {
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
-            List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.getParticipantRoleByPhase(-999);
+            List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.GetParticipantRoleByPhase(-999);
             if (data.Count == 0)
             {
                 Assert.Pass();
@@ -40,7 +40,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void GetListParticipantRoleUT_3()
         {
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
-            List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.getParticipantRoleByPhase(0);
+            List<AcademicActivityPhaseRepo.baseParticipantRole> data = academicActivityPhaseRepo.GetParticipantRoleByPhase(0);
             if (data.Count == 0)
             {
                 Assert.Pass();

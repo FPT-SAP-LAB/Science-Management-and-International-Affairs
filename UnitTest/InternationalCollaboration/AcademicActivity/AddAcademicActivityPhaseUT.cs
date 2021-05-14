@@ -34,7 +34,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 from = "01/01/2020",
                 to = "01/01/2021"
             };
-            bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
+            bool res = academicActivityPhaseRepo.AddPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (res)
                 Assert.Pass();
         }
@@ -58,7 +58,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 from = "31/02/2020",
                 to = "01/01/2021"
             };
-            bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
+            bool res = academicActivityPhaseRepo.AddPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (!res)
                 Assert.Pass();
         }
@@ -82,7 +82,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 from = "01/01/2021",
                 to = "01/01/2020"
             };
-            bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
+            bool res = academicActivityPhaseRepo.AddPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (!res)
                 Assert.Pass();
         }
@@ -106,7 +106,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 from = "05/01/2020",
                 to = "10/01/2021"
             };
-            bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
+            bool res = academicActivityPhaseRepo.AddPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (res)
                 Assert.Pass();
         }
@@ -130,7 +130,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 from = "31/02/2020",
                 to = "10/01/2021"
             };
-            bool res = academicActivityPhaseRepo.addPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
+            bool res = academicActivityPhaseRepo.AddPhase(language_id, academicActivity.activity_id, user.account.account_id, data);
             if (!res)
                 Assert.Pass();
         }

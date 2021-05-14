@@ -12,7 +12,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
         public List<ListAA> ListAllAA(int year)
         {
             try
@@ -100,7 +100,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public List<AcademicActivityTypeLanguage> getType(int language_id)
+        public List<AcademicActivityTypeLanguage> GetType(int language_id)
         {
             try
             {

@@ -19,9 +19,9 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
             guestRepo = new AcademicActivityGuestRepo();
             int language = Models.LanguageResource.GetCurrentLanguageID();
             ViewBag.title = rm.GetString("AcademicActivity");
-            ViewBag.listActivity = guestRepo.getBaseAA(0, new List<int>(), language, null, null);
-            ViewBag.listActivityType = guestRepo.getListType(language);
-            ViewBag.YearSearching = guestRepo.yearSearching();
+            ViewBag.listActivity = guestRepo.GetBaseAA(0, new List<int>(), language, null, null);
+            ViewBag.listActivityType = guestRepo.GetListType(language);
+            ViewBag.YearSearching = guestRepo.YearSearching();
             var pagesTree = new List<PageTree>
             {
                 new PageTree(rm.GetString("AcademicActivity"),"/AcademicActivity/Index"),
@@ -40,10 +40,10 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
                 new PageTree(rm.GetString("Detail"),"/AcademicActivity/Detail")
             };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.Detail = guestRepo.getBaseAADetail(id, language);
+            ViewBag.Detail = guestRepo.GetBaseAADetail(id, language);
             ViewBag.SubContent = guestRepo.GetSubContent(id, language);
-            ViewBag.phase_id = guestRepo.getPhaseCurrentByActivity(id);
-            ViewBag.have_form = guestRepo.checkForm(guestRepo.getPhaseCurrentByActivity(id));
+            ViewBag.phase_id = guestRepo.GetPhaseCurrentByActivity(id);
+            ViewBag.have_form = guestRepo.CheckForm(guestRepo.GetPhaseCurrentByActivity(id));
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
         {
             guestRepo = new AcademicActivityGuestRepo();
             int language = Models.LanguageResource.GetCurrentLanguageID();
-            List<AcademicActivityGuestRepo.baseAA> data = guestRepo.getBaseAA(count, type, language, search, year);
+            List<AcademicActivityGuestRepo.baseAA> data = guestRepo.GetBaseAA(count, type, language, search, year);
             return Json(data);
         }
         public ActionResult loadForm(int pid)
@@ -82,25 +82,25 @@ namespace GUEST.Controllers.InternationalCollaboration.AcademicActivity
                 new PageTree("Đơn đăng kí tham dự","/AcademicActivity/Detail")
             };
             ViewBag.pagesTree = pagesTree;
-            ViewBag.file_drive_id = guestRepo.getImageActivity(pid);
+            ViewBag.file_drive_id = guestRepo.GetImageActivity(pid);
             ViewBag.pid = pid;
             ViewBag.role = guestRepo.GetParticipantRoleByPhase(pid);
-            ViewBag.office = guestRepo.getOffices();
-            ViewBag.outdate = guestRepo.checkFormOutdate(pid);
+            ViewBag.office = guestRepo.GetOffices();
+            ViewBag.outdate = guestRepo.CheckFormOutdate(pid);
             return View();
         }
         [HttpPost]
         public JsonResult getForm(int phase_id)
         {
             guestRepo = new AcademicActivityGuestRepo();
-            AcademicActivityGuestRepo.fullForm data = guestRepo.getForm(phase_id);
+            AcademicActivityGuestRepo.fullForm data = guestRepo.GetForm(phase_id);
             return Json(data);
         }
         [HttpPost]
         public JsonResult sendForm(int fid, string answer, AcademicActivityGuestRepo.AnswerUnchange unchange)
         {
             guestRepo = new AcademicActivityGuestRepo();
-            bool res = guestRepo.sendForm(fid, answer, unchange);
+            bool res = guestRepo.SendForm(fid, answer, unchange);
             if (res)
             {
                 return Json("Gửi đơn đăng kí thành công");

@@ -9,8 +9,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class CheckInRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<dataParticipant> getParticipantByPhase(int phase_id)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public List<dataParticipant> GetParticipantByPhase(int phase_id)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<dataParticipant>();
             }
         }
-        public List<Phase> getPhase(int activity_id)
+        public List<Phase> GetPhase(int activity_id)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<Unit>();
             }
         }
-        public List<Area> getAreaByUnit(int unit_id)
+        public List<Area> GetAreaByUnit(int unit_id)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<Area>();
             }
         }
-        public bool addParticipant(infoParticipant obj)
+        public bool AddParticipant(infoParticipant obj)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -140,8 +140,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     {
                         participant_role_id = obj.participant_role_id,
                         participant_name = obj.name,
-                        email = obj.email == null ? String.Empty : obj.email,
-                        participant_number = obj.participant_number == null ? String.Empty : obj.participant_number,
+                        email = obj.email ?? String.Empty,
+                        participant_number = obj.participant_number ?? String.Empty,
                         office_id = obj.office_id,
                         is_checked = false
                     });

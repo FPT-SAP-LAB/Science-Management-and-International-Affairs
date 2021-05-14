@@ -18,7 +18,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             guestRepo = new AcademicActivityGuestRepo();
             List<int> type = new List<int> { 1, 2, 3, 4 };
-            List<baseAA> alist = guestRepo.getBaseAA(0, type, 1, null, null);
+            List<baseAA> alist = guestRepo.GetBaseAA(0, type, 1, null, null);
             Assert.Pass();
         }
         [TestCase]
@@ -26,7 +26,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             guestRepo = new AcademicActivityGuestRepo();
             List<int> typeAll = new List<int> { 1, 2, 3, 4 };
-            int listAll = guestRepo.getBaseAA(0, typeAll, 2, null, null).Count;
+            int listAll = guestRepo.GetBaseAA(0, typeAll, 2, null, null).Count;
             Assert.LessOrEqual(listAll, 6);
         }
         [TestCase]
@@ -34,8 +34,8 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             guestRepo = new AcademicActivityGuestRepo();
             List<int> typeAll = new List<int> { 1, 2, 3, 4 };
-            int subList = guestRepo.getBaseAA(0, null, 2, null, null).Count;
-            int listAll = guestRepo.getBaseAA(0, typeAll, 2, null, null).Count;
+            int subList = guestRepo.GetBaseAA(0, null, 2, null, null).Count;
+            int listAll = guestRepo.GetBaseAA(0, typeAll, 2, null, null).Count;
             Assert.AreEqual(subList, listAll);
         }
         [TestCase]
@@ -44,8 +44,8 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             guestRepo = new AcademicActivityGuestRepo();
             List<int> subType = new List<int> { 1, 2 };
             List<int> typeAll = new List<int> { 1, 2, 3, 4 };
-            int subList = guestRepo.getBaseAA(0, subType, 2, null, null).Count;
-            int listAll = guestRepo.getBaseAA(0, typeAll, 2, null, null).Count;
+            int subList = guestRepo.GetBaseAA(0, subType, 2, null, null).Count;
+            int listAll = guestRepo.GetBaseAA(0, typeAll, 2, null, null).Count;
             Assert.LessOrEqual(subList, listAll);
         }
         public void GetAcademicActivityUT_5()
@@ -53,8 +53,8 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             guestRepo = new AcademicActivityGuestRepo();
             List<int> subType = new List<int> { 1, 2, 3 };
             List<int> typeAll = new List<int> { 1, 2, 3, 4 };
-            int subList = guestRepo.getBaseAA(0, subType, 2, null, null).Count;
-            int listAll = guestRepo.getBaseAA(0, typeAll, 2, null, null).Count;
+            int subList = guestRepo.GetBaseAA(0, subType, 2, null, null).Count;
+            int listAll = guestRepo.GetBaseAA(0, typeAll, 2, null, null).Count;
             Assert.LessOrEqual(subList, listAll);
         }
     }

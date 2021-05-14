@@ -20,7 +20,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
             new AddParticipantRole().AddParticipantRoleUT_1();
             ParticipantRole participantRole = db.ParticipantRoles.Last();
-            bool res = academicActivityPhaseRepo.deleteParticipantRole(participantRole.participant_role_id);
+            bool res = academicActivityPhaseRepo.DeleteParticipantRole(participantRole.participant_role_id);
             if (res)
                 Assert.Pass();
         }
@@ -28,7 +28,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void DeleteParticipantRoleUT_2()
         {
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
-            bool res = academicActivityPhaseRepo.deleteParticipantRole(0);
+            bool res = academicActivityPhaseRepo.DeleteParticipantRole(0);
             if (res)
                 Assert.Pass();
         }
@@ -36,7 +36,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void DeleteParticipantRoleUT_3()
         {
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
-            bool res = academicActivityPhaseRepo.deleteParticipantRole(-999);
+            bool res = academicActivityPhaseRepo.DeleteParticipantRole(-999);
             if (res)
                 Assert.Pass();
         }

@@ -12,8 +12,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityExpenseRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<infoExpense> getDatatableKP(int activity_id)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public List<infoExpense> GetDatatableKP(int activity_id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpense>();
             }
         }
-        public string addExpense(baseExpense data)
+        public string AddExpense(baseExpense data)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return String.Empty;
             }
         }
-        public bool deleteExpense(int activity_office_id)
+        public bool DeleteExpense(int activity_office_id)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return false;
             }
         }
-        public List<infoExpenseEstimate> getDatatableKPDuTru(int activity_office_id)
+        public List<infoExpenseEstimate> GetDatatableKPDuTru(int activity_office_id)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpenseEstimate>();
             }
         }
-        public List<excelEstimate> getExcelDuTru(int activity_id)
+        public List<excelEstimate> GetExcelDuTru(int activity_id)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<excelEstimate>();
             }
         }
-        public bool addExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
+        public bool AddExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -166,10 +166,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     if (img != null)
                     {
                         Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trù - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                        File file = new File();
-                        file.name = img.FileName;
-                        file.link = f.WebViewLink;
-                        file.file_drive_id = f.Id;
+                        File file = new File
+                        {
+                            name = img.FileName,
+                            link = f.WebViewLink,
+                            file_drive_id = f.Id
+                        };
                         File ff = db.Files.Add(file);
                         db.SaveChanges();
                         aed.file_id = ff.file_id;
@@ -187,7 +189,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool deleteExpenseType(int expense_category_id, int type)
+        public bool DeleteExpenseType(int expense_category_id, int type)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -236,7 +238,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public infoExpenseEstimate getExpenseType(int expense_category_id, int type)
+        public infoExpenseEstimate GetExpenseType(int expense_category_id, int type)
         {
             try
             {
@@ -258,7 +260,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new infoExpenseEstimate();
             }
         }
-        public bool editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
+        public bool EditExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -289,10 +291,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             else
                             {
                                 Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí dự trù - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                                File file = new File();
-                                file.name = img.FileName;
-                                file.link = f.WebViewLink;
-                                file.file_drive_id = f.Id;
+                                File file = new File
+                                {
+                                    name = img.FileName,
+                                    link = f.WebViewLink,
+                                    file_drive_id = f.Id
+                                };
                                 File ff = db.Files.Add(file);
                                 aed.file_id = ff.file_id;
                                 db.Entry(aed).State = EntityState.Modified;
@@ -322,7 +326,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public List<infoExpenseModified> getDatatableKPDieuChinh(int activity_office_id)
+        public List<infoExpenseModified> GetDatatableKPDieuChinh(int activity_office_id)
         {
             try
             {
@@ -346,7 +350,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpenseModified>();
             }
         }
-        public List<excelModified> getExcelDieuChinh(int activity_id)
+        public List<excelModified> GetExcelDieuChinh(int activity_id)
         {
             try
             {
@@ -373,7 +377,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<excelModified>();
             }
         }
-        public bool editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
+        public bool EditExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -456,7 +460,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public List<infoExpenseModified> getDatatableKPThucTe(int activity_office_id)
+        public List<infoExpenseModified> GetDatatableKPThucTe(int activity_office_id)
         {
             try
             {
@@ -487,7 +491,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoExpenseModified>();
             }
         }
-        public List<excelModified> getExcelTongHop(int activity_id)
+        public List<excelModified> GetExcelTongHop(int activity_id)
         {
             try
             {
@@ -518,7 +522,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<excelModified>();
             }
         }
-        public bool editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
+        public bool EditExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -565,10 +569,12 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                             else
                             {
                                 Google.Apis.Drive.v3.Data.File f = GoogleDriveService.UploadIAFile(img, "Chi phí thực tế - " + expense.expense_category_name + " (" + activity_name + " - " + year + ")", 5, false);
-                                File file = new File();
-                                file.name = img.FileName;
-                                file.link = f.WebViewLink;
-                                file.file_drive_id = f.Id;
+                                File file = new File
+                                {
+                                    name = img.FileName,
+                                    link = f.WebViewLink,
+                                    file_drive_id = f.Id
+                                };
                                 File ff = db.Files.Add(file);
                                 db.SaveChanges();
                                 aed.file_id = ff.file_id;
@@ -599,7 +605,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public Statistic getTotal(int activity_id)
+        public Statistic GetTotal(int activity_id)
         {
             try
             {
@@ -625,7 +631,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new Statistic();
             }
         }
-        public List<Statistic> getStatisticOffice(int activity_id)
+        public List<Statistic> GetStatisticOffice(int activity_id)
         {
             try
             {
@@ -651,7 +657,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<Statistic>();
             }
         }
-        public List<Statistic> getStatisticUnit(int activity_id)
+        public List<Statistic> GetStatisticUnit(int activity_id)
         {
             try
             {

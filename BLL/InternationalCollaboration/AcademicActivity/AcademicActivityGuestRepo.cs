@@ -11,8 +11,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityGuestRepo
     {
-        readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<baseAA> getBaseAA(int count, List<int> type, int language, string search, int? year)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public List<baseAA> GetBaseAA(int count, List<int> type, int language, string search, int? year)
         {
             try
             {
@@ -62,8 +62,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
                 foreach (baseAA a in obj)
                 {
-                    a.from = changeFormatDate(a.from);
-                    a.to = changeFormatDate(a.to);
+                    a.from = ChangeFormatDate(a.from);
+                    a.to = ChangeFormatDate(a.to);
                 }
                 return obj;
             }
@@ -73,7 +73,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
         }
 
-        public List<activityType> getListType(int language)
+        public List<activityType> GetListType(int language)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<activityType>();
             }
         }
-        public YearSearching yearSearching()
+        public YearSearching YearSearching()
         {
             try
             {
@@ -104,7 +104,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new YearSearching();
             }
         }
-        public int getPhaseCurrentByActivity(int activity_id)
+        public int GetPhaseCurrentByActivity(int activity_id)
         {
             try
             {
@@ -121,13 +121,13 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             }
         }
 
-        public string changeFormatDate(string date)
+        public string ChangeFormatDate(string date)
         {
             string[] sp = date.Split('-');
             return sp[2] + '/' + sp[1] + '/' + sp[0];
         }
 
-        public baseAA getBaseAADetail(int id, int language)
+        public baseAA GetBaseAADetail(int id, int language)
         {
             try
             {
@@ -143,8 +143,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     new SqlParameter("language", language)).FirstOrDefault();
                 if (detail != null)
                 {
-                    detail.from = changeFormatDate(detail.from);
-                    detail.to = changeFormatDate(detail.to);
+                    detail.from = ChangeFormatDate(detail.from);
+                    detail.to = ChangeFormatDate(detail.to);
                 }
                 return detail;
             }
@@ -174,7 +174,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<subContent>();
             }
         }
-        public fullForm getForm(int phase_id)
+        public fullForm GetForm(int phase_id)
         {
             try
             {
@@ -210,7 +210,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new fullForm();
             }
         }
-        public bool checkForm(int phase_id)
+        public bool CheckForm(int phase_id)
         {
             try
             {
@@ -227,7 +227,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return false;
             }
         }
-        public string checkFormOutdate(int phase_id)
+        public string CheckFormOutdate(int phase_id)
         {
             try
             {
@@ -246,7 +246,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return "no";
             }
         }
-        public bool sendForm(int fid, string answer, AnswerUnchange unchange)
+        public bool SendForm(int fid, string answer, AnswerUnchange unchange)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -293,7 +293,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<ParticipantRole>();
             }
         }
-        public List<Office> getOffices()
+        public List<Office> GetOffices()
         {
             try
             {
@@ -306,7 +306,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<Office>();
             }
         }
-        public string getImageActivity(int phase_id)
+        public string GetImageActivity(int phase_id)
         {
             try
             {
@@ -315,7 +315,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                                     on aap.activity_id = aa.activity_id
                                     where aap.phase_id = @phase_id";
                 string file_drive_id = db.Database.SqlQuery<string>(sql, new SqlParameter("phase_id", phase_id)).FirstOrDefault();
-                return file_drive_id == null ? String.Empty : file_drive_id;
+                return file_drive_id ?? String.Empty;
             }
             catch (Exception e)
             {
