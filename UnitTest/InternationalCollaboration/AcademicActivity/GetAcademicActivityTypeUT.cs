@@ -17,7 +17,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = 1;
-            List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
+            List<AcademicActivityTypeLanguage> data = activityRepo.GetType(language_id);
             if (data.Count > 0)
                 Assert.Pass();
         }
@@ -26,7 +26,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = 2;
-            List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
+            List<AcademicActivityTypeLanguage> data = activityRepo.GetType(language_id);
             if (data.Count > 0)
                 Assert.Pass();
         }
@@ -35,7 +35,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = 0;
-            List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
+            List<AcademicActivityTypeLanguage> data = activityRepo.GetType(language_id);
             if (data.Count == 0)
                 Assert.Pass();
         }
@@ -44,7 +44,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         {
             AcademicActivityRepo activityRepo = new AcademicActivityRepo();
             int language_id = -999;
-            List<AcademicActivityTypeLanguage> data = activityRepo.getType(language_id);
+            List<AcademicActivityTypeLanguage> data = activityRepo.GetType(language_id);
             if (data.Count == 0)
                 Assert.Pass();
         }

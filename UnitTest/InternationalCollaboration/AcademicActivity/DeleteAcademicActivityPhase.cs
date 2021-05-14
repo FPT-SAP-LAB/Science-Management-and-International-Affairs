@@ -20,7 +20,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
             AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
-            bool res = academicActivityPhaseRepo.deletePhase(activityPhase.phase_id);
+            bool res = academicActivityPhaseRepo.DeletePhase(activityPhase.phase_id);
             if (res)
                 Assert.Pass();
         }
@@ -28,7 +28,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void DeleteAcademicActivityPhaseUT_2()
         {
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
-            bool res = academicActivityPhaseRepo.deletePhase(0);
+            bool res = academicActivityPhaseRepo.DeletePhase(0);
             if (res)
                 Assert.Pass();
         }
@@ -36,7 +36,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void DeleteAcademicActivityPhaseUT_3()
         {
             AcademicActivityPhaseRepo academicActivityPhaseRepo = new AcademicActivityPhaseRepo();
-            bool res = academicActivityPhaseRepo.deletePhase(-999);
+            bool res = academicActivityPhaseRepo.DeletePhase(-999);
             if (res)
                 Assert.Pass();
         }

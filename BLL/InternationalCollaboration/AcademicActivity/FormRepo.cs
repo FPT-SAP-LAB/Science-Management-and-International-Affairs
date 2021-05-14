@@ -11,8 +11,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
     {
         public static string GuestURL;
         public static string ManagerURL;
-        ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public DetailOfAcademicActivityRepo.baseForm getFormbyPhase(int phase_id)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public DetailOfAcademicActivityRepo.baseForm GetFormbyPhase(int phase_id)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new DetailOfAcademicActivityRepo.baseForm();
             }
         }
-        public bool updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
+        public bool UpdateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -67,27 +67,27 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     {
                         f = db.Forms.Add(new Form
                         {
-                            title = data.form.title == null ? String.Empty : data.form.title,
-                            title_description = data.form.title_description == null ? String.Empty : data.form.title_description,
+                            title = data.form.title ?? String.Empty,
+                            title_description = data.form.title_description ?? String.Empty,
                             phase_id = data.form.phase_id
                         });
                         db.SaveChanges();
                     }
                     else
                     {
-                        f.title = data.form.title == null ? String.Empty : data.form.title;
-                        f.title_description = data.form.title_description == null ? String.Empty : data.form.title_description;
+                        f.title = data.form.title ?? String.Empty;
+                        f.title_description = data.form.title_description ?? String.Empty;
                         db.Entry(f).State = EntityState.Modified;
                     }
-                    updateQuestion(data, f, quess_id);
+                    UpdateQuestion(data, f, quess_id);
                     foreach (DetailOfAcademicActivityRepo.CustomQuestion cq in data_unchange)
                     {
                         db.Questions.Add(new Question
                         {
                             form_id = f.form_id,
-                            title = cq.title == null ? String.Empty : cq.title,
+                            title = cq.title ?? String.Empty,
                             answer_type_id = 1,
-                            is_compulsory = cq.is_compulsory == 1 ? true : false,
+                            is_compulsory = cq.is_compulsory == 1,
                             is_changeable = false
                         });
                     }
@@ -103,28 +103,28 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void updateQuestion(DetailOfAcademicActivityRepo.baseForm data, Form f, List<int> quess_id)
+        public void UpdateQuestion(DetailOfAcademicActivityRepo.baseForm data, Form f, List<int> quess_id)
         {
             foreach (DetailOfAcademicActivityRepo.Ques q in data.ques)
             {
                 if (quess_id.Contains(q.question_id))
                 {
-                    updateQuesOption(q, data);
+                    UpdateQuesOption(q, data);
                 }
                 else
                 {
-                    addQuesOption(q, data, f);
+                    AddQuesOption(q, data, f);
                 }
                 quess_id.Remove(q.question_id);
             }
-            removeQues(quess_id);
+            RemoveQues(quess_id);
         }
-        public void updateQuesOption(DetailOfAcademicActivityRepo.Ques q, DetailOfAcademicActivityRepo.baseForm data)
+        public void UpdateQuesOption(DetailOfAcademicActivityRepo.Ques q, DetailOfAcademicActivityRepo.baseForm data)
         {
             Question qt = db.Questions.Find(q.question_id);
-            qt.title = q.title == null ? String.Empty : q.title;
+            qt.title = q.title ?? String.Empty;
             qt.answer_type_id = q.answer_type_id;
-            qt.is_compulsory = q.is_compulsory == 1 ? true : false;
+            qt.is_compulsory = q.is_compulsory == 1;
             qt.is_changeable = true;
             db.Entry(qt).State = EntityState.Modified;
             if (q.answer_type_id == 3 || q.answer_type_id == 5)
@@ -137,7 +137,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     {
                         if (qon != null)
                         {
-                            qo.option_title = qon.option_title == null ? String.Empty : qon.option_title;
+                            qo.option_title = qon.option_title ?? String.Empty;
                             db.Entry(qo).State = EntityState.Modified;
                         }
                         else
@@ -160,14 +160,14 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void addQuesOption(DetailOfAcademicActivityRepo.Ques q, DetailOfAcademicActivityRepo.baseForm data, Form f)
+        public void AddQuesOption(DetailOfAcademicActivityRepo.Ques q, DetailOfAcademicActivityRepo.baseForm data, Form f)
         {
             Question qn = db.Questions.Add(new Question
             {
                 form_id = f.form_id,
                 answer_type_id = q.answer_type_id,
-                title = q.title == null ? String.Empty : q.title,
-                is_compulsory = q.is_compulsory == 1 ? true : false,
+                title = q.title ?? String.Empty,
+                is_compulsory = q.is_compulsory == 1,
                 is_changeable = true
             });
             db.SaveChanges();
@@ -187,7 +187,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void removeQues(List<int> quess_id)
+        public void RemoveQues(List<int> quess_id)
         {
             foreach (int i in quess_id)
             {
@@ -203,7 +203,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 db.Questions.Remove(q);
             }
         }
-        public bool deleteForm(int phase_id)
+        public bool DeleteForm(int phase_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -223,7 +223,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public viewResponse getResponse(int phase_id)
+        public viewResponse GetResponse(int phase_id)
         {
             try
             {
@@ -257,7 +257,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new viewResponse();
             }
         }
-        public bool sendEmailForm(EmailForm data)
+        public bool SendEmailForm(EmailForm data)
         {
             try
             {

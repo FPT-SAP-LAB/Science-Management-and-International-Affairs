@@ -17,10 +17,10 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void GetFormUT_1()
         {
             guestRepo = new AcademicActivityGuestRepo();
-            bool checkForm = guestRepo.checkForm(1);
+            bool checkForm = guestRepo.CheckForm(1);
             if (checkForm)
             {
-                fullForm form = guestRepo.getForm(1);
+                fullForm form = guestRepo.GetForm(1);
             }
             Assert.Pass();
         }
@@ -28,10 +28,10 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
         public void GetFormUT_2()
         {
             guestRepo = new AcademicActivityGuestRepo();
-            bool checkForm = guestRepo.checkForm(1);
+            bool checkForm = guestRepo.CheckForm(1);
             if (checkForm)
             {
-                fullForm form = guestRepo.getForm(1);
+                fullForm form = guestRepo.GetForm(1);
                 Assert.IsNotNull(form);
             }
         }

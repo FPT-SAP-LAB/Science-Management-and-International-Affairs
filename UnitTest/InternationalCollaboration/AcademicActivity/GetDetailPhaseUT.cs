@@ -21,7 +21,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
             ENTITIES.AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
             int language_id = 1;
-            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, activityPhase.phase_id);
+            AcademicActivityPhaseRepo.basePhase data = phaseRepo.GetDetailPhase(language_id, activityPhase.phase_id);
             if (data != null)
                 Assert.Pass();
         }
@@ -32,7 +32,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
             ENTITIES.AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
             int language_id = 2;
-            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, activityPhase.phase_id);
+            AcademicActivityPhaseRepo.basePhase data = phaseRepo.GetDetailPhase(language_id, activityPhase.phase_id);
             if (data != null)
                 Assert.Pass();
         }
@@ -43,7 +43,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             new AddAcademicActivityPhaseUT().AddAcademicActivityPhaseUT_1();
             ENTITIES.AcademicActivityPhase activityPhase = db.AcademicActivityPhases.Last();
             int language_id = 3;
-            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, activityPhase.phase_id);
+            AcademicActivityPhaseRepo.basePhase data = phaseRepo.GetDetailPhase(language_id, activityPhase.phase_id);
             if (data == null)
                 Assert.Pass();
         }

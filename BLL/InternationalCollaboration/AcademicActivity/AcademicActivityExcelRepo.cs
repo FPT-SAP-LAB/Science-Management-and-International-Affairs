@@ -18,7 +18,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             string path = HostingEnvironment.MapPath("/Excel_template/");
             string filename = "TemplateKinhPhiDuTru.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<AcademicActivityExpenseRepo.excelEstimate> list = expenseRepo.getExcelDuTru(activity_id);
+            List<AcademicActivityExpenseRepo.excelEstimate> list = expenseRepo.GetExcelDuTru(activity_id);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -94,7 +94,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             string path = HostingEnvironment.MapPath("/Excel_template/");
             string filename = "TemplateKinhPhiDieuChinh.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<AcademicActivityExpenseRepo.excelModified> list = expenseRepo.getExcelDieuChinh(activity_id);
+            List<AcademicActivityExpenseRepo.excelModified> list = expenseRepo.GetExcelDieuChinh(activity_id);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -170,7 +170,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             string path = HostingEnvironment.MapPath("/Excel_template/");
             string filename = "TemplateKinhPhiTongHop.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<AcademicActivityExpenseRepo.excelModified> list = expenseRepo.getExcelTongHop(activity_id);
+            List<AcademicActivityExpenseRepo.excelModified> list = expenseRepo.GetExcelTongHop(activity_id);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))
@@ -248,7 +248,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
             string path = HostingEnvironment.MapPath("/Excel_template/");
             string filename = "TemplateKinhPhiThucTe.xlsx";
             FileInfo file = new FileInfo(path + filename);
-            List<AcademicActivityExpenseRepo.excelModified> list = expenseRepo.getExcelTongHop(activity_id);
+            List<AcademicActivityExpenseRepo.excelModified> list = expenseRepo.GetExcelTongHop(activity_id);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (ExcelPackage excelPackage = new ExcelPackage(file))

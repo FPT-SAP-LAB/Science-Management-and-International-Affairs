@@ -28,7 +28,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 participant_number = "12328181",
                 office_id = 1
             };
-            bool res = repo.addParticipant(obj);
+            bool res = repo.AddParticipant(obj);
             if (res)
                 Assert.Pass();
         }
@@ -46,7 +46,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 participant_number = "",
                 office_id = 0
             };
-            bool res = repo.addParticipant(obj);
+            bool res = repo.AddParticipant(obj);
             if (!res)
                 Assert.Pass();
         }
@@ -64,7 +64,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 participant_number = "0128dasda1",
                 office_id = 0
             };
-            bool res = repo.addParticipant(obj);
+            bool res = repo.AddParticipant(obj);
             if (!res)
                 Assert.Pass();
         }
@@ -82,7 +82,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 participant_number = "12328181",
                 office_id = 2
             };
-            bool res = repo.addParticipant(obj);
+            bool res = repo.AddParticipant(obj);
             if (res)
                 Assert.Pass();
         }

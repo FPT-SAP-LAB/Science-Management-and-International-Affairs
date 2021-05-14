@@ -28,7 +28,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             string quantity = "1";
             List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice = new List<AcademicActivityPhaseRepo.basePlanParticipant>();
-            bool res = academicActivityPhaseRepo.addParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
+            bool res = academicActivityPhaseRepo.AddParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
             if (res)
                 Assert.Pass();
         }
@@ -46,7 +46,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             string quantity = "-999";
             List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice = new List<AcademicActivityPhaseRepo.basePlanParticipant>();
-            bool res = academicActivityPhaseRepo.addParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
+            bool res = academicActivityPhaseRepo.AddParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
             if (res)
                 Assert.Pass();
         }
@@ -64,7 +64,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             string quantity = "1";
             List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice = new List<AcademicActivityPhaseRepo.basePlanParticipant>();
-            bool res = academicActivityPhaseRepo.addParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
+            bool res = academicActivityPhaseRepo.AddParticipantRole(data, arrOffice, "False", quantity, activityPhase.phase_id);
             if (res)
                 Assert.Pass();
         }
@@ -82,7 +82,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             string quantity = "1000";
             List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice = new List<AcademicActivityPhaseRepo.basePlanParticipant>();
-            bool res = academicActivityPhaseRepo.addParticipantRole(data, arrOffice, "False", quantity, 0);
+            bool res = academicActivityPhaseRepo.AddParticipantRole(data, arrOffice, "False", quantity, 0);
             if (!res)
                 Assert.Pass();
         }
@@ -100,7 +100,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
             };
             string quantity = "0";
             List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice = new List<AcademicActivityPhaseRepo.basePlanParticipant>();
-            bool res = academicActivityPhaseRepo.addParticipantRole(data, arrOffice, "False", quantity, 0);
+            bool res = academicActivityPhaseRepo.AddParticipantRole(data, arrOffice, "False", quantity, 0);
             if (!res)
                 Assert.Pass();
         }

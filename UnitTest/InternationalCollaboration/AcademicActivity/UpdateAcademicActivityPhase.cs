@@ -28,7 +28,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 full_name = "aa",
                 phase_id = activityPhase.phase_id
             };
-            bool res = academicActivityPhaseRepo.editPhase(language_id, data);
+            bool res = academicActivityPhaseRepo.EditPhase(language_id, data);
             if (res)
                 Assert.Pass();
         }
@@ -47,7 +47,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 full_name = "aa",
                 phase_id = activityPhase.phase_id
             };
-            bool res = academicActivityPhaseRepo.editPhase(language_id, data);
+            bool res = academicActivityPhaseRepo.EditPhase(language_id, data);
             if (res)
                 Assert.Pass();
         }
@@ -66,7 +66,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 full_name = "aa",
                 phase_id = activityPhase.phase_id
             };
-            bool res = academicActivityPhaseRepo.editPhase(language_id, data);
+            bool res = academicActivityPhaseRepo.EditPhase(language_id, data);
             if (!res)
                 Assert.Pass();
         }
@@ -85,7 +85,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 full_name = "aa",
                 phase_id = activityPhase.phase_id
             };
-            bool res = academicActivityPhaseRepo.editPhase(language_id, data);
+            bool res = academicActivityPhaseRepo.EditPhase(language_id, data);
             if (res)
                 Assert.Pass();
         }
@@ -104,7 +104,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 full_name = "aa",
                 phase_id = activityPhase.phase_id
             };
-            bool res = academicActivityPhaseRepo.editPhase(language_id, data);
+            bool res = academicActivityPhaseRepo.EditPhase(language_id, data);
             if (!res)
                 Assert.Pass();
         }
@@ -123,7 +123,7 @@ namespace UnitTest.InternationalCollaboration.AcademicActivity
                 full_name = "aa",
                 phase_id = activityPhase.phase_id
             };
-            bool res = academicActivityPhaseRepo.editPhase(language_id, data);
+            bool res = academicActivityPhaseRepo.EditPhase(language_id, data);
             if (!res)
                 Assert.Pass();
         }

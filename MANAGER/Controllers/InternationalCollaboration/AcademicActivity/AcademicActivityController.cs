@@ -17,7 +17,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             repo = new AcademicActivityRepo();
             ViewBag.pageTitle = "DANH SÁCH HOẠT ĐỘNG HỌC THUẬT TRONG NĂM";
-            ViewBag.AAType = repo.getType(1);
+            ViewBag.AAType = repo.GetType(1);
             return View();
         }
         [HttpPost]

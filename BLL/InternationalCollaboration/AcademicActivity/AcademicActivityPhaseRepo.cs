@@ -10,8 +10,8 @@ namespace BLL.InternationalCollaboration.AcademicActivity
 {
     public class AcademicActivityPhaseRepo
     {
-        ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
-        public List<infoPhase> getPhase(int language_id, int activity_id)
+        private readonly ScienceAndInternationalAffairsEntities db = new ScienceAndInternationalAffairsEntities();
+        public List<infoPhase> GetPhase(int language_id, int activity_id)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<infoPhase>();
             }
         }
-        public basePhase getDetailPhase(int language_id, int phase_id)
+        public basePhase GetDetailPhase(int language_id, int phase_id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new basePhase();
             }
         }
-        public List<baseParticipantRole> getParticipantRoleByPhase(int phase_id)
+        public List<baseParticipantRole> GetParticipantRoleByPhase(int phase_id)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<baseParticipantRole>();
             }
         }
-        public bool addPhase(int language_id, int activity_id, int account_id, basePhase data)
+        public bool AddPhase(int language_id, int activity_id, int account_id, basePhase data)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -127,7 +127,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool deletePhase(int phase_id)
+        public bool DeletePhase(int phase_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -147,7 +147,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool editPhase(int language_id, infoPhase data)
+        public bool EditPhase(int language_id, infoPhase data)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -172,7 +172,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public infoPlanParticipant getParticipantPlanByRole(int participant_role_id)
+        public infoPlanParticipant GetParticipantPlanByRole(int participant_role_id)
         {
             try
             {
@@ -196,7 +196,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new infoPlanParticipant();
             }
         }
-        public List<baseOffice> getOffices()
+        public List<baseOffice> GetOffices()
         {
             try
             {
@@ -210,7 +210,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 return new List<baseOffice>();
             }
         }
-        public bool addParticipantRole(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
+        public bool AddParticipantRole(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -219,7 +219,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     ParticipantRole pr = db.ParticipantRoles.Add(new ParticipantRole
                     {
                         participant_role_name = baseParticipant.participant_role_name,
-                        need_payed = int.Parse(baseParticipant.price) == -1 ? false : true,
+                        need_payed = int.Parse(baseParticipant.price) != -1,
                         phase_id = phase_id
                     });
                     db.SaveChanges();
@@ -260,7 +260,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public bool editParticipantRole(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
+        public bool EditParticipantRole(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {
@@ -268,7 +268,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 {
                     ParticipantRole pr = db.ParticipantRoles.Find(baseParticipant.participant_role_id);
                     pr.participant_role_name = baseParticipant.participant_role_name;
-                    pr.need_payed = int.Parse(baseParticipant.price) == -1 ? false : true;
+                    pr.need_payed = int.Parse(baseParticipant.price) != -1;
                     if (pr.need_payed == true)
                     {
                         pr.price = double.Parse(baseParticipant.price);
@@ -279,7 +279,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                     }
                     db.Entry(pr).State = EntityState.Modified;
                     db.SaveChanges();
-                    updatePlanParticipant(baseParticipant, arrOffice, check, quantity);
+                    UpdatePlanParticipant(baseParticipant, arrOffice, check, quantity);
                     db.SaveChanges();
                     transaction.Commit();
                     return true;
@@ -292,7 +292,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 }
             }
         }
-        public void updatePlanParticipant(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity)
+        public void UpdatePlanParticipant(baseParticipantRole baseParticipant, List<basePlanParticipant> arrOffice, string check, string quantity)
         {
             if (check.Equals("True"))
             {
@@ -343,7 +343,7 @@ namespace BLL.InternationalCollaboration.AcademicActivity
                 });
             }
         }
-        public bool deleteParticipantRole(int participant_role_id)
+        public bool DeleteParticipantRole(int participant_role_id)
         {
             using (DbContextTransaction transaction = db.Database.BeginTransaction())
             {

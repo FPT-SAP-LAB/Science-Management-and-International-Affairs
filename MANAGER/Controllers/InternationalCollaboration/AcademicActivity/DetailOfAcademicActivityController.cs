@@ -29,7 +29,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             ViewBag.activity_id = id;
             ViewBag.types = repo.GetType(1);
             ViewBag.unit = repo.GetUnits();
-            ViewBag.office = phaseRepo.getOffices();
+            ViewBag.office = phaseRepo.GetOffices();
             return View();
         }
         [HttpPost]
@@ -135,14 +135,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getPhase(int language_id, int activity_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.getPhase(language_id, activity_id);
+            List<AcademicActivityPhaseRepo.infoPhase> data = phaseRepo.GetPhase(language_id, activity_id);
             return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult getDetailPhase(int language_id, int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            AcademicActivityPhaseRepo.basePhase data = phaseRepo.getDetailPhase(language_id, phase_id);
+            AcademicActivityPhaseRepo.basePhase data = phaseRepo.GetDetailPhase(language_id, phase_id);
             return Json(data);
         }
         [Auther(RightID = "3")]
@@ -151,7 +151,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         {
             phaseRepo = new AcademicActivityPhaseRepo();
             int account_id = CurrentAccount.AccountID(Session);
-            bool res = phaseRepo.addPhase(language_id, activity_id, account_id, basePhase);
+            bool res = phaseRepo.AddPhase(language_id, activity_id, account_id, basePhase);
             if (res)
             {
                 return Json("Thêm giai đoạn thành công");
@@ -166,7 +166,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult deletePhase(int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.deletePhase(phase_id);
+            bool res = phaseRepo.DeletePhase(phase_id);
             if (res)
             {
                 return Json("Xóa giai đoạn thành công");
@@ -181,7 +181,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult editPhase(int language_id, AcademicActivityPhaseRepo.infoPhase data)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.editPhase(language_id, data);
+            bool res = phaseRepo.EditPhase(language_id, data);
             if (res)
             {
                 return Json("Chỉnh sửa giai đoạn thành công");
@@ -195,14 +195,14 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getParticipantRoleByPhase(int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            List<AcademicActivityPhaseRepo.baseParticipantRole> data = phaseRepo.getParticipantRoleByPhase(phase_id);
+            List<AcademicActivityPhaseRepo.baseParticipantRole> data = phaseRepo.GetParticipantRoleByPhase(phase_id);
             return Json(new { success = true, data = data });
         }
         [HttpPost]
         public JsonResult getParticipantPlanByRole(int participant_role_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            AcademicActivityPhaseRepo.infoPlanParticipant data = phaseRepo.getParticipantPlanByRole(participant_role_id);
+            AcademicActivityPhaseRepo.infoPlanParticipant data = phaseRepo.GetParticipantPlanByRole(participant_role_id);
             return Json(data);
         }
         [Auther(RightID = "3")]
@@ -210,7 +210,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult addParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.addParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
+            bool res = phaseRepo.AddParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
             if (res)
             {
                 return Json("Thêm tư cách tham gia thành công");
@@ -223,7 +223,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult editParticipantRole(AcademicActivityPhaseRepo.baseParticipantRole baseParticipantRole, List<AcademicActivityPhaseRepo.basePlanParticipant> arrOffice, string check, string quantity, int phase_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.editParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
+            bool res = phaseRepo.EditParticipantRole(baseParticipantRole, arrOffice, check, quantity, phase_id);
             if (res)
             {
                 return Json("Chỉnh sửa tư cách tham gia thành công");
@@ -236,7 +236,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult deleteParticipantRole(int participant_role_id)
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            bool res = phaseRepo.deleteParticipantRole(participant_role_id);
+            bool res = phaseRepo.DeleteParticipantRole(participant_role_id);
             if (res)
             {
                 return Json("Xóa tư cách tham gia thành công");
@@ -254,7 +254,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getFormbyPhase(int phase_id)
         {
             formRepo = new FormRepo();
-            DetailOfAcademicActivityRepo.baseForm data = formRepo.getFormbyPhase(phase_id);
+            DetailOfAcademicActivityRepo.baseForm data = formRepo.GetFormbyPhase(phase_id);
             return Json(data);
         }
         [Auther(RightID = "3")]
@@ -262,7 +262,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult updateForm(DetailOfAcademicActivityRepo.baseForm data, List<DetailOfAcademicActivityRepo.CustomQuestion> data_unchange)
         {
             formRepo = new FormRepo();
-            bool res = formRepo.updateForm(data, data_unchange);
+            bool res = formRepo.UpdateForm(data, data_unchange);
             if (res)
             {
                 return Json("Lưu mẫu đăng ký thành công");
@@ -275,7 +275,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult deleteForm(int phase_id)
         {
             formRepo = new FormRepo();
-            bool res = formRepo.deleteForm(phase_id);
+            bool res = formRepo.DeleteForm(phase_id);
             if (res)
             {
                 return Json("Xóa mẫu đăng ký thành công");
@@ -288,7 +288,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult sendEmailForm(FormRepo.EmailForm data)
         {
             formRepo = new FormRepo();
-            bool res = formRepo.sendEmailForm(data);
+            bool res = formRepo.SendEmailForm(data);
             if (res)
             {
                 return Json("Gửi email đến người đăng ký thành công");
@@ -300,20 +300,20 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getRealtimeParticipant(int phase_id)
         {
             formRepo = new FormRepo();
-            FormRepo.viewResponse data = formRepo.getResponse(phase_id);
+            FormRepo.viewResponse data = formRepo.GetResponse(phase_id);
             return Json(data);
         }
         public JsonResult getOffice()
         {
             phaseRepo = new AcademicActivityPhaseRepo();
-            List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.getOffices();
+            List<AcademicActivityPhaseRepo.baseOffice> data = phaseRepo.GetOffices();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult getDatatableKP(int activity_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.infoExpense> data = expenseRepo.getDatatableKP(activity_id);
+            List<AcademicActivityExpenseRepo.infoExpense> data = expenseRepo.GetDatatableKP(activity_id);
             return Json(new { success = true, data = data });
         }
         [Auther(RightID = "3")]
@@ -321,7 +321,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult addExpense(AcademicActivityExpenseRepo.baseExpense data)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            string res = expenseRepo.addExpense(data);
+            string res = expenseRepo.AddExpense(data);
             if (!String.IsNullOrEmpty(res))
             {
                 return Json(res);
@@ -333,7 +333,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult deleteExpense(int activity_office_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.deleteExpense(activity_office_id);
+            bool res = expenseRepo.DeleteExpense(activity_office_id);
             if (res)
             {
                 return Json("Xóa mục kinh phí thành công");
@@ -344,7 +344,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatableKPDuTru(int activity_office_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.infoExpenseEstimate> data = expenseRepo.getDatatableKPDuTru(activity_office_id);
+            List<AcademicActivityExpenseRepo.infoExpenseEstimate> data = expenseRepo.GetDatatableKPDuTru(activity_office_id);
             return Json(new { success = true, data = data });
         }
         [Auther(RightID = "3")]
@@ -352,7 +352,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult addExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.addExpenseDuTru(activity_office_id, activity_name, data, img);
+            bool res = expenseRepo.AddExpenseDuTru(activity_office_id, activity_name, data, img);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -362,7 +362,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult deleteExpenseType(int expense_category_id, int type)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.deleteExpenseType(expense_category_id, type);
+            bool res = expenseRepo.DeleteExpenseType(expense_category_id, type);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -371,7 +371,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getExpenseType(int expense_category_id, int type)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.getExpenseType(expense_category_id, type);
+            AcademicActivityExpenseRepo.infoExpenseEstimate data = expenseRepo.GetExpenseType(expense_category_id, type);
             return Json(data);
         }
         [Auther(RightID = "3")]
@@ -379,7 +379,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult editExpenseDuTru(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseDuTru(activity_office_id, activity_name, data, img, file_action);
+            bool res = expenseRepo.EditExpenseDuTru(activity_office_id, activity_name, data, img, file_action);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -388,7 +388,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatableKPDieuChinh(int activity_office_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.getDatatableKPDieuChinh(activity_office_id);
+            List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.GetDatatableKPDieuChinh(activity_office_id);
             return Json(new { success = true, data = data });
         }
         [Auther(RightID = "3")]
@@ -396,7 +396,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult editExpenseDieuChinh(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseDieuChinh(activity_office_id, activity_name, data, img, file_action);
+            bool res = expenseRepo.EditExpenseDieuChinh(activity_office_id, activity_name, data, img, file_action);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -405,7 +405,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public ActionResult getDatatableKPThucTe(int activity_office_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.getDatatableKPThucTe(activity_office_id);
+            List<AcademicActivityExpenseRepo.infoExpenseModified> data = expenseRepo.GetDatatableKPThucTe(activity_office_id);
             return Json(new { success = true, data = data });
         }
         [Auther(RightID = "3")]
@@ -413,7 +413,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult editExpenseThucTe(int activity_office_id, string activity_name, string data, HttpPostedFileBase img, string file_action)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            bool res = expenseRepo.editExpenseThucTe(activity_office_id, activity_name, data, img, file_action);
+            bool res = expenseRepo.EditExpenseThucTe(activity_office_id, activity_name, data, img, file_action);
             if (res)
                 return Json("Thành công");
             return Json(String.Empty);
@@ -422,21 +422,21 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
         public JsonResult getTotal(int activity_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            AcademicActivityExpenseRepo.Statistic data = expenseRepo.getTotal(activity_id);
+            AcademicActivityExpenseRepo.Statistic data = expenseRepo.GetTotal(activity_id);
             return Json(data);
         }
         [HttpPost]
         public JsonResult getStatisticOffice(int activity_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.getStatisticOffice(activity_id);
+            List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.GetStatisticOffice(activity_id);
             return Json(data);
         }
         [HttpPost]
         public JsonResult getStatisticUnit(int activity_id)
         {
             expenseRepo = new AcademicActivityExpenseRepo();
-            List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.getStatisticUnit(activity_id);
+            List<AcademicActivityExpenseRepo.Statistic> data = expenseRepo.GetStatisticUnit(activity_id);
             return Json(data);
         }
         [Auther(RightID = "3")]
@@ -447,7 +447,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 int account_id = CurrentAccount.AccountID(Session);
                 partnerRepo = new AcademicActivityPartnerRepo();
                 SaveActivityPartner activityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.saveActivityPartner(evidence_file, folder_name, activityPartner, account_id);
+                AlertModal<string> alertModal = partnerRepo.SaveActivityPartner(evidence_file, folder_name, activityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -461,7 +461,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             try
             {
                 partnerRepo = new AcademicActivityPartnerRepo();
-                AlertModal<ActivityPartner_Ext> alertModal = partnerRepo.getActivityPartner(activity_partner_id);
+                AlertModal<ActivityPartner_Ext> alertModal = partnerRepo.GetActivityPartner(activity_partner_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -478,7 +478,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
                 partnerRepo = new AcademicActivityPartnerRepo();
                 int account_id = CurrentAccount.AccountID(Session);
                 SaveActivityPartner saveActivityPartner = JsonConvert.DeserializeObject<SaveActivityPartner>(obj_activity_partner_stringify);
-                AlertModal<string> alertModal = partnerRepo.updateActivityPartner(evidence_file, file_action, folder_name, saveActivityPartner, account_id);
+                AlertModal<string> alertModal = partnerRepo.UpdateActivityPartner(evidence_file, file_action, folder_name, saveActivityPartner, account_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
@@ -493,7 +493,7 @@ namespace MANAGER.Controllers.InternationalCollaboration.AcademicActivity
             try
             {
                 partnerRepo = new AcademicActivityPartnerRepo();
-                AlertModal<string> alertModal = partnerRepo.deleteActivityPartner(activity_partner_id);
+                AlertModal<string> alertModal = partnerRepo.DeleteActivityPartner(activity_partner_id);
                 return Json(new { alertModal.obj, alertModal.success, alertModal.title, alertModal.content });
             }
             catch (Exception e)
